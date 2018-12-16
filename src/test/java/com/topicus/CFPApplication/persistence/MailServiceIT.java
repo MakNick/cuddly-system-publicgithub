@@ -19,7 +19,7 @@ import com.topicus.CFPApplication.domain.MailContentBuilder;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class MailServiceTest {
+public class MailServiceIT {
 	 
     private GreenMail smtpServer = new GreenMail(new ServerSetup(25, null, "smtp"));
     
