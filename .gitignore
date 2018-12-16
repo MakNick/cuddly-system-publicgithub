@@ -25,4 +25,5 @@
 /.nb-gradle/
 
 *.properties
+!application-acct.properties
 /bin/
