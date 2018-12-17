@@ -17,7 +17,6 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
  */
 
 @Configuration
-@PropertySource("classpath:application.properties")
 @ConfigurationProperties("spring.mail")
 public class MailConfig {
 	
