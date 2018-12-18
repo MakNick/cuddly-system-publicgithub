@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
-import com.topicus.CFPApplication.persistence.ApplicantService;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
 
 @Path("presentationdraft")
