@@ -18,7 +18,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -52,6 +51,9 @@ public class PresentationDraft {
 	@JoinTable(name = "Applicant_PresentationDraft", joinColumns = {
 			@JoinColumn(name = "presentationDraft_id") }, inverseJoinColumns = { @JoinColumn(name = "applicant_id") })
 	private Set<Applicant> applicants = new HashSet<Applicant>();
+
+	@ManyToOne
+	private Conference conference;
 
 	public void addApplicant(Applicant applicant) {
 		this.applicants.add(applicant);
@@ -128,5 +130,9 @@ public class PresentationDraft {
 
 	public void setCategory(String category) {
 		this.category = category;
+	}
+
+	public void setConference(Conference conference) {
+		this.conference = conference;
 	}
 }

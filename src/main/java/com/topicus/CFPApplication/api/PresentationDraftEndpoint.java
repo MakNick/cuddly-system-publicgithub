@@ -20,6 +20,7 @@ import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
+import com.topicus.CFPApplication.persistence.SubscribeService;
 
 @Path("presentationdraft")
 @Component
@@ -27,6 +28,9 @@ public class PresentationDraftEndpoint {
 	
 	@Autowired
 	private PresentationDraftService presentationDraftService;
+	
+	@Autowired
+	private SubscribeService subscribeService;
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
@@ -42,7 +46,7 @@ public class PresentationDraftEndpoint {
 	public Response save(PresentationDraftApplicant presentationDraftApplicant) {	
 		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
-		presentationDraftService.linkPresentationDraftWithApplicants(presentationDraft, applicants);		
+		subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);		
 		return Response.accepted(presentationDraft).build();
 	}
 	
