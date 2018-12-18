@@ -6,6 +6,7 @@ import org.glassfish.jersey.server.ResourceConfig;
 import org.springframework.stereotype.Component;
 
 import com.topicus.CFPApplication.api.ConferenceEndpoint;
+import com.topicus.CFPApplication.api.PDFEndpoint;
 import com.topicus.CFPApplication.api.ApplicantEndpoint;
 import com.topicus.CFPApplication.api.PresentationDraftEndpoint;
 
@@ -16,6 +17,7 @@ public class JerseyConfig extends ResourceConfig {
 		register(PresentationDraftEndpoint.class);
 		register(ConferenceEndpoint.class);
 		register(ApplicantEndpoint.class);
+		register(PDFEndpoint.class);
 		
 	}
 }
