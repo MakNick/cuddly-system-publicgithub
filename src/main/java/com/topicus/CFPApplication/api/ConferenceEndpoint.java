@@ -53,7 +53,7 @@ public class ConferenceEndpoint {
 			@ApiResponse(code = 404, message = "Could not retrieve a conference with the given ID") })
 	@GetMapping("api/conference/{id}")
 	public ResponseEntity<Conference> getConferenceById(
-			@ApiParam(required = true, name = "id", value = "Conference ID") @PathVariable("id") Long id) {
+			@ApiParam(required = true, name = "id", value = "Conference ID", type="Long") @PathVariable("id") Long id) {
 		Optional<Conference> result = conferenceService.findById(id);
 		if (result.isPresent()) {
 			return ResponseEntity.ok(result.get());
@@ -69,7 +69,7 @@ public class ConferenceEndpoint {
 	}
 
 	@PostMapping("api/conference/{id}/savepresentationdraft")
-	public ResponseEntity savePresentationDraftInConference(@PathVariable("id") Long id,
+	public ResponseEntity<Conference> savePresentationDraftInConference(@PathVariable("id") Long id,
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
 		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();

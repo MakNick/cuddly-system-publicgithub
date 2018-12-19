@@ -53,12 +53,12 @@ public class PresentationDraftEndpoint {
 	@ApiOperation("Adds a new presentationdraftapplicant. This object contains a presentationdraft and a list of applicants")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a presentationdraftapplicant") })
 	@PostMapping("api/presentationdraft")
-	public ResponseEntity<PresentationDraft> save(
+	public ResponseEntity<PresentationDraftApplicant> save(
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
 		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
 		subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
-		return ResponseEntity.ok(presentationDraft);
+		return ResponseEntity.ok(presentationDraftApplicant);
 	}
 
 	@ApiOperation("Retrieves a presentationdraft by ID")
@@ -66,7 +66,7 @@ public class PresentationDraftEndpoint {
 			@ApiResponse(code = 404, message = "Could not retrieve a presentationdraft with the given ID") })
 	@GetMapping("api/presentationdraft/{id}")
 	public ResponseEntity<PresentationDraft> findById(
-			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id) {
+			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type="Long") @PathVariable("id") Long id) {
 		if (id != null) {
 			Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
 			if (result.isPresent()) {
@@ -82,8 +82,8 @@ public class PresentationDraftEndpoint {
 	@ApiOperation("Changes the label of the selected presentationdraft")
 	@PostMapping("api/presentationdraft/{id}/label/{value}")
 	public boolean changeLabel(
-			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id,
-			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined") @PathVariable("value") Integer value) {
+			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type="Long") @PathVariable("id") Long id,
+			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined", type="Integer") @PathVariable("value") Integer value) {
 		return this.presentationDraftService.changeLabel(id, value);
 	}
 
@@ -93,7 +93,7 @@ public class PresentationDraftEndpoint {
 	@DeleteMapping("api/presentationdraft/delete/{id}")
 
 	public ResponseEntity<Boolean> delete(
-			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id) {
+			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type="Long") @PathVariable("id") Long id) {
 		presentationDraftService.delete(id);
 		return ResponseEntity.ok(true);
 	}
@@ -103,7 +103,7 @@ public class PresentationDraftEndpoint {
 			@ApiResponse(code = 200, message = "Successfully retrieved all presentationdraft with the given label value") })
 	@GetMapping("api/presentationdraft/findbylabel/{value}")
 	public ResponseEntity<Iterable<PresentationDraft>> listPresentationDraftsByLabel(
-			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined") @PathVariable("value") int value) {
+			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined", type="Integer") @PathVariable("value") Integer value) {
 		Iterable<PresentationDraft> presentationDraftsByLabel = presentationDraftService.findByLabel(value);
 		return ResponseEntity.ok(presentationDraftsByLabel);
 	}

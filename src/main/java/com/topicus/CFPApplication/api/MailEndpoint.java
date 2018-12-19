@@ -56,13 +56,13 @@ public class MailEndpoint {
     })
 	@GetMapping("api/setupconfig/{host}/{port}/{username}/{password}")
 	public ResponseEntity setupConfig(
-			@ApiParam(required = true, name = "host", value = "E-mail server")
+			@ApiParam(required = true, name = "host", value = "E-mail server", type="String")
 			@PathVariable(name="host")String host, 
-			@ApiParam(required = true, name = "port", value = "Server port")
-			@PathVariable(name="port")int port,
-			@ApiParam(required = true, name = "username", value = "Existing e-mail on the given e-mail server")
+			@ApiParam(required = true, name = "port", value = "Server port", type="Integer")
+			@PathVariable(name="port")Integer port,
+			@ApiParam(required = true, name = "username", value = "Existing e-mail on the given e-mail server", type="String")
 			@PathVariable(name="username")String username, 
-			@ApiParam(required = true, name = "password", value = "Password of the given e-mail")
+			@ApiParam(required = true, name = "password", value = "Password of the given e-mail", type="String")
 			@PathVariable(name="password")String password){
 			int result = mailService.setupConfig(host,port,username,password);
 		if(result == 1) {
@@ -82,9 +82,9 @@ public class MailEndpoint {
 	@ApiOperation("For testing purposes. Will send a mail to the given e-mail. Be sure that you have setup the e-mail configurations with the setupconfig endpoint")
 	@GetMapping("api/sendmail/{email}/{name}")
 	public void sendMail(
-			@ApiParam(required = true, name = "email", value = "E-mail receiver")
+			@ApiParam(required = true, name = "email", value = "E-mail receiver", type="String")
 			@PathVariable("email") String email, 
-			@ApiParam(required = true, name = "name", value = "Name receiver")
+			@ApiParam(required = true, name = "name", value = "Name receiver", type="String")
 			@PathVariable("name")String name) {
         mailService.sendMail(email,name);
 	}
@@ -93,11 +93,11 @@ public class MailEndpoint {
 			+ "This will also insert a given text into the e-mail")
 	@GetMapping("api/sendmailtext/{email}/{name}/{text}")
 	public void sendMailText(
-			@ApiParam(required = true, name = "email", value = "E-mail receiver")
+			@ApiParam(required = true, name = "email", value = "E-mail receiver", type="String")
 			@PathVariable("email") String email, 
-			@ApiParam(required = true, name = "name", value = "Name receiver")
+			@ApiParam(required = true, name = "name", value = "Name receiver", type="String")
 			@PathVariable("name") String name,
-			@ApiParam(required = true, name = "text", value = "E-mail content")
+			@ApiParam(required = true, name = "text", value = "E-mail content", type="String")
 			@PathVariable("text") String text) {
         mailService.sendMailText(email,name, text);
 	}
@@ -113,9 +113,9 @@ public class MailEndpoint {
 	@ApiOperation("Sends mail to all applicants of a given presentationdraft. You can only send HTML templates that are in the src/main/resources/templates folder")
 	@GetMapping("api/sendmail/{id}/template/{templateName}")
 	public ResponseEntity<Iterable<Applicant>> sendMail(
-			@ApiParam(required = true, name = "id", value = "presentationdraft ID")
-			@PathVariable(name = "id")long id, 
-			@ApiParam(required = true, name = "templateName", value = "name template")
+			@ApiParam(required = true, name = "id", value = "presentationdraft ID", type="Long")
+			@PathVariable(name = "id")Long id, 
+			@ApiParam(required = true, name = "templateName", value = "name template", type="String")
 			@PathVariable(name ="templateName")String templateName) {
 		Iterable<Applicant> couldNotSendList = mailService.sendMail(id,templateName);
 		return ((List<Applicant>)couldNotSendList).size() > 0 ? ResponseEntity.status(HttpStatus.CONFLICT).body(couldNotSendList) 
@@ -128,7 +128,7 @@ public class MailEndpoint {
 	@ApiOperation("Sends mail to all applicants in the database. You can only send HTML templates that are in the src/main/resources/templates folder")
 	@GetMapping("api/sendallmail/template/{templateName}")
 	public ResponseEntity<Iterable<Applicant>> sendAllMail(
-			@ApiParam(required = true, name = "templateName", value = "name template")
+			@ApiParam(required = true, name = "templateName", value = "name template", type="String")
 			@PathVariable("templateName") String templateName){
 			Iterable<Applicant> couldNotSendList = mailService.sendAllApplicantsMail(templateName);
 		return ((List<Applicant>)couldNotSendList).size() > 0 ? ResponseEntity.status(HttpStatus.CONFLICT).body(couldNotSendList) 

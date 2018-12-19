@@ -27,28 +27,28 @@ public class Conference {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(value = "The unique identifier for the conference", required = true)
+	@ApiModelProperty(position = 1, value = "The unique identifier for the conference", required = true)
 	private long id;
 
-	@ApiModelProperty(required = true)
+	@ApiModelProperty(position = 2, required = true)
 	private String name;
 
 	private LocalDateTime startDate;
-	@ApiModelProperty(required = true)
+	@ApiModelProperty(position = 3, required = true)
 	private LocalDateTime endDate;
-	@ApiModelProperty(value = "After this day the organizor can make a definitive selection of all presentations, and presentations can no longer be submitted", required = true)
+	@ApiModelProperty(position = 4, value = "After this day the organizor can make a definitive selection of all presentations, and presentations can no longer be submitted", required = true)
 	private LocalDateTime deadlinePresentationDraft;
 
 	@Autowired
 	@Column(name = "category")
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "categories", joinColumns = @JoinColumn(name = "conference_id"))
-	@ApiModelProperty(value = "Categories that can be assigned to presentations will be added here")
+	@ApiModelProperty(position = 5, value = "Categories that can be assigned to presentations will be added here")
 	private Set<String> categories;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "conference_id")
-	@ApiModelProperty(value = "All presentations from this conference will be added to this list")
+	@ApiModelProperty(position = 6, value = "All presentations from this conference will be added to this list")
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
