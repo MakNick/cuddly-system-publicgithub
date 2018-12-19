@@ -7,6 +7,8 @@ import java.util.Optional;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +20,18 @@ import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 @Transactional
 public class PresentationDraftService {
 
-	@Autowired
 	private PresentationDraftRepository presentationDraftRepository;
-	@Autowired
 	private ApplicantRepository applicantRepository;
+	private ApplicantService applicantService;
+
+	@Autowired
+	public PresentationDraftService(PresentationDraftRepository presentationDraftRepository,
+			ApplicantRepository applicantsRepository, ApplicantService applicantService) {
+		this.presentationDraftRepository = presentationDraftRepository;
+		this.applicantRepository = applicantsRepository;
+		this.applicantService = applicantService;
+
+	}
 
 	public Iterable<PresentationDraft> findAll() {
 		Iterable<PresentationDraft> result = presentationDraftRepository.findAll();
@@ -108,14 +118,15 @@ public class PresentationDraftService {
 		}
 	}
 
-	public Response makePresentationDraftsFinal() {
+	public ResponseEntity makePresentationDraftsFinal() {
 		if (LocalDateTime.now().isBefore(LocalDateTime.of(2005, 9, 2, 1, 15))) {
-			return Response.status(412, "deadline not passed").build();
+			return new ResponseEntity<>("deadline not passed", HttpStatus.PRECONDITION_FAILED);
 		} else if (!((ArrayList<PresentationDraft>) findByLabel(0)).isEmpty()
 				|| !((ArrayList<PresentationDraft>) findByLabel(4)).isEmpty()) {
-			return Response.status(412, "still unlabeled or undetermined PresentationDrafts").build();
+			return new ResponseEntity<>("still unlabeled or undetermined PresentationDrafts",
+					HttpStatus.PRECONDITION_FAILED);
 		} else {
-			return Response.status(200).build();
+			return ResponseEntity.status(200).build();
 		}
 	}
 

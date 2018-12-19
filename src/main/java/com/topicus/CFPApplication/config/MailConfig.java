@@ -19,12 +19,13 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @Configuration
 @ConfigurationProperties("spring.mail")
 public class MailConfig {
-	
-	private String host,port,username,password;
-	
-	public List<String> getAllValues(){
+
+	private String host, port, username, password;
+
+	public List<String> getAllValues() {
 		List<String> valueList = new ArrayList<>();
-		Collections.addAll(valueList, "Host: " + host,"port: " + port,"username: " + username, "password: " + password);
+		Collections.addAll(valueList, "Host: " + host, "port: " + port, "username: " + username,
+				"password: " + password);
 		return valueList;
 	}
 
