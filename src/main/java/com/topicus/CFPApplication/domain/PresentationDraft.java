@@ -59,8 +59,6 @@ public class PresentationDraft {
 		this.applicants.add(applicant);
 	}
 	
-	
-	
 	//Getters en Setters:
 	public long getId() {
 		return id;
@@ -112,13 +110,9 @@ public class PresentationDraft {
 		this.applicants = applicants;
 	}
 
-
-
 	public String getCategory() {
 		return category;
 	}
-
-
 
 	public void setCategory(String category) {
 		this.category = category;
