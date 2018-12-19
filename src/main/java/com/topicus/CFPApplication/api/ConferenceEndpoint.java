@@ -1,54 +1,81 @@
 package com.topicus.CFPApplication.api;
 
 import java.util.Optional;
+import java.util.Set;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.Conference;
+import com.topicus.CFPApplication.domain.PresentationDraft;
+import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.persistence.ConferenceService;
+import com.topicus.CFPApplication.persistence.SubscribeService;
 
-@Path("conference")
-@Component
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+@RestController
+@Api(value = "ConferenceEndpoint", description = "Manipulate conferences")
 public class ConferenceEndpoint {
-	
-	@Autowired
+
 	private ConferenceService conferenceService;
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response conferenceList() {
-//	conferenceService.save(new Conference());
+
+	private SubscribeService subscribeService;
+
+	@Autowired
+	public ConferenceEndpoint(ConferenceService conferenceService, SubscribeService subscribeService) {
+		this.conferenceService = conferenceService;
+		this.subscribeService = subscribeService;
+	}
+
+	@ApiOperation("Retrieves all available conference from the database")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved all conferences") })
+	@GetMapping("api/conference")
+	public ResponseEntity<Iterable<Conference>> conferenceList() {
 		Iterable<Conference> result = conferenceService.findAll();
-		return Response.ok(result).build();
+		return ResponseEntity.ok(result);
 	}
-	
-	@GET
-	@Path("{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response getConferenceById(@PathParam("id")Long id) {
+
+	@ApiOperation("Retrieves a conference by ID")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a conference with the given ID"),
+			@ApiResponse(code = 404, message = "Could not retrieve a conference with the given ID") })
+	@GetMapping("api/conference/{id}")
+	public ResponseEntity<Conference> getConferenceById(
+			@ApiParam(required = true, name = "id", value = "Conference ID") @PathVariable("id") Long id) {
 		Optional<Conference> result = conferenceService.findById(id);
-		if(result.isPresent()) {
-			return Response.ok(result.get()).build();
+		if (result.isPresent()) {
+			return ResponseEntity.ok(result.get());
 		}
-		return Response.status(404).build();
+		return ResponseEntity.status(404).build();
 	}
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response saveConference(Conference conference){
-		return Response.accepted(conferenceService.save(conference)).build();
+
+	@ApiOperation("Adds a new conference")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a conference") })
+	@PostMapping("api/conference")
+	public ResponseEntity<Conference> saveConference(@RequestBody @Valid Conference conference) {
+		return ResponseEntity.ok(conferenceService.save(conference));
+	}
+
+	@PostMapping("api/conference/{id}/savepresentationdraft")
+	public ResponseEntity savePresentationDraftInConference(@PathVariable("id") Long id,
+			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
+		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
+		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
+		presentationDraft = subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
+		Optional<Conference> result = conferenceService.findById(id);
+		return ResponseEntity.ok(subscribeService.linkPresentationDraftWithConference(result.get(), presentationDraft));
 	}
 
 }

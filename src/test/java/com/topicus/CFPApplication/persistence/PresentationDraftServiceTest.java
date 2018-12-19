@@ -1,12 +1,8 @@
 package com.topicus.CFPApplication.persistence;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
-import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,8 +11,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.ResponseEntity;
 
-import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 
@@ -30,14 +26,21 @@ public class PresentationDraftServiceTest {
 	@InjectMocks
 	PresentationDraftService draftService;
 	
+	@InjectMocks
+	SubscribeService subscribeService;
+	
 	@Mock
 	ApplicantService applicantService;
 	
 	@Mock
 	ApplicantRepository applicantRepo;
 	
+	@Mock
+	PresentationService presentationService;
+	
 	@Test
-	public void makePresentationDraftFinalAcceptedTest() {
+	public void makePresentationDraftFinalUnlabeledTest() {
+
 		List<PresentationDraft> listUnlabeled = new ArrayList<>();
 		PresentationDraft pd1 = new PresentationDraft();
 		pd1.setLabel(PresentationDraft.Label.UNLABELED);
@@ -45,11 +48,11 @@ public class PresentationDraftServiceTest {
 		
 		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNLABELED)).thenReturn(listUnlabeled);
 		
-		Response result = draftService.makePresentationDraftsFinal();
+		ResponseEntity result = draftService.makePresentationDraftsFinal();
 		
 		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
 		
-		Assert.assertEquals(412, result.getStatus());
+		Assert.assertEquals(412, result.getStatusCodeValue());
 	}
 	
 	@Test
@@ -61,57 +64,13 @@ public class PresentationDraftServiceTest {
 
 		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNDETERMINED)).thenReturn(listUndetermined);
 		
-		int response412 = draftService.makePresentationDraftsFinal().getStatus();
+		int response412 = draftService.makePresentationDraftsFinal().getStatusCodeValue();
 		
 		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNDETERMINED);
 		
 		Assert.assertEquals(412, response412);
 	}
-	
-	@Test
-	public void linkPresentationDraftWithApplicantsTestElse() { 
-		// arrange
-		PresentationDraft pres = new PresentationDraft();
-		Applicant applElse = new Applicant();
-		applElse.setName("testElse");
-		applElse.setEmail("emailElse");
-		Set<Applicant> appliList = new HashSet<>();
-		appliList.add(applElse);
-		Optional<Applicant> opt = Optional.ofNullable(null);
 		
-		Mockito.when(this.applicantRepo.findApplicantByNameAndEmail("testElse" ,"emailElse")).thenReturn(opt);
-		// act
-		PresentationDraft resultPres = this.draftService.linkPresentationDraftWithApplicants(pres, appliList);
-		// assert
-		Mockito.verify(this.applicantRepo).findApplicantByNameAndEmail("testElse", "emailElse");
-		
-		Assert.assertEquals("testElse", resultPres.getApplicants().iterator().next().getName());
-		
-	}
-	
-	@Test
-	public void linkPresentationDraftWithApplicantsTest() { 
-		// arrange
-		PresentationDraft pres = new PresentationDraft();
-		pres.setCategory("test");
-		Applicant appl = new Applicant();
-		appl.setName("test");
-		appl.setEmail("email");
-		Set<Applicant> appliList = new HashSet<>();
-		appliList.add(appl);
-		
-		Optional<Applicant> opt = Optional.of(appl);
-		
-		Mockito.when(this.applicantRepo.findApplicantByNameAndEmail("test" ,"email")).thenReturn(opt);
-		// act
-		PresentationDraft resultPres = this.draftService.linkPresentationDraftWithApplicants(pres, appliList);
-		// assert
-		Mockito.verify(this.applicantRepo).findApplicantByNameAndEmail("test", "email");
-		
-		Assert.assertEquals("test", resultPres.getCategory());
-		
-	}
-	
 	@Test
 	public void findByLabelTest() {
 		//arrange 

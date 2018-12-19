@@ -3,108 +3,118 @@ package com.topicus.CFPApplication.api;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
-import com.topicus.CFPApplication.persistence.ApplicantService;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
+import com.topicus.CFPApplication.persistence.SubscribeService;
 
-@Path("presentationdraft")
-@Component
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+
+@RestController
+@Api(value = "PresentationdraftEndpoint", description = "Manipulate presentationdrafts")
 public class PresentationDraftEndpoint {
-	
-	@Autowired
+
 	private PresentationDraftService presentationDraftService;
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response listPresentationDrafts() {
-		//presentationDraftService.save(new PresentationDraft());
-		Iterable<PresentationDraft> presentationDrafts = presentationDraftService.findAll();	
-		return Response.ok(presentationDrafts).build();
+
+	private SubscribeService subscribeService;
+
+	@Autowired
+	public PresentationDraftEndpoint(PresentationDraftService presentationDraftService,
+			SubscribeService subscribeService) {
+		this.presentationDraftService = presentationDraftService;
+		this.subscribeService = subscribeService;
+
 	}
-	
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response save(PresentationDraftApplicant presentationDraftApplicant) {	
+
+	@ApiOperation("Retrieves all available presentationdrafts from the database")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved all presentationdrafts") })
+	@GetMapping("api/presentationdraft")
+	public ResponseEntity<Iterable<PresentationDraft>> listPresentationDrafts() {
+		Iterable<PresentationDraft> presentationDrafts = presentationDraftService.findAll();
+		return ResponseEntity.ok(presentationDrafts);
+	}
+
+	@ApiOperation("Adds a new presentationdraftapplicant. This object contains a presentationdraft and a list of applicants")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a presentationdraftapplicant") })
+	@PostMapping("api/presentationdraft")
+	public ResponseEntity<PresentationDraft> save(
+			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
 		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
-		presentationDraftService.linkPresentationDraftWithApplicants(presentationDraft, applicants);		
-		return Response.accepted(presentationDraft).build();
+		subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
+		return ResponseEntity.ok(presentationDraft);
 	}
-	
-	@Path("{id}")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response findById(@PathParam ("id")Long id) {
+
+	@ApiOperation("Retrieves a presentationdraft by ID")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a presentationdraft with the given ID"),
+			@ApiResponse(code = 404, message = "Could not retrieve a presentationdraft with the given ID") })
+	@GetMapping("api/presentationdraft/{id}")
+	public ResponseEntity<PresentationDraft> findById(
+			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id) {
 		Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
 		if (result.isPresent()) {
-			return Response.ok(result.get()).build();
+			return ResponseEntity.ok(result.get());
 		} else {
-			return Response.status(404).build();
+			return ResponseEntity.status(404).build();
 		}
 	}
-	
-	@Path("/{id}/label/{value}")
-	@POST
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public boolean changeLabel (@PathParam ("id")Long id, @PathParam("value")Integer value) {
+
+	@ApiOperation("Changes the label of the selected presentationdraft")
+	@PostMapping("api/presentationdraft/{id}/label/{value}")
+	public boolean changeLabel(
+			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id,
+			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined") @PathVariable("value") Integer value) {
 		return this.presentationDraftService.changeLabel(id, value);
 	}
-	
-/*	@Path("/delete/{id}")
-	@DELETE
-	@Consumes
-	@Produces(MediaType.APPLICATION_JSON)
-	public void delete (@PathParam ("id")Long id) {
+
+	@ApiOperation("Deletes a presentationdraft by ID")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "Successfully deleted the presentationdraft with the given ID") })
+	@DeleteMapping("api/presentationdraft/delete/{id}")
+	public ResponseEntity delete(
+			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id) {
 		presentationDraftService.delete(id);
+		return ResponseEntity.ok().build();
 	}
-*/	
-	@Path("/delete/{id}")
-	@DELETE
-	@Consumes
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response delete (@PathParam ("id")Long id) {
-		presentationDraftService.delete(id);
-		return Response.status(204).build();
+
+	@ApiOperation("Retrieves all presentationdrafts with the given label value")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "Successfully retrieved all presentationdraft with the given label value") })
+	@GetMapping("api/presentationdraft/findbylabel/{value}")
+	public ResponseEntity<Iterable<PresentationDraft>> listPresentationDraftsByLabel(
+			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined") @PathVariable("value") int value) {
+		Iterable<PresentationDraft> presentationDraftsByLabel = presentationDraftService.findByLabel(value);
+		return ResponseEntity.ok(presentationDraftsByLabel);
 	}
-	
-	@Path("/findbylabel/{label}")
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response listPresentationDraftsByLabel(@PathParam ("label")int value) {
-		Iterable<PresentationDraft> presentationDraftsByLabel = presentationDraftService.findByLabel(value);	
-		return Response.ok(presentationDraftsByLabel).build();
-	}
-	
-	@Path("/finalize")
-	@GET
-	@Produces (MediaType.APPLICATION_JSON)
-	public Response makePresentationDraftsFinal () {
+
+	@ApiOperation("Finalize all presentationdrafts")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully finalized all presentationdrafts"),
+			@ApiResponse(code = 412, message = "Deadline has not yet passed, or there are still presentationdrafts with the label value of undetermined or unlabeled") })
+	@GetMapping("api/presentationdraft/finalize")
+	public ResponseEntity makePresentationDraftsFinal() {
 		return presentationDraftService.makePresentationDraftsFinal();
 	}
-	
-	@Path("/changepresentationdraft")
-	@POST
-	@Consumes (MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public PresentationDraft changePresentationDraft (PresentationDraft presentationDraft) {
+
+	@ApiOperation("Adds a presentationdraft")
+	@PostMapping("api/presentationdraft/changepresentationdraft")
+	public PresentationDraft changePresentationDraft(PresentationDraft presentationDraft) {
 		return presentationDraftService.save(presentationDraft);
 	}
-	
+
 }
