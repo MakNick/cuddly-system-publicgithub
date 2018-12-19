@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -76,6 +77,16 @@ public class ConferenceEndpoint {
 		presentationDraft = subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
 		Optional<Conference> result = conferenceService.findById(id);
 		return ResponseEntity.ok(subscribeService.linkPresentationDraftWithConference(result.get(), presentationDraft));
+	}
+	
+	@ApiOperation("Deletes a conference by ID")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "Successfully deleted the conference with the given ID") })
+	@DeleteMapping("api/conference/delete/{id}")
+	public ResponseEntity delete(
+			@ApiParam(required = true, name = "id", value = "Conference ID") @PathVariable("id") Long id) {
+		conferenceService.delete(id);
+		return ResponseEntity.ok().build();
 	}
 
 }

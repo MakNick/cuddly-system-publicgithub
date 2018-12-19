@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.Conference;
+import com.topicus.CFPApplication.domain.PresentationDraft;
 
 @Service
 @Transactional
@@ -26,6 +28,10 @@ public class ConferenceService {
 
 	public Optional<Conference> findById(Long id) {
 		return conferenceRepository.findById(id);
+	}
+	
+	public void delete(long id) {
+		conferenceRepository.deleteById(id);
 	}
 
 }
