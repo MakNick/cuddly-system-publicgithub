@@ -2,9 +2,8 @@ package com.topicus.CFPApplication.persistence;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Applicant;
+import com.topicus.CFPApplication.domain.Presentation;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 
@@ -22,15 +22,14 @@ public class PresentationDraftService {
 
 	private PresentationDraftRepository presentationDraftRepository;
 	private ApplicantRepository applicantRepository;
-	private ApplicantService applicantService;
+	private PresentationService presentationService;
 
 	@Autowired
 	public PresentationDraftService(PresentationDraftRepository presentationDraftRepository,
-			ApplicantRepository applicantsRepository, ApplicantService applicantService) {
+			ApplicantRepository applicantsRepository, PresentationService presentationService) {
 		this.presentationDraftRepository = presentationDraftRepository;
 		this.applicantRepository = applicantsRepository;
-		this.applicantService = applicantService;
-
+		this.presentationService = presentationService;
 	}
 
 	public Iterable<PresentationDraft> findAll() {
@@ -125,8 +124,12 @@ public class PresentationDraftService {
 				|| !((ArrayList<PresentationDraft>) findByLabel(4)).isEmpty()) {
 			return new ResponseEntity<>("still unlabeled or undetermined PresentationDrafts",
 					HttpStatus.PRECONDITION_FAILED);
-		} else {
+		} else if (((List<Presentation>) presentationService.findAll()).isEmpty()) {
+			ArrayList<PresentationDraft> acceptedPresentationDrafts = (ArrayList<PresentationDraft>) findByLabel(2);
+			presentationService.makePresentation(acceptedPresentationDrafts);
 			return ResponseEntity.status(200).build();
+		} else {
+			return ResponseEntity.status(418).build(); // tekst nog nader te bepalen
 		}
 	}
 

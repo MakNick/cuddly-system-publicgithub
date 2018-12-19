@@ -4,14 +4,11 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -43,11 +40,19 @@ public class Applicant {
 	private String requests;
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(value = "List of presentations that this applcant wants to host", required = true)
+	@ApiModelProperty(value = "List of presentationDrafts that this applicant wants to host", required = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
+
+	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
+	@ApiModelProperty(value = "List of finalized presentations that this applicant will host", required = true)
+	private Set<Presentation> presentations = new HashSet<Presentation>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
 		this.presentationDrafts.add(presentationDraft);
+	}
+
+	public void addPresentation(Presentation presentation) {
+		this.presentations.add(presentation);
 	}
 
 	// Getters en Setters:

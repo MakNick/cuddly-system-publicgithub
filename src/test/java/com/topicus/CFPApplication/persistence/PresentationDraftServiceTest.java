@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import javax.ws.rs.core.Response;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,11 +34,14 @@ public class PresentationDraftServiceTest {
 	@Mock
 	ApplicantRepository applicantRepo;
 	
+	@Mock
+	PresentationService presentationService;
+	
 	@Test
 	public void makePresentationDraftFinalAcceptedTest() {
 		int responseOk = draftService.makePresentationDraftsFinal().getStatusCodeValue();
 		
-		Assert.assertEquals(Response.ok().build().getStatus(), responseOk);
+		Assert.assertEquals(200, responseOk);
 	}
 	
 	@Test
@@ -57,7 +58,7 @@ public class PresentationDraftServiceTest {
 		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
 		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNDETERMINED);
 		
-		Assert.assertEquals(Response.status(412).build().getStatus(), response412);
+		Assert.assertEquals(412, response412);
 	}
 		
 	@Test

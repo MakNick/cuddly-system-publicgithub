@@ -2,8 +2,6 @@ package com.topicus.CFPApplication.api;
 
 import java.util.Optional;
 
-import javax.ws.rs.core.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
