@@ -37,8 +37,15 @@ public class Applicant {
 	@ManyToMany(mappedBy = "applicants", fetch=FetchType.EAGER)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 	
+	@ManyToMany(mappedBy = "applicants", fetch=FetchType.EAGER)
+	private Set<Presentation> presentations = new HashSet<Presentation>();
+	
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
 		this.presentationDrafts.add(presentationDraft);
+	}
+	
+	public void addPresentation(Presentation presentation) {
+		this.presentations.add(presentation);
 	}
 	
 	//Getters en Setters:
