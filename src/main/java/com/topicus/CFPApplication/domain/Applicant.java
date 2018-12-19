@@ -13,23 +13,34 @@ import javax.persistence.ManyToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 @JsonIgnoreProperties(value = "presentationDrafts")
+@ApiModel(value = "Applicant", description = "Holds all values for the applicant object")
 public class Applicant {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(value = "The unique identifier for the applicant", required = true)
 	private long id;
 
+	@ApiModelProperty(required = true)
 	private String name;
+	@ApiModelProperty(required = true)
 	private String email;
 	private String phonenumber;
+	@ApiModelProperty(value = "Current job, hobby or interest of the applicant")
 	private String occupation;
 	private String gender;
+	@ApiModelProperty(required = true)
 	private LocalDate dateOfBirth;
+	@ApiModelProperty(value = "Attributes the applicant needs to host his/her presentation(s)")
 	private String requests;
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
+	@ApiModelProperty(value = "List of presentations that this applcant wants to host", required = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {

@@ -20,4 +20,10 @@ public class MailContentBuilder {
 		context.setVariable("name", recipientName);
 		return templateEngine.process(templateName, context);
 	}
+
+	public String buildText(String recipientName, String text, String templateName) {
+		Context context = new Context();
+		context.setVariable("text", text);
+		return templateEngine.process(templateName, context);
+	}
 }
