@@ -41,7 +41,7 @@ public class PresentationDraftServiceTest {
 	
 	@Test
 	public void makePresentationDraftFinalAcceptedTest() {
-		int responseOk = draftService.makePresentationDraftsFinal().getStatus();
+		int responseOk = draftService.makePresentationDraftsFinal().getStatusCodeValue();
 		
 		Assert.assertEquals(Response.ok().build().getStatus(), responseOk);
 	}
@@ -55,7 +55,7 @@ public class PresentationDraftServiceTest {
 
 		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNDETERMINED)).thenReturn(listUnlabeled);
 		
-		int response412 = draftService.makePresentationDraftsFinal().getStatus();
+		int response412 = draftService.makePresentationDraftsFinal().getStatusCodeValue();
 		
 		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
 		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNDETERMINED);
