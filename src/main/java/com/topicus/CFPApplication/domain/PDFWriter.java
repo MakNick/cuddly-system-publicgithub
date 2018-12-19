@@ -16,21 +16,23 @@ import org.springframework.stereotype.Component;
 @Component
 public class PDFWriter {
 
-	public void writePdf(List<String> content) throws IOException {
-		PDDocument document = new PDDocument(); // Creating PDF document object
+	PDDocument document;
 
+	public void writePdf(List<String> content, Long id) throws IOException {
+
+		document = new PDDocument(); // Creating PDF document object
 		PDPage page = new PDPage(); // Creating a blank page
 		PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
 		document.addPage(page);// Adding the blank page to the document
 
 		PDFont pdfFont = PDType1Font.COURIER; // Select font
-		float fontSize = 12f;
+		float fontSize = 10f;
 		float leading = 1.5f * fontSize;
 
 		PDRectangle mediabox = page.getMediaBox(); // Creating margins
-		float margin = 55;
-		float width = mediabox.getWidth() - 2 * margin;
+		float margin = 52;
+		float width = mediabox.getWidth() - 1.5f * margin;
 		float startX = mediabox.getLowerLeftX() + margin;
 		float startY = mediabox.getUpperRightY() - margin;
 
@@ -62,11 +64,8 @@ public class PDFWriter {
 		contentStream.setFont(pdfFont, fontSize);// Setting the font to the Content stream
 		contentStream.newLineAtOffset(startX, startY);// Setting the position for the line
 
-		float currentY = startY;
-		for (String line : content) { // Adding text in the form of string
-			currentY -= leading;
+		for (String line : lines) { // Adding text in the form of string
 			if (" ".equals(line)) {
-				System.out.println("New page is generated!");
 				contentStream.endText();
 				contentStream.close();
 				PDPage new_Page = new PDPage();
@@ -80,9 +79,20 @@ public class PDFWriter {
 			contentStream.newLineAtOffset(0, -leading);
 		}
 		contentStream.endText();// Ending the content stream
-		System.out.println("\nJOJO \n");
 		contentStream.close();// Closing the content stream
-		document.save(new File("testPDFcfp_001.pdf"));// Saving the document
+	}
+
+	public void savePdf(List<String> content, Long id) throws IOException {
+		document = new PDDocument(); // Creating PDF document object
+		writePdf(content, id);
+		document.save(new File("presentationDraft" + id + ".pdf"));// Saving the document
+		document.close(); // Closing the document
+	}
+
+	public void savePdf(List<String> content) throws IOException {
+		document = new PDDocument(); // Creating PDF document object
+		writePdf(content, 0L);
+		document.save(new File("presentationDraftAll.pdf"));// Saving the document
 		document.close(); // Closing the document
 	}
 }

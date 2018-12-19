@@ -7,14 +7,14 @@ import org.thymeleaf.context.Context;
 
 @Service
 public class MailContentBuilder {
-	
+
 	private TemplateEngine templateEngine;
-	
+
 	@Autowired
 	public MailContentBuilder(TemplateEngine templateEngine) {
 		this.templateEngine = templateEngine;
 	}
-	
+
 	public String build(String recipientName, String templateName) {
 		Context context = new Context();
 		context.setVariable("name", recipientName);
