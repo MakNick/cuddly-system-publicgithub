@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -69,11 +70,15 @@ public class PresentationDraftEndpoint {
 	@GetMapping("api/presentationdraft/{id}")
 	public ResponseEntity<PresentationDraft> findById(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id) {
-		Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
-		if (result.isPresent()) {
-			return ResponseEntity.ok(result.get());
-		} else {
-			return ResponseEntity.status(404).build();
+		if(id != null) {
+			Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
+			if (result.isPresent()) {
+				return ResponseEntity.ok(result.get());
+			} else {
+				return ResponseEntity.status(404).build();
+			}
+		}else {
+			return ResponseEntity.badRequest().build();
 		}
 	}
 
@@ -89,10 +94,14 @@ public class PresentationDraftEndpoint {
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Successfully deleted the presentationdraft with the given ID") })
 	@DeleteMapping("api/presentationdraft/delete/{id}")
-	public Response delete(
+	public ResponseEntity<Boolean> delete(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id) {
-		presentationDraftService.delete(id);
-		return Response.status(200).build();
+		if(id != null) {
+			presentationDraftService.delete(id);
+			return ResponseEntity.ok(true);
+		}else {
+			return ResponseEntity.badRequest().build();
+		}
 	}
 
 	@ApiOperation("Retrieves all presentationdrafts with the given label value")
