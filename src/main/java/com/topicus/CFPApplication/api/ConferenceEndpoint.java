@@ -1,8 +1,15 @@
 package com.topicus.CFPApplication.api;
 
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.POST;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,8 +20,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.Conference;
+import com.topicus.CFPApplication.domain.PresentationDraft;
+import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.persistence.ConferenceService;
+import com.topicus.CFPApplication.persistence.SubscribeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,9 +39,12 @@ public class ConferenceEndpoint {
 
 	private ConferenceService conferenceService;
 
+	private SubscribeService subscribeService;
+
 	@Autowired
-	public ConferenceEndpoint(ConferenceService conferenceService) {
+	public ConferenceEndpoint(ConferenceService conferenceService, SubscribeService subscribeService) {
 		this.conferenceService = conferenceService;
+		this.subscribeService = subscribeService;
 	}
 
 	@ApiOperation("Retrieves all available conference from the database")
@@ -59,6 +73,20 @@ public class ConferenceEndpoint {
 	@PostMapping("api/conference")
 	public ResponseEntity<Conference> saveConference(@RequestBody @Valid Conference conference) {
 		return ResponseEntity.ok(conferenceService.save(conference));
+	}
+
+	@POST
+	@Path("{id}/savepresentationdraft")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response savePresentationDraftInConference(@PathParam("id") Long id,
+			PresentationDraftApplicant presentationDraftApplicant) {
+		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
+		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
+		presentationDraft = subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
+		Optional<Conference> result = conferenceService.findById(id);
+		return Response.accepted(subscribeService.linkPresentationDraftWithConference(result.get(), presentationDraft))
+				.build();
 	}
 
 }

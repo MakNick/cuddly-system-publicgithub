@@ -3,7 +3,6 @@ package com.topicus.CFPApplication.persistence;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.ws.rs.core.Response;
 
@@ -117,26 +116,6 @@ public class PresentationDraftService {
 		default:
 			return presentationDraftRepository.findAll();
 		}
-	}
-
-	public PresentationDraft linkPresentationDraftWithApplicants(PresentationDraft presentationDraft,
-			Set<Applicant> applicants) {
-		save(presentationDraft);
-		for (Applicant applicant : applicants) {
-			Optional<Applicant> result = applicantRepository.findApplicantByNameAndEmail(applicant.getName(),
-					applicant.getEmail());
-			if (result.isPresent()) {
-				result.get().addPresentationDraft(presentationDraft);
-				presentationDraft.addApplicant(result.get());
-			} else {
-				applicantService.save(applicant);
-				presentationDraft.addApplicant(applicant);
-				applicant.addPresentationDraft(presentationDraft);
-				presentationDraftRepository.save(presentationDraft);
-				applicantService.save(applicant);
-			}
-		}
-		return presentationDraft;
 	}
 
 	public ResponseEntity makePresentationDraftsFinal() {

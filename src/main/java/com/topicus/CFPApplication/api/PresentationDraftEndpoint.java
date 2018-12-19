@@ -20,6 +20,7 @@ import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
+import com.topicus.CFPApplication.persistence.SubscribeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -33,9 +34,14 @@ public class PresentationDraftEndpoint {
 
 	private PresentationDraftService presentationDraftService;
 
+	private SubscribeService subscribeService;
+
 	@Autowired
-	public PresentationDraftEndpoint(PresentationDraftService presentationDraftService) {
+	public PresentationDraftEndpoint(PresentationDraftService presentationDraftService,
+			SubscribeService subscribeService) {
 		this.presentationDraftService = presentationDraftService;
+		this.subscribeService = subscribeService;
+
 	}
 
 	@ApiOperation("Retrieves all available presentationdrafts from the database")
@@ -53,7 +59,7 @@ public class PresentationDraftEndpoint {
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
 		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
-		presentationDraftService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
+		subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
 		return ResponseEntity.ok(presentationDraft);
 	}
 

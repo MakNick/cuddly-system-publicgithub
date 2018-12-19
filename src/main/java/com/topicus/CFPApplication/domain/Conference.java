@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -32,7 +33,6 @@ public class Conference {
 	@ApiModelProperty(required = true)
 	private String name;
 
-	@ApiModelProperty(required = true)
 	private LocalDateTime startDate;
 	@ApiModelProperty(required = true)
 	private LocalDateTime endDate;
@@ -50,6 +50,11 @@ public class Conference {
 	@JoinColumn(name = "conference_id")
 	@ApiModelProperty(value = "All presentations from this conference will be added to this list")
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
+
+	public void addPresentationDraft(PresentationDraft presentationDraft) {
+		this.presentationDrafts.add(presentationDraft);
+		presentationDraft.setConference(this);
+	}
 
 	// Getters en Setters:
 	public Set<String> getCategories() {
