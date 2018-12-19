@@ -18,34 +18,34 @@ public class MockDatabase {
 
 	@Autowired
 	ConferenceRepository conferenceRepository;
-	
+
 	@Autowired
 	EntityManager entityManager;
-	
+
 	@PostConstruct
 	public void init() {
 		fillConferenceListCategories();
 	}
-	
+
 	private void fillConferenceListCategories() {
-		Optional<Conference> result = conferenceRepository.findById((long)1);
+		Optional<Conference> result = conferenceRepository.findById((long) 1);
 		Set<String> categories = new TreeSet<>();
-		if(result.isPresent()) {
+		if (result.isPresent()) {
 			categories.add("test01");
 			categories.add("test02");
 			categories.add("test03");
 			result.get().setCategories(categories);
 			conferenceRepository.save(result.get());
-		}else {
+		} else {
 			Conference conference = new Conference();
-	    	conference.setName("test");
+			conference.setName("test");
 			categories.add("test01");
 			categories.add("test02");
 			categories.add("test03");
 			conference.setCategories(categories);
 			conferenceRepository.save(conference);
 		}
-		
-    }
-	
+
+	}
+
 }

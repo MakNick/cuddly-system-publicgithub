@@ -16,6 +16,7 @@ public class PresentationDraftApplicant {
 	public void addApplicant(Applicant applicant) {
 		this.applicants.add(applicant);
 	}
+
 	public Set<Applicant> getApplicants() {
 		return applicants;
 	}

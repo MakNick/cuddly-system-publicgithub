@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Conference;
+import com.topicus.CFPApplication.domain.PresentationDraft;
 
 @Service
 @Transactional
@@ -14,18 +15,18 @@ public class ConferenceService {
 
 	@Autowired
 	private ConferenceRepository conferenceRepository;
-	
-	public Iterable<Conference> findAll(){
+
+	public Iterable<Conference> findAll() {
 		Iterable<Conference> result = conferenceRepository.findAll();
 		return result;
 	}
-	
+
 	public Conference save(Conference conference) {
 		return conferenceRepository.save(conference);
 	}
-	
-	public Optional<Conference> findById(Long id){
+
+	public Optional<Conference> findById(Long id) {
 		return conferenceRepository.findById(id);
 	}
-	
+
 }

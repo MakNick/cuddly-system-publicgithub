@@ -4,11 +4,12 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +22,17 @@ import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 @Transactional
 public class PresentationDraftService {
 
-	@Autowired
 	private PresentationDraftRepository presentationDraftRepository;
-	@Autowired
 	private ApplicantRepository applicantRepository;
-	@Autowired
-	private ApplicantService applicantService;
-	@Autowired
 	private PresentationService presentationService;
+
+	@Autowired
+	public PresentationDraftService(PresentationDraftRepository presentationDraftRepository,
+			ApplicantRepository applicantsRepository, PresentationService presentationService) {
+		this.presentationDraftRepository = presentationDraftRepository;
+		this.applicantRepository = applicantsRepository;
+		this.presentationService = presentationService;
+	}
 
 	public Iterable<PresentationDraft> findAll() {
 		Iterable<PresentationDraft> result = presentationDraftRepository.findAll();
@@ -115,38 +119,19 @@ public class PresentationDraftService {
 		}
 	}
 
-	public PresentationDraft linkPresentationDraftWithApplicants(PresentationDraft presentationDraft,
-			Set<Applicant> applicants) {
-		save(presentationDraft);
-		for (Applicant applicant : applicants) {
-			Optional<Applicant> result = applicantRepository.findApplicantByNameAndEmail(applicant.getName(),
-					applicant.getEmail());
-			if (result.isPresent()) {
-				result.get().addPresentationDraft(presentationDraft);
-				presentationDraft.addApplicant(result.get());
-			} else {
-				applicantService.save(applicant);
-				presentationDraft.addApplicant(applicant);
-				applicant.addPresentationDraft(presentationDraft);
-				presentationDraftRepository.save(presentationDraft);
-				applicantService.save(applicant);
-			}
-		}
-		return presentationDraft;
-	}
-
-	public Response makePresentationDraftsFinal() {
+	public ResponseEntity makePresentationDraftsFinal() {
 		if (LocalDateTime.now().isBefore(LocalDateTime.of(2005, 9, 2, 1, 15))) {
-			return Response.status(412, "deadline not passed").build();
+			return new ResponseEntity<>("deadline not passed", HttpStatus.PRECONDITION_FAILED);
 		} else if (!((ArrayList<PresentationDraft>) findByLabel(0)).isEmpty()
 				|| !((ArrayList<PresentationDraft>) findByLabel(4)).isEmpty()) {
-			return Response.status(412, "still unlabeled or undetermined PresentationDrafts").build();
+			return new ResponseEntity<>("still unlabeled or undetermined PresentationDrafts",
+					HttpStatus.PRECONDITION_FAILED);
 		} else if (((List<Presentation>) presentationService.findAll()).isEmpty()) {
 			ArrayList<PresentationDraft> acceptedPresentationDrafts = (ArrayList<PresentationDraft>) findByLabel(2);
 			presentationService.makePresentation(acceptedPresentationDrafts);
-			return Response.status(200).build();
+			return ResponseEntity.status(200).build();
 		} else {
-			return Response.status(418).build(); // tekst nog nader te bepalen
+			return ResponseEntity.status(418).build(); // tekst nog nader te bepalen
 		}
 	}
 
