@@ -60,7 +60,7 @@ public class ConferenceEndpoint {
 		}
 		return ResponseEntity.status(404).build();
 	}
-
+	
 	@ApiOperation("Adds a new conference")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a conference") })
 	@PostMapping("api/conference")
