@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -88,10 +87,10 @@ public class PresentationDraftEndpoint {
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Successfully deleted the presentationdraft with the given ID") })
 	@DeleteMapping("api/presentationdraft/delete/{id}")
-	public Response delete(
+	public ResponseEntity delete(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id) {
 		presentationDraftService.delete(id);
-		return Response.status(200).build();
+		return ResponseEntity.ok().build();
 	}
 
 	@ApiOperation("Retrieves all presentationdrafts with the given label value")
