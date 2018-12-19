@@ -75,10 +75,7 @@ public class ConferenceEndpoint {
 		return ResponseEntity.ok(conferenceService.save(conference));
 	}
 
-	@POST
-	@Path("{id}/savepresentationdraft")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
+	@PostMapping("api/conference/{id}/savepresentationdraft")
 	public Response savePresentationDraftInConference(@PathParam("id") Long id,
 			PresentationDraftApplicant presentationDraftApplicant) {
 		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
