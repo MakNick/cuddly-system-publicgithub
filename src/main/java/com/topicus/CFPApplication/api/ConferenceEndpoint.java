@@ -4,13 +4,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -76,14 +69,13 @@ public class ConferenceEndpoint {
 	}
 
 	@PostMapping("api/conference/{id}/savepresentationdraft")
-	public Response savePresentationDraftInConference(@PathParam("id") Long id,
-			PresentationDraftApplicant presentationDraftApplicant) {
+	public ResponseEntity savePresentationDraftInConference(@PathVariable("id") Long id,
+			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
 		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
 		presentationDraft = subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
 		Optional<Conference> result = conferenceService.findById(id);
-		return Response.accepted(subscribeService.linkPresentationDraftWithConference(result.get(), presentationDraft))
-				.build();
+		return ResponseEntity.ok(subscribeService.linkPresentationDraftWithConference(result.get(), presentationDraft));
 	}
 
 }
