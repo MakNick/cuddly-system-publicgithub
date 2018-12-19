@@ -76,14 +76,13 @@ public class ConferenceEndpoint {
 	}
 
 	@PostMapping("api/conference/{id}/savepresentationdraft")
-	public Response savePresentationDraftInConference(@PathParam("id") Long id,
-			PresentationDraftApplicant presentationDraftApplicant) {
+	public ResponseEntity savePresentationDraftInConference(@PathVariable("id") Long id,
+			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
 		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
 		presentationDraft = subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
 		Optional<Conference> result = conferenceService.findById(id);
-		return Response.accepted(subscribeService.linkPresentationDraftWithConference(result.get(), presentationDraft))
-				.build();
+		return ResponseEntity.ok(subscribeService.linkPresentationDraftWithConference(result.get(), presentationDraft));
 	}
 
 }
