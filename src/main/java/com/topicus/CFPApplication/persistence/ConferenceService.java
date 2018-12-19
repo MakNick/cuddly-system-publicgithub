@@ -27,5 +27,9 @@ public class ConferenceService {
 	public Optional<Conference> findById(Long id) {
 		return conferenceRepository.findById(id);
 	}
+	
+	public void delete(long id) {
+		conferenceRepository.deleteById(id);
+	}
 
 }
