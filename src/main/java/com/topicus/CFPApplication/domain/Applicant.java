@@ -11,9 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -57,12 +55,6 @@ public class Applicant {
 		this.presentations.add(presentation);
 	}
 	
-//	@JsonCreator
-//	  Status(
-//			  @JsonProperty("dateOfBirth") LocalDate dateOfBirth){
-//	    this.dateOfBirth = dateOfBirth;
-//	  }
-
 	// Getters en Setters:
 	public long getId() {
 		return id;
@@ -112,7 +104,6 @@ public class Applicant {
 		this.gender = gender;
 	}
 
-	@JsonProperty("dateOfBirth")
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}

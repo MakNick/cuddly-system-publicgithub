@@ -27,9 +27,8 @@ import io.swagger.annotations.ApiModelProperty;
 public class Conference {
 
 	@Id
-	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(position = 1, value = "The unique identifier for the conference", required = true)
+	@ApiModelProperty(position = 1, value = "The unique identifier for the conference", hidden = true, required = true)
 	private long id;
 
 	@ApiModelProperty(position = 2, required = true)
@@ -52,7 +51,7 @@ public class Conference {
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "conference_id")
-	@ApiModelProperty(position = 8, value = "All presentations from this conference will be added to this list")
+	@ApiModelProperty(position = 8, value = "All presentations from this conference will be added to this list", hidden = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {

@@ -56,7 +56,7 @@ public class PresentationDraftEndpoint {
 		return ResponseEntity.ok(presentationDrafts);
 	}
 
-	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants", hidden = true)
+	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a presentationdraft and the host") })
 	@PostMapping("api/presentationdraft")
 	public ResponseEntity<PresentationDraft> save(
@@ -122,7 +122,7 @@ public class PresentationDraftEndpoint {
 			@ApiResponse(code = 200, message = "Successfully retrieved all presentationdraft with the given label value") })
 	@GetMapping("api/presentationdraft/findbylabel/{value}")
 	public ResponseEntity<Iterable<PresentationDraft>> listPresentationDraftsByLabel(
-			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined", type = "Integer") @PathVariable("value") Integer value) {
+			@ApiParam(required = true, name = "value", value = "0. Unlabeled 1. Denied 2. Accepted 3. Reserved 4. Undetermined", type = "Integer") @PathVariable("value") Integer value) {
 		Iterable<PresentationDraft> presentationDraftsByLabel = presentationDraftService.findByLabel(value);
 		return ResponseEntity.ok(presentationDraftsByLabel);
 	}
