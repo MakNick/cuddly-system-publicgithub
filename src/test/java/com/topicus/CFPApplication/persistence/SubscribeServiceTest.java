@@ -13,6 +13,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.topicus.CFPApplication.domain.Applicant;
+import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -29,7 +30,7 @@ public class SubscribeServiceTest {
 	
 	@Mock
 	ApplicantService applicantService;
-	
+
 	@Mock
 	ApplicantRepository applicantRepo;
 	

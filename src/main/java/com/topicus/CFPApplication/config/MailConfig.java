@@ -3,14 +3,9 @@ package com.topicus.CFPApplication.config;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Properties;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 /*
  * deze wordt niet meer gebruikt. Wellicht wel in de toekomst, dus laat ik het even staan.
