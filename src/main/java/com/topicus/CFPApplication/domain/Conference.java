@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -18,6 +17,8 @@ import javax.persistence.OneToMany;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -26,29 +27,32 @@ import io.swagger.annotations.ApiModelProperty;
 public class Conference {
 
 	@Id
+	@JsonIgnore
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(value = "The unique identifier for the conference", required = true)
+	@ApiModelProperty(position = 1, value = "The unique identifier for the conference", required = true)
 	private long id;
 
-	@ApiModelProperty(required = true)
+	@ApiModelProperty(position = 2, required = true)
 	private String name;
 
+	@ApiModelProperty(position = 4, required = true, example = "2018-05-23T01:20:30")
 	private LocalDateTime startDate;
-	@ApiModelProperty(required = true)
+	@ApiModelProperty(position = 5, required = true, example = "2018-05-23T01:20:30")
 	private LocalDateTime endDate;
-	@ApiModelProperty(value = "After this day the organizor can make a definitive selection of all presentations, and presentations can no longer be submitted", required = true)
+	@ApiModelProperty(position = 6, value = "After this day the organizor can make a definitive selection of all presentations, "
+			+ "and presentations can no longer be submitted", required = true, example = "2018-05-23T01:20:30")
 	private LocalDateTime deadlinePresentationDraft;
 
 	@Autowired
 	@Column(name = "category")
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name = "categories", joinColumns = @JoinColumn(name = "conference_id"))
-	@ApiModelProperty(value = "Categories that can be assigned to presentations will be added here")
+	@ApiModelProperty(position = 7, value = "Categories that can be assigned to presentations will be added here")
 	private Set<String> categories;
 
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "conference_id")
-	@ApiModelProperty(value = "All presentations from this conference will be added to this list")
+	@ApiModelProperty(position = 8, value = "All presentations from this conference will be added to this list")
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {

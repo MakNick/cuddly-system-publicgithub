@@ -1,45 +1,37 @@
 package com.topicus.CFPApplication.api;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.persistence.PDFService;
-import com.topicus.CFPApplication.persistence.PresentationDraftService;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 @RestController
+@Api(value = "PDFEndpoint", description = "create PDF")
 public class PDFEndpoint {
 
 	private PDFService pdfService;
 
-	private PresentationDraftService presentationDraftService;
-	
 	@Autowired
-	public PDFEndpoint(PresentationDraftService presentationDraftService, PDFService pdfService) {
-		this.presentationDraftService = presentationDraftService;
+	public PDFEndpoint(PDFService pdfService) {
 		this.pdfService = pdfService;
-		
 	}
 
+	@ApiOperation("Get all presentationDrafts and create PDF")
 	@GetMapping("api/pdf")
 	public void createPDF() {
 		pdfService.getPresentationDraftsToPDF();
 	}
-	
-//	@Path("{id}")
-//	@GET
-//	@Consumes(MediaType.APPLICATION_JSON)
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Response findById(@PathParam ("id")Long id) {
-//		Optional<PresentationDraft> result = this.pdfService.findById(id);
-//		if (result.isPresent()) { 
-//			return Response.ok(result.get()).build();
-//		} else {
-//			return Response.status(404).build();
-//		}
-//	}
+
+	@GetMapping("api/pdf/{id}")
+	public void getPresentationDraft(
+			@ApiParam(required = true, name = "hallo", value = "PresentationDraft ID") @PathVariable("id") Long id) {
+		pdfService.getPresentationDraftToPDF(id);
+
+	}
 }

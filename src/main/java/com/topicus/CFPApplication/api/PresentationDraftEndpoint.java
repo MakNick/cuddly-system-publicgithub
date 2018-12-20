@@ -1,18 +1,18 @@
 package com.topicus.CFPApplication.api;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,55 +44,77 @@ public class PresentationDraftEndpoint {
 
 	}
 
+	// Deze kan weg zodra we via een conference de presentationdrafts ophalen
 	@ApiOperation("Retrieves all available presentationdrafts from the database")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved all presentationdrafts") })
 	@GetMapping("api/presentationdraft")
-	public ResponseEntity<Iterable<PresentationDraft>> listPresentationDrafts() {
-		Iterable<PresentationDraft> presentationDrafts = presentationDraftService.findAll();
+	public ResponseEntity<Object> listPresentationDrafts() {
+		List<PresentationDraft> presentationDrafts = (List<PresentationDraft>) presentationDraftService.findAll();
+		if (presentationDrafts.isEmpty()) {
+			return new ResponseEntity<>("Presentationdraft list is empty", HttpStatus.NOT_FOUND);
+		}
 		return ResponseEntity.ok(presentationDrafts);
 	}
 
-	@ApiOperation("Adds a new presentationdraftapplicant. This object contains a presentationdraft and a list of applicants")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a presentationdraftapplicant") })
+	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants", hidden = true)
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a presentationdraft and the host") })
 	@PostMapping("api/presentationdraft")
 	public ResponseEntity<PresentationDraft> save(
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
-		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
-		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
-		subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
-		return ResponseEntity.ok(presentationDraft);
+		if (presentationDraftApplicant != null) {
+			PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
+			Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
+			return ResponseEntity.ok(subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants));
+		}
+		return ResponseEntity.badRequest().build();
 	}
 
 	@ApiOperation("Retrieves a presentationdraft by ID")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a presentationdraft with the given ID"),
 			@ApiResponse(code = 404, message = "Could not retrieve a presentationdraft with the given ID") })
 	@GetMapping("api/presentationdraft/{id}")
-	public ResponseEntity<PresentationDraft> findById(
-			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id) {
-		Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
-		if (result.isPresent()) {
-			return ResponseEntity.ok(result.get());
+	public ResponseEntity<Object> findById(
+			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id) {
+		if (id != null && id > 0) {
+			Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
+			if (result.isPresent()) {
+				return ResponseEntity.ok(result.get());
+			} else {
+				return new ResponseEntity<>("Could not find presentation with the given ID", HttpStatus.NOT_FOUND);
+			}
 		} else {
-			return ResponseEntity.status(404).build();
+			return ResponseEntity.badRequest().build();
 		}
 	}
 
 	@ApiOperation("Changes the label of the selected presentationdraft")
 	@PostMapping("api/presentationdraft/{id}/label/{value}")
-	public boolean changeLabel(
-			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id,
-			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined") @PathVariable("value") Integer value) {
-		return this.presentationDraftService.changeLabel(id, value);
+	public ResponseEntity<Object> changeLabel(
+			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id,
+			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined", type = "Integer") @PathVariable("value") Integer value) {
+		if (id != null && id > 0 && value != null && value > 0 && value <= 4) {
+			int result = this.presentationDraftService.changeLabel(id, value);
+			if (result == 0) {
+				return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
+			} else if (result == -1) {
+				return new ResponseEntity<>("Presentationdraft with the given ID does not exist", HttpStatus.NOT_FOUND);
+			} else {
+				return ResponseEntity.ok().body(result);
+			}
+		}
+		return new ResponseEntity<>("ID does not exist or label value is invalid", HttpStatus.BAD_REQUEST);
+
 	}
 
+	// tot hier
 	@ApiOperation("Deletes a presentationdraft by ID")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Successfully deleted the presentationdraft with the given ID") })
 	@DeleteMapping("api/presentationdraft/delete/{id}")
-	public Response delete(
-			@ApiParam(required = true, name = "id", value = "Presentationdraft ID") @PathVariable("id") Long id) {
+	public ResponseEntity<Boolean> delete(
+			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id) {
 		presentationDraftService.delete(id);
-		return Response.status(200).build();
+		return ResponseEntity.ok(true);
 	}
 
 	@ApiOperation("Retrieves all presentationdrafts with the given label value")
@@ -100,7 +122,7 @@ public class PresentationDraftEndpoint {
 			@ApiResponse(code = 200, message = "Successfully retrieved all presentationdraft with the given label value") })
 	@GetMapping("api/presentationdraft/findbylabel/{value}")
 	public ResponseEntity<Iterable<PresentationDraft>> listPresentationDraftsByLabel(
-			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined") @PathVariable("value") int value) {
+			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined", type = "Integer") @PathVariable("value") Integer value) {
 		Iterable<PresentationDraft> presentationDraftsByLabel = presentationDraftService.findByLabel(value);
 		return ResponseEntity.ok(presentationDraftsByLabel);
 	}
@@ -109,11 +131,11 @@ public class PresentationDraftEndpoint {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully finalized all presentationdrafts"),
 			@ApiResponse(code = 412, message = "Deadline has not yet passed, or there are still presentationdrafts with the label value of undetermined or unlabeled") })
 	@GetMapping("api/presentationdraft/finalize")
-	public ResponseEntity makePresentationDraftsFinal() {
+	public ResponseEntity<Object> makePresentationDraftsFinal() {
 		return presentationDraftService.makePresentationDraftsFinal();
 	}
 
-	@ApiOperation("Adds a presentationdraft")
+	@ApiOperation(value = "Adds a presentationdraft", hidden = true)
 	@PostMapping("api/presentationdraft/changepresentationdraft")
 	public PresentationDraft changePresentationDraft(PresentationDraft presentationDraft) {
 		return presentationDraftService.save(presentationDraft);

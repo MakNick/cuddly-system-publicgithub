@@ -2,10 +2,9 @@ package com.topicus.CFPApplication.persistence;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,53 +50,27 @@ public class PresentationDraftService {
 		return presentationDraftRepository.findPresentationDraftByCategory(category);
 	}
 
-	public boolean changeLabel(long id, int value) {
-		PresentationDraft temp = presentationDraftRepository.findById(id).get();
-		switch (value) {
-		case 1:
-			if (temp.getLabel().equals(Label.DENIED)) {
-				return false;
+	public int changeLabel(long id, int value) {
+		Optional<PresentationDraft> result = presentationDraftRepository.findById(id);
+		if (result.isPresent()) {
+			PresentationDraft presentationDraft = result.get();
+			List<Label> labelList = Arrays.asList(Label.DENIED, Label.ACCEPTED, Label.RESERVED, Label.UNDETERMINED);
+
+			if (labelList.get(value - 1).equals(presentationDraft.getLabel())) {
+				return 0;
 			} else {
-				temp.setLabel(Label.DENIED);
-				return true;
+				presentationDraft.setLabel(labelList.get(value - 1));
+				return value;
 			}
-		case 2:
-			if (temp.getLabel().equals(Label.ACCEPTED)) {
-				return false;
-			} else {
-				temp.setLabel(Label.ACCEPTED);
-				return true;
-			}
-		case 3:
-			if (temp.getLabel().equals(Label.RESERVED)) {
-				return false;
-			} else {
-				temp.setLabel(Label.RESERVED);
-				return true;
-			}
-		case 4:
-			if (temp.getLabel().equals(Label.UNDETERMINED)) {
-				return false;
-			} else {
-				temp.setLabel(Label.UNDETERMINED);
-				return true;
-			}
-		default:
-			return false;
 		}
+		return -1;
 	}
 
-//	 de applicant mag niet worden verwijderd, hij moet in de database blijven. De presentatie moet wel uit de lijst van de applicant.
 	public void delete(long id) {
 		Optional<PresentationDraft> opt = presentationDraftRepository.findById(id);
 		PresentationDraft result = opt.get();
-
 		for (Applicant applicant : result.getApplicants()) {
-			if (applicant.getPresentationDrafts().size() == 1) {
-				applicantRepository.delete(applicant);
-			} else {
-				applicant.getPresentationDrafts().remove(result);
-			}
+			applicant.getPresentationDrafts().remove(result);
 		}
 		presentationDraftRepository.deleteById(id);
 	}
@@ -119,7 +92,7 @@ public class PresentationDraftService {
 		}
 	}
 
-	public ResponseEntity makePresentationDraftsFinal() {
+	public ResponseEntity<Object> makePresentationDraftsFinal() {
 		if (LocalDateTime.now().isBefore(LocalDateTime.of(2005, 9, 2, 1, 15))) {
 			return new ResponseEntity<>("deadline not passed", HttpStatus.PRECONDITION_FAILED);
 		} else if (!((ArrayList<PresentationDraft>) findByLabel(0)).isEmpty()

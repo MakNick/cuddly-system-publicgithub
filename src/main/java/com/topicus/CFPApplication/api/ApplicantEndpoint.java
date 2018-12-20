@@ -2,8 +2,6 @@ package com.topicus.CFPApplication.api;
 
 import java.util.Optional;
 
-import javax.ws.rs.core.Response;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,7 +41,7 @@ public class ApplicantEndpoint {
 			@ApiResponse(code = 404, message = "Could not retrieve an applicant with the given ID") })
 	@GetMapping("api/applicant/{id}")
 	public ResponseEntity<Applicant> findById(
-			@ApiParam(required = true, name = "id", value = "Applicant ID") @PathVariable("id") Long id) {
+			@ApiParam(required = true, name = "id", value = "Applicant ID", type = "Long") @PathVariable("id") Long id) {
 		Optional<Applicant> result = this.applicantService.findById(id);
 		if (result.isPresent()) {
 			return ResponseEntity.ok(result.get());
