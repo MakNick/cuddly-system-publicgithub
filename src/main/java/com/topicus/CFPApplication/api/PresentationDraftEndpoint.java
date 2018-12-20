@@ -56,16 +56,15 @@ public class PresentationDraftEndpoint {
 		return ResponseEntity.ok(presentationDrafts);
 	}
 
-	@ApiOperation("Adds a new presentationdraftapplicant. This object contains a presentationdraft and a list of applicants")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a presentationdraftapplicant") })
+	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants", hidden = true)
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a presentationdraft and the host") })
 	@PostMapping("api/presentationdraft")
 	public ResponseEntity<PresentationDraft> save(
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
 		if (presentationDraftApplicant != null) {
 			PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 			Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
-			subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
-			return ResponseEntity.ok(presentationDraft);
+			return ResponseEntity.ok(subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants));
 		}
 		return ResponseEntity.badRequest().build();
 	}
@@ -136,7 +135,7 @@ public class PresentationDraftEndpoint {
 		return presentationDraftService.makePresentationDraftsFinal();
 	}
 
-	@ApiOperation("Adds a presentationdraft")
+	@ApiOperation(value = "Adds a presentationdraft", hidden = true)
 	@PostMapping("api/presentationdraft/changepresentationdraft")
 	public PresentationDraft changePresentationDraft(PresentationDraft presentationDraft) {
 		return presentationDraftService.save(presentationDraft);

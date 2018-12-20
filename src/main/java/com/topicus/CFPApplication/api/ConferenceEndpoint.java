@@ -62,13 +62,14 @@ public class ConferenceEndpoint {
 		return ResponseEntity.status(404).build();
 	}
 	
-	@ApiOperation("Adds a new conference")
+	@ApiOperation(value = "Adds a new conference", hidden = true)
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a conference") })
 	@PostMapping("api/conference")
 	public ResponseEntity<Conference> saveConference(@RequestBody @Valid Conference conference) {
 		return ResponseEntity.ok(conferenceService.save(conference));
 	}
 
+	@ApiOperation(value = "Adds a new presentation at he given conference ID", hidden = true)
 	@PostMapping("api/conference/{id}/savepresentationdraft")
 	public ResponseEntity<Conference> savePresentationDraftInConference(@PathVariable("id") Long id,
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {

@@ -11,7 +11,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -23,7 +25,7 @@ public class Applicant {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(position = 1, value = "The unique identifier for the applicant", required = true)
+	@ApiModelProperty(position = 1, value = "The unique identifier for the applicant", hidden = true, required = true)
 	private long id;
 
 	@ApiModelProperty(position = 2, required = true)
@@ -34,17 +36,17 @@ public class Applicant {
 	@ApiModelProperty(position = 4, value = "Current job, hobby or interest of the applicant")
 	private String occupation;
 	private String gender;
-	@ApiModelProperty(position = 5, required = true)
+	@ApiModelProperty(position = 5, required = true, example = "1992-05-20")
 	private LocalDate dateOfBirth;
 	@ApiModelProperty(position = 6, value = "Attributes the applicant needs to host his/her presentation(s)")
 	private String requests;
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(position = 7, value = "List of presentationDrafts that this applicant wants to host", required = true)
+	@ApiModelProperty(position = 7, value = "List of presentationDrafts that this applicant wants to host", hidden = true, required = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(position = 8, value = "List of finalized presentations that this applicant will host", required = true)
+	@ApiModelProperty(position = 8, value = "List of finalized presentations that this applicant will host", hidden = true, required = true)
 	private Set<Presentation> presentations = new HashSet<Presentation>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
@@ -54,6 +56,12 @@ public class Applicant {
 	public void addPresentation(Presentation presentation) {
 		this.presentations.add(presentation);
 	}
+	
+//	@JsonCreator
+//	  Status(
+//			  @JsonProperty("dateOfBirth") LocalDate dateOfBirth){
+//	    this.dateOfBirth = dateOfBirth;
+//	  }
 
 	// Getters en Setters:
 	public long getId() {
@@ -104,6 +112,7 @@ public class Applicant {
 		this.gender = gender;
 	}
 
+	@JsonProperty("dateOfBirth")
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
