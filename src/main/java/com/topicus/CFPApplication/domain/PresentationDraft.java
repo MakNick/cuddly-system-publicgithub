@@ -68,6 +68,7 @@ public class PresentationDraft {
 	private Set<Applicant> applicants = new HashSet<Applicant>();
 
 	@ManyToOne
+	@JsonIgnore
 	@ApiModelProperty(position = 10, value = "Conference to which this presentationdraft belongs", required = true)
 	private Conference conference;
 
