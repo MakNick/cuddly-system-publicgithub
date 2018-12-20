@@ -23,28 +23,28 @@ public class Applicant {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(value = "The unique identifier for the applicant", required = true)
+	@ApiModelProperty(position = 1, value = "The unique identifier for the applicant", required = true)
 	private long id;
 
-	@ApiModelProperty(required = true)
+	@ApiModelProperty(position = 2, required = true)
 	private String name;
-	@ApiModelProperty(required = true)
+	@ApiModelProperty(position = 3, required = true)
 	private String email;
 	private String phonenumber;
-	@ApiModelProperty(value = "Current job, hobby or interest of the applicant")
+	@ApiModelProperty(position = 4, value = "Current job, hobby or interest of the applicant")
 	private String occupation;
 	private String gender;
-	@ApiModelProperty(required = true)
+	@ApiModelProperty(position = 5, required = true)
 	private LocalDate dateOfBirth;
-	@ApiModelProperty(value = "Attributes the applicant needs to host his/her presentation(s)")
+	@ApiModelProperty(position = 6, value = "Attributes the applicant needs to host his/her presentation(s)")
 	private String requests;
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(value = "List of presentationDrafts that this applicant wants to host", required = true)
+	@ApiModelProperty(position = 7, value = "List of presentationDrafts that this applicant wants to host", required = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(value = "List of finalized presentations that this applicant will host", required = true)
+	@ApiModelProperty(position = 8, value = "List of finalized presentations that this applicant will host", required = true)
 	private Set<Presentation> presentations = new HashSet<Presentation>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {

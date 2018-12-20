@@ -56,7 +56,7 @@ public class MailEndpoint {
 			@ApiResponse(code = 400, message = "1. Name or password is incorrect. 2. E-mail server or port is incorrect"
 					+ "If it takes longer than 2 seconds to get a response, then the port is wrong") })
 	@GetMapping("api/setupconfig/{host}/{port}/{username}/{password}")
-	public ResponseEntity setupConfig(
+	public ResponseEntity<Object> setupConfig(
 			@ApiParam(required = true, name = "host", value = "E-mail server") @PathVariable(name = "host") String host,
 			@ApiParam(required = true, name = "port", value = "Server port") @PathVariable(name = "port") int port,
 			@ApiParam(required = true, name = "username", value = "Existing e-mail on the given e-mail server") @PathVariable(name = "username") String username,
