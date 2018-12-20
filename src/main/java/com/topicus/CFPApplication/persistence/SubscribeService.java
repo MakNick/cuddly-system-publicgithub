@@ -42,6 +42,7 @@ public class SubscribeService {
 			if (result.isPresent()) {
 				result.get().addPresentationDraft(presentationDraft);
 				presentationDraft.addApplicant(result.get());
+				presentationDraftRepository.save(presentationDraft);
 			} else {
 				applicantService.save(applicant);
 				presentationDraft.addApplicant(applicant);
