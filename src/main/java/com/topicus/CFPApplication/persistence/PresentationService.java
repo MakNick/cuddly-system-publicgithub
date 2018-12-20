@@ -1,6 +1,7 @@
 package com.topicus.CFPApplication.persistence;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,8 @@ public class PresentationService {
 	@Autowired
 	private PresentationRepository presentationRepository;
 	
-	public void makePresentation(ArrayList<PresentationDraft> acceptedPresentationDrafts) {
+	public List<Presentation> makePresentation(ArrayList<PresentationDraft> acceptedPresentationDrafts) {
+		List<Presentation> presentationList = new ArrayList<Presentation>();
 		for(PresentationDraft draft: acceptedPresentationDrafts) {
 			Presentation presentation = new Presentation();
 			presentation.setSubject(draft.getSubject());
@@ -29,7 +31,9 @@ public class PresentationService {
 				presentation.addApplicant(applicant);
 			}
 			save(presentation);
+			presentationList.add(presentation);
 		}
+		return presentationList;
 	}
 
 	public Presentation save(Presentation presentation) {

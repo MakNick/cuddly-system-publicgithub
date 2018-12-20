@@ -31,13 +31,9 @@ public class Presentation {
 	private String type;
 	private int duration;
 
-	@ManyToMany(fetch=FetchType.EAGER, cascade = 
-        {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(
-	        name = "Applicant_Presentation", 
-	        joinColumns = { @JoinColumn(name = "presentation_id") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "applicant_id") }
-	    )
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "Applicant_Presentation", joinColumns = {
+			@JoinColumn(name = "presentation_id") }, inverseJoinColumns = { @JoinColumn(name = "applicant_id") })
 	private Set<Applicant> applicants = new HashSet<Applicant>();
 
 	public void addApplicant(Applicant applicant) {
@@ -88,10 +84,4 @@ public class Presentation {
 		this.duration = duration;
 	}
 
-//	public Set<Applicant> getApplicants() { return applicants; }
-//	 
-//	public void setApplicants(Set<Applicant> applicants) { 
-//		 this.applicants = applicants; }
-//	 
-	 
 }
