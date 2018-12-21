@@ -57,7 +57,7 @@ public class MailService {
 			return couldNotSendList; // all mails have been send if this list is empty. If not, those applicants are
 										// returned.
 		}
-		return null; // if this is send. The presentationDraft id doesn't exist.
+		return couldNotSendList; // if this is send empty. The presentationDraft id doesn't exist.
 	}
 
 	// Usage for sending invitation to specified mailing list from customer. Add

@@ -118,6 +118,7 @@ public class MailEndpoint {
 	 */
 
 	@ApiOperation("Sends mail to all applicants of a given presentationdraft. You can only send HTML templates that are in the src/main/resources/templates folder")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Email was send to the host with of the presentationdraft with the given ID")})
 	@GetMapping("api/sendmail/{id}/template/{templateName}")
 	public ResponseEntity<Iterable<Applicant>> sendMail(
 			@ApiParam(required = true, name = "id", value = "presentationdraft ID") @PathVariable(name = "id") long id,

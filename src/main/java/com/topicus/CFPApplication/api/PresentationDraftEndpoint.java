@@ -33,7 +33,6 @@ import io.swagger.annotations.ApiResponses;
 public class PresentationDraftEndpoint {
 
 	private PresentationDraftService presentationDraftService;
-
 	private SubscribeService subscribeService;
 
 	@Autowired
@@ -89,6 +88,11 @@ public class PresentationDraftEndpoint {
 	}
 
 	@ApiOperation("Changes the label of the selected presentationdraft")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "Successfully changed the label of the conference with the given ID"),
+			@ApiResponse(code = 400, message = "Invalid ID or label value"),
+			@ApiResponse(code = 404, message = "Could not find a presentationdraft with the given ID"),
+			@ApiResponse(code = 304, message = "This label has already been assigned to this presentationdraft")})
 	@PostMapping("api/presentationdraft/{id}/label/{value}")
 	public ResponseEntity<Object> changeLabel(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id,
@@ -147,7 +151,8 @@ public class PresentationDraftEndpoint {
 
 	@ApiOperation("Finalize all presentationdrafts")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully finalized all presentationdrafts"),
-			@ApiResponse(code = 412, message = "Deadline has not yet passed, or there are still presentationdrafts with the label value of undetermined or unlabeled") })
+			@ApiResponse(code = 412, message = "Deadline has not yet passed, or there are still presentationdrafts with the label value of: undetermined or unlabeled"),
+			@ApiResponse(code = 418, message = "Presentationdrafts have already been finalized")})
 	@GetMapping("api/presentationdraft/finalize")
 	public ResponseEntity<Object> makePresentationDraftsFinal() {
 		return presentationDraftService.makePresentationDraftsFinal();
