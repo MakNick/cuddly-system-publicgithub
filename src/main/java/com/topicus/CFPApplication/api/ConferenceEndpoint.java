@@ -88,5 +88,28 @@ public class ConferenceEndpoint {
 		conferenceService.delete(id);
 		return ResponseEntity.ok().build();
 	}
+	
+	
+	
+	@ApiOperation("Retrieves Presentationdrafts for a conference of a certain label. 0=unlabeled, 1=denied, 2=accepted, 3=reserved, 4=undetermined, anyOtherNumber=all")
+	
+	@GetMapping("api/conference/{id}/findpresentationdraft/{label}")
+	public ResponseEntity<Iterable<PresentationDraft>> findPresentationdrafts(@PathVariable("id") Long id, @PathVariable("label") int label) {
+		Optional<Conference> conference = conferenceService.findById(id);
+		if (conference.isPresent()) {
+			if (label <= 5 && label >= 0) {
+				Iterable<PresentationDraft> result = conferenceService.findPresentationDrafts(conference.get(), label);
+				return ResponseEntity.ok(result);
+			} else {
+				return ResponseEntity.status(417).build();
+			}	
+		} else {
+		return ResponseEntity.status(404).build();
+		}
+	}
+	
+	
+	
+	
 
 }
