@@ -22,7 +22,7 @@ public class Presentation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(position = 1, value = "The unique identifier for the presentation", required = true)
+	@ApiModelProperty(position = 1, required = true, value = "The unique identifier for the presentation")
 	private long id;
 	
 	@ApiModelProperty(position = 2)

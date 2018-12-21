@@ -64,7 +64,8 @@ public class PresentationDraftEndpoint {
 		if (presentationDraftApplicant != null) {
 			PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 			Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
-			return ResponseEntity.ok(subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants));
+			return ResponseEntity
+					.ok(subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants));
 		}
 		return ResponseEntity.badRequest().build();
 	}
@@ -106,25 +107,42 @@ public class PresentationDraftEndpoint {
 
 	}
 
-	// tot hier
 	@ApiOperation("Deletes a presentationdraft by ID")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "Successfully deleted the presentationdraft with the given ID") })
+			@ApiResponse(code = 200, message = "Successfully deleted the presentationdraft with the given ID"),
+			@ApiResponse(code = 400, message = "Invalid ID value given"),
+			@ApiResponse(code = 404, message = "Could not find presentationdraft with the given ID") })
 	@DeleteMapping("api/presentationdraft/delete/{id}")
 	public ResponseEntity<Boolean> delete(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id) {
-		presentationDraftService.delete(id);
-		return ResponseEntity.ok(true);
+		if(id > 0 && id != null) {
+			if(presentationDraftService.delete(id)) {
+				return ResponseEntity.ok(true);				
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
+			} 
+		}
+		return ResponseEntity.badRequest().build();
 	}
 
+	
 	@ApiOperation("Retrieves all presentationdrafts with the given label value")
 	@ApiResponses({
-			@ApiResponse(code = 200, message = "Successfully retrieved all presentationdraft with the given label value") })
+		@ApiResponse(code = 200, message = "Successfully retrieved all presentationdraft with the given label value"),
+		@ApiResponse(code = 400, message = "Invalid label value given"),
+		@ApiResponse(code = 404, message = "Could not find any presentationdrafts with the given label value") })	
 	@GetMapping("api/presentationdraft/findbylabel/{value}")
 	public ResponseEntity<Iterable<PresentationDraft>> listPresentationDraftsByLabel(
 			@ApiParam(required = true, name = "value", value = "0. Unlabeled 1. Denied 2. Accepted 3. Reserved 4. Undetermined", type = "Integer") @PathVariable("value") Integer value) {
-		Iterable<PresentationDraft> presentationDraftsByLabel = presentationDraftService.findByLabel(value);
-		return ResponseEntity.ok(presentationDraftsByLabel);
+		if(value >=0 && value <= 4 && value != null) {
+			Iterable<PresentationDraft> presentationDraftsByLabel = presentationDraftService.findByLabel(value);
+			if(((List<PresentationDraft>) presentationDraftsByLabel).size() == 0) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			} else {
+				return ResponseEntity.ok(presentationDraftsByLabel);				
+			}
+		} 
+		return ResponseEntity.badRequest().build();
 	}
 
 	@ApiOperation("Finalize all presentationdrafts")
