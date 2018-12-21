@@ -1,8 +1,10 @@
 package com.topicus.CFPApplication.persistence;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -13,6 +15,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import com.topicus.CFPApplication.domain.Conference;
+import com.topicus.CFPApplication.domain.PresentationDraft;
+import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConferenceServiceTest {
@@ -62,5 +66,32 @@ public class ConferenceServiceTest {
 		Mockito.verify(this.conferenceRepo).findById((long) 1);
 
 		Assert.assertEquals(1, testItem.getId());
+	}
+	
+	@Test
+	public void findPresentationDraftTest() {
+		
+		PresentationDraft d1 = new PresentationDraft();
+		PresentationDraft d2 = new PresentationDraft();
+		PresentationDraft d3 = new PresentationDraft();
+		
+		List<Label> labelList = Arrays.asList(Label.UNLABELED, Label.DENIED, Label.ACCEPTED, Label.RESERVED, Label.UNDETERMINED);
+		
+		for (int a = 0 ; a <= 5 ; a++) {
+			Conference c = new Conference();
+			if (a == 5) {
+				c.addPresentationDraft(d1);
+				c.addPresentationDraft(d2);
+				c.addPresentationDraft(d3);
+			} else {
+				d1.setLabel(labelList.get(a)); c.addPresentationDraft(d1);
+				d2.setLabel(labelList.get(a)); c.addPresentationDraft(d2);
+				d3.setLabel(labelList.get(a)); c.addPresentationDraft(d3);
+			}
+			
+			Set<PresentationDraft> testList = (Set<PresentationDraft>) this.conferenceService.findPresentationDrafts(c, a);
+			
+			Assert.assertEquals(3, testList.size());
+		}
 	}
 }
