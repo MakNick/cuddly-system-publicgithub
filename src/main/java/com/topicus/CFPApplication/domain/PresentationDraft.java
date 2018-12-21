@@ -21,8 +21,6 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -32,21 +30,21 @@ public class PresentationDraft {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(position = 1, value = "The unique identifier for the conference", hidden = true, required = true)
+	@ApiModelProperty(position = 1, required = true, value = "The unique identifier for the presentationdraft", hidden = true)
 	private long id;
 
-	@ApiModelProperty(position = 2, value = "What will the presentation be about", required = true)
+	@ApiModelProperty(position = 2, required = true, value = "What will the presentation be about")
 	private String subject;
 	@ApiModelProperty(position = 3, value = "Conference has a list of categories. One of those may be assigned here")
 	private String category;
 
 	@Lob
 	@Column(name = "summary", length = 512)
-	@ApiModelProperty(position = 4, value = "Applicant's short explanation about his/her idea", required = true)
+	@ApiModelProperty(position = 4, required = true, value = "Applicant's short explanation about his/her idea")
 	private String summary;
 	@ApiModelProperty(position = 5, value = "Type of presentation. Example: workshop")
 	private String type;
-	@ApiModelProperty(position = 6, value = "How much time the applicant needs to host his presentation")
+	@ApiModelProperty(position = 6, value = "How much time the applicant needs to host his/her presentation")
 	private int duration;
 
 	@CreatedDate
@@ -64,12 +62,11 @@ public class PresentationDraft {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "Applicant_PresentationDraft", joinColumns = {
 			@JoinColumn(name = "presentationDraft_id") }, inverseJoinColumns = { @JoinColumn(name = "applicant_id") })
-	@ApiModelProperty(position = 9, value = "This list hold the hosts of this presentationdraft", required = true)
+	@ApiModelProperty(position = 9, required = true, value = "This list hold the hosts of this presentationdraft")
 	private Set<Applicant> applicants = new HashSet<Applicant>();
 
 	@ManyToOne
-	@JsonIgnore
-	@ApiModelProperty(position = 10, value = "Conference to which this presentationdraft belongs", required = true)
+	@ApiModelProperty(position = 10, required = true, value = "Conference to which this presentationdraft belongs")
 	private Conference conference;
 
 	public void addApplicant(Applicant applicant) {
@@ -149,6 +146,7 @@ public class PresentationDraft {
 		this.category = category;
 	}
 
+	@ApiModelProperty(hidden = true)
 	public void setConference(Conference conference) {
 		this.conference = conference;
 	}
