@@ -108,12 +108,13 @@ public class MailEndpoint {
 	 */
 
 	@ApiOperation("Sends mail to all applicants of a given presentationdraft. You can only send HTML templates that are in the src/main/resources/templates folder")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Email was send to the host with of the presentationdraft with the given ID")})
 	@GetMapping("api/sendmail/{id}/template/{templateName}")
 	public ResponseEntity<Iterable<Applicant>> sendMail(
 			@ApiParam(required = true, name = "id", value = "presentationdraft ID") @PathVariable(name = "id") long id,
 			@ApiParam(required = true, name = "templateName", value = "name template") @PathVariable(name = "templateName") String templateName) {
 		Iterable<Applicant> couldNotSendList = mailService.sendMail(id, templateName);
-		return ((List<Applicant>) couldNotSendList).size() > 0
+		return ((List<Applicant>) couldNotSendList).size() == 0
 				? ResponseEntity.status(HttpStatus.CONFLICT).body(couldNotSendList)
 				: ResponseEntity.status(HttpStatus.OK).body(couldNotSendList);
 	}
@@ -126,7 +127,7 @@ public class MailEndpoint {
 	public ResponseEntity<Iterable<Applicant>> sendAllMail(
 			@ApiParam(required = true, name = "templateName", value = "name template") @PathVariable("templateName") String templateName) {
 		Iterable<Applicant> couldNotSendList = mailService.sendAllApplicantsMail(templateName);
-		return ((List<Applicant>) couldNotSendList).size() > 0
+		return ((List<Applicant>) couldNotSendList).size() == 0
 				? ResponseEntity.status(HttpStatus.CONFLICT).body(couldNotSendList)
 				: ResponseEntity.status(HttpStatus.OK).body(couldNotSendList);
 	}
