@@ -24,7 +24,7 @@ public class Presentation {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@ApiModelProperty(position = 1, required = true, value = "The unique identifier for the presentation")
 	private long id;
-	
+
 	@ApiModelProperty(position = 2)
 	private String subject;
 	@ApiModelProperty(position = 3)
@@ -39,13 +39,9 @@ public class Presentation {
 	@ApiModelProperty(position = 6)
 	private int duration;
 
-	@ManyToMany(fetch=FetchType.EAGER, cascade = 
-        {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(
-	        name = "Applicant_Presentation", 
-	        joinColumns = { @JoinColumn(name = "presentation_id") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "applicant_id") }
-	    )
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "Applicant_Presentation", joinColumns = {
+			@JoinColumn(name = "presentation_id") }, inverseJoinColumns = { @JoinColumn(name = "applicant_id") })
 	@ApiModelProperty(position = 7)
 	private Set<Applicant> applicants = new HashSet<Applicant>();
 
@@ -95,6 +91,14 @@ public class Presentation {
 
 	public void setDuration(int duration) {
 		this.duration = duration;
+	}
+
+	public Set<Applicant> getApplicants() {
+		return applicants;
+	}
+
+	public void setApplicants(Set<Applicant> applicants) {
+		this.applicants = applicants;
 	}
 
 }

@@ -52,6 +52,7 @@ public class Applicant {
 	}
 
 	public void addPresentation(Presentation presentation) {
+//		System.out.println("check");
 		this.presentations.add(presentation);
 	}
 	
@@ -126,6 +127,14 @@ public class Applicant {
 
 	public void setPresentationDrafts(Set<PresentationDraft> presentationDrafts) {
 		this.presentationDrafts = presentationDrafts;
+	}
+	
+	public Set<Presentation> getPresentations() {
+		return presentations;
+	}
+
+	public void setPresentations(Set<Presentation> presentations) {
+		this.presentations = presentations;
 	}
 
 }
