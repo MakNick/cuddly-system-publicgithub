@@ -2,6 +2,7 @@ package com.topicus.CFPApplication.persistence;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,14 +22,15 @@ import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 public class PresentationDraftService {
 
 	private PresentationDraftRepository presentationDraftRepository;
-	private ApplicantRepository applicantRepository;
 	private PresentationService presentationService;
+
+	private final List<Label> labelList = Arrays.asList(Label.UNLABELED, Label.DENIED, Label.ACCEPTED, Label.RESERVED,
+			Label.UNDETERMINED);
 
 	@Autowired
 	public PresentationDraftService(PresentationDraftRepository presentationDraftRepository,
-			ApplicantRepository applicantsRepository, PresentationService presentationService) {
+			PresentationService presentationService) {
 		this.presentationDraftRepository = presentationDraftRepository;
-		this.applicantRepository = applicantsRepository;
 		this.presentationService = presentationService;
 	}
 
@@ -49,75 +51,38 @@ public class PresentationDraftService {
 		return presentationDraftRepository.findPresentationDraftByCategory(category);
 	}
 
-	public boolean changeLabel(long id, int value) {
-		PresentationDraft temp = presentationDraftRepository.findById(id).get();
-		switch (value) {
-		case 1:
-			if (temp.getLabel().equals(Label.DENIED)) {
-				return false;
+	public int changeLabel(long id, int value) {
+		Optional<PresentationDraft> result = presentationDraftRepository.findById(id);
+		if (result.isPresent()) {
+			PresentationDraft presentationDraft = result.get();
+			if (labelList.get(value).equals(presentationDraft.getLabel())) {
+				return 0;
 			} else {
-				temp.setLabel(Label.DENIED);
-				return true;
+				presentationDraft.setLabel(labelList.get(value));
+				return value;
 			}
-		case 2:
-			if (temp.getLabel().equals(Label.ACCEPTED)) {
-				return false;
-			} else {
-				temp.setLabel(Label.ACCEPTED);
-				return true;
-			}
-		case 3:
-			if (temp.getLabel().equals(Label.RESERVED)) {
-				return false;
-			} else {
-				temp.setLabel(Label.RESERVED);
-				return true;
-			}
-		case 4:
-			if (temp.getLabel().equals(Label.UNDETERMINED)) {
-				return false;
-			} else {
-				temp.setLabel(Label.UNDETERMINED);
-				return true;
-			}
-		default:
-			return false;
 		}
+		return -1;
 	}
 
-//	 de applicant mag niet worden verwijderd, hij moet in de database blijven. De presentatie moet wel uit de lijst van de applicant.
-	public void delete(long id) {
+	public Boolean delete(long id) {
 		Optional<PresentationDraft> opt = presentationDraftRepository.findById(id);
-		PresentationDraft result = opt.get();
-
-		for (Applicant applicant : result.getApplicants()) {
-			if (applicant.getPresentationDrafts().size() == 1) {
-				applicantRepository.delete(applicant);
-			} else {
+		if (opt.isPresent()) {
+			PresentationDraft result = opt.get();
+			for (Applicant applicant : result.getApplicants()) {
 				applicant.getPresentationDrafts().remove(result);
 			}
+			presentationDraftRepository.deleteById(id);
+			return true;
 		}
-		presentationDraftRepository.deleteById(id);
+		return false;
 	}
 
 	public Iterable<PresentationDraft> findByLabel(int value) {
-		switch (value) {
-		case 0:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.UNLABELED);
-		case 1:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.DENIED);
-		case 2:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.ACCEPTED);
-		case 3:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.RESERVED);
-		case 4:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.UNDETERMINED);
-		default:
-			return presentationDraftRepository.findAll();
-		}
+		return presentationDraftRepository.findPresentationDraftByLabel(labelList.get(value));
 	}
 
-	public ResponseEntity makePresentationDraftsFinal() {
+	public ResponseEntity<Object> makePresentationDraftsFinal() {
 		if (LocalDateTime.now().isBefore(LocalDateTime.of(2005, 9, 2, 1, 15))) {
 			return new ResponseEntity<>("deadline not passed", HttpStatus.PRECONDITION_FAILED);
 		} else if (!((ArrayList<PresentationDraft>) findByLabel(0)).isEmpty()
