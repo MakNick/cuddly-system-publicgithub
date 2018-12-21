@@ -134,6 +134,37 @@ public class PresentationDraftServiceTest {
 		Assert.assertEquals(pres, testItem);
 
 	}
+	
+	@Test
+	public void deleteOkTest() {
+		PresentationDraft pres = new PresentationDraft();
+		Optional<PresentationDraft> opt = Optional.of(pres);
+		Long id = 1L;
+		
+		Mockito.when(this.draftRepo.findById(id)).thenReturn(opt);
+
+		Boolean result = this.draftService.delete(id);
+
+		Mockito.verify(this.draftRepo).deleteById(id);
+
+		Assert.assertEquals(true, result);
+
+	}
+	
+	@Test
+	public void deleteFailedTest() {
+		Optional<PresentationDraft> opt = Optional.ofNullable(null);
+		Long id = 1L;
+		
+		Mockito.when(this.draftRepo.findById(id)).thenReturn(opt);
+
+		Boolean result = this.draftService.delete(id);
+
+		Mockito.verify(this.draftRepo, Mockito.times(0)).deleteById(id);
+		
+		Assert.assertEquals(false, result);
+
+	}
 
 	@Test
 	public void findByCategoryTest() {

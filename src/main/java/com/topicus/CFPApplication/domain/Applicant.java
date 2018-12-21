@@ -23,7 +23,7 @@ public class Applicant {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(position = 1, value = "The unique identifier for the applicant", hidden = true, required = true)
+	@ApiModelProperty(position = 1, required = true, value = "The unique identifier for the applicant", hidden = true)
 	private long id;
 
 	@ApiModelProperty(position = 2, required = true)
@@ -40,11 +40,11 @@ public class Applicant {
 	private String requests;
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(position = 7, value = "List of presentationDrafts that this applicant wants to host", hidden = true, required = true)
+	@ApiModelProperty(position = 7, required = true, value = "List of presentationDrafts that this applicant wants to host", hidden = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(position = 8, value = "List of finalized presentations that this applicant will host", hidden = true, required = true)
+	@ApiModelProperty(position = 8, required = true, value = "List of finalized presentations that this applicant will host", hidden = true)
 	private Set<Presentation> presentations = new HashSet<Presentation>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
