@@ -21,6 +21,8 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -30,7 +32,7 @@ public class PresentationDraft {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(position = 1, value = "The unique identifier for the conference", required = true)
+	@ApiModelProperty(position = 1, value = "The unique identifier for the conference", hidden = true, required = true)
 	private long id;
 
 	@ApiModelProperty(position = 2, value = "What will the presentation be about", required = true)
@@ -48,7 +50,7 @@ public class PresentationDraft {
 	private int duration;
 
 	@CreatedDate
-	@ApiModelProperty(position = 7)
+	@ApiModelProperty(position = 7, example = "2018-05-23T01:20:30")
 	private LocalDateTime timeOfCreation = LocalDateTime.now();
 
 	public enum Label {
@@ -56,7 +58,7 @@ public class PresentationDraft {
 	}
 
 	@Enumerated(EnumType.STRING)
-	@ApiModelProperty(position = 8, value = "The label of this presentationdraft. If no label is given, the default label will be: UNLABELED")
+	@ApiModelProperty(position = 8, value = "The label of this presentationdraft. If no label is given, the default label will be: UNLABELED", hidden = true)
 	private Label label = Label.UNLABELED;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -66,6 +68,7 @@ public class PresentationDraft {
 	private Set<Applicant> applicants = new HashSet<Applicant>();
 
 	@ManyToOne
+	@JsonIgnore
 	@ApiModelProperty(position = 10, value = "Conference to which this presentationdraft belongs", required = true)
 	private Conference conference;
 
@@ -77,7 +80,7 @@ public class PresentationDraft {
 	public long getId() {
 		return id;
 	}
-
+	
 	public void setId(long id) {
 		this.id = id;
 	}

@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,28 +63,32 @@ public class ConferenceEndpoint {
 		return ResponseEntity.status(404).build();
 	}
 	
-	@ApiOperation("Adds a new conference")
+	@ApiOperation(value = "Adds a new conference")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a conference") })
 	@PostMapping("api/conference")
 	public ResponseEntity<Conference> saveConference(@RequestBody @Valid Conference conference) {
 		return ResponseEntity.ok(conferenceService.save(conference));
 	}
 
+	@ApiOperation(value = "Adds a new presentation at he given conference ID")
 	@PostMapping("api/conference/{id}/savepresentationdraft")
-	public ResponseEntity<Conference> savePresentationDraftInConference(@PathVariable("id") Long id,
+	public ResponseEntity<Object> savePresentationDraftInConference(@PathVariable("id") Long id,
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
 		PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 		Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
 		presentationDraft = subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
 		Optional<Conference> result = conferenceService.findById(id);
-		return ResponseEntity.ok(subscribeService.linkPresentationDraftWithConference(result.get(), presentationDraft));
+		if(result.isPresent()) {
+			return ResponseEntity.ok(subscribeService.linkPresentationDraftWithConference(result.get(), presentationDraft));
+		}
+		return new ResponseEntity<>("Conference with the given ID does not exist", HttpStatus.NOT_FOUND);
 	}
 	
 	@ApiOperation("Deletes a conference by ID")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "Successfully deleted the conference with the given ID") })
 	@DeleteMapping("api/conference/delete/{id}")
-	public ResponseEntity delete(
+	public ResponseEntity<Conference> delete(
 			@ApiParam(required = true, name = "id", value = "Conference ID") @PathVariable("id") Long id) {
 		conferenceService.delete(id);
 		return ResponseEntity.ok().build();

@@ -12,7 +12,7 @@ public class PresentationDraftApplicant {
 	@ApiModelProperty(position = 1, value = "The presentation that was submitted", required = true)
 	private PresentationDraft presentationDraft;
 
-	@ApiModelProperty(position = 2, value = "The host(s) of the presentation", required = true)
+	@ApiModelProperty(position = 2, value = "The host(s) of the presentation", hidden = true, required = true)
 	private Set<Applicant> applicants = new HashSet<Applicant>();
 
 	public PresentationDraft getPresentationDraft() {
