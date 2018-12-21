@@ -48,11 +48,11 @@ public class PresentationDraftServiceTest {
 		
 		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNLABELED)).thenReturn(listUnlabeled);
 		
-		ResponseEntity result = draftService.makePresentationDraftsFinal();
+		int result = draftService.makePresentationDraftsFinal().getStatusCodeValue();
 		
 		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
 		
-		Assert.assertEquals(412, result.getStatusCodeValue());
+		Assert.assertEquals(412, result);
 	}
 	
 	@Test

@@ -31,5 +31,9 @@ public class ApplicantService {
 	public Optional<Applicant> findExistingApplicant(String name, String email) {
 		return applicantRepository.findApplicantByNameAndEmail(name, email);
 	}
+	
+	public Optional<Applicant> showPresentationDraftsByApplicant(Long id) {
+		return applicantRepository.findById(id);
+	}
 
 }

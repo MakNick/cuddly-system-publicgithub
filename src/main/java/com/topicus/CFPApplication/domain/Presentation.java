@@ -88,10 +88,10 @@ public class Presentation {
 		this.duration = duration;
 	}
 
-//	public Set<Applicant> getApplicants() { return applicants; }
-//	 
-//	public void setApplicants(Set<Applicant> applicants) { 
-//		 this.applicants = applicants; }
-//	 
+	public Set<Applicant> getApplicants() { return applicants; }
+	 
+	public void setApplicants(Set<Applicant> applicants) { 
+		 this.applicants = applicants; }
+	 
 	 
 }
