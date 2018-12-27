@@ -11,9 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -25,7 +23,7 @@ public class Applicant {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(position = 1, value = "The unique identifier for the applicant", hidden = true, required = true)
+	@ApiModelProperty(position = 1, required = true, value = "The unique identifier for the applicant", hidden = true)
 	private long id;
 
 	@ApiModelProperty(position = 2, required = true)
@@ -42,11 +40,11 @@ public class Applicant {
 	private String requests;
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(position = 7, value = "List of presentationDrafts that this applicant wants to host", hidden = true, required = true)
+	@ApiModelProperty(position = 7, required = true, value = "List of presentationDrafts that this applicant wants to host", hidden = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(position = 8, value = "List of finalized presentations that this applicant will host", hidden = true, required = true)
+	@ApiModelProperty(position = 8, required = true, value = "List of finalized presentations that this applicant will host", hidden = true)
 	private Set<Presentation> presentations = new HashSet<Presentation>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
@@ -54,15 +52,10 @@ public class Applicant {
 	}
 
 	public void addPresentation(Presentation presentation) {
+//		System.out.println("check");
 		this.presentations.add(presentation);
 	}
 	
-//	@JsonCreator
-//	  Status(
-//			  @JsonProperty("dateOfBirth") LocalDate dateOfBirth){
-//	    this.dateOfBirth = dateOfBirth;
-//	  }
-
 	// Getters en Setters:
 	public long getId() {
 		return id;
@@ -112,7 +105,6 @@ public class Applicant {
 		this.gender = gender;
 	}
 
-	@JsonProperty("dateOfBirth")
 	public LocalDate getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -135,6 +127,14 @@ public class Applicant {
 
 	public void setPresentationDrafts(Set<PresentationDraft> presentationDrafts) {
 		this.presentationDrafts = presentationDrafts;
+	}
+	
+	public Set<Presentation> getPresentations() {
+		return presentations;
+	}
+
+	public void setPresentations(Set<Presentation> presentations) {
+		this.presentations = presentations;
 	}
 
 }

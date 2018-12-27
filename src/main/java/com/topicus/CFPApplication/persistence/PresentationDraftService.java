@@ -22,14 +22,15 @@ import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 public class PresentationDraftService {
 
 	private PresentationDraftRepository presentationDraftRepository;
-	private ApplicantRepository applicantRepository;
 	private PresentationService presentationService;
+
+	private final List<Label> labelList = Arrays.asList(Label.UNLABELED, Label.DENIED, Label.ACCEPTED, Label.RESERVED,
+			Label.UNDETERMINED);
 
 	@Autowired
 	public PresentationDraftService(PresentationDraftRepository presentationDraftRepository,
-			ApplicantRepository applicantsRepository, PresentationService presentationService) {
+			PresentationService presentationService) {
 		this.presentationDraftRepository = presentationDraftRepository;
-		this.applicantRepository = applicantsRepository;
 		this.presentationService = presentationService;
 	}
 
@@ -54,42 +55,31 @@ public class PresentationDraftService {
 		Optional<PresentationDraft> result = presentationDraftRepository.findById(id);
 		if (result.isPresent()) {
 			PresentationDraft presentationDraft = result.get();
-			List<Label> labelList = Arrays.asList(Label.DENIED, Label.ACCEPTED, Label.RESERVED, Label.UNDETERMINED);
-
-			if (labelList.get(value - 1).equals(presentationDraft.getLabel())) {
+			if (labelList.get(value).equals(presentationDraft.getLabel())) {
 				return 0;
 			} else {
-				presentationDraft.setLabel(labelList.get(value - 1));
+				presentationDraft.setLabel(labelList.get(value));
 				return value;
 			}
 		}
 		return -1;
 	}
 
-	public void delete(long id) {
+	public Boolean delete(long id) {
 		Optional<PresentationDraft> opt = presentationDraftRepository.findById(id);
-		PresentationDraft result = opt.get();
-		for (Applicant applicant : result.getApplicants()) {
-			applicant.getPresentationDrafts().remove(result);
+		if (opt.isPresent()) {
+			PresentationDraft result = opt.get();
+			for (Applicant applicant : result.getApplicants()) {
+				applicant.getPresentationDrafts().remove(result);
+			}
+			presentationDraftRepository.deleteById(id);
+			return true;
 		}
-		presentationDraftRepository.deleteById(id);
+		return false;
 	}
 
 	public Iterable<PresentationDraft> findByLabel(int value) {
-		switch (value) {
-		case 0:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.UNLABELED);
-		case 1:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.DENIED);
-		case 2:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.ACCEPTED);
-		case 3:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.RESERVED);
-		case 4:
-			return presentationDraftRepository.findPresentationDraftByLabel(Label.UNDETERMINED);
-		default:
-			return presentationDraftRepository.findAll();
-		}
+		return presentationDraftRepository.findPresentationDraftByLabel(labelList.get(value));
 	}
 
 	public ResponseEntity<Object> makePresentationDraftsFinal() {
