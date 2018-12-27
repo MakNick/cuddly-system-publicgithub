@@ -23,6 +23,7 @@ public class MailContentBuilder {
 
 	public String buildText(String recipientName, String text, String templateName) {
 		Context context = new Context();
+		context.setVariable("name", recipientName);
 		context.setVariable("text", text);
 		return templateEngine.process(templateName, context);
 	}

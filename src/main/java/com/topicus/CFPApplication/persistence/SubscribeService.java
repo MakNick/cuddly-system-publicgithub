@@ -15,17 +15,20 @@ import com.topicus.CFPApplication.domain.PresentationDraft;
 @Transactional
 public class SubscribeService {
 
-	@Autowired
 	private PresentationDraftRepository presentationDraftRepository;
-
-	@Autowired
 	private ConferenceRepository conferenceRepository;
-
-	@Autowired
 	private ApplicantService applicantService;
+	private ApplicantRepository applicantRepository;
 
 	@Autowired
-	private ApplicantRepository applicantRepository;
+	public SubscribeService(PresentationDraftRepository presentationDraftRepository,
+			ConferenceRepository conferenceRepository, ApplicantService applicantService,
+			ApplicantRepository applicantRepository) {
+		this.presentationDraftRepository = presentationDraftRepository;
+		this.conferenceRepository = conferenceRepository;
+		this.applicantService = applicantService;
+		this.applicantRepository = applicantRepository;
+	}
 
 	public Conference linkPresentationDraftWithConference(Conference conference, PresentationDraft presentationDraft) {
 		conference.addPresentationDraft(presentationDraft);
@@ -42,6 +45,7 @@ public class SubscribeService {
 			if (result.isPresent()) {
 				result.get().addPresentationDraft(presentationDraft);
 				presentationDraft.addApplicant(result.get());
+				presentationDraftRepository.save(presentationDraft);
 			} else {
 				applicantService.save(applicant);
 				presentationDraft.addApplicant(applicant);

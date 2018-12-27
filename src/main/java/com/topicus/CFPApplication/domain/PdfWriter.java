@@ -14,7 +14,7 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PDFWriter {
+public class PdfWriter {
 
 	PDDocument document;
 

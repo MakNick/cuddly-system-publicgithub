@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
@@ -36,8 +37,16 @@ public class MailEndpoint {
 	 * @return Iterable<String>
 	 */
 	@ApiOperation("Gives information on the current: server host, port and sender's e-mail address")
-	@GetMapping("api/configs")
-	public ResponseEntity<Iterable<String>> getConfigValues() {
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "Found e-mail configurations"),
+		@ApiResponse(code = 404, message = "Could not find the correct values for the e-mail configuration") })
+	@GetMapping("api/email/configs")
+	public ResponseEntity<List<String>> getConfigValues() {
+		if(mailService.getConfigValues().get(1).equals("-1")) {
+			System.out.println("mail config test");
+			System.out.println(mailService.getConfigValues().get(1));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 		return ResponseEntity.ok(mailService.getConfigValues());
 	}
 
@@ -52,11 +61,12 @@ public class MailEndpoint {
 
 	@ApiOperation("Sets the email server, port, sender's e-mail and password."
 			+ "The e-mail must exists on the e-mail server in combination with the given password")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Setup successful"),
-			@ApiResponse(code = 400, message = "1. Name or password is incorrect. 2. E-mail server or port is incorrect"
+	@ApiResponses({ 
+		@ApiResponse(code = 200, message = "Setup successful"),
+		@ApiResponse(code = 400, message = "1. Name or password is incorrect. 2. E-mail server or port is incorrect"
 					+ "If it takes longer than 2 seconds to get a response, then the port is wrong") })
-	@GetMapping("api/setupconfig/{host}/{port}/{username}/{password}")
-	public ResponseEntity setupConfig(
+	@PostMapping("api/email/setupconfig/{host}/{port}/{username}/{password}")
+	public ResponseEntity<Object> setupConfig(
 			@ApiParam(required = true, name = "host", value = "E-mail server") @PathVariable(name = "host") String host,
 			@ApiParam(required = true, name = "port", value = "Server port") @PathVariable(name = "port") int port,
 			@ApiParam(required = true, name = "username", value = "Existing e-mail on the given e-mail server") @PathVariable(name = "username") String username,
@@ -68,7 +78,7 @@ public class MailEndpoint {
 			return new ResponseEntity<>("The port might be incorrect if the response took longer than 2 seconds. "
 					+ "Else the host server is incorrect", HttpStatus.BAD_REQUEST);
 		} else {
-			return new ResponseEntity<>("the username or password is incorrect", HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>("the username and password combination could not be found", HttpStatus.BAD_REQUEST);
 		}
 	}
 
@@ -96,7 +106,7 @@ public class MailEndpoint {
 
 	/*
 	 * this will find a presentationDraft by id, and then send all the applicants in
-	 * the set of the applicationDraf an email the subject of the mail will be set
+	 * the set of the applicationDraft an email the subject of the mail will be set
 	 * to the name of the email template.html if an applicant does not have an
 	 * email(null), or the email field has an String length less than 2. He will be
 	 * added to the couldNotSendList. when this list is returned empty. It means
@@ -108,12 +118,13 @@ public class MailEndpoint {
 	 */
 
 	@ApiOperation("Sends mail to all applicants of a given presentationdraft. You can only send HTML templates that are in the src/main/resources/templates folder")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Email was send to the host with of the presentationdraft with the given ID")})
 	@GetMapping("api/sendmail/{id}/template/{templateName}")
 	public ResponseEntity<Iterable<Applicant>> sendMail(
 			@ApiParam(required = true, name = "id", value = "presentationdraft ID") @PathVariable(name = "id") long id,
 			@ApiParam(required = true, name = "templateName", value = "name template") @PathVariable(name = "templateName") String templateName) {
 		Iterable<Applicant> couldNotSendList = mailService.sendMail(id, templateName);
-		return ((List<Applicant>) couldNotSendList).size() > 0
+		return ((List<Applicant>) couldNotSendList).size() == 0
 				? ResponseEntity.status(HttpStatus.CONFLICT).body(couldNotSendList)
 				: ResponseEntity.status(HttpStatus.OK).body(couldNotSendList);
 	}
@@ -126,7 +137,7 @@ public class MailEndpoint {
 	public ResponseEntity<Iterable<Applicant>> sendAllMail(
 			@ApiParam(required = true, name = "templateName", value = "name template") @PathVariable("templateName") String templateName) {
 		Iterable<Applicant> couldNotSendList = mailService.sendAllApplicantsMail(templateName);
-		return ((List<Applicant>) couldNotSendList).size() > 0
+		return ((List<Applicant>) couldNotSendList).size() == 0
 				? ResponseEntity.status(HttpStatus.CONFLICT).body(couldNotSendList)
 				: ResponseEntity.status(HttpStatus.OK).body(couldNotSendList);
 	}

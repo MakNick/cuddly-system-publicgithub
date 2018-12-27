@@ -16,11 +16,12 @@ import com.topicus.CFPApplication.persistence.ConferenceRepository;
 @Component
 public class MockDatabase {
 
+	private ConferenceRepository conferenceRepository;
+	
 	@Autowired
-	ConferenceRepository conferenceRepository;
-
-	@Autowired
-	EntityManager entityManager;
+	public MockDatabase(ConferenceRepository conferenceRepository) {
+		this.conferenceRepository = conferenceRepository;
+	}
 
 	@PostConstruct
 	public void init() {

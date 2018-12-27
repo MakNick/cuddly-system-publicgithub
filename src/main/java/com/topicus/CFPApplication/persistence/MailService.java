@@ -1,7 +1,7 @@
 package com.topicus.CFPApplication.persistence;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
@@ -21,24 +21,26 @@ import com.topicus.CFPApplication.domain.PresentationDraft;
 @Service
 public class MailService {
 
-	@Autowired
 	private MailContentBuilder mailContentBuilder;
-
-	@Autowired
 	private JavaMailSenderImpl emailSender;
-
-	@Autowired
 	private PresentationDraftService presentationDraftService;
+	private ApplicantService applicantService;
 
 	@Autowired
-	private ApplicantService applicantService;
+	public MailService(MailContentBuilder mailContentBuilder, JavaMailSenderImpl emailSender,
+			PresentationDraftService presentationDraftService, ApplicantService applicantService) {
+		this.mailContentBuilder = mailContentBuilder;
+		this.emailSender = emailSender;
+		this.presentationDraftService = presentationDraftService;
+		this.applicantService = applicantService;
+	}
 
 	public void sendMail(String email, String name) {
 		emailSender.send(prepareAndSend(email, name, "demo-template"));
 	}
 
 	public void sendMailText(String email, String name, String text) {
-		emailSender.send(prepareAndSend(email, name, text, "demo-template"));
+		emailSender.send(prepareAndSend(email, name, text, "demo-template-text"));
 	}
 
 	public Iterable<Applicant> sendMail(long id, String templateName) {
@@ -55,9 +57,11 @@ public class MailService {
 			return couldNotSendList; // all mails have been send if this list is empty. If not, those applicants are
 										// returned.
 		}
-		return null; // if this is send. The presentationDraft id doesn't exist.
+		return couldNotSendList; // if this is send empty. The presentationDraft id doesn't exist.
 	}
 
+	// Usage for sending invitation to specified mailing list from customer. Add
+	// Iterable parameter.
 	public List<Applicant> sendAllApplicantsMail(String templateName) {
 		Iterable<Applicant> applicants = applicantService.findAll();
 		List<Applicant> couldNotSendMail = new ArrayList<>();
@@ -94,9 +98,9 @@ public class MailService {
 		return messagePreparator;
 	}
 
-	public Iterable<String> getConfigValues() {
-		List<String> setupList = new ArrayList<>();
-		Collections.addAll(setupList, emailSender.getHost(), "" + emailSender.getPort(), emailSender.getUsername());
+	public List<String> getConfigValues() {
+		List<String> setupList = Arrays.asList(emailSender.getHost(), "" + emailSender.getPort(),
+				emailSender.getUsername());
 		return setupList;
 	}
 

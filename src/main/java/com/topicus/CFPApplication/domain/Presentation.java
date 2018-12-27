@@ -15,29 +15,34 @@ import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 
+import io.swagger.annotations.ApiModelProperty;
+
 @Entity
 public class Presentation {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@ApiModelProperty(position = 1, required = true, value = "The unique identifier for the presentation")
 	private long id;
 
+	@ApiModelProperty(position = 2)
 	private String subject;
+	@ApiModelProperty(position = 3)
 	private String category;
 
 	@Lob
 	@Column(name = "summary", length = 512)
+	@ApiModelProperty(position = 4)
 	private String summary;
+	@ApiModelProperty(position = 5)
 	private String type;
+	@ApiModelProperty(position = 6)
 	private int duration;
 
-	@ManyToMany(fetch=FetchType.EAGER, cascade = 
-        {CascadeType.PERSIST, CascadeType.MERGE})
-	@JoinTable(
-	        name = "Applicant_Presentation", 
-	        joinColumns = { @JoinColumn(name = "presentation_id") }, 
-	        inverseJoinColumns = { @JoinColumn(name = "applicant_id") }
-	    )
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinTable(name = "Applicant_Presentation", joinColumns = {
+			@JoinColumn(name = "presentation_id") }, inverseJoinColumns = { @JoinColumn(name = "applicant_id") })
+	@ApiModelProperty(position = 7)
 	private Set<Applicant> applicants = new HashSet<Applicant>();
 
 	public void addApplicant(Applicant applicant) {
@@ -88,10 +93,12 @@ public class Presentation {
 		this.duration = duration;
 	}
 
-//	public Set<Applicant> getApplicants() { return applicants; }
-//	 
-//	public void setApplicants(Set<Applicant> applicants) { 
-//		 this.applicants = applicants; }
-//	 
-	 
+	public Set<Applicant> getApplicants() {
+		return applicants;
+	}
+
+	public void setApplicants(Set<Applicant> applicants) {
+		this.applicants = applicants;
+	}
+
 }

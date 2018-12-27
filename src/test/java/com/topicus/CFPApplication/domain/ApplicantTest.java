@@ -1,44 +1,41 @@
-/*package com.topicus.CFPApplication.domain;
+package com.topicus.CFPApplication.domain;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.mockito.stubbing.OngoingStubbing;
 
-import com.topicus.CFPApplication.persistence.ApplicantRepository;
-import com.topicus.CFPApplication.persistence.ApplicantService;
-
-import junit.framework.Assert;
+import org.junit.Assert;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicantTest {
-
-	@InjectMocks
-	private Applicant applicant;
-	
-	@Mock
-	private ApplicantRepository repository;
-	@Mock
-	private ApplicantService service;
 	
 	@Test
-	public void save() {
-		// Given (Arrange) 
-				//applicant = new Applicant();
-				//applicant.setId(99);
-				//applicant.setName("Henk van de Applicant-Savetest");
+	public void addPresentationDraftTest() {
+		PresentationDraft pd = new PresentationDraft();
+		Applicant a = new Applicant();
+		a.addPresentationDraft(pd);
 		
-		// When (Act) Mockito.when
-				//OngoingStubbing<Applicant> applicant2 = Mockito.when(this.service.save(Mockito.any(Applicant.class))).thenReturn(applicant);
-		
-	    // Then (Assert) Mockito.verify - Asstert.equals
-				//Mockito.verify(this.service).save(Mockito.any(Applicant.class));
-	      		//Assert.assertEquals(applicant, applicant2.getMock());
-			   
+		Assert.assertEquals(1, a.getPresentationDrafts().size());
 	}
 	
+	@Test
+	public void addPresentationTest() {
+		Presentation p = new Presentation();
+		Applicant a = new Applicant();
+		a.addPresentation(p);
+		
+		Assert.assertEquals(1, a.getPresentations().size());
+	}
+	
+	
 }
-*/
+
+
+
+
+
+
+
