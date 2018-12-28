@@ -85,14 +85,14 @@ public class PdfWriter {
 	public void savePdf(List<String> content, Long id) throws IOException {
 		document = new PDDocument(); // Creating PDF document object
 		writePdf(content, id);
-		document.save(new File("presentationDraft" + id + ".pdf"));// Saving the document
+		document.save(new File("presentationDraft" + id + ".csv"));// Saving the document
 		document.close(); // Closing the document
 	}
 
 	public void savePdf(List<String> content) throws IOException {
 		document = new PDDocument(); // Creating PDF document object
 		writePdf(content, 0L);
-		document.save(new File("presentationDraftAll.pdf"));// Saving the document
+		document.save(new File("presentationDraftAll.csv"));// Saving the document
 		document.close(); // Closing the document
 	}
 }
