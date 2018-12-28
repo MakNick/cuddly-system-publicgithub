@@ -114,8 +114,12 @@ public class ConferenceEndpoint {
 	public ResponseEntity<Conference> delete(
 			@ApiParam(required = true, name = "id", value = "Conference ID") @PathVariable("id") Long id) {
 		if (id != null && id > 0) {
-			conferenceService.delete(id);
-			return ResponseEntity.ok().build();
+			try {
+				conferenceService.delete(id);
+				return ResponseEntity.ok().build();
+			}catch(Exception e) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			}
 		}
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
