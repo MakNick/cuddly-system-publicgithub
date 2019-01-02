@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.http.ResponseEntity;
 
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
@@ -37,24 +38,33 @@ public class PresentationDraftServiceTest {
 	PresentationService presentationService;
 
 	@Test
-	public void makePresentationDraftFinalAcceptedTest() {
-		int responseOk = draftService.makePresentationDraftsFinal().getStatusCodeValue();
+	public void makePresentationDraftFinalUnlabeledTest() {
 
-		Assert.assertEquals(200, responseOk);
+		List<PresentationDraft> listUnlabeled = new ArrayList<>();
+		PresentationDraft pd1 = new PresentationDraft();
+		pd1.setLabel(PresentationDraft.Label.UNLABELED);
+		listUnlabeled.add(pd1);
+		
+		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNLABELED)).thenReturn(listUnlabeled);
+		
+		int result = draftService.makePresentationDraftsFinal().getStatusCodeValue();
+		
+		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
+		
+		Assert.assertEquals(412, result);
 	}
 
 	@Test
 	public void makePresentationDraftFinalUndeterminedTest() {
-		List<PresentationDraft> listUnlabeled = new ArrayList<>();
-		PresentationDraft presUnlabeled = new PresentationDraft();
-		presUnlabeled.setLabel(Label.UNDETERMINED);
-		listUnlabeled.add(presUnlabeled);
+		List<PresentationDraft> listUndetermined = new ArrayList<>();
+		PresentationDraft presUndetermined = new PresentationDraft();
+		presUndetermined.setLabel(Label.UNDETERMINED);
+		listUndetermined.add(presUndetermined);
 
-		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNDETERMINED)).thenReturn(listUnlabeled);
-
+		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNDETERMINED)).thenReturn(listUndetermined);
+		
 		int response412 = draftService.makePresentationDraftsFinal().getStatusCodeValue();
-
-		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
+		
 		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNDETERMINED);
 
 		Assert.assertEquals(412, response412);
@@ -132,6 +142,37 @@ public class PresentationDraftServiceTest {
 		Mockito.verify(this.draftRepo).save(Mockito.any(PresentationDraft.class));
 
 		Assert.assertEquals(pres, testItem);
+
+	}
+	
+	@Test
+	public void deleteOkTest() {
+		PresentationDraft pres = new PresentationDraft();
+		Optional<PresentationDraft> opt = Optional.of(pres);
+		Long id = 1L;
+		
+		Mockito.when(this.draftRepo.findById(id)).thenReturn(opt);
+
+		Boolean result = this.draftService.delete(id);
+
+		Mockito.verify(this.draftRepo).deleteById(id);
+
+		Assert.assertEquals(true, result);
+
+	}
+	
+	@Test
+	public void deleteFailedTest() {
+		Optional<PresentationDraft> opt = Optional.ofNullable(null);
+		Long id = 1L;
+		
+		Mockito.when(this.draftRepo.findById(id)).thenReturn(opt);
+
+		Boolean result = this.draftService.delete(id);
+
+		Mockito.verify(this.draftRepo, Mockito.times(0)).deleteById(id);
+		
+		Assert.assertEquals(false, result);
 
 	}
 

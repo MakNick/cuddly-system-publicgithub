@@ -12,8 +12,12 @@ import com.topicus.CFPApplication.domain.Applicant;
 @Transactional
 public class ApplicantService {
 
-	@Autowired
 	private ApplicantRepository applicantRepository;
+	
+	@Autowired
+	public ApplicantService(ApplicantRepository applicantRepository) {
+		this.applicantRepository = applicantRepository;
+	}
 
 	public Iterable<Applicant> findAll() {
 		Iterable<Applicant> result = applicantRepository.findAll();
@@ -30,6 +34,10 @@ public class ApplicantService {
 
 	public Optional<Applicant> findExistingApplicant(String name, String email) {
 		return applicantRepository.findApplicantByNameAndEmail(name, email);
+	}
+	
+	public Optional<Applicant> showPresentationDraftsByApplicant(Long id) {
+		return applicantRepository.findById(id);
 	}
 
 }

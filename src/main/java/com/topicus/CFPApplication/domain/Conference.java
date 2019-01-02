@@ -17,8 +17,6 @@ import javax.persistence.OneToMany;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -28,7 +26,7 @@ public class Conference {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@ApiModelProperty(position = 1, value = "The unique identifier for the conference", hidden = true, required = true)
+	@ApiModelProperty(position = 1, required = true, value = "The unique identifier for the conference", hidden = true)
 	private long id;
 
 	@ApiModelProperty(position = 2, required = true)
@@ -38,8 +36,8 @@ public class Conference {
 	private LocalDateTime startDate;
 	@ApiModelProperty(position = 5, required = true, example = "2018-05-23T01:20:30")
 	private LocalDateTime endDate;
-	@ApiModelProperty(position = 6, value = "After this day the organizor can make a definitive selection of all presentations, "
-			+ "and presentations can no longer be submitted", required = true, example = "2018-05-23T01:20:30")
+	@ApiModelProperty(position = 6, required = true, value = "After this day the organizor can make a definitive selection of all presentations, "
+			+ "and presentations can no longer be submitted", example = "2018-05-23T01:20:30")
 	private LocalDateTime deadlinePresentationDraft;
 
 	@Autowired

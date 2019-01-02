@@ -17,8 +17,12 @@ import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 @Transactional
 public class ConferenceService {
 
-	@Autowired
 	private ConferenceRepository conferenceRepository;
+
+	@Autowired
+	public ConferenceService(ConferenceRepository conferenceRepository) {
+		this.conferenceRepository = conferenceRepository;
+	}
 
 	public Iterable<Conference> findAll() {
 		Iterable<Conference> result = conferenceRepository.findAll();
@@ -32,7 +36,7 @@ public class ConferenceService {
 	public Optional<Conference> findById(Long id) {
 		return conferenceRepository.findById(id);
 	}
-	
+
 	public void delete(long id) {
 		conferenceRepository.deleteById(id);
 	}
