@@ -1,5 +1,8 @@
 package com.topicus.CFPApplication.api;
 
+import java.awt.print.PrinterException;
+import java.io.IOException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,10 +30,10 @@ public class PdfEndpoint {
 	@ApiOperation(value = "Get all presentationDrafts and create PDF", hidden = true)
 	@GetMapping("api/pdf")
 	public ResponseEntity<Object> createPDF() {
-		int result = pdfService.getPresentationDraftsToPDF();
-		if (result == 1) {
+		String result = pdfService.getPresentationDraftsToPDF();
+		if (result == "1") {
 			return ResponseEntity.ok().build();
-		} else if (result == 2) {
+		} else if (result == "2") {
 			return new ResponseEntity<>("Interrupted I/O operation.", HttpStatus.CONFLICT);
 		} else {
 			return new ResponseEntity<>("No presentationdrafts availiable", HttpStatus.NOT_FOUND);
@@ -41,13 +44,42 @@ public class PdfEndpoint {
 	@GetMapping("api/pdf/{id}")
 	public ResponseEntity<Object> getPresentationDraft(
 			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id) {
-		int result = pdfService.getPresentationDraftToPDF(id);
-		if (result == 1) {
+		String result = pdfService.getPresentationDraftToPDF(id);
+		if (result == "1") {
 			return ResponseEntity.ok().build();
-		} else if (result == 2) {
+		} else if (result == "2") {
 			return new ResponseEntity<>("Interrupted I/O operation.", HttpStatus.CONFLICT);
 		} else {
 			return new ResponseEntity<>("Could not find presentationdraft with the given ID", HttpStatus.NOT_FOUND);
 		}
 	}
+
+	@ApiOperation(value = " ", hidden = true)
+	@GetMapping("api/print/pdf/")
+	public ResponseEntity<Object> printAllPdf() throws IOException, PrinterException {
+		String result = pdfService.printAllPdf();
+		if (result == "1") {
+			return ResponseEntity.ok().build();
+		} else if (result == "2") {
+			return new ResponseEntity<>("Interrupted I/O operation.", HttpStatus.CONFLICT);
+		} else {
+			return new ResponseEntity<>("No presentationdrafts availiable", HttpStatus.NOT_FOUND);
+		}
+	}
+
+	@ApiOperation(value = " ", hidden = true)
+	@GetMapping("api/print/pdf/{id}")
+	public ResponseEntity<Object> printSinglePdf(
+			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id)
+			throws IOException, PrinterException {
+		String result = pdfService.printSinglePdf(id);
+		if (result == "1") {
+			return ResponseEntity.ok().build();
+		} else if (result == "2") {
+			return new ResponseEntity<>("Interrupted I/O operation.", HttpStatus.CONFLICT);
+		} else {
+			return new ResponseEntity<>("No presentationdrafts availiable", HttpStatus.NOT_FOUND);
+		}
+	}
+
 }
