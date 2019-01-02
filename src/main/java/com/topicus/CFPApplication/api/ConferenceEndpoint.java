@@ -67,6 +67,7 @@ public class ConferenceEndpoint {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a conference") })
 	@PostMapping("api/conference")
 	public ResponseEntity<Conference> saveConference(@RequestBody @Valid Conference conference) {
+		System.out.println("ik doe het");
 		return ResponseEntity.ok(conferenceService.save(conference));
 	}
 
@@ -112,9 +113,4 @@ public class ConferenceEndpoint {
 		return ResponseEntity.status(404).build();
 		}
 	}
-	
-	
-	
-	
-
 }

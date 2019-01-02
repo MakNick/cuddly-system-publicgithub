@@ -100,6 +100,10 @@ public class PresentationDraftService {
 			return new ResponseEntity<>("still unlabeled or undetermined PresentationDrafts",
 					HttpStatus.PRECONDITION_FAILED);
 		} else if (((List<Presentation>) presentationService.findAll()).isEmpty()) {
+			
+			
+			
+			
 			ArrayList<PresentationDraft> acceptedPresentationDrafts = (ArrayList<PresentationDraft>) findByLabel(2);
 			presentationService.makePresentation(acceptedPresentationDrafts);
 			return ResponseEntity.status(200).build();
