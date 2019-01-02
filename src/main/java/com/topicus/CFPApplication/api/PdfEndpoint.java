@@ -23,7 +23,7 @@ public class PdfEndpoint {
 	public PdfEndpoint(PdfService pdfService) {
 		this.pdfService = pdfService;
 	}
-
+	
 	@ApiOperation(value = "Get all presentationDrafts and create PDF", hidden = true)
 	@GetMapping("api/pdf")
 	public ResponseEntity<Object> createPDF() {
