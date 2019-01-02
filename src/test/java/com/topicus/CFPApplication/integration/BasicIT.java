@@ -14,6 +14,7 @@ public class BasicIT {
 	@Drone
 	WebDriver driver;
 	
+	//BASIC INTEGRATION TEST FOR LEARNING PURPOSES
 	@Test
 	public void testOpeningConferenceHomepage() {
 		String url  = "http://api.topiconf.carpago.nl/api/presentationdraft";

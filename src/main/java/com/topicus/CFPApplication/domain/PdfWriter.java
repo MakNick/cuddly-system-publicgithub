@@ -1,6 +1,5 @@
 package com.topicus.CFPApplication.domain;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,12 +10,18 @@ import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import com.topicus.CFPApplication.persistence.FileService;
 
 @Component
 public class PdfWriter {
 
 	PDDocument document;
+
+	@Autowired
+	private FileService fileService;
 
 	public void writePdf(List<String> content, Long id) throws IOException {
 
@@ -85,14 +90,14 @@ public class PdfWriter {
 	public void savePdf(List<String> content, Long id) throws IOException {
 		document = new PDDocument(); // Creating PDF document object
 		writePdf(content, id);
-		document.save(new File("presentationDraft" + id + ".pdf"));// Saving the document
+		document.save(fileService.saveDocumentInSaveDialog("presentationDraft" + id + ".pdf"));// Saving the document
 		document.close(); // Closing the document
 	}
 
 	public void savePdf(List<String> content) throws IOException {
 		document = new PDDocument(); // Creating PDF document object
 		writePdf(content, 0L);
-		document.save(new File("presentationDraftAll.pdf"));// Saving the document
+		document.save(fileService.saveDocumentInSaveDialog("presentationDraftAll.pdf"));
 		document.close(); // Closing the document
 	}
 }
