@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Applicant;
-import com.topicus.CFPApplication.domain.PdfWriter;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 
 @Service
@@ -28,39 +27,39 @@ public class PdfService {
 
 	}
 
-	public String getPresentationDraftsToPDF() {
+	public int getPresentationDraftsToPDF() {
 		List<PresentationDraft> listPresentations = (List<PresentationDraft>) presentationDraftRepository.findAll();
 		List<String> content = new ArrayList<>();
 		if (!listPresentations.isEmpty()) {
 			for (int i = 0; i < listPresentations.size(); i++) {
 				addContent(content, listPresentations.get(i));
 				if (i != listPresentations.size() - 1) {
-					content.add(" "); // to create new page
+					content.add(" "); // to create new page for a different presentationDraft
 				}
 			}
 			try {
-				pdfWriter.savePdf(content);
-				return "1";
+				pdfWriter.saveAllPresentationDraft(content);
+				return 1;
 			} catch (IOException e) {
-				return "2";
+				return 2;
 			}
 		}
-		return "3";
+		return 3;
 	}
 
-	public String getPresentationDraftToPDF(Long id) {
+	public int getPresentationDraftToPDF(Long id) {
 		Optional<PresentationDraft> presentationDraft = presentationDraftRepository.findById(id);
 		List<String> content = new ArrayList<>();
 		if (presentationDraft.isPresent()) {
 			content = addContent(content, presentationDraft.get());
 			try {
-				pdfWriter.savePdf(content, id);
-				return "1";
+				pdfWriter.saveSinglePresentationDrafts(content, id);
+				return 1;
 			} catch (IOException e) {
-				return "2";
+				return 2;
 			}
 		}
-		return "3";
+		return 3;
 	}
 
 	private List<String> addContent(List<String> content, PresentationDraft presentationDraft) {
@@ -91,7 +90,7 @@ public class PdfService {
 		return content;
 	}
 
-	public String printAllPdf() throws PrinterException {
+	public int printAllPdf() throws PrinterException {
 		List<PresentationDraft> listPresentations = (List<PresentationDraft>) presentationDraftRepository.findAll();
 		List<String> content = new ArrayList<>();
 		if (!listPresentations.isEmpty()) {
@@ -103,40 +102,26 @@ public class PdfService {
 			}
 			try {
 				pdfWriter.printAllPdf(content);
-				return "1";
+				return 1;
 			} catch (IOException e) {
-				return "2";
+				return 2;
 			}
 		}
-		return "3";
+		return 3;
 	}
 
-	public String printSinglePdf(Long id) throws PrinterException {
+	public int printSinglePdf(Long id) throws PrinterException {
 		Optional<PresentationDraft> presentationDraft = presentationDraftRepository.findById(id);
 		List<String> content = new ArrayList<>();
 		if (presentationDraft.isPresent()) {
 			content = addContent(content, presentationDraft.get());
 			try {
 				pdfWriter.printSinglePdf(content, id);
-				return "1";
+				return 1;
 			} catch (IOException e) {
-				return "2";
+				return 2;
 			}
 		}
-		return "3";
+		return 3;
 	}
-
-//	public void printSinglePdf(PDDocument document, Long id) throws IOException, PrinterException {
-//		Optional<PresentationDraft> presentationDraft = presentationDraftRepository.findById(id);
-//		List<String> content = new ArrayList<>();
-//		PrinterJob pj = PrinterJob.getPrinterJob();
-//		pj.setPrintable(getPresentationDraftToPDF(id));
-//		if (pj.printDialog()) {
-//			try {
-//				pj.print();
-//			} catch (PrinterException e) {
-//				System.out.println(e);
-//			}
-//		}
-//	}
 }

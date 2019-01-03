@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,7 @@ import com.topicus.CFPApplication.persistence.ConferenceRepository;
 public class MockDatabase {
 
 	private ConferenceRepository conferenceRepository;
-	
+
 	@Autowired
 	public MockDatabase(ConferenceRepository conferenceRepository) {
 		this.conferenceRepository = conferenceRepository;
