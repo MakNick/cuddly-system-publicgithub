@@ -49,13 +49,11 @@ public class ConferenceEndpoint {
 			@ApiResponse(code = 404, message = "No conferences could be found") })
 	@GetMapping("api/conference")
 	public ResponseEntity<Iterable<Conference>> conferenceList() {
-	Iterable<Conference> result = conferenceService.findAll();
-	return ResponseEntity.ok(result);
-//		List<Conference> result = (List<Conference>) conferenceService.findAll();
-//		if (!result.isEmpty()) {
-//			return ResponseEntity.ok().body(result);
-//		}
-//		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		List<Conference> result = (List<Conference>) conferenceService.findAll();
+		if (!result.isEmpty()) {
+			return ResponseEntity.ok().body(result);
+		}
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
 	@ApiOperation("Retrieves a conference by ID")
