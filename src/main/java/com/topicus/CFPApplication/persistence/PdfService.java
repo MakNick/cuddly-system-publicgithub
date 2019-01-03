@@ -24,7 +24,6 @@ public class PdfService {
 	public PdfService(PdfWriter pdfWriter, PresentationDraftRepository presentationDraftRepository) {
 		this.pdfWriter = pdfWriter;
 		this.presentationDraftRepository = presentationDraftRepository;
-
 	}
 
 	public int getPresentationDraftsToPDF() {

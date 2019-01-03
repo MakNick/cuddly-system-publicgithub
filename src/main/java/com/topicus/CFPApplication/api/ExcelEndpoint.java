@@ -39,7 +39,7 @@ public class ExcelEndpoint {
 		if (conferenceId > 0 && conferenceId != null) {
 			try {
 				excelService.createExcel(conferenceId);
-				return ResponseEntity.ok().build();
+				return new ResponseEntity<>("Save completed", HttpStatus.OK);
 			} catch (NoSuchElementException nsee) {
 				return new ResponseEntity<>("Conference and/or conference ID not found", HttpStatus.NOT_FOUND);
 			} catch (IOException e) {

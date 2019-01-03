@@ -20,8 +20,12 @@ public class PdfWriter {
 
 	PDDocument document;
 
-	@Autowired
 	private FileService fileService;
+
+	@Autowired
+	public PdfWriter(FileService fileService) {
+		this.fileService = fileService;
+	}
 
 	public void writePdf(List<String> content, Long id) throws IOException {
 

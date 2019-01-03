@@ -35,9 +35,9 @@ public class ExcelService {
 
 	public void createExcel(Long id) throws IOException, NoSuchElementException {
 		Optional<Conference> conference = conferenceService.findById(id);
-		List<PresentationDraft> listPresentations = new ArrayList<>(conference.get().getPresentationDrafts());
 
 		if (conference.isPresent()) {
+			List<PresentationDraft> listPresentations = new ArrayList<>(conference.get().getPresentationDrafts());
 			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet sheet = workbook.createSheet("All PresentationDrafts");
 			String FILE_NAME = fileService.saveDocumentInSaveDialog("PresentationDrafts.xlsx");
