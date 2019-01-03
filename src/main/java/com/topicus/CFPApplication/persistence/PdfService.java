@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Applicant;
-import com.topicus.CFPApplication.domain.PdfWriter;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 
 @Service
@@ -24,7 +23,6 @@ public class PdfService {
 	public PdfService(PdfWriter pdfWriter, PresentationDraftRepository presentationDraftRepository) {
 		this.pdfWriter = pdfWriter;
 		this.presentationDraftRepository = presentationDraftRepository;
-
 	}
 
 	public int getPresentationDraftsToPDF() {

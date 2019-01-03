@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.mail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,8 +15,9 @@ import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 
 import com.topicus.CFPApplication.domain.Applicant;
-import com.topicus.CFPApplication.domain.MailContentBuilder;
 import com.topicus.CFPApplication.domain.PresentationDraft;
+import com.topicus.CFPApplication.persistence.ApplicantService;
+import com.topicus.CFPApplication.persistence.PresentationDraftService;
 
 @Service
 public class MailService {
@@ -57,7 +58,7 @@ public class MailService {
 			return couldNotSendList; // all mails have been send if this list is empty. If not, those applicants are
 										// returned.
 		}
-		return couldNotSendList; // if this is send empty. The presentationDraft id doesn't exist.
+		return couldNotSendList; // if this is returned empty. The presentationDraft id doesn't exist.
 	}
 
 	// Usage for sending invitation to specified mailing list from customer. Add
@@ -99,9 +100,7 @@ public class MailService {
 	}
 
 	public List<String> getConfigValues() {
-		List<String> setupList = Arrays.asList(emailSender.getHost(), "" + emailSender.getPort(),
-				emailSender.getUsername());
-		return setupList;
+		return Arrays.asList(emailSender.getHost(), "" + emailSender.getPort(),emailSender.getUsername());
 	}
 
 	public int setupConfig(String host, int port, String username, String password) {

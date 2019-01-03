@@ -42,7 +42,7 @@ public class ApplicantServiceTest {
 	@Test
 	public void saveTest() {
 		Applicant appl = new Applicant();
-		 
+		
 		Mockito.when(this.applicantRepository.save(appl)).thenReturn(appl);
 
 		Applicant testItem = this.applicantRepository.save(appl);
