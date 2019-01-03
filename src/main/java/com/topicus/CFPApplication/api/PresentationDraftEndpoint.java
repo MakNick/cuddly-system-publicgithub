@@ -39,15 +39,13 @@ public class PresentationDraftEndpoint {
 	private PresentationDraftService presentationDraftService;
 	private SubscribeService subscribeService;
 	private MailService mailService;
-	private PresentationService presentationService;
-
+	
 	@Autowired
 	public PresentationDraftEndpoint(PresentationDraftService presentationDraftService,
 			SubscribeService subscribeService, MailService mailService, PresentationService presentationService) {
 		this.presentationDraftService = presentationDraftService;
 		this.subscribeService = subscribeService;
 		this.mailService = mailService;
-		this.presentationService = presentationService;
 	}
 
 	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants")
