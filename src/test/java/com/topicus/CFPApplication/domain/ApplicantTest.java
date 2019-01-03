@@ -1,13 +1,9 @@
 package com.topicus.CFPApplication.domain;
 
-import java.util.HashSet;
-import java.util.Set;
-
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
-
-import org.junit.Assert;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ApplicantTest {

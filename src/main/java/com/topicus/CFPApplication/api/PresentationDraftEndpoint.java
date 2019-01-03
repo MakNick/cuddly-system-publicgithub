@@ -21,10 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
-import com.topicus.CFPApplication.persistence.MailService;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
 import com.topicus.CFPApplication.persistence.PresentationService;
 import com.topicus.CFPApplication.persistence.SubscribeService;
+import com.topicus.CFPApplication.persistence.mail.MailService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -50,18 +50,6 @@ public class PresentationDraftEndpoint {
 		this.presentationService = presentationService;
 	}
 
-	// Deze kan weg zodra we via een conference de presentationdrafts ophalen
-	@ApiOperation("Retrieves all available presentationdrafts from the database")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved all presentationdrafts") })
-	@GetMapping("api/presentationdraft")
-	public ResponseEntity<Object> listPresentationDrafts() {
-		List<PresentationDraft> presentationDrafts = (List<PresentationDraft>) presentationDraftService.findAll();
-		if (presentationDrafts.isEmpty()) {
-			return new ResponseEntity<>("Presentationdraft list is empty", HttpStatus.NOT_FOUND);
-		}
-		return ResponseEntity.ok(presentationDrafts);
-	}
-
 	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a presentationdraft and the host") })
 	@PostMapping("api/presentationdraft")
@@ -80,7 +68,7 @@ public class PresentationDraftEndpoint {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a presentationdraft with the given ID"),
 			@ApiResponse(code = 404, message = "Could not retrieve a presentationdraft with the given ID") })
 	@GetMapping("api/presentationdraft/{id}")
-	public ResponseEntity<Object> findById(
+	public ResponseEntity<?> findById(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id) {
 		if (id != null && id > 0) {
 			Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
@@ -101,7 +89,7 @@ public class PresentationDraftEndpoint {
 			@ApiResponse(code = 404, message = "Could not find a presentationdraft with the given ID"),
 			@ApiResponse(code = 304, message = "This label has already been assigned to this presentationdraft") })
 	@PostMapping("api/presentationdraft/{id}/label/{value}")
-	public ResponseEntity<Object> changeLabel(
+	public ResponseEntity<?> changeLabel(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id,
 			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined", type = "Integer") @PathVariable("value") Integer value) {
 		if (id != null && id > 0 && value != null && value > 0 && value <= 4) {
@@ -171,9 +159,10 @@ public class PresentationDraftEndpoint {
 //					}
 					for (PresentationDraft draft : listPresentationDrafts) {
 						List<Applicant> listApplicants = new ArrayList<>(draft.getApplicants());
-						for (Applicant applicant : listApplicants) {	
+						for (Applicant applicant : listApplicants) {
 							mailService.sendMailText(applicant.getEmail(), applicant.getName(),
-									"jojo" + draft.getLabel().toString()); // GETNAME CONFERENCE AANPASSEN NAAR GETTEMPLATE TEXT!
+									"jojo" + draft.getLabel().toString()); // GETNAME CONFERENCE AANPASSEN NAAR
+																			// GETTEMPLATE TEXT!
 						}
 					}
 				}

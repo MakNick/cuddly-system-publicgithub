@@ -33,7 +33,7 @@ public class Applicant {
 	private String phonenumber;
 	@ApiModelProperty(position = 4, value = "Current job, hobby or interest of the applicant")
 	private String occupation;
-	private String gender;
+	private String gender; // mag deze eruit?
 	@ApiModelProperty(position = 5, required = true, example = "1992-05-20")
 	private LocalDate dateOfBirth;
 	@ApiModelProperty(position = 6, value = "Attributes the applicant needs to host his/her presentation(s)")
@@ -52,7 +52,6 @@ public class Applicant {
 	}
 
 	public void addPresentation(Presentation presentation) {
-//		System.out.println("check");
 		this.presentations.add(presentation);
 	}
 	

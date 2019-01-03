@@ -88,7 +88,7 @@ public class PresentationDraftService {
 			throws CannotProceedException {
 		Optional<Conference> conference = conferenceService.findById(conferenceId);
 		if (conference.isPresent()) {
-			if (LocalDateTime.now().isBefore(conference.get().getdeadlinePresentationDraft())) {
+			if (LocalDateTime.now().isBefore(conference.get().getDeadlinePresentationDraft())) {
 				throw new CannotProceedException();
 			} else if (conferenceService.findPresentationDrafts(conference.get(), 0).iterator().hasNext()
 					|| conferenceService.findPresentationDrafts(conference.get(), 4).iterator().hasNext()) {
