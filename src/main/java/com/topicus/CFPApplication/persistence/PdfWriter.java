@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.domain;
+package com.topicus.CFPApplication.persistence;
 
 import java.io.IOException;
 import java.util.ArrayList;

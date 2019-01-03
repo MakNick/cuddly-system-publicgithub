@@ -51,6 +51,7 @@ public class PresentationDraft {
 	@ApiModelProperty(position = 7, example = "2018-05-23T01:20:30")
 	private LocalDateTime timeOfCreation = LocalDateTime.now();
 
+	@ApiModel(value = "Label", description = "Labels that can be assigned to presentation drafts")
 	public enum Label {
 		UNLABELED, DENIED, ACCEPTED, RESERVED, UNDETERMINED
 	}
@@ -149,5 +150,10 @@ public class PresentationDraft {
 	@ApiModelProperty(hidden = true)
 	public void setConference(Conference conference) {
 		this.conference = conference;
+	}
+	
+	@ApiModelProperty(hidden = true)
+	public Conference getConference() {
+		return conference;
 	}
 }

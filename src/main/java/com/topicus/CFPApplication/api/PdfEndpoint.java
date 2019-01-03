@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@Api(value = "PDFEndpoint", description = "create PDF", hidden = true)
+@Api(value = "PDFEndpoint", description = "create PDF file")
 public class PdfEndpoint {
 
 	private PdfService pdfService;
@@ -24,7 +24,7 @@ public class PdfEndpoint {
 		this.pdfService = pdfService;
 	}
 
-	@ApiOperation(value = "Get all presentationDrafts and create PDF", hidden = true)
+	@ApiOperation(value = "Convert all presentationdrafts to one pdf")
 	@GetMapping("api/pdf")
 	public ResponseEntity<Object> createPDF() {
 		int result = pdfService.getPresentationDraftsToPDF();
@@ -37,7 +37,7 @@ public class PdfEndpoint {
 		}
 	}
 
-	@ApiOperation(value = " ", hidden = true)
+	@ApiOperation(value = "Convert a presentationdraft with the given ID to a pdf")
 	@GetMapping("api/pdf/{id}")
 	public ResponseEntity<Object> getPresentationDraft(
 			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id) {

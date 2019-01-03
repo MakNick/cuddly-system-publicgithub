@@ -15,7 +15,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
-import com.topicus.CFPApplication.domain.MailContentBuilder;
+import com.topicus.CFPApplication.persistence.mail.MailContentBuilder;
+import com.topicus.CFPApplication.persistence.mail.MailService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)

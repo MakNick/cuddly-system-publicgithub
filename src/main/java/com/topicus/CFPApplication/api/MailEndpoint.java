@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
-import com.topicus.CFPApplication.persistence.MailService;
+import com.topicus.CFPApplication.persistence.mail.MailService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(value = "MailEndpoint", description = "Sends and configures mail settings")
+@Api(value = "MailEndpoint", description = "Sends e-mail and configures e-mail settings")
 public class MailEndpoint {
 
 	private MailService mailService;
@@ -34,7 +34,7 @@ public class MailEndpoint {
 	 * gives information on all the mail configuration values. Will give current
 	 * mail server,port,username.
 	 * 
-	 * @return Iterable<String>
+	 * @return ResponseEntity<List<String>>
 	 */
 	@ApiOperation("Gives information on the current: server host, port and sender's e-mail address")
 	@ApiResponses({
@@ -43,8 +43,6 @@ public class MailEndpoint {
 	@GetMapping("api/email/configs")
 	public ResponseEntity<List<String>> getConfigValues() {
 		if(mailService.getConfigValues().get(1).equals("-1")) {
-			System.out.println("mail config test");
-			System.out.println(mailService.getConfigValues().get(1));
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		return ResponseEntity.ok(mailService.getConfigValues());
@@ -56,7 +54,7 @@ public class MailEndpoint {
 	 * will return a 412 status, with the reason. After successfully setting up the
 	 * email, a template will be send to the email address that it was successful.
 	 * 
-	 * @return Response
+	 * @return ResponseEntity<?>
 	 */
 
 	@ApiOperation("Sets the email server, port, sender's e-mail and password."
@@ -66,7 +64,7 @@ public class MailEndpoint {
 		@ApiResponse(code = 400, message = "1. Name or password is incorrect. 2. E-mail server or port is incorrect"
 					+ "If it takes longer than 2 seconds to get a response, then the port is wrong") })
 	@PostMapping("api/email/setupconfig/{host}/{port}/{username}/{password}")
-	public ResponseEntity<Object> setupConfig(
+	public ResponseEntity<?> setupConfig(
 			@ApiParam(required = true, name = "host", value = "E-mail server") @PathVariable(name = "host") String host,
 			@ApiParam(required = true, name = "port", value = "Server port") @PathVariable(name = "port") int port,
 			@ApiParam(required = true, name = "username", value = "Existing e-mail on the given e-mail server") @PathVariable(name = "username") String username,
@@ -114,11 +112,12 @@ public class MailEndpoint {
 	 * does not have an email he will be added to the list, and the list will be
 	 * returned with that applicant.
 	 * 
-	 * @return Iterable<Applicant>
+	 * @return ResponseEntity<Iterable<Applicant>>
 	 */
 
 	@ApiOperation("Sends mail to all applicants of a given presentationdraft. You can only send HTML templates that are in the src/main/resources/templates folder")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Email was send to the host with of the presentationdraft with the given ID")})
+	@ApiResponses({ @ApiResponse(code = 200, message = "E-mail was send to the host with of the presentationdraft with the given ID"),
+		@ApiResponse(code = 409, message = "Returns a list of applicants that did not receive an e-mail")})
 	@GetMapping("api/sendmail/{id}/template/{templateName}")
 	public ResponseEntity<Iterable<Applicant>> sendMail(
 			@ApiParam(required = true, name = "id", value = "presentationdraft ID") @PathVariable(name = "id") long id,
@@ -130,9 +129,11 @@ public class MailEndpoint {
 	}
 
 	/*
-	 * @return List<Applicant>
+	 * @return ResponseEntity<Iterable<Applicant>>
 	 */
 	@ApiOperation("Sends mail to all applicants in the database. You can only send HTML templates that are in the src/main/resources/templates folder")
+	@ApiResponses({ @ApiResponse(code = 200, message = "E-mail was send to the host with of the presentationdraft with the given ID"),
+		@ApiResponse(code = 409, message = "Returns a list of applicants that did not receive an e-mail")})
 	@GetMapping("api/sendallmail/template/{templateName}")
 	public ResponseEntity<Iterable<Applicant>> sendAllMail(
 			@ApiParam(required = true, name = "templateName", value = "name template") @PathVariable("templateName") String templateName) {
