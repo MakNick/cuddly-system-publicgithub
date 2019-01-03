@@ -150,4 +150,9 @@ public class PresentationDraft {
 	public void setConference(Conference conference) {
 		this.conference = conference;
 	}
+	
+	@ApiModelProperty(hidden = true)
+	public Conference getConference() {
+		return conference;
+	}
 }
