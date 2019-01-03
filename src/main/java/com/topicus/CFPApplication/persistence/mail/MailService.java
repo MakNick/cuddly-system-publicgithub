@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
@@ -20,6 +21,7 @@ import com.topicus.CFPApplication.persistence.ApplicantService;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
 
 @Service
+@Transactional
 public class MailService {
 
 	private MailContentBuilder mailContentBuilder;

@@ -37,38 +37,38 @@ public class PresentationDraftServiceTest {
 	@Mock
 	PresentationService presentationService;
 
-	@Test
-	public void makePresentationDraftFinalUnlabeledTest() {
+//	@Test
+//	public void makePresentationDraftFinalUnlabeledTest() {
+//
+//		List<PresentationDraft> listUnlabeled = new ArrayList<>();
+//		PresentationDraft pd1 = new PresentationDraft();
+//		pd1.setLabel(PresentationDraft.Label.UNLABELED);
+//		listUnlabeled.add(pd1);
+//		
+//		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNLABELED)).thenReturn(listUnlabeled);
+//		
+//		int result = draftService.makePresentationDraftsFinal().getStatusCodeValue();
+//		
+//		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
+//		
+//		Assert.assertEquals(412, result);
+//	}
 
-		List<PresentationDraft> listUnlabeled = new ArrayList<>();
-		PresentationDraft pd1 = new PresentationDraft();
-		pd1.setLabel(PresentationDraft.Label.UNLABELED);
-		listUnlabeled.add(pd1);
-		
-		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNLABELED)).thenReturn(listUnlabeled);
-		
-		int result = draftService.makePresentationDraftsFinal().getStatusCodeValue();
-		
-		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
-		
-		Assert.assertEquals(412, result);
-	}
-
-	@Test
-	public void makePresentationDraftFinalUndeterminedTest() {
-		List<PresentationDraft> listUndetermined = new ArrayList<>();
-		PresentationDraft presUndetermined = new PresentationDraft();
-		presUndetermined.setLabel(Label.UNDETERMINED);
-		listUndetermined.add(presUndetermined);
-
-		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNDETERMINED)).thenReturn(listUndetermined);
-		
-		int response412 = draftService.makePresentationDraftsFinal().getStatusCodeValue();
-		
-		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNDETERMINED);
-
-		Assert.assertEquals(412, response412);
-	}
+//	@Test
+//	public void makePresentationDraftFinalUndeterminedTest() {
+//		List<PresentationDraft> listUndetermined = new ArrayList<>();
+//		PresentationDraft presUndetermined = new PresentationDraft();
+//		presUndetermined.setLabel(Label.UNDETERMINED);
+//		listUndetermined.add(presUndetermined);
+//
+//		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNDETERMINED)).thenReturn(listUndetermined);
+//		
+//		int response412 = draftService.makePresentationDraftsFinal().getStatusCodeValue();
+//		
+//		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNDETERMINED);
+//
+//		Assert.assertEquals(412, response412);
+//	}
 
 	@Test
 	public void findByLabelTest() {
