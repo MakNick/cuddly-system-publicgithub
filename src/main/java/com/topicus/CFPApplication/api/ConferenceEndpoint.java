@@ -1,5 +1,6 @@
 package com.topicus.CFPApplication.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -48,11 +49,13 @@ public class ConferenceEndpoint {
 			@ApiResponse(code = 404, message = "No conferences could be found") })
 	@GetMapping("api/conference")
 	public ResponseEntity<Iterable<Conference>> conferenceList() {
-		List<Conference> result = (List<Conference>) conferenceService.findAll();
-		if (!result.isEmpty()) {
-			return ResponseEntity.ok(result);
-		}
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	Iterable<Conference> result = conferenceService.findAll();
+	return ResponseEntity.ok(result);
+//		List<Conference> result = (List<Conference>) conferenceService.findAll();
+//		if (!result.isEmpty()) {
+//			return ResponseEntity.ok().body(result);
+//		}
+//		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
 
 	@ApiOperation("Retrieves a conference by ID")

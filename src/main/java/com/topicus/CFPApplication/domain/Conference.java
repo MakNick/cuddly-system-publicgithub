@@ -21,6 +21,9 @@ import javax.persistence.OneToOne;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -83,7 +86,6 @@ public class Conference {
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
 		this.presentationDrafts.add(presentationDraft);
-		presentationDraft.setConference(this);
 	}
 
 	// Getters en Setters:
@@ -175,6 +177,7 @@ public class Conference {
 		this.presentationDraftForm = presentationDraftForm;
 	}
 
+
 	@Entity
 	@ApiModel(value = "Extra", description = "Any extra facilities that will be available for the conference")
 	public static class Extra{
@@ -188,10 +191,6 @@ public class Conference {
 		
 		@ApiModelProperty(position = 3, value = "How long the extra facility will by available for the duration of the conference", hidden = true)
 		private Period duration;
-		
-		@ManyToOne
-		@ApiModelProperty(position = 4, value = "The conference to which this extra facility belongs")
-		private Conference conference;
 
 		public String getName() {
 			return name;
@@ -217,13 +216,6 @@ public class Conference {
 			this.duration = duration;
 		}
 
-		public Conference getConference() {
-			return conference;
-		}
-
-		public void setConference(Conference conference) {
-			this.conference = conference;
-		}
 	}
 	
 	@Entity
@@ -240,10 +232,6 @@ public class Conference {
 		@JoinColumn(name = "stage_name")
 		@ApiModelProperty(position = 2, value = "Attributes of the stage will be added here")
 		private Set<Attribute> attributes;
-		
-		@ManyToOne
-		@ApiModelProperty(position = 3, value = "Holds the conference to which this stage belongs")
-		private Conference conference;
 
 		public Set<Attribute> getAttributes() {
 			return attributes;
@@ -259,14 +247,6 @@ public class Conference {
 
 		public void setName(String name) {
 			this.name = name;
-		}
-		
-		public Conference getConference() {
-			return conference;
-		}
-
-		public void setConference(Conference conference) {
-			this.conference = conference;
 		}
 
 		@Entity

@@ -142,7 +142,7 @@ public class MailEndpoint {
 	@ApiOperation("Will find a MailTemplate(object with String text) from the database")
 	@ApiResponses({ @ApiResponse(code = 200, message = "template was found and send to frontend")})
 	@GetMapping("api/email/template/{template-id}")
-	public ResponseEntity/*<Email>*/ getTemplate (@ApiParam(required = true, name = "template-id", value = "id of template-mail") @PathVariable(name = "template-id") int id) {
+	public ResponseEntity<MailTemplate> getTemplate (@ApiParam(required = true, name = "template-id", value = "id of template-mail") @PathVariable(name = "template-id") int id) {
 		
 		
 		return null;
@@ -152,13 +152,13 @@ public class MailEndpoint {
 	 * this will send a specified text as email to the applicants of a presentationDraft
 	 */
 	
-	@PostMapping("api/sendmail/{id}/{mailtemplate}")
+	@PostMapping("api/sendmail/{id}")
 	public ResponseEntity sendSpecifiedMail (
 			@ApiParam(required = true, name = "id", value = "presentationdraft ID") @PathVariable(name = "id") long id,
-			@ApiParam(required = true, name = "mailtemplate", value = "MailTemplate-object") @PathVariable(name = "mailtemplate") MailTemplate mailtemplate) {
+			MailTemplate mailTemplate) {
 		Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
 		if (result.isPresent()) {
-			mailService.sendMailText(result.get(), mailtemplate.getContent());	
+			mailService.sendMailText(result.get(), mailTemplate.getContent());	
 			return ResponseEntity.status(HttpStatus.OK).build();		
 		} else {
 			ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -166,7 +166,6 @@ public class MailEndpoint {
 		return null;	
 	}
 			
-
 	/*
 	 * @return ResponseEntity<Iterable<Applicant>>
 	 */
