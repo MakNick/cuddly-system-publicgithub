@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,10 +39,10 @@ public class ConferenceService {
 	public void delete(long id) {
 		conferenceRepository.deleteById(id);
 	}
-	
+
 	public Iterable<PresentationDraft> findPresentationDrafts(Conference conference, int label) {
 		Set<PresentationDraft> set = conference.getPresentationDrafts();
-		
+
 		Label L = null;
 		Label L2 = null;
 		switch (label) {
@@ -67,17 +66,15 @@ public class ConferenceService {
 		case 5:
 			return set;
 		}
-		
+
 		Set<PresentationDraft> sendset = new HashSet<PresentationDraft>();
-		
+
 		for (PresentationDraft p : set) {
 			if (p.getLabel() == L || p.getLabel() == L2) {
 				sendset.add(p);
-				}
-			}	
-		return sendset;		
+			}
 		}
-	
-	
+		return sendset;
 	}
 
+}

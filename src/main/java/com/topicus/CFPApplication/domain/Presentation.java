@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -101,5 +100,5 @@ public class Presentation {
 	public void setApplicants(Set<Applicant> applicants) {
 		this.applicants = applicants;
 	}
-	
+
 }

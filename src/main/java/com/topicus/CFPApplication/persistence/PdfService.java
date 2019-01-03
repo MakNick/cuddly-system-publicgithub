@@ -1,5 +1,6 @@
 package com.topicus.CFPApplication.persistence;
 
+import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,11 +33,11 @@ public class PdfService {
 			for (int i = 0; i < listPresentations.size(); i++) {
 				addContent(content, listPresentations.get(i));
 				if (i != listPresentations.size() - 1) {
-					content.add(" "); // to create new page
+					content.add(" "); // to create new page for a different presentationDraft
 				}
 			}
 			try {
-				pdfWriter.savePdf(content);
+				pdfWriter.saveAllPresentationDraft(content);
 				return 1;
 			} catch (IOException e) {
 				return 2;
@@ -51,7 +52,7 @@ public class PdfService {
 		if (presentationDraft.isPresent()) {
 			content = addContent(content, presentationDraft.get());
 			try {
-				pdfWriter.savePdf(content, id);
+				pdfWriter.saveSinglePresentationDrafts(content, id);
 				return 1;
 			} catch (IOException e) {
 				return 2;
@@ -86,5 +87,40 @@ public class PdfService {
 			content.add("Requests: " + app.getRequests());
 		}
 		return content;
+	}
+
+	public int printAllPdf() throws PrinterException {
+		List<PresentationDraft> listPresentations = (List<PresentationDraft>) presentationDraftRepository.findAll();
+		List<String> content = new ArrayList<>();
+		if (!listPresentations.isEmpty()) {
+			for (int i = 0; i < listPresentations.size(); i++) {
+				addContent(content, listPresentations.get(i));
+				if (i != listPresentations.size() - 1) {
+					content.add(" "); // to create new page
+				}
+			}
+			try {
+				pdfWriter.printAllPdf(content);
+				return 1;
+			} catch (IOException e) {
+				return 2;
+			}
+		}
+		return 3;
+	}
+
+	public int printSinglePdf(Long id) throws PrinterException {
+		Optional<PresentationDraft> presentationDraft = presentationDraftRepository.findById(id);
+		List<String> content = new ArrayList<>();
+		if (presentationDraft.isPresent()) {
+			content = addContent(content, presentationDraft.get());
+			try {
+				pdfWriter.printSinglePdf(content, id);
+				return 1;
+			} catch (IOException e) {
+				return 2;
+			}
+		}
+		return 3;
 	}
 }

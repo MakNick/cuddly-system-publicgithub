@@ -11,7 +11,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.ResponseEntity;
 
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
@@ -46,7 +45,7 @@ public class PresentationDraftServiceTest {
 //		listUnlabeled.add(pd1);
 //		
 //		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNLABELED)).thenReturn(listUnlabeled);
-//		
+//		 fe	
 //		int result = draftService.makePresentationDraftsFinal().getStatusCodeValue();
 //		
 //		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
@@ -144,13 +143,13 @@ public class PresentationDraftServiceTest {
 		Assert.assertEquals(pres, testItem);
 
 	}
-	
+
 	@Test
 	public void deleteOkTest() {
 		PresentationDraft pres = new PresentationDraft();
 		Optional<PresentationDraft> opt = Optional.of(pres);
 		Long id = 1L;
-		
+
 		Mockito.when(this.draftRepo.findById(id)).thenReturn(opt);
 
 		Boolean result = this.draftService.delete(id);
@@ -160,18 +159,18 @@ public class PresentationDraftServiceTest {
 		Assert.assertEquals(true, result);
 
 	}
-	
+
 	@Test
 	public void deleteFailedTest() {
 		Optional<PresentationDraft> opt = Optional.ofNullable(null);
 		Long id = 1L;
-		
+
 		Mockito.when(this.draftRepo.findById(id)).thenReturn(opt);
 
 		Boolean result = this.draftService.delete(id);
 
 		Mockito.verify(this.draftRepo, Mockito.times(0)).deleteById(id);
-		
+
 		Assert.assertEquals(false, result);
 
 	}
