@@ -47,33 +47,33 @@ public class Conference {
 	@Autowired
 	@Column(name = "category")
 	@ElementCollection(fetch = FetchType.EAGER)
-	@CollectionTable(name = "categories", joinColumns = @JoinColumn(name = "conference_id"))
+	@JoinColumn(name = "conference_id")
 	@ApiModelProperty(position = 7, value = "Categories that can be assigned to presentations will be added here")
 	private Set<String> categories;
 	
 	@Autowired
 	@Column(name = "stage")
 	@OneToMany(fetch = FetchType.EAGER)
-	@CollectionTable(name = "stages", joinColumns = @JoinColumn(name = "conference_id"))
+	@JoinColumn(name = "conference_id")
 	@ApiModelProperty(position = 8, value = "Available stages for the presentations will be added here", hidden = true)
 	private Set<Stage> stages;
 	
 	@Autowired
 	@Column(name = "extra")
 	@OneToMany(fetch = FetchType.EAGER)
-	@CollectionTable(name = "extras", joinColumns = @JoinColumn(name = "conference_id"))
+	@JoinColumn(name = "conference_id")
 	@ApiModelProperty(position = 9, value = "Extra facilities for the conference will be added here", hidden = true)
 	private Set<Extra> extras;
 	
 	@Column(name = "day")
 	@OneToMany(fetch = FetchType.EAGER)
-	@CollectionTable(name = "days", joinColumns = @JoinColumn(name = "conference_id"))
+	@JoinColumn(name = "conference_id")
 	@ApiModelProperty(position = 10, value = "Duration in days", hidden = true)
 	private Set<Day> days = new HashSet<Day>();
 
 	@Column(name = "presentationdraft")
 	@OneToMany(fetch = FetchType.EAGER)
-	@CollectionTable(name = "presentation_drafts", joinColumns = @JoinColumn(name = "conference_id"))
+	@JoinColumn(name = "conference_id")
 	@ApiModelProperty(position = 11, value = "All presentations from this conference will be added to this list", hidden = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 	
@@ -86,7 +86,7 @@ public class Conference {
 		presentationDraft.setConference(this);
 	}
 
-	// Getters en Setters:'
+	// Getters en Setters:
 	public Set<Stage> getStages() {
 		return stages;
 	}
@@ -237,7 +237,7 @@ public class Conference {
 		@Autowired
 		@Column(name = "attribute")
 		@OneToMany(fetch = FetchType.EAGER)
-		@CollectionTable(name = "attributes", joinColumns = @JoinColumn(name = "stage_name"))
+		@JoinColumn(name = "stage_name")
 		@ApiModelProperty(position = 2, value = "Attributes of the stage will be added here")
 		private Set<Attribute> attributes;
 		

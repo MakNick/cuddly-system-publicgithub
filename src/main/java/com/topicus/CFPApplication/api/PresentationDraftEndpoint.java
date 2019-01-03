@@ -73,7 +73,7 @@ public class PresentationDraftEndpoint {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a presentationdraft with the given ID"),
 			@ApiResponse(code = 404, message = "Could not retrieve a presentationdraft with the given ID") })
 	@GetMapping("api/presentationdraft/{id}")
-	public ResponseEntity<Object> findById(
+	public ResponseEntity<?> findById(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id) {
 		if (id != null && id > 0) {
 			Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
@@ -94,7 +94,7 @@ public class PresentationDraftEndpoint {
 			@ApiResponse(code = 404, message = "Could not find a presentationdraft with the given ID"),
 			@ApiResponse(code = 304, message = "This label has already been assigned to this presentationdraft")})
 	@PostMapping("api/presentationdraft/{id}/label/{value}")
-	public ResponseEntity<Object> changeLabel(
+	public ResponseEntity<?> changeLabel(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id,
 			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined", type = "Integer") @PathVariable("value") Integer value) {
 		if (id != null && id > 0 && value != null && value > 0 && value <= 4) {

@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Applicant;
-import com.topicus.CFPApplication.domain.PdfWriter;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 
 @Service
