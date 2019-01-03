@@ -61,7 +61,22 @@
 			<scope>provided</scope>
 		</dependency>
 
-
+		<!-- Arquillian JUnit Standalone -->
+		<dependency>
+		    <groupId>org.jboss.arquillian.junit</groupId>
+		    <artifactId>arquillian-junit-standalone</artifactId>
+		    <version>1.4.0.Final</version>
+		    <scope>test</scope>
+		</dependency>
+		
+		<dependency>
+    		<groupId>org.jboss.arquillian.graphene</groupId>
+    		<artifactId>graphene-webdriver</artifactId>
+    		<version>2.3.2</version>
+    		<type>pom</type>
+    		<scope>test</scope>
+		</dependency>
+		
 		<!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui -->
 		<dependency>
 			<groupId>io.springfox</groupId>
@@ -102,6 +117,11 @@
 			<artifactId>pdfbox</artifactId>
 			<version>2.0.12</version>
 		</dependency>
+		<dependency>
+   			<groupId>org.apache.poi</groupId>
+    		<artifactId>poi-ooxml</artifactId>
+    		<version>3.15</version>
+  		</dependency>
 		<dependency>
 			<groupId>org.bouncycastle</groupId>
 			<artifactId>bcprov-jdk15on</artifactId>

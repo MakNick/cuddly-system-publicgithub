@@ -51,6 +51,7 @@ public class PresentationDraft {
 	@ApiModelProperty(position = 7, example = "2018-05-23T01:20:30")
 	private LocalDateTime timeOfCreation = LocalDateTime.now();
 
+	@ApiModel(value = "Label", description = "Labels that can be assigned to presentation drafts")
 	public enum Label {
 		UNLABELED, DENIED, ACCEPTED, RESERVED, UNDETERMINED
 	}
@@ -64,10 +65,6 @@ public class PresentationDraft {
 			@JoinColumn(name = "presentationDraft_id") }, inverseJoinColumns = { @JoinColumn(name = "applicant_id") })
 	@ApiModelProperty(position = 9, required = true, value = "This list hold the hosts of this presentationdraft")
 	private Set<Applicant> applicants = new HashSet<Applicant>();
-
-	@ManyToOne
-	@ApiModelProperty(position = 10, required = true, value = "Conference to which this presentationdraft belongs")
-	private Conference conference;
 
 	public void addApplicant(Applicant applicant) {
 		this.applicants.add(applicant);
@@ -146,8 +143,4 @@ public class PresentationDraft {
 		this.category = category;
 	}
 
-	@ApiModelProperty(hidden = true)
-	public void setConference(Conference conference) {
-		this.conference = conference;
-	}
 }

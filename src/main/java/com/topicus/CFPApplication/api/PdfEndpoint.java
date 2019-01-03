@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(value = "PdfEndpoint", description = "create PDF")
+@Api(value = "PdfEndpoint", description = "Create PDF file")
 public class PdfEndpoint {
 
 	private PdfService pdfService;

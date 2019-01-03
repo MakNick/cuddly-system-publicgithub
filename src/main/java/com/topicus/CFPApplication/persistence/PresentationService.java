@@ -33,6 +33,7 @@ public class PresentationService {
 			presentation.setDuration(draft.getDuration());
 			for (Applicant applicant : draft.getApplicants()) {
 				presentation.addApplicant(applicant);
+				applicant.addPresentation(presentation);
 			}
 			save(presentation);
 			presentationList.add(presentation);

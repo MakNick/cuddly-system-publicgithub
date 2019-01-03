@@ -1,6 +1,5 @@
 package com.topicus.CFPApplication.persistence;
 
-import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,39 +13,42 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.topicus.CFPApplication.persistence.FileService;
+
 @Component
 public class PdfWriter {
 
+	PDDocument document;
+
 	private FileService fileService;
-	private PrintService printService;
 
 	@Autowired
-	public PdfWriter(FileService fileService, PrintService printService) {
+	public PdfWriter(FileService fileService) {
 		this.fileService = fileService;
-		this.printService = printService;
 	}
 
-	public PDDocument createPdfFile(List<String> content, Long id) throws IOException {
-		PDDocument document = new PDDocument(); // Creating PDF document object
+	public void writePdf(List<String> content, Long id) throws IOException {
+
+		document = new PDDocument(); // Creating PDF document object
 		PDPage page = new PDPage(); // Creating a blank page
 		PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
 		document.addPage(page);// Adding the blank page to the document
 
 		PDFont pdfFont = PDType1Font.COURIER; // Select font
-		float fontSize = 10f; //font size
-		float lineSpace = 1.3f * fontSize; //The amount of space from the bottom of one line of text to the bottom of the next line
+		float fontSize = 10f;
+		float leading = 1.5f * fontSize;
 
 		PDRectangle mediabox = page.getMediaBox(); // Creating margins
-		float margin = 50f;
-		float width = mediabox.getWidth() - 1.7f * margin;
+		float margin = 52;
+		float width = mediabox.getWidth() - 1.5f * margin;
 		float startX = mediabox.getLowerLeftX() + margin;
 		float startY = mediabox.getUpperRightY() - margin;
 
 		List<String> lines = new ArrayList<String>();
-		for (String text : content) { 
+		for (String text : content) {
 			int lastSpace = -1;
-			while (text.length() > 0) { // if the text reaches the end of the page, it will continue on the next line
+			while (text.length() > 0) {
 				int spaceIndex = text.indexOf(' ', lastSpace + 1);
 				if (spaceIndex < 0)
 					spaceIndex = text.length();
@@ -67,55 +69,39 @@ public class PdfWriter {
 				}
 			}
 		}
-		contentStream.beginText();// Begin the content stream
-		contentStream.setFont(pdfFont, fontSize);// Setting the font to the content stream
+		contentStream.beginText();// Begin the Content stream
+		contentStream.setFont(pdfFont, fontSize);// Setting the font to the Content stream
 		contentStream.newLineAtOffset(startX, startY);// Setting the position for the line
 
-		float currentY = startY;
 		for (String line : lines) { // Adding text in the form of string
-			currentY -= lineSpace;
-			// if the currentY hits the margin, line will continue on the next page
-			// if line is equal to " " (see PdfService.class), the text will continue on the next page
-			if (currentY <= margin || " ".equals(line)) {
+			if (" ".equals(line)) {
 				contentStream.endText();
 				contentStream.close();
-				PDPage newPage = new PDPage();
-				document.addPage(newPage);
-				contentStream = new PDPageContentStream(document, newPage);
+				PDPage new_Page = new PDPage();
+				document.addPage(new_Page);
+				contentStream = new PDPageContentStream(document, new_Page);
 				contentStream.beginText();
 				contentStream.setFont(pdfFont, fontSize);
 				contentStream.newLineAtOffset(startX, startY);
-				currentY = startY;
 			}
-			contentStream.showText(line); // Add the text on the content stream
-			contentStream.newLineAtOffset(0, -lineSpace);
+			contentStream.showText(line);
+			contentStream.newLineAtOffset(0, -leading);
 		}
 		contentStream.endText();// Ending the content stream
 		contentStream.close();// Closing the content stream
-		return document;
 	}
 
-	public void saveSinglePresentationDrafts(List<String> content, Long id) throws IOException {
-		PDDocument document = createPdfFile(content, id); 
+	public void savePdf(List<String> content, Long id) throws IOException {
+		document = new PDDocument(); // Creating PDF document object
+		writePdf(content, id);
 		document.save(fileService.saveDocumentInSaveDialog("presentationDraft" + id + ".pdf"));// Saving the document
 		document.close(); // Closing the document
 	}
 
-	public void saveAllPresentationDraft(List<String> content) throws IOException {
-		PDDocument document = createPdfFile(content, 0l);
-		document.save(fileService.saveDocumentInSaveDialog("presentationDraftAll.pdf"));// Saving the document
-		document.close(); // Closing the document
-	}
-
-	public void printSinglePdf(List<String> content, Long id) throws PrinterException, IOException {
-		PDDocument document = createPdfFile(content, id);
-		printService.printDocument(document); // print the document
-		document.close(); // Closing the document
-	}
-
-	public void printAllPdf(List<String> content) throws PrinterException, IOException {
-		PDDocument document = createPdfFile(content, 0l);
-		printService.printDocument(document); // print the document
+	public void savePdf(List<String> content) throws IOException {
+		document = new PDDocument(); // Creating PDF document object
+		writePdf(content, 0L);
+		document.save(fileService.saveDocumentInSaveDialog("presentationDraftAll.pdf"));
 		document.close(); // Closing the document
 	}
 }
