@@ -1,5 +1,6 @@
 package com.topicus.CFPApplication.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -44,14 +45,13 @@ public class ConferenceEndpoint {
 	}
 
 	@ApiOperation("Retrieves all available conference from the database")
-	@ApiResponses({ 
-		@ApiResponse(code = 200, message = "Successfully retrieved all conferences"),
-		@ApiResponse(code = 404, message = "No conferences could be found")})
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved all conferences"),
+			@ApiResponse(code = 404, message = "No conferences could be found") })
 	@GetMapping("api/conference")
 	public ResponseEntity<Iterable<Conference>> conferenceList() {
-		List<Conference> result = (List<Conference>)conferenceService.findAll();
-		if(!result.isEmpty()) {
-			return ResponseEntity.ok(result);
+		List<Conference> result = (List<Conference>) conferenceService.findAll();
+		if (!result.isEmpty()) {
+			return ResponseEntity.ok().body(result);
 		}
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	}
@@ -59,11 +59,11 @@ public class ConferenceEndpoint {
 	@ApiOperation("Retrieves a conference by ID")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a conference with the given ID"),
 			@ApiResponse(code = 404, message = "Could not retrieve a conference with the given ID"),
-			@ApiResponse(code = 400, message = "Invalid ID value")})
+			@ApiResponse(code = 400, message = "Invalid ID value") })
 	@GetMapping("api/conference/{id}")
 	public ResponseEntity<Conference> getConferenceById(
 			@ApiParam(required = true, name = "id", value = "Conference ID", type = "Long") @PathVariable("id") Long id) {
-		if(id != null && id > 0) {
+		if (id != null && id > 0) {
 			Optional<Conference> result = conferenceService.findById(id);
 			if (result.isPresent()) {
 				return ResponseEntity.ok(result.get());
@@ -74,12 +74,11 @@ public class ConferenceEndpoint {
 	}
 
 	@ApiOperation(value = "Adds a new conference")
-	@ApiResponses({ 
-		@ApiResponse(code = 200, message = "Successfully added a conference"),
-		@ApiResponse(code = 400, message = "Invalid conference object")})
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a conference"),
+			@ApiResponse(code = 400, message = "Invalid conference object") })
 	@PostMapping("api/conference")
 	public ResponseEntity<Conference> saveConference(@RequestBody @Valid Conference conference) {
-		if(conference != null) {
+		if (conference != null) {
 			return ResponseEntity.ok(conferenceService.save(conference));
 		}
 		return ResponseEntity.badRequest().build();
@@ -88,12 +87,12 @@ public class ConferenceEndpoint {
 	@ApiOperation(value = "Adds a new presentation at he given conference ID")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a new conference"),
 			@ApiResponse(code = 404, message = "Conference with the given ID doest not exist"),
-			@ApiResponse(code = 400, message = "ID value or presentationdraftapplicant is invalid")})
+			@ApiResponse(code = 400, message = "ID value or presentationdraftapplicant is invalid") })
 	@PostMapping("api/conference/{id}/savepresentationdraft")
 	public ResponseEntity<Object> savePresentationDraftInConference(
 			@ApiParam(required = true, name = "id", value = "Conference ID") @PathVariable("id") Long id,
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
-		if(id != null && id > 0 && presentationDraftApplicant != null) {
+		if (id != null && id > 0 && presentationDraftApplicant != null) {
 			PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 			Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
 			presentationDraft = subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants);
@@ -117,7 +116,7 @@ public class ConferenceEndpoint {
 			try {
 				conferenceService.delete(id);
 				return ResponseEntity.ok().build();
-			}catch(Exception e) {
+			} catch (Exception e) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 			}
 		}

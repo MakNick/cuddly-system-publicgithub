@@ -124,5 +124,11 @@ public class MailService {
 			return 3;
 		}
 	}
+	
+	public void sendMailText(PresentationDraft presentationDraft, String text) {
+		for (Applicant a : presentationDraft.getApplicants()) {
+			emailSender.send(prepareAndSend(a.getEmail(), a.getName(), text, "demo-template-text"));
+		}
+	}
 
 }
