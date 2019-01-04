@@ -15,13 +15,16 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.ServerSetup;
-import com.topicus.CFPApplication.domain.MailContentBuilder;
+import com.topicus.CFPApplication.domain.Applicant;
+import com.topicus.CFPApplication.domain.PresentationDraft;
+import com.topicus.CFPApplication.persistence.mail.MailContentBuilder;
+import com.topicus.CFPApplication.persistence.mail.MailService;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
 public class MailServiceIT {
 	 
-    private GreenMail smtpServer = new GreenMail(new ServerSetup(25, null, "smtp"));
+    private GreenMail smtpServer = new GreenMail(new ServerSetup(25, null, "smtp"));    
     
     @Autowired
     private MailService mailService;
@@ -46,6 +49,7 @@ public class MailServiceIT {
         assertEquals(1, receivedMessages.length);
         String content = receivedMessages[0].getContent().toString().trim();
         assertEquals(expected, content);
-    }
-	     
+    }	     
 }
+
+

@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -48,7 +49,7 @@ public class ApplicantEndpoint {
 		if (result.isPresent()) {
 			return ResponseEntity.ok(result.get());
 		} else {
-			return ResponseEntity.status(404).build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 	}
 
@@ -59,8 +60,8 @@ public class ApplicantEndpoint {
 	@GetMapping("api/applicant/{id}/presentationdrafts")
 	public ResponseEntity<Iterable<PresentationDraft>> showPresentationDraftsByApplicant(
 			@ApiParam(required = true, name = "id", value = "Applicant ID") @PathVariable("id") Long id) {
-		
-		if(id != null && id > 0) {
+
+		if (id != null && id > 0) {
 			Optional<Applicant> result = applicantService.showPresentationDraftsByApplicant(id);
 			if (result.isPresent()) {
 				Set<PresentationDraft> set = result.get().getPresentationDrafts();
@@ -68,7 +69,7 @@ public class ApplicantEndpoint {
 			} else {
 				return ResponseEntity.status(404).build();
 			}
-			
+
 		}
 		return ResponseEntity.badRequest().build();
 	}

@@ -17,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -51,6 +50,7 @@ public class PresentationDraft {
 	@ApiModelProperty(position = 7, example = "2018-05-23T01:20:30")
 	private LocalDateTime timeOfCreation = LocalDateTime.now();
 
+	@ApiModel(value = "Label", description = "Labels that can be assigned to presentation drafts")
 	public enum Label {
 		UNLABELED, DENIED, ACCEPTED, RESERVED, UNDETERMINED
 	}
@@ -65,10 +65,6 @@ public class PresentationDraft {
 	@ApiModelProperty(position = 9, required = true, value = "This list hold the hosts of this presentationdraft")
 	private Set<Applicant> applicants = new HashSet<Applicant>();
 
-	@ManyToOne
-	@ApiModelProperty(position = 10, required = true, value = "Conference to which this presentationdraft belongs")
-	private Conference conference;
-
 	public void addApplicant(Applicant applicant) {
 		this.applicants.add(applicant);
 	}
@@ -77,7 +73,7 @@ public class PresentationDraft {
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -144,10 +140,5 @@ public class PresentationDraft {
 
 	public void setCategory(String category) {
 		this.category = category;
-	}
-
-	@ApiModelProperty(hidden = true)
-	public void setConference(Conference conference) {
-		this.conference = conference;
 	}
 }
