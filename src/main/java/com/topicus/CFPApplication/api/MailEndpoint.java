@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
+import com.topicus.CFPApplication.domain.Conference.MailTemplate;
 import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.domain.mail.MailTemplate;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
 import com.topicus.CFPApplication.persistence.mail.MailService;
 
