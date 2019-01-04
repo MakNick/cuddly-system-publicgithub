@@ -33,7 +33,7 @@ public class PdfEndpoint {
 			@ApiResponse(code = 404, message = "No presentationdraft available"),
 			@ApiResponse(code = 412, message = "Cancelled save request") })
 	@GetMapping("api/download/pdf")
-	public ResponseEntity<Object> createPDF() {
+	public ResponseEntity<?> createPDF() {
 		int result = pdfService.getPresentationDraftsToPDF();
 		if (result == 1) {
 			return ResponseEntity.ok().build();
@@ -46,30 +46,33 @@ public class PdfEndpoint {
 
 	@ApiOperation(value = "Get single presentationDraft and create PDF ")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Create PDF succesfully"),
+			@ApiResponse(code = 400, message = "Invalid ID value"),
 			@ApiResponse(code = 404, message = "No presentationdraft ID available"),
 			@ApiResponse(code = 412, message = "Cancelled save request") })
 	@GetMapping("api/download/pdf/{id}")
-	public ResponseEntity<Object> getPresentationDraft(
+	public ResponseEntity<?> getPresentationDraft(
 			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id) {
-		int result = pdfService.getPresentationDraftToPDF(id);
-		if (result == 1) {
-			return ResponseEntity.ok().build();
-		} else if (result == 2) {
-			return new ResponseEntity<>("Save request was cancelled", HttpStatus.CONFLICT);
-		} else {
-			return new ResponseEntity<>("Could not find presentationdraft with the given ID", HttpStatus.NOT_FOUND);
+		if (id != null && id != 0) {
+			int result = pdfService.getPresentationDraftToPDF(id);
+			if (result == 1) {
+				return ResponseEntity.ok().build();
+			} else if (result == 2) {
+				return new ResponseEntity<>("Save request was cancelled", HttpStatus.CONFLICT);
+			} else {
+				return new ResponseEntity<>("Could not find presentationdraft with the given ID", HttpStatus.NOT_FOUND);
+			}
 		}
+		return ResponseEntity.badRequest().build();
 	}
 
 	@ApiOperation(value = "Print all presentationDrafts")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Printing PDF succesfully"),
-			@ApiResponse(code = 404, message = "No presentationdraft available"),
-			@ApiResponse(code = 412, message = "Cancelled print request") })
+			@ApiResponse(code = 400, message = "A error occured while trying to print file"),
+			@ApiResponse(code = 404, message = "No presentationdraft available") })
 	@GetMapping("api/print/pdf")
-	public ResponseEntity<Object> printAllPdf() {
-		int result;
+	public ResponseEntity<?> printAllPdf() {
 		try {
-			result = pdfService.printAllPdf();
+			int result = pdfService.printAllPdf();
 			if (result == 1) {
 				return ResponseEntity.ok().build();
 			} else if (result == 2) {
@@ -79,30 +82,31 @@ public class PdfEndpoint {
 			}
 		} catch (PrinterException e) {
 			e.printStackTrace();
+			return new ResponseEntity<>("A error occured while trying to print file", HttpStatus.BAD_REQUEST);
 		}
-		return new ResponseEntity<>("Print job was cancelled", HttpStatus.NOT_FOUND);
 	}
 
 	@ApiOperation(value = "Print single presentationDraft")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Printing PDF succesfully"),
-			@ApiResponse(code = 404, message = "No presentationdraft ID available"),
-			@ApiResponse(code = 412, message = "Cancelled print request") })
+			@ApiResponse(code = 400, message = "A error occured while trying to print file or invalid ID value"),
+			@ApiResponse(code = 404, message = "No presentationdraft available") })
 	@GetMapping("api/print/pdf/{id}")
-	public ResponseEntity<Object> printSinglePdf(
+	public ResponseEntity<?> printSinglePdf(
 			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id) {
-		int result;
-		try {
-			result = pdfService.printSinglePdf(id);
-			if (result == 1) {
-				return ResponseEntity.ok().build();
-			} else if (result == 2) {
-				return new ResponseEntity<>("Interrupted I/O operation.", HttpStatus.CONFLICT);
-			} else {
-				return new ResponseEntity<>("Could not find presentationdraft ID", HttpStatus.NOT_FOUND);
+		if (id != null && id != 0) {
+			try {
+				int result = pdfService.printSinglePdf(id);
+				if (result == 1) {
+					return ResponseEntity.ok().build();
+				} else if (result == 2) {
+					return new ResponseEntity<>("Interrupted I/O operation.", HttpStatus.CONFLICT);
+				} else {
+					return new ResponseEntity<>("Could not find presentationdraft ID", HttpStatus.NOT_FOUND);
+				}
+			} catch (PrinterException e) {
+				e.printStackTrace();
 			}
-		} catch (PrinterException e) {
-			e.printStackTrace();
 		}
-		return new ResponseEntity<>("Print job was cancelled", HttpStatus.NOT_FOUND);
+		return ResponseEntity.badRequest().build();
 	}
 }

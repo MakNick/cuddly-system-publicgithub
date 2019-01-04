@@ -27,23 +27,28 @@ public class PdfService {
 	}
 
 	public int getPresentationDraftsToPDF() {
-		List<PresentationDraft> listPresentations = (List<PresentationDraft>) presentationDraftRepository.findAll();
+		Iterable<PresentationDraft> iterableList = presentationDraftRepository.findAll();
 		List<String> content = new ArrayList<>();
-		if (!listPresentations.isEmpty()) {
-			for (int i = 0; i < listPresentations.size(); i++) {
-				addContent(content, listPresentations.get(i));
-				if (i != listPresentations.size() - 1) {
-					content.add(" "); // to create new page for a different presentationDraft
+		if (iterableList instanceof List) {
+			List<PresentationDraft> listPresentations = (List<PresentationDraft>) iterableList;
+			if (!listPresentations.isEmpty()) {
+				for (int i = 0; i < listPresentations.size(); i++) {
+					addContent(content, listPresentations.get(i));
+					if (i != listPresentations.size() - 1) {
+						content.add(" "); // to create new page for a different presentationDraft
+					}
 				}
+				try {
+					pdfWriter.saveAllPresentationDraft(content);
+					return 1;
+				} catch (IOException e) {
+					return 2;
+				}
+
 			}
-			try {
-				pdfWriter.saveAllPresentationDraft(content);
-				return 1;
-			} catch (IOException e) {
-				return 2;
-			}
+			return 3;
 		}
-		return 3;
+		return -1;
 	}
 
 	public int getPresentationDraftToPDF(Long id) {
@@ -90,23 +95,27 @@ public class PdfService {
 	}
 
 	public int printAllPdf() throws PrinterException {
-		List<PresentationDraft> listPresentations = (List<PresentationDraft>) presentationDraftRepository.findAll();
+		Iterable<PresentationDraft> iterableList = presentationDraftRepository.findAll();
 		List<String> content = new ArrayList<>();
-		if (!listPresentations.isEmpty()) {
-			for (int i = 0; i < listPresentations.size(); i++) {
-				addContent(content, listPresentations.get(i));
-				if (i != listPresentations.size() - 1) {
-					content.add(" "); // to create new page
+		if (iterableList instanceof List) {
+			List<PresentationDraft> listPresentations = (List<PresentationDraft>) iterableList;
+			if (!listPresentations.isEmpty()) {
+				for (int i = 0; i < listPresentations.size(); i++) {
+					addContent(content, listPresentations.get(i));
+					if (i != listPresentations.size() - 1) {
+						content.add(" "); // to create new page for a different presentationDraft
+					}
+				}
+				try {
+					pdfWriter.printAllPdf(content);
+					return 1;
+				} catch (IOException e) {
+					return 2;
 				}
 			}
-			try {
-				pdfWriter.printAllPdf(content);
-				return 1;
-			} catch (IOException e) {
-				return 2;
-			}
+			return 3;
 		}
-		return 3;
+		return -1;
 	}
 
 	public int printSinglePdf(Long id) throws PrinterException {
