@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 import io.swagger.annotations.ApiModelProperty;
 
@@ -40,7 +39,7 @@ public class Presentation {
 	@ApiModelProperty(position = 6)
 	private int duration;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "Applicant_Presentation", joinColumns = {
 			@JoinColumn(name = "presentation_id") }, inverseJoinColumns = { @JoinColumn(name = "applicant_id") })
 	@ApiModelProperty(position = 7)

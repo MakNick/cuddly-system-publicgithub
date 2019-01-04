@@ -2,7 +2,10 @@ package com.topicus.CFPApplication.persistence;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import javax.naming.CannotProceedException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -11,8 +14,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.http.ResponseEntity;
 
+import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 
@@ -36,23 +39,29 @@ public class PresentationDraftServiceTest {
 
 	@Mock
 	PresentationService presentationService;
+	
+	@Mock
+	ConferenceRepository conferenceRepo;
+	
+	@InjectMocks
+	ConferenceService conferenceService;
 
-//	@Test
-//	public void makePresentationDraftFinalUnlabeledTest() {
-//
-//		List<PresentationDraft> listUnlabeled = new ArrayList<>();
-//		PresentationDraft pd1 = new PresentationDraft();
-//		pd1.setLabel(PresentationDraft.Label.UNLABELED);
-//		listUnlabeled.add(pd1);
-//		
-//		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNLABELED)).thenReturn(listUnlabeled);
-//		
-//		int result = draftService.makePresentationDraftsFinal().getStatusCodeValue();
-//		
-//		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
-//		
-//		Assert.assertEquals(412, result);
-//	}
+	@Test
+	public void makePresentationDraftFinalUnlabeledTest() throws CannotProceedException, NoSuchElementException {
+		Conference conf = new Conference();
+		conf.setId(1);
+		PresentationDraft pd1 = new PresentationDraft();
+		pd1.setLabel(PresentationDraft.Label.UNLABELED);
+		conf.addPresentationDraft(pd1);
+		
+		Iterable<PresentationDraft> result = this.conferenceService.findPresentationDrafts(conf, 0);
+		
+		int counter = 0;
+		if(result.iterator().hasNext()) {
+			counter++;
+		}
+		Assert.assertEquals(1, counter);
+	}
 
 //	@Test
 //	public void makePresentationDraftFinalUndeterminedTest() {
