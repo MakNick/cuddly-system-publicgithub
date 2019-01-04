@@ -3,12 +3,15 @@ package com.topicus.CFPApplication.api;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
@@ -135,15 +138,13 @@ public class MailEndpoint {
 	}
 
 	/*
-	 * this will find a MailTemplate(object with String text) from the database
+	 * this will find a MailTemplate(object with String text) from the database NOT FINISHED
 	 */
 
 	@ApiOperation("Will find a MailTemplate(object with String text) from the database")
 	@ApiResponses({ @ApiResponse(code = 200, message = "template was found and send to frontend") })
 	@GetMapping("api/email/template/{template-id}")
-	public ResponseEntity<MailTemplate> getTemplate(
-			@ApiParam(required = true, name = "template-id", value = "id of template-mail") @PathVariable(name = "template-id") int id) {
-
+	public ResponseEntity<MailTemplate> getTemplate (@ApiParam(required = true, name = "template-id", value = "id of template-mail") @PathVariable(name = "template-id") int id) {
 		return null;
 	}
 
@@ -151,23 +152,35 @@ public class MailEndpoint {
 	 * this will send a specified text as email to the applicants of a
 	 * presentationDraft
 	 */
-
+	@ApiOperation("Sends a specified email to the applicants of a presentationdraft")
+	@ApiResponses({
+			@ApiResponse(code = 200, message = "Mail was send to all applicants of the presentationdraft"), 
+			@ApiResponse(code = 409, message = "Not all the applicants have received the email"), 
+			@ApiResponse(code = 404, message = "Presentationdraft was not found."),
+			@ApiResponse(code = 501, message = "E-mail server was not setup")})
 	@PostMapping("api/sendmail/{id}")
 	public ResponseEntity<?> sendSpecifiedMail(
 			@ApiParam(required = true, name = "id", value = "presentationdraft ID") @PathVariable(name = "id") long id,
-			MailTemplate mailTemplate) {
+			@RequestBody @Valid MailTemplate mailTemplate) {
+		if(mailService.getConfigValues().get(1).equals("-1")) {
+			return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
+		}
 		Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
 		if (result.isPresent()) {
-			mailService.sendMailText(result.get(), mailTemplate.getContent());
-			return ResponseEntity.status(HttpStatus.OK).build();
+			List<Applicant> couldNotSend = mailService.sendMailText(result.get(), mailTemplate.getContent());	
+			if(couldNotSend.size() == 0) {
+				return ResponseEntity.status(HttpStatus.OK).build();
+			} else {
+				System.out.println(couldNotSend.get(0).getEmail());
+				return ResponseEntity.status(HttpStatus.CONFLICT).body(couldNotSend);
+			}	
 		} else {
-			ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
-		return null;
 	}
 
 	/*
-	 * @return ResponseEntity<Iterable<Applicant>>
+	 * @return ResponseEntity<Iterable<Applicant>> MOET AANGEPAST WORDEN NAAR ALLE APPLICANTEN VAN EEN CONFERENTIE
 	 */
 	@ApiOperation("Sends mail to all applicants in the database. You can only send HTML templates that are in the src/main/resources/templates folder")
 	@ApiResponses({
