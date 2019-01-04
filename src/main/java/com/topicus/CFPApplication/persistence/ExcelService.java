@@ -21,7 +21,6 @@ import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 
 @Service
-@Transactional
 public class ExcelService {
 
 	private ConferenceService conferenceService;
@@ -33,6 +32,7 @@ public class ExcelService {
 		this.fileService = fileService;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void createExcel(Long id) throws IOException, NoSuchElementException {
 		Optional<Conference> conference = conferenceService.findById(id);
 

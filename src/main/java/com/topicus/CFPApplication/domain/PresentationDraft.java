@@ -17,7 +17,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 import org.springframework.data.annotation.CreatedDate;
 
@@ -74,7 +73,7 @@ public class PresentationDraft {
 	public long getId() {
 		return id;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
 	}
@@ -142,5 +141,4 @@ public class PresentationDraft {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
 }
