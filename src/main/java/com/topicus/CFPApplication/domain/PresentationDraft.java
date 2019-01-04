@@ -141,5 +141,4 @@ public class PresentationDraft {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-
 }
