@@ -1,0 +1,42 @@
+/* font-family: 'Pacifico', cursive; */
+
+html, body {
+ /* background-color: hsla(256, 71%, 14%, 0.90); */
+ background-color: hsla(256, 71%, 14%, 0.90);
+ font-family: 'Ubuntu', serif;
+ color: white;
+ /* background-image: url("topiConf.png"); */
+ background-repeat: no-repeat;
+ background-size: cover;
+ background-attachment: fixed;
+ height: 100%;
+ min-height: 100%;
+ background-blend-mode: darken;
+}
+
+h1 {
+ font-family: 'Pacifico', cursive;
+ color: hsl(54, 100%, 50%);
+ /* text-transform: uppercase; */
+}
+
+h2, h3, h4, h5, h6 {
+ font-family: 'Ubuntu', sans-serif;
+ color: hsl(54, 100%, 50%);
+ text-transform: uppercase;
+}
+
+.navbar {
+ background-color: hsl(256, 71%, 14%);
+}
+
+.timer {
+  align-content: center;
+  font-family: 'Ubuntu', sans-serif;
+  color: hsl(54, 100%, 50%);
+  text-transform: uppercase;
+}
+
+.container {
+font-family: 'Pacifico', sans-serif;
+}
