@@ -89,7 +89,7 @@ public class Conference {
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
 		this.presentationDrafts.add(presentationDraft);
 	}
-	
+
 	public void addPresentation(Presentation presentation) {
 		this.presentations.add(presentation);
 	}

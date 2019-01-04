@@ -39,10 +39,10 @@ public class PresentationDraftServiceTest {
 
 	@Mock
 	PresentationService presentationService;
-	
+
 	@Mock
 	ConferenceRepository conferenceRepo;
-	
+
 	@InjectMocks
 	ConferenceService conferenceService;
 
@@ -53,11 +53,11 @@ public class PresentationDraftServiceTest {
 		PresentationDraft pd1 = new PresentationDraft();
 		pd1.setLabel(PresentationDraft.Label.UNLABELED);
 		conf.addPresentationDraft(pd1);
-		
+
 		Iterable<PresentationDraft> result = this.conferenceService.findPresentationDrafts(conf, 0);
-		
+
 		int counter = 0;
-		if(result.iterator().hasNext()) {
+		if (result.iterator().hasNext()) {
 			counter++;
 		}
 		Assert.assertEquals(1, counter);
@@ -153,13 +153,13 @@ public class PresentationDraftServiceTest {
 		Assert.assertEquals(pres, testItem);
 
 	}
-	
+
 	@Test
 	public void deleteOkTest() {
 		PresentationDraft pres = new PresentationDraft();
 		Optional<PresentationDraft> opt = Optional.of(pres);
 		Long id = 1L;
-		
+
 		Mockito.when(this.draftRepo.findById(id)).thenReturn(opt);
 
 		Boolean result = this.draftService.delete(id);
@@ -169,18 +169,18 @@ public class PresentationDraftServiceTest {
 		Assert.assertEquals(true, result);
 
 	}
-	
+
 	@Test
 	public void deleteFailedTest() {
 		Optional<PresentationDraft> opt = Optional.ofNullable(null);
 		Long id = 1L;
-		
+
 		Mockito.when(this.draftRepo.findById(id)).thenReturn(opt);
 
 		Boolean result = this.draftService.delete(id);
 
 		Mockito.verify(this.draftRepo, Mockito.times(0)).deleteById(id);
-		
+
 		Assert.assertEquals(false, result);
 
 	}

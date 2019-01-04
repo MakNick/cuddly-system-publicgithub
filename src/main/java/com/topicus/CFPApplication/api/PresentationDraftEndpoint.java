@@ -53,6 +53,7 @@ public class PresentationDraftEndpoint {
 		this.mailService = mailService;
 		this.presentationService = presentationService;
 		this.conferenceService = conferenceService;
+
 	}
 
 	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants")
@@ -171,7 +172,9 @@ public class PresentationDraftEndpoint {
 							List<Applicant> listApplicants = new ArrayList<>(draft.getApplicants());
 							for (Applicant applicant : listApplicants) {
 								mailService.sendMailText(applicant.getEmail(), applicant.getName(),
-										"jojo" + draft.getLabel().toString()); // GETNAME CONFERENCE AANPASSEN NAAR GETTEMPLATE TEXT VANUIT INNERCLASS IN CONFERENCE!
+										"jojo" + draft.getLabel().toString()); // GETNAME CONFERENCE AANPASSEN NAAR
+																				// GETTEMPLATE TEXT VANUIT INNERCLASS IN
+																				// CONFERENCE!
 							}
 						}
 					}

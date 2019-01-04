@@ -100,5 +100,5 @@ public class Presentation {
 	public void setApplicants(Set<Applicant> applicants) {
 		this.applicants = applicants;
 	}
-	
+
 }
