@@ -21,10 +21,6 @@ public class Day {
 	@ApiModelProperty(position = 2, required = true,  value="End date of the conference",
 			example = "2018-05-23T01:20:30")
 	private LocalDateTime end;
-	
-	@ManyToOne
-	@ApiModelProperty(position = 3, value="Holds the conference to which this object belongs")
-	private Conference conference;
 
 	public LocalDateTime getEnd() {
 		return end;
@@ -40,14 +36,6 @@ public class Day {
 
 	public void setStart(LocalDateTime start) {
 		this.start = start;
-	}
-
-	public Conference getConference() {
-		return conference;
-	}
-
-	public void setConference(Conference conference) {
-		this.conference = conference;
 	}
 
 }
