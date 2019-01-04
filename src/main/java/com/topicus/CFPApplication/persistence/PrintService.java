@@ -1,5 +1,6 @@
 package com.topicus.CFPApplication.persistence;
 
+import java.awt.HeadlessException;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 
@@ -15,12 +16,16 @@ public class PrintService {
 	public void printDocument(PDDocument document) {
 		PrinterJob job = PrinterJob.getPrinterJob();
 		job.setPageable(new PDFPageable(document));
-		if (job.printDialog()) {
-			try {
-				job.print();
-			} catch (PrinterException e) {
-				e.printStackTrace();
+		try {
+			if (job.printDialog()) {
+				try {
+					job.print();
+				} catch (PrinterException e) {
+					e.printStackTrace();
+				}
 			}
+		} catch (HeadlessException he) {
+			he.printStackTrace();
 		}
 	}
 }
