@@ -12,32 +12,25 @@ import com.topicus.CFPApplication.domain.PresentationDraftConference;
 @Transactional
 public class RequestCategorizedDraftsService {
 
-	private PresentationDraftRepository pdrep;
-	private PresentationDraftService pdser;
-	private ConferenceRepository crep;
-	private ConferenceService cser;
-	private PresentationDraftConference pdconf;
+	private ConferenceService conferenceService;
+	private PresentationDraftConference presentationDraftConference;
 	
 	@Autowired
-	public RequestCategorizedDraftsService(PresentationDraftRepository pdrep,
-			ConferenceRepository crep, PresentationDraftService pdser, ConferenceService cser) {
-		this.pdrep = pdrep;
-		this.pdser = pdser;
-		this.crep = crep;
-		this.cser = cser;
+	public RequestCategorizedDraftsService(ConferenceService conferenceService) {
+		this.conferenceService = conferenceService;
 	}
 	
 	//Method gets called when both Conference and Category exist
 	public Iterable<PresentationDraft> findPresentationDraftsByCategory(Conference conference, String category){
-		Iterable<PresentationDraft> allDraftsFromConference = cser.findPresentationDrafts(conference, 5);
-		pdconf = new PresentationDraftConference();
+		Iterable<PresentationDraft> allDraftsFromConference = conferenceService.findPresentationDrafts(conference, 5);
+		presentationDraftConference = new PresentationDraftConference();
 		
 		for(PresentationDraft pdraft : allDraftsFromConference) {
 			if(pdraft.getCategory().equals(category)) {
-				pdconf.addPresentationDraft(pdraft);
+				presentationDraftConference.addPresentationDraft(pdraft);
 			}
 		}
-		return pdconf.getPresentationDrafts();
+		return presentationDraftConference.getPresentationDrafts();
 	}
 	
 	

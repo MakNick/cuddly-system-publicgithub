@@ -40,11 +40,12 @@ public class ConferenceEndpoint {
 	private ConferenceService conferenceService;
 
 	private SubscribeService subscribeService;
-	
+
 	private RequestCategorizedDraftsService requestCategorizedDraftsService;
 
 	@Autowired
-	public ConferenceEndpoint(ConferenceService conferenceService, SubscribeService subscribeService, RequestCategorizedDraftsService requestCategorizedDraftsService) {
+	public ConferenceEndpoint(ConferenceService conferenceService, SubscribeService subscribeService,
+			RequestCategorizedDraftsService requestCategorizedDraftsService) {
 		this.conferenceService = conferenceService;
 		this.subscribeService = subscribeService;
 		this.requestCategorizedDraftsService = requestCategorizedDraftsService;
@@ -148,22 +149,28 @@ public class ConferenceEndpoint {
 	}
 
 	@ApiOperation("Retrieves Presentationdrafts for a conference of a certain category. If a non-existing category is passed, then all categories will be shown.")
-	@RequestMapping(path = "api/findpresentationdraftsbycategory", method = RequestMethod.GET)//, consumes = "application/json")
-	public ResponseEntity<Iterable<PresentationDraft>> findPresentationdraftsByCategory(@RequestParam(value = "id", required = true) Long id, @RequestParam(value = "category", required=true) String category) {
-		category = category.substring(1, category.length()-1);
-		Optional<Conference> conference = conferenceService.findById(id);
-		if (conference.isPresent()) {
-			if(conference.get().getCategories().contains(category)) {
-				Iterable<PresentationDraft> result = requestCategorizedDraftsService.findPresentationDraftsByCategory(conference.get(), category);
-				return ResponseEntity.ok(result);
-			}else if(category.equals("Toon alle")) {
-				Iterable<PresentationDraft> result = conferenceService.findPresentationDrafts(conference.get(), 5);
-				return ResponseEntity.ok(result);
-			}else {
-				return ResponseEntity.status(417).build();
+	@GetMapping(path = "api/findpresentationdraftsbycategory")
+	public ResponseEntity<Iterable<PresentationDraft>> findPresentationdraftsByCategory(
+			@RequestParam(value = "id", required = true) Long id,
+			@RequestParam(value = "category", required = true) String category) {
+		if (category != null && id != null && id > 0) {
+			category = category.substring(1, category.length() - 1);
+			Optional<Conference> conference = conferenceService.findById(id);
+			if (conference.isPresent()) {
+				if (conference.get().getCategories().contains(category)) {
+					Iterable<PresentationDraft> result = requestCategorizedDraftsService
+							.findPresentationDraftsByCategory(conference.get(), category);
+					return ResponseEntity.ok(result);
+				} else if (category.equals("Toon alle")) {
+					Iterable<PresentationDraft> result = conferenceService.findPresentationDrafts(conference.get(), 5);
+					return ResponseEntity.ok(result);
+				} else {
+					return ResponseEntity.status(417).build();
+				}
 			}
+			return ResponseEntity.status(404).build();
 		}
-		return ResponseEntity.status(404).build();
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 
 }
