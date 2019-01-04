@@ -181,7 +181,7 @@ public class MailEndpoint {
 	}
 			
 	/*
-	 * @return ResponseEntity<Iterable<Applicant>>
+	 * @return ResponseEntity<Iterable<Applicant>> MOET AANGEPAST WORDEN NAAR ALLE APPLICANTEN VAN EEN CONFERENTIE
 	 */
 	@ApiOperation("Sends mail to all applicants in the database. You can only send HTML templates that are in the src/main/resources/templates folder")
 	@ApiResponses({ @ApiResponse(code = 200, message = "E-mail was send to the host with of the presentationdraft with the given ID"),

@@ -136,5 +136,4 @@ public class MailService {
 		}
 		return couldNotSendList;
 	}
-
 }
