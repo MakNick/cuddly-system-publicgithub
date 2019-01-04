@@ -1,7 +1,5 @@
 package com.topicus.CFPApplication.domain;
 
-import static org.junit.Assert.*;
-
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +13,7 @@ public class ConferenceTest {
 		Conference c = new Conference();
 		PresentationDraft pd = new PresentationDraft();
 		c.addPresentationDraft(pd);
-		
+
 		Assert.assertEquals(1, c.getPresentationDrafts().size());
 	}
 

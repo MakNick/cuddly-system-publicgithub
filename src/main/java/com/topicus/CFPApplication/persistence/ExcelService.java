@@ -32,6 +32,7 @@ public class ExcelService {
 		this.fileService = fileService;
 	}
 
+	@SuppressWarnings("deprecation")
 	public void createExcel(Long id) throws IOException, NoSuchElementException {
 		Optional<Conference> conference = conferenceService.findById(id);
 

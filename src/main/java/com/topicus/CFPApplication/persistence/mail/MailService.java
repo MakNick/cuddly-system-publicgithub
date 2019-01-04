@@ -13,6 +13,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
@@ -20,6 +21,7 @@ import com.topicus.CFPApplication.persistence.ApplicantService;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
 
 @Service
+@Transactional
 public class MailService {
 
 	private MailContentBuilder mailContentBuilder;
@@ -122,6 +124,12 @@ public class MailService {
 			return 2;
 		} catch (Exception e) {
 			return 3;
+		}
+	}
+	
+	public void sendMailText(PresentationDraft presentationDraft, String text) {
+		for (Applicant a : presentationDraft.getApplicants()) {
+			emailSender.send(prepareAndSend(a.getEmail(), a.getName(), text, "demo-template-text"));
 		}
 	}
 

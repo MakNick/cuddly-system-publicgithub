@@ -1,9 +1,11 @@
 package com.topicus.CFPApplication.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.naming.CannotProceedException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +22,9 @@ import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
+import com.topicus.CFPApplication.persistence.PresentationService;
 import com.topicus.CFPApplication.persistence.SubscribeService;
+import com.topicus.CFPApplication.persistence.mail.MailService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -34,25 +38,14 @@ public class PresentationDraftEndpoint {
 
 	private PresentationDraftService presentationDraftService;
 	private SubscribeService subscribeService;
-
+	private MailService mailService;
+	
 	@Autowired
 	public PresentationDraftEndpoint(PresentationDraftService presentationDraftService,
-			SubscribeService subscribeService) {
+			SubscribeService subscribeService, MailService mailService, PresentationService presentationService) {
 		this.presentationDraftService = presentationDraftService;
 		this.subscribeService = subscribeService;
-
-	}
-
-	// Deze kan weg zodra we via een conference de presentationdrafts ophalen
-	@ApiOperation("Retrieves all available presentationdrafts from the database")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved all presentationdrafts") })
-	@GetMapping("api/presentationdraft")
-	public ResponseEntity<Object> listPresentationDrafts() {
-		List<PresentationDraft> presentationDrafts = (List<PresentationDraft>) presentationDraftService.findAll();
-		if (presentationDrafts.isEmpty()) {
-			return new ResponseEntity<>("Presentationdraft list is empty", HttpStatus.NOT_FOUND);
-		}
-		return ResponseEntity.ok(presentationDrafts);
+		this.mailService = mailService;
 	}
 
 	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants")
@@ -92,7 +85,7 @@ public class PresentationDraftEndpoint {
 			@ApiResponse(code = 200, message = "Successfully changed the label of the conference with the given ID"),
 			@ApiResponse(code = 400, message = "Invalid ID or label value"),
 			@ApiResponse(code = 404, message = "Could not find a presentationdraft with the given ID"),
-			@ApiResponse(code = 304, message = "This label has already been assigned to this presentationdraft")})
+			@ApiResponse(code = 304, message = "This label has already been assigned to this presentationdraft") })
 	@PostMapping("api/presentationdraft/{id}/label/{value}")
 	public ResponseEntity<?> changeLabel(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id,
@@ -112,50 +105,72 @@ public class PresentationDraftEndpoint {
 	}
 
 	@ApiOperation("Deletes a presentationdraft by ID")
-	@ApiResponses({
-			@ApiResponse(code = 200, message = "Successfully deleted the presentationdraft with the given ID"),
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully deleted the presentationdraft with the given ID"),
 			@ApiResponse(code = 400, message = "Invalid ID value given"),
 			@ApiResponse(code = 404, message = "Could not find presentationdraft with the given ID") })
 	@DeleteMapping("api/presentationdraft/delete/{id}")
 	public ResponseEntity<Boolean> delete(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id) {
-		if(id > 0 && id != null) {
-			if(presentationDraftService.delete(id)) {
-				return ResponseEntity.ok(true);				
+		if (id > 0 && id != null) {
+			if (presentationDraftService.delete(id)) {
+				return ResponseEntity.ok(true);
 			} else {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(false);
-			} 
+			}
 		}
 		return ResponseEntity.badRequest().build();
 	}
 
-	
 	@ApiOperation("Retrieves all presentationdrafts with the given label value")
 	@ApiResponses({
-		@ApiResponse(code = 200, message = "Successfully retrieved all presentationdraft with the given label value"),
-		@ApiResponse(code = 400, message = "Invalid label value given"),
-		@ApiResponse(code = 404, message = "Could not find any presentationdrafts with the given label value") })	
+			@ApiResponse(code = 200, message = "Successfully retrieved all presentationdraft with the given label value"),
+			@ApiResponse(code = 400, message = "Invalid label value given"),
+			@ApiResponse(code = 404, message = "Could not find any presentationdrafts with the given label value") })
 	@GetMapping("api/presentationdraft/findbylabel/{value}")
 	public ResponseEntity<Iterable<PresentationDraft>> listPresentationDraftsByLabel(
 			@ApiParam(required = true, name = "value", value = "0. Unlabeled 1. Denied 2. Accepted 3. Reserved 4. Undetermined", type = "Integer") @PathVariable("value") Integer value) {
-		if(value >=0 && value <= 4 && value != null) {
+		if (value >= 0 && value <= 4 && value != null) {
 			Iterable<PresentationDraft> presentationDraftsByLabel = presentationDraftService.findByLabel(value);
-			if(((List<PresentationDraft>) presentationDraftsByLabel).size() == 0) {
+			if (((List<PresentationDraft>) presentationDraftsByLabel).size() == 0) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 			} else {
-				return ResponseEntity.ok(presentationDraftsByLabel);				
+				return ResponseEntity.ok(presentationDraftsByLabel);
 			}
-		} 
+		}
 		return ResponseEntity.badRequest().build();
 	}
 
 	@ApiOperation("Finalize all presentationdrafts")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully finalized all presentationdrafts"),
 			@ApiResponse(code = 412, message = "Deadline has not yet passed, or there are still presentationdrafts with the label value of: undetermined or unlabeled"),
-			@ApiResponse(code = 418, message = "Presentationdrafts have already been finalized")})
-	@GetMapping("api/presentationdraft/finalize")
-	public ResponseEntity<Object> makePresentationDraftsFinal() {
-		return presentationDraftService.makePresentationDraftsFinal();
+			@ApiResponse(code = 418, message = "Presentationdrafts have already been finalized") })
+	@GetMapping("api/{conferenceId}/presentationdraft/finalize")
+	public ResponseEntity<Object> makePresentationDraftsFinal(
+			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId) {
+		if (conferenceId > 0 && conferenceId != null) {
+			try {
+				for (int label = 1; label < 4; label++) {
+					List<PresentationDraft> listPresentationDrafts = presentationDraftService
+							.makePresentationDraftsFinal(conferenceId, label);
+//					if(label == 2) {
+//						presentationService.makePresentation((ArrayList<PresentationDraft>)listPresentationDrafts);
+//					}
+					for (PresentationDraft draft : listPresentationDrafts) {
+						List<Applicant> listApplicants = new ArrayList<>(draft.getApplicants());
+						for (Applicant applicant : listApplicants) {
+							mailService.sendMailText(applicant.getEmail(), applicant.getName(),
+									"jojo" + draft.getLabel().toString()); // GETNAME CONFERENCE AANPASSEN NAAR
+																			// GETTEMPLATE TEXT!
+						}
+					}
+				}
+				return new ResponseEntity<>("Finalize mails sent (Accepted, reserved and denied)", HttpStatus.OK);
+			} catch (CannotProceedException cpe) {
+				return new ResponseEntity<>("Deadline not passed or Unlabeled presentationDrafts not empty",
+						HttpStatus.PRECONDITION_FAILED);
+			}
+		}
+		return new ResponseEntity<>("Invalid conference ID", HttpStatus.NOT_FOUND);
 	}
 
 	@ApiOperation(value = "Adds a presentationdraft", hidden = true)

@@ -6,7 +6,6 @@ import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -258,10 +257,6 @@ public class Conference {
 		@ApiModelProperty(position = 2, value = "Attributes of the stage will be added here")
 		private Set<Attribute> attributes;
 
-		@ManyToOne
-		@ApiModelProperty(position = 3, value = "Holds the conference to which this stage belongs", hidden = true)
-		private Conference conference;
-
 		public Set<Attribute> getAttributes() {
 			return attributes;
 		}
@@ -361,5 +356,4 @@ public class Conference {
 		}
 
 	}
-
 }
