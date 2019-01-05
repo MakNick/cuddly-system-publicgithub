@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,7 @@ public class PdfService {
 		this.presentationDraftRepository = presentationDraftRepository;
 	}
 
-	public int getPresentationDraftsToPDF() {
+	public PDDocument getPresentationDraftsToPDF() {
 		Iterable<PresentationDraft> iterableList = presentationDraftRepository.findAll();
 		List<String> content = new ArrayList<>();
 		if (iterableList instanceof List) {
@@ -39,31 +40,31 @@ public class PdfService {
 					}
 				}
 				try {
-					pdfWriter.saveAllPresentationDraft(content);
-					return 1;
+					PDDocument result = pdfWriter.saveAllPresentationDraft(content);
+					return result;
 				} catch (IOException e) {
-					return 2;
+					return null;
 				}
 
 			}
-			return 3;
+			return null;
 		}
-		return -1;
+		return null;
 	}
 
-	public int getPresentationDraftToPDF(Long id) {
+	public PDDocument getPresentationDraftToPDF(Long id) {
 		Optional<PresentationDraft> presentationDraft = presentationDraftRepository.findById(id);
 		List<String> content = new ArrayList<>();
 		if (presentationDraft.isPresent()) {
 			content = addContent(content, presentationDraft.get());
 			try {
-				pdfWriter.saveSinglePresentationDrafts(content, id);
-				return 1;
+				PDDocument result = pdfWriter.saveSinglePresentationDrafts(content, id);
+				return result;
 			} catch (IOException e) {
-				return 2;
+				return null;
 			}
 		}
-		return 3;
+		return null;
 	}
 
 	private List<String> addContent(List<String> content, PresentationDraft presentationDraft) {

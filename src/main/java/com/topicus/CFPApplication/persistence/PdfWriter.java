@@ -17,12 +17,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class PdfWriter {
 
-	private FileService fileService;
 	private PrintService printService;
 
 	@Autowired
-	public PdfWriter(FileService fileService, PrintService printService) {
-		this.fileService = fileService;
+	public PdfWriter(PrintService printService) {
 		this.printService = printService;
 	}
 
@@ -97,16 +95,14 @@ public class PdfWriter {
 		return document;
 	}
 
-	public void saveSinglePresentationDrafts(List<String> content, Long id) throws IOException {
+	public PDDocument saveSinglePresentationDrafts(List<String> content, Long id) throws IOException {
 		PDDocument document = createPdfFile(content, id);
-		document.save(fileService.saveDocumentInSaveDialog("presentationDraft" + id + ".pdf"));// Saving the document
-		document.close(); // Closing the document
+		return document;
 	}
 
-	public void saveAllPresentationDraft(List<String> content) throws IOException {
+	public PDDocument saveAllPresentationDraft(List<String> content) throws IOException {
 		PDDocument document = createPdfFile(content, 0l);
-		document.save(fileService.saveDocumentInSaveDialog("presentationDraftAll.pdf"));// Saving the document
-		document.close(); // Closing the document
+		return document;
 	}
 
 	public void printSinglePdf(List<String> content, Long id) throws PrinterException, IOException {

@@ -1,6 +1,5 @@
 package com.topicus.CFPApplication.persistence;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,23 +24,20 @@ import com.topicus.CFPApplication.domain.PresentationDraft;
 public class ExcelService {
 
 	private ConferenceService conferenceService;
-	private FileService fileService;
 
 	@Autowired
-	public ExcelService(ConferenceService conferenceService, FileService fileService) {
+	public ExcelService(ConferenceService conferenceService) {
 		this.conferenceService = conferenceService;
-		this.fileService = fileService;
 	}
 
 	@SuppressWarnings("deprecation")
-	public void createExcel(Long id) throws IOException, NoSuchElementException {
+	public XSSFWorkbook createExcel(Long id) throws IOException, NoSuchElementException {
 		Optional<Conference> conference = conferenceService.findById(id);
 
 		if (conference.isPresent()) {
 			List<PresentationDraft> listPresentations = new ArrayList<>(conference.get().getPresentationDrafts());
 			XSSFWorkbook workbook = new XSSFWorkbook();
 			XSSFSheet sheet = workbook.createSheet("All PresentationDrafts");
-			String FILE_NAME = fileService.saveDocumentInSaveDialog("PresentationDrafts.xlsx");
 
 			CellStyle leftAligned = workbook.createCellStyle();
 			leftAligned.setAlignment(CellStyle.ALIGN_LEFT);
@@ -97,10 +93,7 @@ public class ExcelService {
 				}
 				colNum = 0;
 			}
-
-			FileOutputStream outputStream = new FileOutputStream(FILE_NAME);
-			workbook.write(outputStream);
-			workbook.close();
+			return workbook;
 		} else {
 			throw new NoSuchElementException();
 		}

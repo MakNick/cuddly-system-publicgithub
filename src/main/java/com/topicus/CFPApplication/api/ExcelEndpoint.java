@@ -1,9 +1,12 @@
 package com.topicus.CFPApplication.api;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,20 +36,37 @@ public class ExcelEndpoint {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully created Excel spreadsheet"),
 			@ApiResponse(code = 404, message = "Conference and/or conference ID not found"),
 			@ApiResponse(code = 412, message = "Save request was cancelled or shut down"), })
-	@GetMapping("api/{conferenceId}/excel")
-	public ResponseEntity<Object> createExcel(
+	@GetMapping("api/{conferenceId}/download/excel")
+	public ResponseEntity<byte[]> createExcel(
 			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId) {
 		if (conferenceId > 0 && conferenceId != null) {
 			try {
-				excelService.createExcel(conferenceId);
-				return new ResponseEntity<>("Save completed", HttpStatus.OK);
+				XSSFWorkbook wb = excelService.createExcel(conferenceId);
+				if (wb != null) {
+					ByteArrayOutputStream baos = new ByteArrayOutputStream();
+					wb.write(baos);
+
+					byte[] outputArray = baos.toByteArray();
+
+					HttpHeaders headers = new HttpHeaders();
+					headers.add("Content-Type", "application/octet-stream");
+					headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+					headers.setContentLength(outputArray.length);
+
+					ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(outputArray, headers, HttpStatus.OK);
+
+					wb.close();
+					baos.close();
+					return response;
+				} else {
+					return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
+				}
 			} catch (NoSuchElementException nsee) {
-				return new ResponseEntity<>("Conference and/or conference ID not found", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 			} catch (IOException e) {
-				return new ResponseEntity<>("Cancelled save request", HttpStatus.PRECONDITION_FAILED);
+				return new ResponseEntity<>(new byte[0], HttpStatus.PRECONDITION_FAILED);
 			}
 		}
-		return new ResponseEntity<>("Invalid conference ID", HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 	}
-
 }

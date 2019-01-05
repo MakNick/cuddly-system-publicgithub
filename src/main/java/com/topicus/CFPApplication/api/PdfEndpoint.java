@@ -1,8 +1,12 @@
 package com.topicus.CFPApplication.api;
 
 import java.awt.print.PrinterException;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,14 +37,26 @@ public class PdfEndpoint {
 			@ApiResponse(code = 404, message = "No presentationdraft available"),
 			@ApiResponse(code = 412, message = "Cancelled save request") })
 	@GetMapping("api/download/pdf")
-	public ResponseEntity<?> createPDF() {
-		int result = pdfService.getPresentationDraftsToPDF();
-		if (result == 1) {
-			return ResponseEntity.ok().build();
-		} else if (result == 2) {
-			return new ResponseEntity<>("Save request was cancelled", HttpStatus.CONFLICT);
+	public ResponseEntity<byte[]> createPDF() {
+		PDDocument result = pdfService.getPresentationDraftsToPDF();
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		if (result != null) {
+			try {
+				result.save(baos);
+				byte[] outputArray = baos.toByteArray();
+				HttpHeaders headers = new HttpHeaders();
+				headers.add("Content-Type", "application/octet-stream");
+				headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+				headers.setContentLength(outputArray.length);
+				ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(outputArray, headers, HttpStatus.OK);
+				baos.close();
+				result.close();
+				return response;
+			} catch (IOException e) {
+				return new ResponseEntity<>(new byte[0], HttpStatus.CONFLICT);
+			}
 		} else {
-			return new ResponseEntity<>("No presentationdrafts available", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 		}
 	}
 
@@ -50,19 +66,32 @@ public class PdfEndpoint {
 			@ApiResponse(code = 404, message = "No presentationdraft ID available"),
 			@ApiResponse(code = 412, message = "Cancelled save request") })
 	@GetMapping("api/download/pdf/{id}")
-	public ResponseEntity<?> getPresentationDraft(
+	public ResponseEntity<byte[]> getPresentationDraft(
 			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id) {
 		if (id != null && id != 0) {
-			int result = pdfService.getPresentationDraftToPDF(id);
-			if (result == 1) {
-				return ResponseEntity.ok().build();
-			} else if (result == 2) {
-				return new ResponseEntity<>("Save request was cancelled", HttpStatus.CONFLICT);
+			PDDocument result = pdfService.getPresentationDraftToPDF(id);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			if (result != null) {
+				try {
+					result.save(baos);
+					byte[] outputArray = baos.toByteArray();
+					HttpHeaders headers = new HttpHeaders();
+					headers.add("Content-Type", "application/octet-stream");
+					headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+					headers.setContentLength(outputArray.length);
+					ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(outputArray, headers, HttpStatus.OK);
+					baos.close();
+					result.close();
+					return response;
+				} catch (IOException e) {
+					return new ResponseEntity<>(new byte[0], HttpStatus.CONFLICT);
+				}
 			} else {
-				return new ResponseEntity<>("Could not find presentationdraft with the given ID", HttpStatus.NOT_FOUND);
+				return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 			}
+		} else {
+			return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 		}
-		return ResponseEntity.badRequest().build();
 	}
 
 	@ApiOperation(value = "Print all presentationDrafts")

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,9 +32,9 @@ public class PdfServiceTest {
 	public void getPresentationDraftsToPDF() {
 		List<PresentationDraft> listJaviel = new ArrayList<>();
 		Mockito.when(this.presentationDraftRepository.findAll()).thenReturn(listJaviel);
-		int result = pdfService.getPresentationDraftsToPDF();
+		PDDocument result = pdfService.getPresentationDraftsToPDF();
 		Mockito.verify(this.presentationDraftRepository).findAll();
-		Assert.assertEquals(3, result);
+		Assert.assertNull(result);
 	}
 
 	@Test
@@ -41,9 +42,9 @@ public class PdfServiceTest {
 		Optional<PresentationDraft> pd = Optional.of(new PresentationDraft());
 		pd.get().setId(1);
 		Mockito.when(this.presentationDraftRepository.findById((long) 1)).thenReturn(pd);
-		int result = this.pdfService.getPresentationDraftToPDF((long) 1);
+		PDDocument result = this.pdfService.getPresentationDraftToPDF((long) 1);
 		Mockito.verify(this.presentationDraftRepository).findById((long) 1);
-		Assert.assertEquals(1, result);
+		Assert.assertNull(result);
 	}
 
 	@Test
