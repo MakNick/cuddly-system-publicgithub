@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiModelProperty;
 @Entity
 @ApiModel(value = "PresentationDraft", description = "Holds all values for the presentationdrafts")
 public class PresentationDraft {
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@ApiModelProperty(position = 1, required = true, value = "The unique identifier for the presentationdraft", hidden = true)
