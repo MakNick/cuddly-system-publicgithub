@@ -1,6 +1,7 @@
 package com.topicus.CFPApplication.persistence;
 
 import java.awt.print.PrinterException;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +20,6 @@ import com.topicus.CFPApplication.domain.PresentationDraft;
 @Service
 @Transactional
 public class PdfService {
-
 	private PdfWriter pdfWriter;
 	private ConferenceService conferenceService;
 
@@ -29,7 +29,7 @@ public class PdfService {
 		this.conferenceService = conferenceService;
 	}
 
-	public PDDocument getAllPresentationDraftsToPDF(Long conferenceId) throws IOException {
+	public PDDocument getAllPresentationDraftsToPDF(Long conferenceId) throws IOException, NoSuchElementException {
 		Optional<Conference> conferenceOpt = conferenceService.findById(conferenceId);
 		List<String> content = new ArrayList<>();
 		if (conferenceOpt.isPresent()) {
@@ -41,13 +41,14 @@ public class PdfService {
 					content.add(" "); // to create new page for a different presentationDraft
 				}
 			}
-			PDDocument pdd = pdfWriter.saveSinglePresentationDrafts(content, conferenceId);
+			PDDocument pdd = pdfWriter.saveAllPresentationDraft(content);
 			return pdd;
 		}
 		throw new NoSuchElementException();
 	}
 
-	public PDDocument getSinglePresentationDraftToPDF(long id, Long conferenceId) throws IOException {
+	public PDDocument getSinglePresentationDraftToPDF(long id, Long conferenceId)
+			throws IOException, NoSuchElementException {
 		Optional<Conference> conferenceOpt = conferenceService.findById(conferenceId);
 		List<String> content = new ArrayList<>();
 		if (conferenceOpt.isPresent()) {
@@ -59,7 +60,7 @@ public class PdfService {
 				}
 			}
 			if (content.isEmpty()) {
-				return null;
+				throw new FileNotFoundException();
 			} else {
 				PDDocument pdd = pdfWriter.saveSinglePresentationDrafts(content, id);
 				return pdd;
@@ -121,7 +122,6 @@ public class PdfService {
 			PresentationDraft first = sortedPresentationDraft.get(x);
 			PresentationDraft second = sortedPresentationDraft.get(x + 1);
 			if (first.getId() < second.getId()) {
-
 			} else {
 				sortedPresentationDraft.set(x, second);
 				sortedPresentationDraft.set(x + 1, first);
@@ -135,32 +135,30 @@ public class PdfService {
 	}
 
 	private void addContent(List<String> content, PresentationDraft presentationDraft) {
-		content.add("*ID PresentationDraft:* " + presentationDraft.getId());
-		content.add("*Subject:* "
+		content.add("ID PresentationDraft: " + presentationDraft.getId());
+		content.add("Subject: "
 				+ presentationDraft.getSubject().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
-		content.add("*Category:* "
+		content.add("Category: "
 				+ presentationDraft.getCategory().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		if (presentationDraft.getSummary().contains("\n") && presentationDraft.getSummary().contains("\r")) {
-			content.add("*Summary:* "
+			content.add("Summary: "
 					+ presentationDraft.getSummary().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		} else {
-			content.add("*Summary:* " + presentationDraft.getSummary());
+			content.add("*Summary: " + presentationDraft.getSummary());
 		}
-		content.add("*Type:* " + presentationDraft.getType());
-		content.add("*Duration:* " + presentationDraft.getDuration());
-		content.add("*Time of Creation:* " + presentationDraft.getTimeOfCreation());
-
+		content.add("Type: " + presentationDraft.getType());
+		content.add("Duration: " + presentationDraft.getDuration());
+		content.add("Time of Creation: " + presentationDraft.getTimeOfCreation());
 		for (Applicant app : presentationDraft.getApplicants()) {
-			content.add("*---------------------------------------*"); // seperating lines
-			content.add("*ID Applicant:* " + app.getId());
-			content.add("*Name:* " + app.getName().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
-			content.add("*E-mail:* " + app.getEmail().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
-			content.add("*Phone Number:* " + app.getPhonenumber());
-			content.add("*Occupation:* " + app.getOccupation());
-			content.add("*Gender:* " + app.getGender());
-			content.add("*Date of Birth:* " + app.getDateOfBirth());
+			content.add("---------------------------------------*"); // seperating lines
+			content.add("ID Applicant: " + app.getId());
+			content.add("Name: " + app.getName().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
+			content.add("E-mail: " + app.getEmail().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
+			content.add("Phone Number: " + app.getPhonenumber());
+			content.add("Occupation: " + app.getOccupation());
+			content.add("Gender: " + app.getGender());
 			content.add(
-					"*Requests:* " + app.getRequests().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
+					"Requests: " + app.getRequests().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		}
 	}
 }

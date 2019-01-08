@@ -16,13 +16,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PdfWriter {
-
-	private FileService fileService;
 	private PrintService printService;
 
 	@Autowired
-	public PdfWriter(FileService fileService, PrintService printService) {
-		this.fileService = fileService;
+	public PdfWriter(PrintService printService) {
 		this.printService = printService;
 	}
 
@@ -32,18 +29,15 @@ public class PdfWriter {
 		PDPageContentStream contentStream = new PDPageContentStream(pdDocument, page);
 
 		pdDocument.addPage(page);// Adding the blank page to the document
-
 		PDFont pdfFont = PDType1Font.HELVETICA; // Select font
 		float fontSize = 10f; // font size
 		float lineSpace = 1.3f * fontSize; // The amount of space from the bottom of one line of text to the bottom of
 											// the next line
-
 		PDRectangle mediabox = page.getMediaBox(); // Creating margins
 		float margin = 50f;
 		float width = mediabox.getWidth() - 1.7f * margin;
 		float startX = mediabox.getLowerLeftX() + margin;
 		float startY = mediabox.getUpperRightY() - margin;
-
 		List<String> lines = new ArrayList<String>();
 		for (String text : content) {
 			int lastSpace = -1;
@@ -71,7 +65,6 @@ public class PdfWriter {
 		contentStream.beginText();// Begin the content stream
 		contentStream.setFont(pdfFont, fontSize);// Setting the font to the content stream
 		contentStream.newLineAtOffset(startX, startY);// Setting the position for the line
-
 		float currentY = startY;
 		for (String line : lines) { // Adding text in the form of string
 			currentY -= lineSpace;
@@ -99,15 +92,11 @@ public class PdfWriter {
 
 	public PDDocument saveSinglePresentationDrafts(List<String> content, Long id) throws IOException {
 		PDDocument document = createPdfFile(content, id);
-		document.save(fileService.saveDocumentInSaveDialog("presentationDraft" + id + ".pdf"));// Saving the document
-		document.close(); // Closing the document
 		return document;
 	}
 
 	public PDDocument saveAllPresentationDraft(List<String> content) throws IOException {
 		PDDocument document = createPdfFile(content, 0l);
-		document.save(fileService.saveDocumentInSaveDialog("presentationDraftAll.pdf"));// Saving the document
-		document.close(); // Closing the document
 		return document;
 	}
 

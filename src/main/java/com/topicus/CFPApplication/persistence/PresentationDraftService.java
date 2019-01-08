@@ -85,7 +85,7 @@ public class PresentationDraftService {
 	}
 
 	public List<PresentationDraft> makePresentationDraftsFinal(long conferenceId, int label)
-			throws CannotProceedException {
+			throws CannotProceedException,NoSuchElementException {
 		Optional<Conference> conference = conferenceService.findById(conferenceId);
 		if (conference.isPresent()) {
 			if (LocalDateTime.now().isBefore(conference.get().getDeadlinePresentationDraft())) {
