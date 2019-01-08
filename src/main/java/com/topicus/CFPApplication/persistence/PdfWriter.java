@@ -27,11 +27,11 @@ public class PdfWriter {
 	}
 
 	public PDDocument createPdfFile(List<String> content, Long id) throws IOException {
-		PDDocument document = new PDDocument(); // Creating PDF document object
+		PDDocument pdDocument = new PDDocument(); // Creating PDF document object
 		PDPage page = new PDPage(); // Creating a blank page
-		PDPageContentStream contentStream = new PDPageContentStream(document, page);
+		PDPageContentStream contentStream = new PDPageContentStream(pdDocument, page);
 
-		document.addPage(page);// Adding the blank page to the document
+		pdDocument.addPage(page);// Adding the blank page to the document
 
 		PDFont pdfFont = PDType1Font.HELVETICA; // Select font
 		float fontSize = 10f; // font size
@@ -82,8 +82,8 @@ public class PdfWriter {
 				contentStream.endText();
 				contentStream.close();
 				PDPage newPage = new PDPage();
-				document.addPage(newPage);
-				contentStream = new PDPageContentStream(document, newPage);
+				pdDocument.addPage(newPage);
+				contentStream = new PDPageContentStream(pdDocument, newPage);
 				contentStream.beginText();
 				contentStream.setFont(pdfFont, fontSize);
 				contentStream.newLineAtOffset(startX, startY);
@@ -94,7 +94,7 @@ public class PdfWriter {
 		}
 		contentStream.endText();// Ending the content stream
 		contentStream.close();// Closing the content stream
-		return document;
+		return pdDocument;
 	}
 
 	public PDDocument saveSinglePresentationDrafts(List<String> content, Long id) throws IOException {
@@ -104,10 +104,10 @@ public class PdfWriter {
 		return document;
 	}
 
-	public PDDocument saveAllPresentationDraft(List<String> content) throws IOException{
+	public PDDocument saveAllPresentationDraft(List<String> content) throws IOException {
 		PDDocument document = createPdfFile(content, 0l);
-//		document.save(fileService.saveDocumentInSaveDialog("presentationDraftAll.pdf"));// Saving the document
-//		document.close(); // Closing the document
+		document.save(fileService.saveDocumentInSaveDialog("presentationDraftAll.pdf"));// Saving the document
+		document.close(); // Closing the document
 		return document;
 	}
 

@@ -4,6 +4,7 @@ import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -29,7 +30,6 @@ public class PdfService {
 	}
 
 	public PDDocument getAllPresentationDraftsToPDF(Long conferenceId) throws IOException {
-		PDDocument pdd = null;
 		Optional<Conference> conferenceOpt = conferenceService.findById(conferenceId);
 		List<String> content = new ArrayList<>();
 		if (conferenceOpt.isPresent()) {
@@ -41,12 +41,13 @@ public class PdfService {
 					content.add(" "); // to create new page for a different presentationDraft
 				}
 			}
-			pdd = pdfWriter.saveAllPresentationDraft(content);
+			PDDocument pdd = pdfWriter.saveSinglePresentationDrafts(content, conferenceId);
+			return pdd;
 		}
-		return pdd;
+		throw new NoSuchElementException();
 	}
 
-	public int getSinglePresentationDraftToPDF(long id, Long conferenceId) {
+	public PDDocument getSinglePresentationDraftToPDF(long id, Long conferenceId) throws IOException {
 		Optional<Conference> conferenceOpt = conferenceService.findById(conferenceId);
 		List<String> content = new ArrayList<>();
 		if (conferenceOpt.isPresent()) {
@@ -58,17 +59,13 @@ public class PdfService {
 				}
 			}
 			if (content.isEmpty()) {
-				return -1;
+				return null;
 			} else {
-				try {
-					pdfWriter.saveSinglePresentationDrafts(content, id);
-					return 1;
-				} catch (IOException e) {
-					return 2;
-				}
+				PDDocument pdd = pdfWriter.saveSinglePresentationDrafts(content, id);
+				return pdd;
 			}
 		}
-		return 3;
+		throw new NoSuchElementException();
 	}
 
 	public int printAllPdf(Long conferenceId) throws PrinterException {
@@ -138,29 +135,32 @@ public class PdfService {
 	}
 
 	private void addContent(List<String> content, PresentationDraft presentationDraft) {
-		content.add("ID PresentationDraft: " + presentationDraft.getId());
-		content.add("Subject: " + presentationDraft.getSubject());
-		content.add("Category: " + presentationDraft.getCategory());
-		if (presentationDraft.getSummary() != null) {
-			content.add("Summary: "
-					+ (presentationDraft.getSummary().contains("\n") ? null : presentationDraft.getSummary().trim()));
+		content.add("*ID PresentationDraft:* " + presentationDraft.getId());
+		content.add("*Subject:* "
+				+ presentationDraft.getSubject().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
+		content.add("*Category:* "
+				+ presentationDraft.getCategory().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
+		if (presentationDraft.getSummary().contains("\n") && presentationDraft.getSummary().contains("\r")) {
+			content.add("*Summary:* "
+					+ presentationDraft.getSummary().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		} else {
-			content.add("Summary: ");
+			content.add("*Summary:* " + presentationDraft.getSummary());
 		}
-		content.add("Type: " + presentationDraft.getType());
-		content.add("Duration: " + presentationDraft.getDuration());
-		content.add("Time of Creation: " + presentationDraft.getTimeOfCreation());
+		content.add("*Type:* " + presentationDraft.getType());
+		content.add("*Duration:* " + presentationDraft.getDuration());
+		content.add("*Time of Creation:* " + presentationDraft.getTimeOfCreation());
 
 		for (Applicant app : presentationDraft.getApplicants()) {
-			content.add("-------------------"); // seperating lines
-			content.add("ID Applicant: " + app.getId());
-			content.add("Name: " + app.getName());
-			content.add("E-mail: " + app.getEmail());
-			content.add("Phone Number: " + app.getPhonenumber());
-			content.add("Occupation: " + app.getOccupation());
-			content.add("Gender: " + app.getGender());
-			content.add("Date of Birth: " + app.getDateOfBirth());
-			content.add("Requests: " + app.getRequests().trim());
+			content.add("*---------------------------------------*"); // seperating lines
+			content.add("*ID Applicant:* " + app.getId());
+			content.add("*Name:* " + app.getName().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
+			content.add("*E-mail:* " + app.getEmail().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
+			content.add("*Phone Number:* " + app.getPhonenumber());
+			content.add("*Occupation:* " + app.getOccupation());
+			content.add("*Gender:* " + app.getGender());
+			content.add("*Date of Birth:* " + app.getDateOfBirth());
+			content.add(
+					"*Requests:* " + app.getRequests().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		}
 	}
 }
