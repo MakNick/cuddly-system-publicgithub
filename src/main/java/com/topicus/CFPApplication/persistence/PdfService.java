@@ -70,11 +70,13 @@ public class PdfService {
 		content.add("ID PresentationDraft: " + presentationDraft.getId());
 		content.add("Subject: " + presentationDraft.getSubject());
 		content.add("Category: " + presentationDraft.getCategory());
+		System.out.println(">>"+presentationDraft.getSummary());
 		if (presentationDraft.getSummary() != null) {
 			content.add("Summary: "
 					+ (presentationDraft.getSummary().contains("\n") ? null : presentationDraft.getSummary()));
 		} else {
 			content.add("Summary: ");
+			
 		}
 		content.add("Type: " + presentationDraft.getType());
 		content.add("Duration: " + presentationDraft.getDuration());
