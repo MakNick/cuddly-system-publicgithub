@@ -172,7 +172,7 @@ public class PresentationDraftEndpoint {
 							List<Applicant> listApplicants = new ArrayList<>(draft.getApplicants());
 							for (Applicant applicant : listApplicants) {
 								mailService.sendMailText(applicant.getEmail(), applicant.getName(),
-										"jojo" + draft.getLabel().toString()); // GETNAME CONFERENCE AANPASSEN NAAR
+										"MailTemplate " + draft.getLabel().toString()); // GETNAME CONFERENCE AANPASSEN NAAR
 																				// GETTEMPLATE TEXT VANUIT INNERCLASS IN
 																				// CONFERENCE!
 							}

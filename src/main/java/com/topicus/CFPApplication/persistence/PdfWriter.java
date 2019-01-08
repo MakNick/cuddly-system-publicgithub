@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PdfWriter {
-
 	private PrintService printService;
 
 	@Autowired
@@ -25,23 +24,19 @@ public class PdfWriter {
 	}
 
 	public PDDocument createPdfFile(List<String> content, Long id) throws IOException {
-		PDDocument document = new PDDocument(); // Creating PDF document object
+		PDDocument pdDocument = new PDDocument(); // Creating PDF document object
 		PDPage page = new PDPage(); // Creating a blank page
-		PDPageContentStream contentStream = new PDPageContentStream(document, page);
-
-		document.addPage(page);// Adding the blank page to the document
-
-		PDFont pdfFont = PDType1Font.COURIER; // Select font
+		PDPageContentStream contentStream = new PDPageContentStream(pdDocument, page);
+		pdDocument.addPage(page);// Adding the blank page to the document
+		PDFont pdfFont = PDType1Font.HELVETICA; // Select font
 		float fontSize = 10f; // font size
 		float lineSpace = 1.3f * fontSize; // The amount of space from the bottom of one line of text to the bottom of
 											// the next line
-
 		PDRectangle mediabox = page.getMediaBox(); // Creating margins
 		float margin = 50f;
 		float width = mediabox.getWidth() - 1.7f * margin;
 		float startX = mediabox.getLowerLeftX() + margin;
 		float startY = mediabox.getUpperRightY() - margin;
-
 		List<String> lines = new ArrayList<String>();
 		for (String text : content) {
 			int lastSpace = -1;
@@ -69,7 +64,6 @@ public class PdfWriter {
 		contentStream.beginText();// Begin the content stream
 		contentStream.setFont(pdfFont, fontSize);// Setting the font to the content stream
 		contentStream.newLineAtOffset(startX, startY);// Setting the position for the line
-
 		float currentY = startY;
 		for (String line : lines) { // Adding text in the form of string
 			currentY -= lineSpace;
@@ -80,8 +74,8 @@ public class PdfWriter {
 				contentStream.endText();
 				contentStream.close();
 				PDPage newPage = new PDPage();
-				document.addPage(newPage);
-				contentStream = new PDPageContentStream(document, newPage);
+				pdDocument.addPage(newPage);
+				contentStream = new PDPageContentStream(pdDocument, newPage);
 				contentStream.beginText();
 				contentStream.setFont(pdfFont, fontSize);
 				contentStream.newLineAtOffset(startX, startY);
@@ -92,7 +86,7 @@ public class PdfWriter {
 		}
 		contentStream.endText();// Ending the content stream
 		contentStream.close();// Closing the content stream
-		return document;
+		return pdDocument;
 	}
 
 	public PDDocument saveSinglePresentationDrafts(List<String> content, Long id) throws IOException {

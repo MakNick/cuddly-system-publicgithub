@@ -36,8 +36,11 @@ public class PresentationServiceTest {
 		presentationDraft1.setLabel(Label.ACCEPTED);
 		PresentationDraft presentationDraft2 = new PresentationDraft();
 		presentationDraft2.setLabel(Label.ACCEPTED);
+		PresentationDraft presentationDraft3 = new PresentationDraft();
+		presentationDraft3.setLabel(Label.DENIED);
 		conf.addPresentationDraft(presentationDraft1);
 		conf.addPresentationDraft(presentationDraft2);
+		conf.addPresentationDraft(presentationDraft3);
 
 		ArrayList<PresentationDraft> listPresentationDrafts = new ArrayList<>();
 		Iterator<PresentationDraft> tempList = conf.getPresentationDrafts().iterator();
@@ -48,7 +51,8 @@ public class PresentationServiceTest {
 		for (Presentation presentation : presentationService.makePresentation(listPresentationDrafts, conf)) {
 			conf.addPresentation(presentation);
 		}
-		System.out.println(conf.getPresentations().size());
+
+		Assert.assertEquals(3, conf.getPresentationDrafts().size());
 		Assert.assertEquals(2, conf.getPresentations().size());
 	}
 
