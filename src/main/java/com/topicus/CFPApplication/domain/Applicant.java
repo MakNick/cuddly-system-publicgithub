@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -17,7 +18,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@JsonIgnoreProperties(value = "presentationDrafts")
+@JsonIgnoreProperties( { "presentationDrafts", "presentations" } )
 @ApiModel(value = "Applicant", description = "Holds all values for the applicant object")
 public class Applicant {
 
@@ -43,7 +44,7 @@ public class Applicant {
 	@ApiModelProperty(position = 7, required = true, value = "List of presentationDrafts that this applicant wants to host", hidden = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
-	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
+	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@ApiModelProperty(position = 8, required = true, value = "List of finalized presentations that this applicant will host", hidden = true)
 	private Set<Presentation> presentations = new HashSet<Presentation>();
 
