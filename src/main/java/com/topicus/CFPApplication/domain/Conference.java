@@ -17,11 +17,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 
 import io.swagger.annotations.ApiModel;
@@ -86,6 +84,12 @@ public class Conference {
 	@ApiModelProperty(position = 12, value = "All presentations from this conference will be added to this list", hidden = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
+	@Column(name = "presentation")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "conference_id")
+	@ApiModelProperty(position = 12, value = "All presentations from this conference will be added to this list", hidden = true)
+	private Set<Presentation> presentations = new HashSet<Presentation>();
+
 	@OneToOne
 	@ApiModelProperty(position = 13, value = "Form to be used for this conference", hidden = true)
 	private PresentationDraftForm presentationDraftForm;
@@ -93,7 +97,7 @@ public class Conference {
 	public void addCategorie(String categorie) {
 		this.categories.add(categorie);
 	}
-	
+
 	public void addStage(Stage stage) {
 		this.stages.add(stage);
 	}
@@ -112,6 +116,10 @@ public class Conference {
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
 		this.presentationDrafts.add(presentationDraft);
+	}
+
+	public void addPresentation(Presentation presentation) {
+		this.presentations.add(presentation);
 	}
 
 	// Getters en Setters:
@@ -201,6 +209,14 @@ public class Conference {
 
 	public void setPresentationDraftForm(PresentationDraftForm presentationDraftForm) {
 		this.presentationDraftForm = presentationDraftForm;
+	}
+
+	public Set<Presentation> getPresentations() {
+		return presentations;
+	}
+
+	public void setPresentations(Set<Presentation> presentations) {
+		this.presentations = presentations;
 	}
 
 	@Entity
