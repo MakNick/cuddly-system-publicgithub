@@ -2,10 +2,10 @@
 
 html, body {
  /* background-color: hsla(256, 71%, 14%, 0.90); */
- background-color: hsla(256, 71%, 14%, 0.90);
+ /* background-color: hsla(256, 71%, 14%, 0.90); */
  font-family: 'Ubuntu', serif;
  color: white;
- /* background-image: url("topiConf.png"); */
+ background-image: url('../assets/background.png');
  background-repeat: no-repeat;
  background-size: cover;
  background-attachment: fixed;
