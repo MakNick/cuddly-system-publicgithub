@@ -20,7 +20,6 @@ import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 
 @Service
-@Transactional
 public class ExcelService {
 
 	private ConferenceService conferenceService;
