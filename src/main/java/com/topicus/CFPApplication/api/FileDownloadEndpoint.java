@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(value = "ExcelEndpoint", description = "Create Excel spreadsheets")
+@Api(value = "FileDownloadEndpoint", description = "Create Excel and PDF files")
 public class FileDownloadEndpoint {
 
 	private ExcelService excelService;
@@ -39,7 +39,7 @@ public class FileDownloadEndpoint {
 	@ApiOperation("Creates Excel spreadsheet from specified conference ID")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully created Excel spreadsheet"),
 			@ApiResponse(code = 404, message = "Conference and/or conference ID not found"),
-			@ApiResponse(code = 412, message = "Save request was cancelled or shut down"), })
+			@ApiResponse(code = 409, message = "I/O Exception"), })
 	@GetMapping("api/{conferenceId}/download/excel")
 	public ResponseEntity<byte[]> createExcel(
 			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId) {
@@ -64,16 +64,16 @@ public class FileDownloadEndpoint {
 			} catch (NoSuchElementException nsee) {
 				return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 			} catch (IOException e) {
-				return new ResponseEntity<>(new byte[0], HttpStatus.PRECONDITION_FAILED);
+				return new ResponseEntity<>(new byte[0], HttpStatus.CONFLICT);
 			}
 		}
 		return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 	}
-	
+
 	@ApiOperation(value = "Get all presentationDrafts and create PDF")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Create PDF succesfully"),
 			@ApiResponse(code = 404, message = "No presentationdraft available"),
-			@ApiResponse(code = 412, message = "Cancelled save request") })
+			@ApiResponse(code = 409, message = "I/O Exception") })
 	@GetMapping("api/{conferenceId}/download/pdf")
 	public ResponseEntity<byte[]> getAllPdf(
 			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId) {
@@ -106,9 +106,8 @@ public class FileDownloadEndpoint {
 
 	@ApiOperation(value = "Get single presentationDraft and create PDF ")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Create PDF succesfully"),
-			@ApiResponse(code = 400, message = "Invalid ID value"),
-			@ApiResponse(code = 404, message = "No presentationdraft ID available"),
-			@ApiResponse(code = 412, message = "Cancelled save request") })
+			@ApiResponse(code = 404, message = "No presentationdraft and/or conference ID available"),
+			@ApiResponse(code = 409, message = "I/O Exception") })
 	@GetMapping("api/{conferenceId}/download/pdf/{id}")
 	public ResponseEntity<byte[]> getPresentationDraft(
 			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id,

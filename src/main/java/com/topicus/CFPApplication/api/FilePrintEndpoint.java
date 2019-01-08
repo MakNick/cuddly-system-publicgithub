@@ -8,7 +8,7 @@ import com.topicus.CFPApplication.persistence.PdfService;
 import io.swagger.annotations.Api;
 
 @RestController
-@Api(value = "PdfEndpoint", description = "Create PDF file")
+@Api(value = "FilePrintEndpoint", description = "Print files")
 public class FilePrintEndpoint {
 
 	private PdfService pdfService;

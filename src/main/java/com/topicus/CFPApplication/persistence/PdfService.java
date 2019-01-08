@@ -134,7 +134,7 @@ public class PdfService {
 		return sortedPresentationDraft;
 	}
 
-	public List<String> addContent(List<String> content, PresentationDraft presentationDraft) {
+	private void addContent(List<String> content, PresentationDraft presentationDraft) {
 		content.add("ID PresentationDraft: " + presentationDraft.getId());
 		content.add("Subject: "
 				+ presentationDraft.getSubject().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
@@ -157,10 +157,8 @@ public class PdfService {
 			content.add("Phone Number: " + app.getPhonenumber());
 			content.add("Occupation: " + app.getOccupation());
 			content.add("Gender: " + app.getGender());
-			content.add("Date of Birth: " + app.getDateOfBirth());
 			content.add(
 					"Requests: " + app.getRequests().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		}
-		return content;
 	}
 }
