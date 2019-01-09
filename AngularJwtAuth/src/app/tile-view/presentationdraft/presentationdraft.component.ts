@@ -3,7 +3,6 @@ import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 import { ConferenceService } from '../conference/conference.service';
-import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { Conference } from 'src/app/objects/conference';
 
 @Component({
