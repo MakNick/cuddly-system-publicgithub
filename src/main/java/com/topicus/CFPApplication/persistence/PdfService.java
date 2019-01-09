@@ -93,6 +93,7 @@ public class PdfService {
 
 	public int printSinglePdf(long id, Long conferenceId) throws PrinterException {
 		Optional<Conference> conferenceOpt = conferenceService.findById(conferenceId);
+
 		List<String> content = new ArrayList<>();
 		if (conferenceOpt.isPresent()) {
 			List<PresentationDraft> listPresentations = new ArrayList<>(conferenceOpt.get().getPresentationDrafts());
@@ -145,7 +146,7 @@ public class PdfService {
 			content.add("Summary: "
 					+ presentationDraft.getSummary().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		} else {
-			content.add("*Summary: " + presentationDraft.getSummary());
+			content.add("Summary: " + presentationDraft.getSummary());
 		}
 		content.add("Type: " + presentationDraft.getType());
 		content.add("Duration: " + presentationDraft.getDuration());
