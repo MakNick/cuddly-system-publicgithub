@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { ConferenceService } from '../conference/conference.service';
 import { Conference } from 'src/app/objects/conference';
 import { PresentationdraftdetailComponent } from './presentationdraftdetail/presentationdraftdetail.component';
+import { PresentationDraft } from 'src/app/objects/presentation-draft';
 
 @Component({
   selector: 'app-presentationdraft',
@@ -35,7 +36,7 @@ export class PresentationdraftComponent implements OnInit {
     .subscribe(conference =>{ this.conference = conference; console.log(conference)});
   }
 
-  showPresentationDetail(): void {
+  showPresentationDetail(pres: PresentationDraft): void {
     this.router.navigate([{ outlets: { presentationDraftDetail : [ 'presentationDraftDetail' ] } }])
   }
 
