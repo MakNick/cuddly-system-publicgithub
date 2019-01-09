@@ -6,26 +6,14 @@ import java.util.Set;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
-@ApiModel(value = "PresentationDraftApplicant", description = "Holds the host(s), conference and presentationdraft")
+@ApiModel(value = "PresentationDraftApplicant", description = "Holds the host(s) and presentationdraft")
 public class PresentationDraftApplicant {
-
-	@ApiModelProperty(position = 1, required = true, value = "The conference that has presentationdrafts")
-	private Conference conference;
 	
 	@ApiModelProperty(position = 1, required = true, value = "The presentationdraft that was submitted")
 	private PresentationDraft presentationDraft;
 
 	@ApiModelProperty(position = 2, required = true, value = "The host(s) of the presentationdraft")
 	private Set<Applicant> applicants = new HashSet<Applicant>();
-
-	
-	public Conference getConference() {
-		return conference;
-	}
-
-	public void setConference(Conference conference) {
-		this.conference = conference;
-	}
 
 	public PresentationDraft getPresentationDraft() {
 		return presentationDraft;

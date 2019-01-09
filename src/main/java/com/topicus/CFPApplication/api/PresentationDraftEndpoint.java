@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
-import com.topicus.CFPApplication.domain.Conference;
+//import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.persistence.ConferenceService;
@@ -61,19 +61,12 @@ public class PresentationDraftEndpoint {
 	@PostMapping("api/presentationdraft")
 	public ResponseEntity<PresentationDraft> save(
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
-		
 		if (presentationDraftApplicant != null) {
 			PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 			Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
-			Conference conferencewithonlyID = presentationDraftApplicant.getConference();
-			Conference conference = conferenceService.findById(conferencewithonlyID.getId()).get();
-			
-			subscribeService.linkPresentationDraftWithConference(conference, presentationDraft);
-			
 			return ResponseEntity
 					.ok(subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants));
-		}
-		
+		}	
 		return ResponseEntity.badRequest().build();
 	}
 
