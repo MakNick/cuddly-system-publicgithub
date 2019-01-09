@@ -1,1 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
+.center{
+    text-align: center;
+}
+
+.center-box{
+    margin: 0 auto;
+}
+
+.navbar {
+    background-color: hsl(256, 71%, 14%) !important; 
+}
+
+.navbar-light .navbar-nav .nav-link{
+    color: white;
+}
+
+.navbar-toggler{
+    background-color: hsl(254, 40%, 22%);
+}
+
+.tile{
+    background-color: lightblue;
+    border: 1px solid darkblue;
+    margin: 2px;
+}
+
+.back-button{
+    background-color: rgb(140, 143, 145);
+}

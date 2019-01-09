@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 
 import { ConferenceService } from '../conference/conference.service';
 import { Conference } from 'src/app/objects/conference';
+import { PresentationDraft } from 'src/app/objects/presentation-draft';
 
 @Component({
   selector: 'app-presentationdraft',
