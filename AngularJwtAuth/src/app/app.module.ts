@@ -13,6 +13,8 @@ import { AdminComponent } from './admin/admin.component';
 import { PmComponent } from './pm/pm.component';
 
 import { httpInterceptorProviders } from './auth/auth-interceptor';
+import { ConferenceComponent } from './tile-view/conference/conference.component';
+import { PresentationdraftComponent } from './tile-view/presentationdraft/presentationdraft.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,9 @@ import { httpInterceptorProviders } from './auth/auth-interceptor';
     RegisterComponent,
     HomeComponent,
     AdminComponent,
-    PmComponent
+    PmComponent,
+    ConferenceComponent,
+    PresentationdraftComponent
   ],
   imports: [
     BrowserModule,

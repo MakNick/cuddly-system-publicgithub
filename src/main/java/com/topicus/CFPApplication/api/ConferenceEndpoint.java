@@ -21,6 +21,7 @@ import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.persistence.ConferenceService;
+import com.topicus.CFPApplication.persistence.PresentationDraftRepository;
 import com.topicus.CFPApplication.persistence.SubscribeService;
 
 import io.swagger.annotations.Api;

@@ -1,0 +1,7 @@
+<div class="row py-3 tile-box">
+  <div *ngFor="let conference of conferences" 
+      routerLink="/conference/{{conference.id}}"
+      class="col-ms tile">
+    {{conference.name}}
+  </div>
+</div>

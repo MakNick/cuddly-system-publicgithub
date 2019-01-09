@@ -1,0 +1,13 @@
+<div class="row py-3 tile-box">
+  <button (click)="goBack()" 
+      class="col-ms-2 tile">
+    Back
+  </button>
+</div>
+
+<div class="row tile-box">
+    <button *ngFor="let presentationdraft of conference.presentationDrafts" 
+        class="col-ms tile">
+      {{presentationdraft.subject}}
+    </button>
+  </div>
