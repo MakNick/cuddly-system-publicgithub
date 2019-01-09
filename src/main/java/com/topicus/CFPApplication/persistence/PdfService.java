@@ -146,7 +146,7 @@ public class PdfService {
 			content.add("Summary: "
 					+ presentationDraft.getSummary().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		} else {
-			content.add("*Summary: " + presentationDraft.getSummary());
+			content.add("Summary: " + presentationDraft.getSummary());
 		}
 		content.add("Type: " + presentationDraft.getType());
 		content.add("Duration: " + presentationDraft.getDuration());
