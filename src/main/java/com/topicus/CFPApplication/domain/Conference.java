@@ -83,7 +83,7 @@ public class Conference {
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "conference_id")
 	@ApiModelProperty(position = 12, value = "All presentations from this conference will be added to this list", hidden = true)
-	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
+	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();				
 
 	@Column(name = "presentation")
 	@OneToMany(fetch = FetchType.EAGER)
