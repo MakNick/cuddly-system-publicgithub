@@ -5,10 +5,10 @@
   </button>
 </div>
 <div class="row tile-box">
-    <button *ngFor="let presentationDraft of conference.presentationDrafts" 
-        class="col-ms tile"
-        (click)="showPresentationDetail()">
-      {{presentationdraft.subject}}
-    </button>
-    <app-presentationdraftdetail [presentationDraft]="selectedDraft" ></app-presentationdraftdetail>
-  </div>
+  <button *ngFor="let presentationDraft of conference.presentationDrafts" 
+      class="col-ms tile"
+      (click)="showPresentationDetail()">
+    {{presentationdraft.subject}}
+  </button>
+  <app-presentationdraftdetail [presentationDraft]="selectedDraft" ></app-presentationdraftdetail>
+</div>

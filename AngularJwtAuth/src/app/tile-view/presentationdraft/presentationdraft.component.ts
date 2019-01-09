@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 import { ConferenceService } from '../conference/conference.service';
 import { Conference } from 'src/app/objects/conference';
-import { PresentationDraft } from 'src/app/objects/presentation-draft';
+import { PresentationdraftdetailComponent } from './presentationdraftdetail/presentationdraftdetail.component';
 
 @Component({
   selector: 'app-presentationdraft',
