@@ -56,7 +56,7 @@ public class PdfService {
 			listPresentations = sortList(listPresentations);
 			for (int i = 0; i < listPresentations.size(); i++) {
 				if (listPresentations.get(i).getId() == id) {
-					addContent(content, listPresentations.get((int) id - 1));
+					addContent(content, listPresentations.get(i));
 				}
 			}
 			if (content.isEmpty()) {
@@ -99,7 +99,7 @@ public class PdfService {
 			listPresentations = sortList(listPresentations);
 			for (int i = 0; i < listPresentations.size(); i++) {
 				if (listPresentations.get(i).getId() == id) {
-					addContent(content, listPresentations.get((int) id - 1));
+					addContent(content, listPresentations.get(i));
 				}
 			}
 			if (content.isEmpty()) {
@@ -140,7 +140,8 @@ public class PdfService {
 				+ presentationDraft.getSubject().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		content.add("Category: "
 				+ presentationDraft.getCategory().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
-		if (presentationDraft.getSummary().contains("\n") && presentationDraft.getSummary().contains("\r")) {
+		if (presentationDraft.getSummary().contains("\n") || presentationDraft.getSummary().contains("\r")
+				|| presentationDraft.getSummary().contains("\t")) {
 			content.add("Summary: "
 					+ presentationDraft.getSummary().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		} else {
