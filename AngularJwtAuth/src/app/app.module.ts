@@ -15,6 +15,7 @@ import { PmComponent } from './pm/pm.component';
 import { httpInterceptorProviders } from './auth/auth-interceptor';
 import { ConferenceComponent } from './tile-view/conference/conference.component';
 import { PresentationdraftComponent } from './tile-view/presentationdraft/presentationdraft.component';
+import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { PresentationdraftComponent } from './tile-view/presentationdraft/presen
     AdminComponent,
     PmComponent,
     ConferenceComponent,
-    PresentationdraftComponent
+    PresentationdraftComponent,
+    PresentationdraftdetailComponent
   ],
   imports: [
     BrowserModule,

@@ -8,7 +8,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="nav navbar-nav" routerLinkActive="active">
         <li class="nav-item"><a class="nav-link" routerLink="home">Home</a></li>
-        <li *ngIf="authority === 'user' || authority === 'admin'" class="nav-item">
+        <li *ngIf="authority === 'user'" class="nav-item">
           <a class="nav-link" routerLink="user">User Board</a>
         </li>
         <li *ngIf="authority === 'admin'" class="nav-item">
@@ -29,4 +29,5 @@
   
 <div class="container">
   <router-outlet></router-outlet>
+  <router-outlet name="presentationDraftDetail"></router-outlet>
 </div>

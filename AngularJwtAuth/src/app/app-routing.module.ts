@@ -9,6 +9,7 @@ import { PmComponent } from './pm/pm.component';
 import { AdminComponent } from './admin/admin.component';
 import { ConferenceComponent } from './tile-view/conference/conference.component';
 import { PresentationdraftComponent } from './tile-view/presentationdraft/presentationdraft.component';
+import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
 
 const routes: Routes = [
     {
@@ -34,6 +35,10 @@ const routes: Routes = [
     
     {   path: 'conference/:id', 
         component: PresentationdraftComponent  
+    },
+    {   path: 'presentationDraftDetail', 
+        component: PresentationdraftdetailComponent,
+        outlet: 'presentationDraftDetail' 
     },
     {
         path: 'auth/login',

@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
 import { ConferenceService } from '../conference/conference.service';
 import { Conference } from 'src/app/objects/conference';
@@ -16,7 +17,8 @@ export class PresentationdraftComponent implements OnInit {
 
   constructor(private conferenceService: ConferenceService,
               private route: ActivatedRoute,
-              private location: Location) { }
+              private location: Location,
+              private router: Router) { }
 
   ngOnInit() {
     this.getConferences();
@@ -30,6 +32,10 @@ export class PresentationdraftComponent implements OnInit {
     const id = +this.route.snapshot.paramMap.get('id');
     this.conferenceService.getConference(id)
     .subscribe(conference =>{ this.conference = conference; console.log(conference)});
+  }
+
+  showPresentationDetail(): void {
+    this.router.navigate([{ outlets: { presentationDraftDetail : [ 'presentationDraftDetail' ] } }])
   }
 
 }
