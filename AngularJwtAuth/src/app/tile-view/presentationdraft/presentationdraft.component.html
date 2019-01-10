@@ -1,26 +1,46 @@
-<div class="row py-3 tile-box">
-  <button (click)="goBack()" 
-      class="back-button">
-    Back
-  </button>
-    < welke kleur geven we de buttons en wat gebeurd er bij een hover?
-</div>
-<div class="row tile-box">
-  <div *ngIf="conference.presentationDrafts; else nothingToShow">
-    <button *ngFor="let presentationDraft of conference.presentationDrafts" 
-      class="col-md-2 tile"
-      (click)="showPresentationDetail()">
-        <ul class="list-unstyled clean-margin">
-          <li>
-            {{presentationDraft.subject}}
-          </li>
-          <li class="figure-caption text-right">
-            {{getTimeOfCreation(presentationDraft)}}
-          </li>
-        </ul>
-    </button>
+<div class="row tile-outer-box">
+  <div class="row tile-inner-box">
+    <div class="col-2">
+      <button (click)="goBack()" class="back-button">Back</button>
+    </div>
+    <div class="col-3">
+      <button class="new-button" (click)="getPresentationDraftByLabel(0)" >New/Unlabelled</button>
+    </div>
+    <div class="col-2">
+      <button class="ccepted-button" (click)="getPresentationDraftByLabel(2)">Accepted</button>
+    </div>
+    <div class="col-2">
+      <button class="denied-button" (click)="getPresentationDraftByLabel(1)">Denied</button>
+    </div>
+    <div class="col-2">
+      <button class="reserved-button" (click)="getPresentationDraftByLabel(3)">Reserved</button>
+    </div>
+    <div class="col-1">
+      <button class="all-button" (click)="showAllPresentationDrafts()">All</button>
+    </div>
   </div>
-  <ng-template #nothingToShow>
-    <p>This conference has no presentation drafts</p>
-  </ng-template>
+  <div class="row py-3 px-3 tile-view-box">
+    <div class="row tile-box">
+      <div *ngIf="presentationDrafts; else listEmpty">
+        <button *ngFor="let presentationDraft of presentationDrafts" 
+          class="col-xs-2 tile"
+          (click)="showPresentationDetail()">
+            <ul class="list-unstyled clean-margin">
+              <li>
+                {{presentationDraft.subject}}
+              </li>
+              <li class="figure-caption text-right">
+                {{getTimeOfCreation(presentationDraft)}}
+              </li>
+              <li class="figure-caption text-right">
+                {{presentationDraft.label | lowercase}}
+              </li>
+            </ul>
+        </button>
+      </div>
+      <ng-template #listEmpty>
+        this conference has no presentation drafts.
+      </ng-template>
+    </div>
+  </div>
 </div>
