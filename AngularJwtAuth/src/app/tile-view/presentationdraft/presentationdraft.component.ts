@@ -4,8 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 
 import { ConferenceService } from '../conference/conference.service';
-import { Conference } from 'src/app/objects/conference';
-import { PresentationdraftdetailComponent } from './presentationdraftdetail/presentationdraftdetail.component';
+import { Conference } from 'src/app/objects/conference/conference';
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
 
 @Component({
@@ -36,7 +35,7 @@ export class PresentationdraftComponent implements OnInit {
     .subscribe(conference =>{ this.conference = conference; console.log(conference)});
   }
 
-  showPresentationDetail(pres: PresentationDraft): void {
+  showPresentationDetail(): void {
     this.router.navigate([{ outlets: { presentationDraftDetail : [ 'presentationDraftDetail' ] } }])
   }
 

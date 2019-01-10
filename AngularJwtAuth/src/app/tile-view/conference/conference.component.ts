@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { ConferenceService } from './conference.service';
 
-import { PresentationDraft } from '../../objects/presentation-draft';
-import { Conference } from '../../objects/conference';
+import { Conference } from '../../objects/conference/conference';
 
 @Component({
   selector: 'app-conference',

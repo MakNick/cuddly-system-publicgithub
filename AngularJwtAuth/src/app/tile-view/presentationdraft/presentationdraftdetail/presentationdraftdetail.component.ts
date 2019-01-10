@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
+import { viewParentEl } from '@angular/core/src/view/util';
 
 @Component({
   selector: 'app-presentationdraftdetail',
@@ -17,8 +18,11 @@ export class PresentationdraftdetailComponent implements OnInit {
   ngOnInit() {
   }
 
-  goBack(): void{
-    this.location.back();
+  goBack(event): void{
+    if(event.target !== event.currentTarget){
+      return;
+    }
+    this.location.back()
   }
 
 }

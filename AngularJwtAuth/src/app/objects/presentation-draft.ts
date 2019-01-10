@@ -1,3 +1,5 @@
+import { Applicant } from "./applicant";
+
 export class PresentationDraft{
   
   id: number;
@@ -6,5 +8,9 @@ export class PresentationDraft{
   summary: string;
   type: string;
   duration: number;
+  timeOfCreation: Date;
+  label: string;
+
+  applicants: Applicant[];
 
 }

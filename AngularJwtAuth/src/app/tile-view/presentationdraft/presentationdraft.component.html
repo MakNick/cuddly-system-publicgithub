@@ -5,9 +5,14 @@
   </button>
 </div>
 <div class="row tile-box">
-  <button *ngFor="let presentationDraft of conference.presentationDrafts" 
-      class="col-ms tile"
-      (click)="showPresentationDetail(presentationDraft)">
-    {{presentationDraft.subject}}
-  </button>
+  <div *ngIf="conference.presentationDrafts; else nothingToShow">
+    <button *ngFor="let presentationDraft of conference.presentationDrafts" 
+      class="col-ms button tile"
+      (click)="showPresentationDetail()">
+      {{presentationDraft.subject}}
+    </button>
+  </div>
+  <ng-template #nothingToShow>
+    <p>This conference has no presentation drafts</p>
+  </ng-template>
 </div>
