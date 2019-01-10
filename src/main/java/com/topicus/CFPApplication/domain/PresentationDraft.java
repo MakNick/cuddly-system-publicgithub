@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Entity
 @ApiModel(value = "PresentationDraft", description = "Holds all values for the presentationdrafts")
-public class PresentationDraft {
+public class PresentationDraft{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,7 +59,7 @@ public class PresentationDraft {
 	@ApiModelProperty(position = 8, value = "The label of this presentationdraft. If no label is given, the default label will be: UNLABELED", hidden = true)
 	private Label label = Label.UNLABELED;
 
-	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.MERGE })
 	@JoinTable(name = "Applicant_PresentationDraft", joinColumns = {
 			@JoinColumn(name = "presentationDraft_id") }, inverseJoinColumns = { @JoinColumn(name = "applicant_id") })
 	@ApiModelProperty(position = 9, required = true, value = "This list hold the hosts of this presentationdraft")
@@ -141,4 +141,5 @@ public class PresentationDraft {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
 }
