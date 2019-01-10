@@ -27,7 +27,6 @@ public class PdfWriter {
 		PDDocument pdDocument = new PDDocument(); // Creating PDF document object
 		PDPage page = new PDPage(); // Creating a blank page
 		PDPageContentStream contentStream = new PDPageContentStream(pdDocument, page);
-
 		pdDocument.addPage(page);// Adding the blank page to the document
 		PDFont pdfFont = PDType1Font.HELVETICA; // Select font
 		float fontSize = 10f; // font size
