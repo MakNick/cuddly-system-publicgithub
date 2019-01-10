@@ -9,7 +9,17 @@
     <button *ngFor="let presentationDraft of conference.presentationDrafts" 
       class="col-ms button tile"
       (click)="showPresentationDetail()">
-      {{presentationDraft.subject}}
+        <ul class="list-unstyled">
+          <li>
+            Subject: {{presentationDraft.subject}}
+          </li>
+          <li>
+            Category: {{presentationDraft.category}}
+          </li> 
+          <li>
+            Subject: {{presentationDraft.summary}}
+          </li>
+        </ul>
     </button>
   </div>
   <ng-template #nothingToShow>
