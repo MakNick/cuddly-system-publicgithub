@@ -3,10 +3,10 @@
     vertical-align: top;
 }
 
-.tile-outer-box{
-    margin-top: 10px;
+.navigation-box{
+    width: 100%;
 }
 
-.tile-view-box{
-    background-color: rgba(211, 211, 211, 0.596);
+.tile-outer-box{
+    margin-top: 10px;
 }
