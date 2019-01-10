@@ -1,23 +1,21 @@
 <div class="row py-3 tile-box">
   <button (click)="goBack()" 
-      class="col-ms-2 back-button">
+      class="back-button">
     Back
   </button>
+    < welke kleur geven we de buttons en wat gebeurd er bij een hover?
 </div>
 <div class="row tile-box">
   <div *ngIf="conference.presentationDrafts; else nothingToShow">
     <button *ngFor="let presentationDraft of conference.presentationDrafts" 
-      class="col-ms button tile"
+      class="col-md-2 tile"
       (click)="showPresentationDetail()">
-        <ul class="list-unstyled">
+        <ul class="list-unstyled clean-margin">
           <li>
-            Subject: {{presentationDraft.subject}}
+            {{presentationDraft.subject}}
           </li>
-          <li>
-            Category: {{presentationDraft.category}}
-          </li> 
-          <li>
-            Subject: {{presentationDraft.summary}}
+          <li class="figure-caption text-right">
+            {{getTimeOfCreation(presentationDraft)}}
           </li>
         </ul>
     </button>

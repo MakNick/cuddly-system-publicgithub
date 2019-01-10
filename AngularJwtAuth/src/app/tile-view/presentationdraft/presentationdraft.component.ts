@@ -29,6 +29,25 @@ export class PresentationdraftComponent implements OnInit {
     this.location.back();
   }
 
+  getTimeOfCreation(presentationDraft: PresentationDraft): string{
+    let dateToString: string = "" + presentationDraft.timeOfCreation;
+    let arrayOfDate: string[] = dateToString.split(",");
+    let formattedDate: string = "";
+    let counter: number = 0;
+    for(let value of arrayOfDate){
+      if(value !== "," && counter < 3){
+        if(counter == 2){
+          formattedDate += value
+          counter++;
+        }else{
+          formattedDate += value+"-"
+          counter++;
+        }
+      }
+    }
+    return formattedDate;
+  }
+
   getConferences(): void{
     const id = +this.route.snapshot.paramMap.get('id');
     this.conferenceService.getConference(id)

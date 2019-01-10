@@ -1,4 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    font-family: "Times New Roman", Times, serif;
+}
+
+.clean-margin{
+    margin: 0px;
+}
+
+.clean-padding{
+    padding: 0px;
+}
+
 .center{
     text-align: center;
 }
@@ -24,8 +36,8 @@
 }
 
 .tile{
-    background-color: lightblue;
-    border: 1px solid darkblue;
+    background-color: rgba(173, 216, 230, 0.247);
+    border: 1px solid rgba(0, 0, 139, 0.212);
     margin: 2px;
 }
 
