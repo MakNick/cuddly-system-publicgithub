@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
+//import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -82,7 +83,7 @@ public class Conference {
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "conference_id")
 	@ApiModelProperty(position = 12, value = "All presentations from this conference will be added to this list", hidden = true)
-	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
+	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();				
 
 	@Column(name = "presentation")
 	@OneToMany(fetch = FetchType.EAGER)

@@ -147,6 +147,10 @@ public class ConferenceEndpoint {
 	}
 
 	@ApiOperation("Retrieves Presentationdrafts for a conference of a certain category. If a non-existing category is passed, then all categories will be shown.")
+	@ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved the presentationDrafts with a certain category"), 
+		@ApiResponse(code = 404, message = "The conference passed does not exist"),
+		@ApiResponse(code = 400, message = "The conference or category passed is invalid"),
+		@ApiResponse(code = 417, message = "An unexpected situation occured.")})
 	@GetMapping(path = "api/findpresentationdraftsbycategory")
 	public ResponseEntity<Iterable<PresentationDraft>> findPresentationdraftsByCategory(
 			@RequestParam(value = "id", required = true) Long id,

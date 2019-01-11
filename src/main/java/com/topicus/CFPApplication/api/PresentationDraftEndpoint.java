@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
+//import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.persistence.ConferenceService;
@@ -53,7 +54,6 @@ public class PresentationDraftEndpoint {
 		this.mailService = mailService;
 		this.presentationService = presentationService;
 		this.conferenceService = conferenceService;
-
 	}
 
 	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants")
@@ -66,7 +66,7 @@ public class PresentationDraftEndpoint {
 			Set<Applicant> applicants = presentationDraftApplicant.getApplicants();
 			return ResponseEntity
 					.ok(subscribeService.linkPresentationDraftWithApplicants(presentationDraft, applicants));
-		}
+		}	
 		return ResponseEntity.badRequest().build();
 	}
 
