@@ -19,12 +19,12 @@ import com.topicus.CFPApplication.domain.PresentationDraft;
 
 @Service
 @Transactional
-public class PdfService {
+public class PdfServiceNot {
 	private PdfWriter pdfWriter;
 	private ConferenceService conferenceService;
 
 	@Autowired
-	public PdfService(PdfWriter pdfWriter, ConferenceService conferenceService) {
+	public PdfServiceNot(PdfWriter pdfWriter, ConferenceService conferenceService) {
 		this.pdfWriter = pdfWriter;
 		this.conferenceService = conferenceService;
 	}

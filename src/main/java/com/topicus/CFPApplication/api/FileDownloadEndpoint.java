@@ -74,7 +74,7 @@ public class FileDownloadEndpoint {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Create PDF succesfully"),
 			@ApiResponse(code = 404, message = "No presentationdraft and/or conference available"),
 			@ApiResponse(code = 412, message = "Cancelled save request") })
-	@GetMapping("api/test/{conferenceId}/download/pdf")
+	@GetMapping("api/{conferenceId}/download/pdf")
 	public ResponseEntity<byte[]> getAllPdf(
 			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId)
 			throws IOException {
@@ -107,7 +107,7 @@ public class FileDownloadEndpoint {
 			@ApiResponse(code = 400, message = "Invalid conference ID and/or presentationdraft ID value"),
 			@ApiResponse(code = 404, message = "No presentationdraft ID available"),
 			@ApiResponse(code = 412, message = "Cancelled save request") })
-	@GetMapping("api/test/{conferenceId}/download/pdf/{id}")
+	@GetMapping("api/{conferenceId}/download/pdf/{id}")
 	public ResponseEntity<byte[]> getSinglePdf(
 			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id,
 			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId)

@@ -95,8 +95,8 @@ public class PdfService {
 		} else {
 			image = new ImageElement(PdfService.class.getResourceAsStream("TopiconfHeaderLogo.png"));
 		}
-		image.setWidth(image.getWidth());
-		image.setHeight(image.getHeight());
+		image.setWidth(image.getWidth() / 1.5f);
+		image.setHeight(image.getHeight() / 1.5f);
 		document.add(image, new VerticalLayoutHint(Alignment.Right, 10, 10, 10, 10, true));
 
 		SectionRenderer sectionRenderer = new SectionRenderer();
@@ -107,7 +107,7 @@ public class PdfService {
 		for (String text : content) {
 			lines.add(text);
 		}
-			for (String line : lines) {
+		for (String line : lines) {
 			Paragraph paragraph = new Paragraph();
 			paragraph.addMarkup(line, 10, BaseFont.Helvetica);
 			document.add(paragraph);
@@ -116,8 +116,8 @@ public class PdfService {
 				document.add(image, new VerticalLayoutHint(Alignment.Right, 100, 10, 10, 10, true));
 			}
 		}
-		final OutputStream outputStream = new FileOutputStream("presentationDraft" + id + ".pdf");
-		document.save(outputStream);
+//		final OutputStream outputStream = new FileOutputStream("presentationDraft" + id + ".pdf");
+//		document.save(outputStream);
 		return document;
 	}
 

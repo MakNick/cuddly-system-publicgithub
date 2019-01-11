@@ -27,7 +27,7 @@ public class PdfServiceTest {
 	private PdfWriter pdfWriter;
 
 	@InjectMocks
-	private PdfService pdfService;
+	private PdfServiceNot pdfService;
 
 	@Mock
 	private ConferenceService conferenceService;
