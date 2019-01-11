@@ -38,7 +38,6 @@ body{
 .tile{
     background-color: rgba(173, 216, 230, 0.247);
     border: 1px solid rgba(0, 0, 139, 0.212);
-    margin: 2px;
 }
 
 .tile:hover{

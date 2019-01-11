@@ -7,6 +7,10 @@
     width: 100%;
 }
 
+.navigation-box > button:focus{
+    background:rgb(190, 190, 190);
+}
+
 .tile-outer-box{
     margin-top: 10px;
 }
