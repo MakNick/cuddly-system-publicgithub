@@ -2,9 +2,7 @@ package com.topicus.CFPApplication.persistence.pdf;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -116,8 +114,6 @@ public class PdfService {
 				document.add(image, new VerticalLayoutHint(Alignment.Right, 100, 10, 10, 10, true));
 			}
 		}
-//		final OutputStream outputStream = new FileOutputStream("presentationDraft" + id + ".pdf");
-//		document.save(outputStream);
 		return document;
 	}
 
@@ -171,10 +167,11 @@ public class PdfService {
 
 	private void addContent(List<String> content, PresentationDraft presentationDraft) {
 		content.add("__*PresentationDraft ID: *__" + "__*" + presentationDraft.getId() + "*__");
-		content.add("\n*Subject: *" + presentationDraft.getSubject());
+		content.add("\n*Subject: *" + presentationDraft.getSubject().replaceAll("\\_", "\\\\\\_").replaceAll("\\*", "\\\\\\*"));
 		content.add("*Category: *" + presentationDraft.getCategory());
-		content.add("*Type: *" + presentationDraft.getType());
+		content.add("*Type: *" + presentationDraft.getType().replaceAll("\\_", "\\\\\\_").replaceAll("\\*", "\\\\\\*"));
 		content.add("*Duration: *" + presentationDraft.getDuration());
+		content.add("*Label: *" + presentationDraft.getLabel());
 		content.add("*Time of Creation: *" + presentationDraft.getTimeOfCreation());
 		content.add("\n*Summary: *\n" + presentationDraft.getSummary());
 		for (Applicant app : presentationDraft.getApplicants()) {
@@ -185,7 +182,7 @@ public class PdfService {
 			content.add("*Phone Number: *" + app.getPhonenumber());
 			content.add("*Occupation: *" + app.getOccupation());
 			content.add("*Gender: *" + app.getGender());
-			content.add("*Requests: *" + app.getRequests());
+			content.add("*Requests: *" + app.getRequests().replaceAll("\\_", "\\\\\\_").replaceAll("\\*", "\\\\\\*"));
 		}
 	}
 
