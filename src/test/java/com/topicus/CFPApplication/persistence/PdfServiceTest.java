@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -16,6 +15,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
+import com.topicus.CFPApplication.persistence.pdf.PdfService;
+
+import rst.pdfbox.layout.elements.Document;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PdfServiceTest {
@@ -23,11 +25,8 @@ public class PdfServiceTest {
 	@Mock
 	private PresentationDraftRepository presentationDraftRepository;
 
-	@Mock
-	private PdfWriter pdfWriter;
-
 	@InjectMocks
-	private PdfServiceNot pdfService;
+	private PdfService pdfService;
 
 	@Mock
 	private ConferenceService conferenceService;
@@ -37,14 +36,14 @@ public class PdfServiceTest {
 		Conference conf = new Conference();
 		conf.setId(1);
 
-		PDDocument pdd = new PDDocument();
+		Document pdd = new Document();
 
 		Mockito.when(this.conferenceService.findById(conf.getId())).thenReturn(Optional.of(conf));
 		Mockito.when(this.pdfService.getAllPresentationDraftsToPDF(conf.getId())).thenReturn(pdd);
 
 		int result = 0;
 		try {
-			PDDocument document = pdfService.getAllPresentationDraftsToPDF(conf.getId());
+			Document document = pdfService.getAllPresentationDraftsToPDF(conf.getId());
 			if (document == null) {
 				result = 4;
 			} else {
@@ -69,13 +68,13 @@ public class PdfServiceTest {
 		pd.setSubject("test");
 		pd.setCategory("testCategory");
 		pd.setSummary("testsummary");
-		
+
 		conf.addPresentationDraft(pd);
-		
+
 		Mockito.when(this.conferenceService.findById(conf.getId())).thenReturn(Optional.of(conf));
 		int result = 0;
 		try {
-			PDDocument document = this.pdfService.getSinglePresentationDraftToPDF(pd.getId(), conf.getId());
+			Document document = this.pdfService.getSinglePresentationDraftToPDF(pd.getId(), conf.getId());
 			if (document == null) {
 				result = 1;
 			}
