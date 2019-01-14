@@ -39,19 +39,13 @@
   Logged in as {{roles}}.
 </div>
 
-<div class="row">
-  <div class="col-ms">
-
-  </div>
-</div>
-
 <ng-template #loggedOut>
   <div class="row col-sm-6" style="max-width:350px;">
     <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
       <div class="form-group">
       <div class="input-group">
+        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
         <!-- <label for="username">Username</label> -->
-        <span class="input-group-addon"><i class="fas fa-user"></i></span>
         <input type="text" class="form-control" name="username" placeholder="Username" [(ngModel)]="form.username" #username="ngModel"
         required />
         <!-- <input type="text" class="form-control" name="username" [(ngModel)]="form.username" #username="ngModel"

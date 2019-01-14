@@ -15,7 +15,7 @@
         <option value="mercedes">Mercedes</option>
         <option value="audi">Audi</option>
       </select>
-      <button class="col-2 offset-1 py-2">All</button>
+      <button class="col-2 offset-1 py-2" (click)="showAllPresentationDrafts()">All</button>
       <div class="w-100 py-2"></div>
       <button class="col-3" (click)="getPresentationDraftByLabel(0)">New</button>
       <button class="col-3" (click)="getPresentationDraftByLabel(2)">Accepted</button>
@@ -26,7 +26,7 @@
   <div class="row py-3 px-3 tile-box">
     <div *ngIf="presentationDrafts; else listEmpty">
       <button *ngFor="let presentationDraft of presentationDrafts" 
-        class="col-3 tile"
+        class="col-md-6 tile"
         (click)="showPresentationDetail()">
           <ul class="list-unstyled">
             <li class="figure-caption text-center">
