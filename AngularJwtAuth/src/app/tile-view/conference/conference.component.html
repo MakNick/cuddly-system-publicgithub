@@ -1,14 +1,14 @@
-<div class="row py-3 tile-box">
-  <button *ngFor="let conference of conferences" 
-      routerLink="/conference/{{conference.id}}"
-      class="col-md px-2 py-2 tile">
-      <ul class="list-unstyled">
-        <li>
-          <strong>Title:</strong>
-        </li>
-        <li>
-          {{conference.name}}
-        </li>
-      </ul>
-</button>
+<div class="row tile-box">
+  <div class="col-md tile" *ngFor="let conference of conferences">
+    <button routerLink="/conference/{{conference.id}}">
+        <ul class="list-unstyled">
+          <li>
+            <strong>Title:</strong>
+          </li>
+          <li>
+            {{conference.name}}
+          </li>
+        </ul>
+    </button>
+  </div>
 </div>

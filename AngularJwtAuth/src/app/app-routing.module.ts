@@ -10,6 +10,7 @@ import { AdminComponent } from './admin/admin.component';
 import { ConferenceComponent } from './tile-view/conference/conference.component';
 import { PresentationdraftComponent } from './tile-view/presentationdraft/presentationdraft.component';
 import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
+import { AanmeldformulierComponent } from './aanmeldformulier/aanmeldformulier.component';
 
 const routes: Routes = [
     {
@@ -27,6 +28,10 @@ const routes: Routes = [
     {
         path: 'admin',
         component: AdminComponent
+    },
+    {
+        path: 'aanmeldformulier',
+        component: AanmeldformulierComponent
     },
     {
         path: 'conference',

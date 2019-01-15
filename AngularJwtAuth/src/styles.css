@@ -19,6 +19,18 @@ body{
     margin: 0 auto;
 }
 
+.align-items-center{
+    align-items: center;
+}
+
+.max-width{
+    width: 100%;
+}
+
+.margin-top-10{
+    margin-top: 10px
+}
+
 .navbar {
     background-color: hsl(256, 71%, 14%) !important; 
 }
@@ -36,12 +48,15 @@ body{
 }
 
 .tile{
-    background-color: rgba(173, 216, 230, 0.247);
-    border: 1px solid rgba(0, 0, 139, 0.212);
+    padding: 0px !important;
 }
 
-.tile:hover{
-    background-color: rgb(192, 219, 228);
+.tile > button{
+    background-color: rgb(206, 253, 253);
+}
+
+.tile > button:hover{
+    background-color: rgb(181, 252, 252);
 }
 
 /* Footer */

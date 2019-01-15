@@ -1,4 +1,4 @@
-<div class="row tile-outer-box">
+<div class="row tile-outer-box px-2 py-2">
   <div class="col-10 offset-1 navigation-box">
       <button class="col-2 py-2" (click)="goBack()">Back</button>
       <select placeholder="category" class="col-3 offset-1">
@@ -21,28 +21,75 @@
       <button class="col-3" (click)="getPresentationDraftByLabel(2)">Accepted</button>
       <button class="col-3" (click)="getPresentationDraftByLabel(1)">Denied</button>
       <button class="col-3" (click)="getPresentationDraftByLabel(3)">Reserved</button>
-      
   </div>
-  <div class="row py-3 px-3 tile-box">
-    <div *ngIf="presentationDrafts; else listEmpty">
-      <button *ngFor="let presentationDraft of presentationDrafts" 
-        class="col-md-6 tile"
-        (click)="showPresentationDetail()">
-          <ul class="list-unstyled">
-            <li class="figure-caption text-center">
-              {{presentationDraft.label | lowercase}}
-            </li>
-            <li>
-              {{presentationDraft.subject}}
-            </li>
-            <li class="figure-caption text-right">
-              {{getTimeOfCreation(presentationDraft)}}
-            </li>
-          </ul>
-      </button>
+  <div class="container margin-top-10" *ngIf="pagedItems; else listEmpty">
+    <div class="row presentation-box py-2 px-2">
+      <div *ngFor="let presentationDraft of pagedItems" class="col-md-3 tile">
+        <button class="" (click)="showPresentationDetail()">
+            <ul class="list-unstyled">
+              <li class="figure-caption text-center">
+                {{presentationDraft.label | lowercase}}
+              </li>
+              <li>
+                {{presentationDraft.subject}}
+              </li>
+              <li class="figure-caption text-right">
+                {{getTimeOfCreation(presentationDraft)}}
+              </li>
+            </ul>
+        </button>
+      </div>
     </div>
-    <ng-template #listEmpty>
-      this conference has no presentation drafts.
-    </ng-template>
+    <div *ngIf="pager.pages && pager.pages.length" class="pagination row py-2">
+      <div class="col-md" 
+      [ngClass]="{disabled:pager.currentPage === 1}">
+        <span *ngIf="sortedPagedItems else firstAll">
+          <button class="max-width" (click)="setSortedPage(1)">First</button>
+        </span> 
+        <ng-template #firstAll>
+          <button class="max-width" (click)="setPage(1)">First</button>
+        </ng-template>
+      </div>
+      <div class="col-md"
+      [ngClass]="{disabled:pager.currentPage === 1}">
+        <span *ngIf="sortedPagedItems else previousAll">
+          <button class="max-width" (click)="setSortedPage(pager.currentPage - 1)">Previous</button>
+        </span> 
+        <ng-template #previousAll>
+          <button class="max-width" (click)="setPage(pager.currentPage - 1)">Previous</button>
+        </ng-template>
+      </div>
+      <div class="col-md-1"
+      *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+        <span *ngIf="sortedPagedItems else numbersAll">
+          <button (click)="setSortedPage(page)">{{page}}</button>
+        </span> 
+        <ng-template #numbersAll>
+          <button (click)="setPage(page)">{{page}}</button>
+        </ng-template>    
+      </div>
+      <div class="col-md"
+      [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <span *ngIf="sortedPagedItems else nextAll">
+          <button class="max-width" (click)="setSortedPage(pager.currentPage + 1)">Next</button>
+        </span> 
+        <ng-template #nextAll>
+          <button class="max-width" (click)="setPage(pager.currentPage + 1)">Next</button>
+        </ng-template>
+      </div>
+      <div class="col-md"
+      [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
+        <span *ngIf="sortedPagedItems else lastAll">
+          <button class="max-width" (click)="setSortedPage(pager.totalPages)">last</button>
+        </span> 
+        <ng-template #lastAll>
+            <button class="max-width" (click)="setPage(pager.totalPages)">Last</button>
+        </ng-template>
+          
+      </div>
+    </div>
   </div>
+  <ng-template #listEmpty>
+    this conference has no presentation drafts.
+  </ng-template>
 </div>

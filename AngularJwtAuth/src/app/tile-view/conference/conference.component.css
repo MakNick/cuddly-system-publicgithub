@@ -2,9 +2,8 @@
     margin-top: 30px;
 }
 
-.tile{
-    /* height: 500px; */
-    padding: 10px;
+.tile > button{
+    width: 100%;
 }
 
 .title{

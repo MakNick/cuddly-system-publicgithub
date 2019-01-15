@@ -9,9 +9,6 @@ import { Conference } from '../../objects/conference/conference';
   templateUrl: './conference.component.html',
   styleUrls: ['./conference.component.css']
 })
-@Directive({
-  selector: '[changeCarousel]'
-})
 export class ConferenceComponent implements OnInit {
 
   private conferences: Conference[];
@@ -22,18 +19,11 @@ export class ConferenceComponent implements OnInit {
 
   ngOnInit() {
     this.fillConferences();
-    this.renderer2.addClass(this.el.nativeElement ,"carousel-item");
-    this.renderer2.addClass(this.el.nativeElement ,"active");
   }
 
   fillConferences(): void{
     this.conferenceService.getConferences()
     .subscribe(conferences => this.conferences = conferences);
-  }
-
-  changeClassName(): void{
-    
-    this.renderer2.removeClass(this.el.nativeElement ,"active");
   }
 
 }

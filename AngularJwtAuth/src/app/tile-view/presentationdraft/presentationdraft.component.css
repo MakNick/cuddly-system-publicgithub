@@ -1,6 +1,16 @@
-.tile{
-    height: 100px;
+.tile > button{
+    height: 100%;
+    width: 100%;
     vertical-align: top;
+}
+
+.tile-outer-box{
+    border: 1px solid;
+}
+
+.presentation-box{
+    border: 1px solid;
+    background: rgb(245, 245, 245);
 }
 
 .navigation-box{

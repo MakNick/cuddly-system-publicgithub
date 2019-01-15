@@ -16,6 +16,7 @@ import { httpInterceptorProviders } from './auth/auth-interceptor';
 import { ConferenceComponent } from './tile-view/conference/conference.component';
 import { PresentationdraftComponent } from './tile-view/presentationdraft/presentationdraft.component';
 import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
+import { AanmeldformulierComponent } from './aanmeldformulier/aanmeldformulier.component';
 
 @NgModule({
   declarations: [
@@ -28,9 +29,10 @@ import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/
     PmComponent,
     ConferenceComponent,
     PresentationdraftComponent,
-    PresentationdraftdetailComponent
+    PresentationdraftdetailComponent,
+    AanmeldformulierComponent
   ],
-  imports: [
+  imports: [ 
     BrowserModule,
     AppRoutingModule,
     FormsModule,
