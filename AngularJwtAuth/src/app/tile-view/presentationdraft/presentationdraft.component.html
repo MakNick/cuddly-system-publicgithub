@@ -1,19 +1,15 @@
-<div class="row tile-outer-box px-2 py-2">
+<div class="row tile-outer-box">
   <div class="col-10 offset-1 navigation-box">
       <button class="col-2 py-2" (click)="goBack()">Back</button>
-      <select placeholder="category" class="col-3 offset-1">
+      <select placeholder="category" class="col-3 offset-1" (click)="showPresentationDraftByCategory($event)">
         <option value="" disabled selected>categories</option>
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
+        <option value="" *ngFor="let category of conference.categories">
+          {{category}}
+        </option>
       </select>
       <select class="col-3">
         <option value="" disabled selected>tags</option>
-        <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option>
+        <!-- <option value="" *ngFor="let presentationDraft of conference.presentationDrafts"></option> -->
       </select>
       <button class="col-2 offset-1 py-2" (click)="showAllPresentationDrafts()">All</button>
       <div class="w-100 py-2"></div>
@@ -23,8 +19,8 @@
       <button class="col-3" (click)="getPresentationDraftByLabel(3)">Reserved</button>
   </div>
   <div class="container margin-top-10" *ngIf="pagedItems; else listEmpty">
-    <div class="row presentation-box py-2 px-2">
-      <div *ngFor="let presentationDraft of pagedItems" class="col-md-3 tile">
+    <div class="row presentation-box mx-2 py-2 px-2">
+      <div *ngFor="let presentationDraft of pagedItems" class="col-md-2 tile">
         <button class="" (click)="showPresentationDetail()">
             <ul class="list-unstyled">
               <li class="figure-caption text-center">
@@ -40,52 +36,34 @@
         </button>
       </div>
     </div>
-    <div *ngIf="pager.pages && pager.pages.length" class="pagination row py-2">
-      <div class="col-md" 
+    <div *ngIf="pager.pages && pager.pages.length" class="pagination row mx-2">
+      <div class="row center-box">
+        <div class="py-2 page-number"
+        *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
+          <span *ngIf="currentPageNumber === page; else showNormalNumber">
+            <button class="py-2 px-2 no-border background-transparent tbc-slow" (click)="paginate(page)"><strong>{{page}}</strong></button>
+          </span>
+          <ng-template #showNormalNumber>
+            <button class="py-2 px-2 no-border background-transparent tbc-slow" (click)="paginate(page)">{{page}}</button>
+          </ng-template>
+        </div>
+      </div>
+      <div class="w-100"></div>
+      <div class="col-md nav-button-first tbc-slow px-0"
       [ngClass]="{disabled:pager.currentPage === 1}">
-        <span *ngIf="sortedPagedItems else firstAll">
-          <button class="max-width" (click)="setSortedPage(1)">First</button>
-        </span> 
-        <ng-template #firstAll>
-          <button class="max-width" (click)="setPage(1)">First</button>
-        </ng-template>
+        <button class="max-width nav-button-first py-2 no-border background-transparent" (click)="paginate(1)">First</button>
       </div>
-      <div class="col-md"
+      <div class="col-md nav-button px-0 tbc-slow"
       [ngClass]="{disabled:pager.currentPage === 1}">
-        <span *ngIf="sortedPagedItems else previousAll">
-          <button class="max-width" (click)="setSortedPage(pager.currentPage - 1)">Previous</button>
-        </span> 
-        <ng-template #previousAll>
-          <button class="max-width" (click)="setPage(pager.currentPage - 1)">Previous</button>
-        </ng-template>
+        <button class="max-width nav-button py-2 no-border background-transparent" (click)="paginate(pager.currentPage - 1)">Previous</button>
       </div>
-      <div class="col-md-1"
-      *ngFor="let page of pager.pages" [ngClass]="{active:pager.currentPage === page}">
-        <span *ngIf="sortedPagedItems else numbersAll">
-          <button (click)="setSortedPage(page)">{{page}}</button>
-        </span> 
-        <ng-template #numbersAll>
-          <button (click)="setPage(page)">{{page}}</button>
-        </ng-template>    
-      </div>
-      <div class="col-md"
+      <div class="col-md nav-button px-0 tbc-slow"
       [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-        <span *ngIf="sortedPagedItems else nextAll">
-          <button class="max-width" (click)="setSortedPage(pager.currentPage + 1)">Next</button>
-        </span> 
-        <ng-template #nextAll>
-          <button class="max-width" (click)="setPage(pager.currentPage + 1)">Next</button>
-        </ng-template>
+        <button class="max-width py-2 no-border background-transparent" (click)="paginate(pager.currentPage + 1)">Next</button>
       </div>
-      <div class="col-md"
+      <div class="col-md nav-button-last px-0 tbc-slow"
       [ngClass]="{disabled:pager.currentPage === pager.totalPages}">
-        <span *ngIf="sortedPagedItems else lastAll">
-          <button class="max-width" (click)="setSortedPage(pager.totalPages)">last</button>
-        </span> 
-        <ng-template #lastAll>
-            <button class="max-width" (click)="setPage(pager.totalPages)">Last</button>
-        </ng-template>
-          
+        <button class="max-width py-2 no-border background-transparent" (click)="paginate(pager.totalPages)">Last</button>
       </div>
     </div>
   </div>

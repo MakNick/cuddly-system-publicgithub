@@ -13,9 +13,7 @@ export class ConferenceComponent implements OnInit {
 
   private conferences: Conference[];
 
-  constructor(private conferenceService: ConferenceService,
-              private renderer2: Renderer2,
-              private el: ElementRef) { }
+  constructor(private conferenceService: ConferenceService) { }
 
   ngOnInit() {
     this.fillConferences();

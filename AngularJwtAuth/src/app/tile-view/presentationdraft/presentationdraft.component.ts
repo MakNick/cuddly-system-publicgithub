@@ -8,6 +8,7 @@ import { Conference } from 'src/app/objects/conference/conference';
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { PresentationdraftService } from './presentationdraft.service';
 import { PagerService } from 'src/app/pager/pager.service';
+import { injectComponentFactoryResolver } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-presentationdraft',
@@ -19,8 +20,9 @@ export class PresentationdraftComponent implements OnInit {
   conference: Conference = new Conference();
 
   pager: any = {};
+  currentPageNumber: number;
   pagedItems:any[];
-  sortedPagedItems: any[];
+  sortedPagedItems: any[] = [];
 
   constructor(private conferenceService: ConferenceService,
               private presentationDraftService: PresentationdraftService,
@@ -68,6 +70,17 @@ export class PresentationdraftComponent implements OnInit {
     });
   }
 
+  showPresentationDraftByCategory(event): void{
+    this.sortedPagedItems = [];
+    for(let pres of this.conference.presentationDrafts){
+      if(pres.category === event.target[event.target.selectedIndex].text){
+        this.sortedPagedItems.push(pres);
+        console.log(pres.subject + " added");
+      }
+    }
+    this.paginate(1);
+  }
+
   getPresentationDraftByLabel(id: number){
     this.presentationDraftService
     .getPresentationDraftsByLabel(this.conference.id, id)
@@ -75,22 +88,29 @@ export class PresentationdraftComponent implements OnInit {
       this.sortedPagedItems = presentationDraft
       this.setSortedPage(1);
     });
-    
   }
 
   showPresentationDetail(): void {
     this.router.navigate([{ outlets: { presentationDraftDetail : [ 'presentationDraftDetail' ] } }])
   }
 
-  setPage(page: number){
-    this.pager = this.pagerService.getPager(this.conference.presentationDrafts.length, page);
+  paginate(page: number): void{
+    if(this.sortedPagedItems.length == 0){
+      this.setPage(page);
+    }else{
+      this.setSortedPage(page);
+    }
+  }
 
+  setPage(page: number){
+    this.currentPageNumber = page;
+    this.pager = this.pagerService.getPager(this.conference.presentationDrafts.length, page);
     this.pagedItems = this.conference.presentationDrafts.slice(this.pager.startIndex, this.pager.endIndex+1);
   }
 
   setSortedPage(page: number){
+    this.currentPageNumber = page;
     this.pager = this.pagerService.getPager(this.sortedPagedItems.length, page);
-
     this.pagedItems = this.sortedPagedItems.slice(this.pager.startIndex, this.pager.endIndex+1);
   }
 

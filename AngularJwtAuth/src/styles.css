@@ -3,6 +3,18 @@ body{
     font-family: "Times New Roman", Times, serif;
 }
 
+.tbc-slow{
+    transition: background-color 1s;
+}
+
+.background-transparent{
+    background-color:transparent;
+}
+
+.no-border{
+    border:none;
+}
+
 .clean-margin{
     margin: 0px;
 }
@@ -16,7 +28,7 @@ body{
 }
 
 .center-box{
-    margin: 0 auto;
+    margin: 0 auto !important;
 }
 
 .align-items-center{
