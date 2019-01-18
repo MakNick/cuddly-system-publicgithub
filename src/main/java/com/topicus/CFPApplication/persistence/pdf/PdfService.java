@@ -1,5 +1,6 @@
 package com.topicus.CFPApplication.persistence.pdf;
 
+import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.persistence.ConferenceService;
+import com.topicus.CFPApplication.persistence.PrintService;
 
 import rst.pdfbox.layout.elements.Document;
 import rst.pdfbox.layout.elements.Element;
@@ -39,10 +41,12 @@ import rst.pdfbox.layout.text.TextSequenceUtil;
 public class PdfService {
 
 	private ConferenceService conferenceService;
+	private PrintService printService;
 
 	@Autowired
-	public PdfService(ConferenceService conferenceService) {
+	public PdfService(ConferenceService conferenceService, PrintService printService) {
 		this.conferenceService = conferenceService;
+		this.printService = printService;
 	}
 
 	public Document getAllPresentationDraftsToPDF(Long conferenceId) throws IOException, NoSuchElementException {
@@ -57,8 +61,8 @@ public class PdfService {
 					content.add("  "); // to create new page for a different presentationDraft
 				}
 			}
-			Document pdd = saveAllPresentationDrafts(content);
-			return pdd;
+			Document document = saveAllPresentationDrafts(content);
+			return document;
 		}
 		throw new NoSuchElementException();
 	}
@@ -78,8 +82,8 @@ public class PdfService {
 			if (content.isEmpty()) {
 				throw new FileNotFoundException();
 			} else {
-				Document pdd = saveSinglePresentationDraft(content, id);
-				return pdd;
+				Document document = saveSinglePresentationDraft(content, id);
+				return document;
 			}
 		}
 		throw new NoSuchElementException();
@@ -167,7 +171,8 @@ public class PdfService {
 
 	private void addContent(List<String> content, PresentationDraft presentationDraft) {
 		content.add("__*PresentationDraft ID: *__" + "__*" + presentationDraft.getId() + "*__");
-		content.add("\n*Subject: *" + presentationDraft.getSubject().replaceAll("\\_", "\\\\\\_").replaceAll("\\*", "\\\\\\*"));
+		content.add("\n*Subject: *"
+				+ presentationDraft.getSubject().replaceAll("\\_", "\\\\\\_").replaceAll("\\*", "\\\\\\*"));
 		content.add("*Category: *" + presentationDraft.getCategory());
 		content.add("*Type: *" + presentationDraft.getType().replaceAll("\\_", "\\\\\\_").replaceAll("\\*", "\\\\\\*"));
 		content.add("*Duration: *" + presentationDraft.getDuration());
@@ -193,6 +198,58 @@ public class PdfService {
 
 	public Document saveSinglePresentationDraft(List<String> content, Long id) throws IOException {
 		Document document = createPdf(content, id);
+		return document;
+	}
+
+	public Document printAllPdf(Long conferenceId) throws PrinterException, IOException {
+		Optional<Conference> conferenceOpt = conferenceService.findById(conferenceId);
+		List<String> content = new ArrayList<>();
+		if (conferenceOpt.isPresent()) {
+			List<PresentationDraft> listPresentations = new ArrayList<>(conferenceOpt.get().getPresentationDrafts());
+			listPresentations = sortList(listPresentations);
+			for (int i = 0; i < listPresentations.size(); i++) {
+				addContent(content, listPresentations.get(i));
+				if (i != listPresentations.size() - 1) {
+					content.add(" "); // to create new page for a different presentationDraft
+				}
+			}
+			Document document = printAllPdf(content);
+			return document;
+		}
+		throw new NoSuchElementException();
+	}
+
+	public Document printSinglePdf(long id, Long conferenceId) throws PrinterException, IOException {
+		Optional<Conference> conferenceOpt = conferenceService.findById(conferenceId);
+
+		List<String> content = new ArrayList<>();
+		if (conferenceOpt.isPresent()) {
+			List<PresentationDraft> listPresentations = new ArrayList<>(conferenceOpt.get().getPresentationDrafts());
+			listPresentations = sortList(listPresentations);
+			for (int i = 0; i < listPresentations.size(); i++) {
+				if (listPresentations.get(i).getId() == id) {
+					addContent(content, listPresentations.get(i));
+				}
+			}
+			if (content.isEmpty()) {
+				throw new FileNotFoundException();
+			} else {
+				Document document = printSinglePdf(content, id);
+				return document;
+			}
+		}
+		throw new NoSuchElementException();
+	}
+
+	public Document printSinglePdf(List<String> content, Long id) throws PrinterException, IOException {
+		Document document = createPdf(content, id);
+		printService.printDocument(document); // print the document
+		return document;
+	}
+
+	public Document printAllPdf(List<String> content) throws PrinterException, IOException {
+		Document document = createPdf(content, 0l);
+		printService.printDocument(document); // print the document
 		return document;
 	}
 }
