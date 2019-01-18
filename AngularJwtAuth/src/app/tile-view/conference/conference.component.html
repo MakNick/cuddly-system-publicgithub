@@ -1,0 +1,14 @@
+<div class="row tile-box">
+  <div class="col-md tile" *ngFor="let conference of conferences">
+    <button routerLink="/conference/{{conference.id}}">
+        <ul class="list-unstyled">
+          <li>
+            <strong>Title:</strong>
+          </li>
+          <li>
+            {{conference.name}}
+          </li>
+        </ul>
+    </button>
+  </div>
+</div>
