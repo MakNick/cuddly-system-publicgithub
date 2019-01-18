@@ -1,24 +1,25 @@
 package com.topicus.CFPApplication.persistence.pdf;
-
-import java.awt.print.PrinterException;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.topicus.CFPApplication.domain.Applicant;
-import com.topicus.CFPApplication.domain.Conference;
-import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.persistence.ConferenceService;
-import com.topicus.CFPApplication.persistence.PrintService;
+//
+//import java.awt.print.PrinterException;
+//import java.io.File;
+//import java.io.FileNotFoundException;
+//import java.io.IOException;
+//import java.util.ArrayList;
+//import java.util.List;
+//import java.util.NoSuchElementException;
+//import java.util.Optional;
+//
+//import org.apache.pdfbox.pdmodel.font.PDType1Font;
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.stereotype.Service;
+//import org.springframework.transaction.annotation.Transactional;
+//
+//import com.topicus.CFPApplication.domain.Applicant;
+//import com.topicus.CFPApplication.domain.Conference;
+//import com.topicus.CFPApplication.domain.PresentationDraft;
+//import com.topicus.CFPApplication.persistence.ConferenceService;
+//import com.topicus.CFPApplication.persistence.PrintService;
+//
 
 //import rst.pdfbox.layout.elements.Document;
 //import rst.pdfbox.layout.elements.Element;
@@ -36,9 +37,10 @@ import com.topicus.CFPApplication.persistence.PrintService;
 //import rst.pdfbox.layout.text.TextFlowUtil;
 //import rst.pdfbox.layout.text.TextSequenceUtil;
 
-@Service
-@Transactional
+//@Service
+//@Transactional
 public class PdfService {
+//
 
 //	private ConferenceService conferenceService;
 //	private PrintService printService;
@@ -252,4 +254,5 @@ public class PdfService {
 //		printService.printDocument(document); // print the document
 //		return document;
 //	}
+
 }
