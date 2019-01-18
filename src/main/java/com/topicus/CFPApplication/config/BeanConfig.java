@@ -13,8 +13,12 @@ import com.topicus.CFPApplication.persistence.ConferenceRepository;
 @Configuration
 public class BeanConfig {
 
-	@Autowired
 	ConferenceRepository conferenceRepo;
+	
+	@Autowired
+	public BeanConfig(ConferenceRepository conferenceRepo) {
+		this.conferenceRepo = conferenceRepo;
+	}
 
 	@Bean
 	public Set<String> categories() {
