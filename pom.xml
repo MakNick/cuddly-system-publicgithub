@@ -199,13 +199,14 @@
 			<scope>test</scope>
 		</dependency>
 
-		<!-- PDFlayout Dependency -->
+		<!-- PDFlayout Dependency 
 		<dependency>
 			<groupId>com.github.ralfstuckert.pdfbox-layout</groupId>
 			<artifactId>pdfbox2-layout</artifactId>
 			<version>1.0.0</version>
-		</dependency>
-
+		</dependency> -->
+		
+		<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
 
 	</dependencies>
 
@@ -225,12 +226,12 @@
 		</plugins>
 	</build>
 
-	<repositories>
+	<!-- <repositories>
 		<repository>
 			<id>jitpack.io</id>
 			<url>https://jitpack.io</url>
 		</repository>
-	</repositories>
+	</repositories> -->
 
 </project>
 
