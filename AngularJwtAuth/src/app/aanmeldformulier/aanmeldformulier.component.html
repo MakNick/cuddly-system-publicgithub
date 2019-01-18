@@ -1,0 +1,84 @@
+<body>
+
+  <div class="FormBackgroundStyle">
+    <div class="container">
+      <h2 class="text-center">Presentatie aanmelden </h2>
+
+        <div class="form-group">
+          <label for="form_name">Naam:</label>
+          <input type="text" class="form-control" id="form_name">
+        </div>
+        <div class="form-group">
+          <label for="form_email">Email:</label>
+          <input type="email" class="form-control" id="form_email">
+        </div>
+        <div class="form-group">
+          <label for="form_subject">Onderwerp:</label>
+          <input type="text" class="form-control" id="form_subject">
+        </div>
+        <div class="form-group">
+          <label for="form_summary">Omschrijving:</label>
+          <textarea class="form-control" rows="5" maxlength="500" id="form_summary"></textarea>
+        </div>
+        <details name="optional_fields">
+          <summary>Optionele velden</summary>
+          <br>
+          <div class="form-group">
+            <label for="form_type">Type presentatie:</label>
+            <input type="text" class="form-control" id="form_type">
+          </div>
+          <div class="form-group">
+            <label for="form_category">Categorie:</label>
+            <select class="form-control" id="form_category">
+              <option disabled selected value> -- Maak een keuze -- </option>
+              <option>test 1</option>
+              <option>test 2</option>
+              <option>test 3</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form_duration">Tijdsduur presentatie:</label>
+            <select class="form-control" id="form_duration">
+              <option disabled selected value> -- Maak een keuze -- </option>
+              <option>15</option>
+              <option>30
+              <option>45</option>
+              <option>60</option>
+              <option>75</option>
+              <option>90</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form_occupation">Beroep/achtergrond:</label>
+            <input type="text" class="form-control" id="form_occupation">
+          </div>
+          <div class="form-group">
+            <label for="form_gender">Geslacht:</label>
+            <select class="form-control" id="form_gender">
+              <option disabled selected value> -- Maak een keuze -- </option>
+              <option>Man</option>
+              <option>Vrouw</option>
+              <option>Overig</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="form_requests">Overige opmerkingen:</label>
+            <textarea class="form-control" rows="5" maxlength="500" id="form_requests"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="form_cohost">Wil je mede-presentatoren aanmelden?</label>
+            <select class="form-control" id="form_cohost">
+              <option>nee</option>
+              <option>ja, 1</option>
+              <option>ja, 2</option>
+              <option>ja, 3</option>
+            </select>
+          </div>
+        </details>
+        <br>
+        <button type="submit" class="btn btn-default">Verzenden</button>
+
+    </div>
+  </div>
+
+</body>
