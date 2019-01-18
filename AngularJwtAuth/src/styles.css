@@ -59,10 +59,6 @@ body{
     background-color: hsl(254, 40%, 22%) !important;
 }
 
-.tile{
-    padding: 0px !important;
-}
-
 .tile > button{
     background-color: rgb(206, 253, 253);
 }

@@ -24,7 +24,7 @@ public class ConferenceService {
 	}
 
 	public Iterable<Conference> findAll() {
-		Iterable<Conference> result = conferenceRepository.findAll();
+		Iterable<Conference> result = conferenceRepository.findAllByOrderByName();
 		return result;
 	}
 

@@ -1,7 +1,15 @@
+#navigation-box{
+    /* width: 100%; */
+    display: grid;
+}
+
+.label-button{
+    grid-column: span 2
+}
+
 .tile > button{
     height: 100%;
     width: 100%;
-    vertical-align: top;
 }
 
 .tile-outer-box{
@@ -11,15 +19,36 @@
 
 .presentation-box{
     border: 1px solid;
+    min-height: 420px;
     background: rgb(245, 245, 245);
 }
 
-.navigation-box{
-    width: 100%;
+.presentation-drafts{
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-gap: 5px 2px;
 }
 
-.navigation-box > button:focus{
-    background:rgb(190, 190, 190);
+.tile{
+    grid-column: span 3;
+}
+
+.tile > button > ul{
+    margin: 0px;
+}
+
+@media screen and (max-width:680px){
+    .tile{
+        font-size: 10px;
+        grid-column: span 2;
+    }
+}
+
+@media screen and (max-width:460px){
+    .tile{
+        font-size: 10px;
+        grid-column: span 4;
+    }
 }
 
 .page-number > button:hover{

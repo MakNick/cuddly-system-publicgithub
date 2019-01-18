@@ -1,39 +1,41 @@
 <div class="row tile-outer-box">
-  <div class="col-10 offset-1 navigation-box">
-      <button class="col-2 py-2" (click)="goBack()">Back</button>
-      <select placeholder="category" class="col-3 offset-1" (click)="showPresentationDraftByCategory($event)">
+  <div id="navigation-box">
+      <button class="py-2" (click)="goBack()">Back</button>
+      <select id="categories" (click)="showPresentationDraftByCategory($event)">
         <option value="" disabled selected>categories</option>
         <option value="" *ngFor="let category of conference.categories">
           {{category}}
         </option>
       </select>
-      <select class="col-3">
+      <select id="tags">
         <option value="" disabled selected>tags</option>
         <!-- <option value="" *ngFor="let presentationDraft of conference.presentationDrafts"></option> -->
       </select>
-      <button class="col-2 offset-1 py-2" (click)="showAllPresentationDrafts()">All</button>
+      <button id="all-button py-2" (click)="showAllPresentationDrafts()">All</button>
       <div class="w-100 py-2"></div>
-      <button class="col-3" (click)="getPresentationDraftByLabel(0)">New</button>
-      <button class="col-3" (click)="getPresentationDraftByLabel(2)">Accepted</button>
-      <button class="col-3" (click)="getPresentationDraftByLabel(1)">Denied</button>
-      <button class="col-3" (click)="getPresentationDraftByLabel(3)">Reserved</button>
+      <button class="label-button" (click)="getPresentationDraftByLabel(0)">New</button>
+      <button class="label-button" (click)="getPresentationDraftByLabel(2)">Accepted</button>
+      <button class="label-button" (click)="getPresentationDraftByLabel(1)">Denied</button>
+      <button class="label-button" (click)="getPresentationDraftByLabel(3)">Reserved</button>
   </div>
   <div class="container margin-top-10" *ngIf="pagedItems; else listEmpty">
-    <div class="row presentation-box mx-2 py-2 px-2">
-      <div *ngFor="let presentationDraft of pagedItems" class="col-md-2 tile">
-        <button class="" (click)="showPresentationDetail()">
-            <ul class="list-unstyled">
-              <li class="figure-caption text-center">
-                {{presentationDraft.label | lowercase}}
-              </li>
-              <li>
-                {{presentationDraft.subject}}
-              </li>
-              <li class="figure-caption text-right">
-                {{getTimeOfCreation(presentationDraft)}}
-              </li>
-            </ul>
-        </button>
+    <div class="presentation-box">
+      <div class="presentation-drafts mx-2 my-2">
+        <div *ngFor="let presentationDraft of pagedItems" class="tile">
+          <button class="py-2" (click)="showPresentationDetail()">
+              <ul class="list-unstyled">
+                <li class="figure-caption text-center">
+                  {{presentationDraft.label | lowercase}}
+                </li>
+                <li>
+                  {{presentationDraft.subject}}
+                </li>
+                <li class="figure-caption text-right">
+                  {{getTimeOfCreation(presentationDraft)}}
+                </li>
+              </ul>
+          </button>
+        </div>
       </div>
     </div>
     <div *ngIf="pager.pages && pager.pages.length" class="pagination row mx-2">
