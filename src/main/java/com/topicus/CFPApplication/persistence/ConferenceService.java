@@ -1,9 +1,6 @@
 package com.topicus.CFPApplication.persistence;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -14,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
-
 
 @Service
 @Transactional
@@ -80,5 +76,5 @@ public class ConferenceService {
 		}
 		return sendset;
 	}
-	
+
 }
