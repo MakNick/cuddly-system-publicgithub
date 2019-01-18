@@ -204,10 +204,8 @@
 			<groupId>com.github.ralfstuckert.pdfbox-layout</groupId>
 			<artifactId>pdfbox2-layout</artifactId>
 			<version>1.0.0</version>
-		</dependency> -->
+		</dependency>-->
 		
-		<!-- https://mvnrepository.com/artifact/org.apache.pdfbox/pdfbox -->
-
 	</dependencies>
 
 	<build>
