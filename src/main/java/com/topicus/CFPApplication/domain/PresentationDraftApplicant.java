@@ -8,7 +8,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel(value = "PresentationDraftApplicant", description = "Holds the host(s) and presentationdraft")
 public class PresentationDraftApplicant {
-
+	
 	@ApiModelProperty(position = 1, required = true, value = "The presentationdraft that was submitted")
 	private PresentationDraft presentationDraft;
 

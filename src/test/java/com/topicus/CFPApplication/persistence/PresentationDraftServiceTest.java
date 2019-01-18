@@ -1,8 +1,13 @@
 package com.topicus.CFPApplication.persistence;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import javax.naming.CannotProceedException;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,6 +17,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 
@@ -28,46 +34,108 @@ public class PresentationDraftServiceTest {
 	SubscribeService subscribeService;
 
 	@Mock
+	ApplicantRepository applicantRepo;
+
+	@InjectMocks
 	ApplicantService applicantService;
 
 	@Mock
-	ApplicantRepository applicantRepo;
+	PresentationRepository presentationRepo;
 
-	@Mock
+	@InjectMocks
 	PresentationService presentationService;
 
-//	@Test
-//	public void makePresentationDraftFinalUnlabeledTest() {
-//
-//		List<PresentationDraft> listUnlabeled = new ArrayList<>();
-//		PresentationDraft pd1 = new PresentationDraft();
-//		pd1.setLabel(PresentationDraft.Label.UNLABELED);
-//		listUnlabeled.add(pd1);
-//		
-//		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNLABELED)).thenReturn(listUnlabeled);
-//		 fe	
-//		int result = draftService.makePresentationDraftsFinal().getStatusCodeValue();
-//		
-//		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNLABELED);
-//		
-//		Assert.assertEquals(412, result);
-//	}
+	@Mock
+	ConferenceRepository conferenceRepo;
 
-//	@Test
-//	public void makePresentationDraftFinalUndeterminedTest() {
-//		List<PresentationDraft> listUndetermined = new ArrayList<>();
-//		PresentationDraft presUndetermined = new PresentationDraft();
-//		presUndetermined.setLabel(Label.UNDETERMINED);
-//		listUndetermined.add(presUndetermined);
-//
-//		Mockito.when(this.draftRepo.findPresentationDraftByLabel(Label.UNDETERMINED)).thenReturn(listUndetermined);
-//		
-//		int response412 = draftService.makePresentationDraftsFinal().getStatusCodeValue();
-//		
-//		Mockito.verify(this.draftRepo).findPresentationDraftByLabel(Label.UNDETERMINED);
-//
-//		Assert.assertEquals(412, response412);
-//	}
+	@Mock
+	ConferenceService conferenceService;
+
+	@Test
+	public void makePresentationFinalDeadlineTest() {
+		Conference conf = new Conference();
+		conf.setId(1);
+		conf.setDeadlinePresentationDraft(LocalDateTime.now().plusHours(1));
+
+		PresentationDraft pd1 = new PresentationDraft();
+		pd1.setLabel(Label.UNLABELED);
+		conf.addPresentationDraft(pd1);
+
+		Mockito.when(this.conferenceService.findById((long) 1)).thenReturn(Optional.of(conf));
+
+		int result = 0;
+		try {
+			this.draftService.makePresentationDraftsFinal(conf.getId(), 0);
+			result = 1;
+		} catch (CannotProceedException e) {
+			result = 2;
+		} catch (NoSuchElementException e) {
+			result = 3;
+		}
+
+		Assert.assertEquals(2, result);
+	}
+
+	@Test
+	public void makePresentationFinalUnlabeledTest() {
+		final List<Label> labelList = Arrays.asList(Label.UNLABELED, Label.DENIED, Label.ACCEPTED, Label.RESERVED,
+				Label.UNDETERMINED);
+
+		Conference conf = new Conference();
+		conf.setId(1);
+		conf.setDeadlinePresentationDraft(LocalDateTime.now().minusHours(1));
+
+		for (int i = 0; i < labelList.size(); i++) {
+			PresentationDraft pd = new PresentationDraft();
+			pd.setLabel(labelList.get(i));
+			conf.addPresentationDraft(pd);
+		}
+
+		Mockito.when(this.conferenceService.findById((long) 1)).thenReturn(Optional.of(conf));
+		Mockito.when(this.conferenceService.findPresentationDrafts(conf, 0)).thenReturn(conf.getPresentationDrafts());
+
+		int result = 0;
+		List<PresentationDraft> resultList = new ArrayList<>();
+		try {
+			resultList.addAll(this.draftService.makePresentationDraftsFinal(conf.getId(), 0));
+			result = 1;
+		} catch (CannotProceedException e) {
+			result = 2;
+		} catch (NoSuchElementException e) {
+			result = 3;
+		}
+
+		Assert.assertEquals(2, result);
+	}
+
+	@Test
+	public void makePresentationDraftFinalTest() throws CannotProceedException, NoSuchElementException {
+		Conference conf = new Conference();
+		conf.setId(1);
+		conf.setDeadlinePresentationDraft(LocalDateTime.now().minusHours(1));
+		List<PresentationDraft> resultList = new ArrayList<>();
+
+		PresentationDraft pd1 = new PresentationDraft();
+		pd1.setLabel(Label.ACCEPTED);
+		resultList.add(pd1);
+		
+		
+		Mockito.when(this.conferenceService.findById((long) 1)).thenReturn(Optional.of(conf));
+		Mockito.when(this.draftService.makePresentationDraftsFinal(conf.getId(), 2)).thenReturn(resultList);
+
+		int result = 0;
+		try {
+			resultList = this.draftService.makePresentationDraftsFinal(conf.getId(), 2);
+			result = 1;
+		} catch (CannotProceedException e) {
+			result = 2;
+		} catch (NoSuchElementException e) {
+			result = 3;
+		}
+
+		Assert.assertEquals(1, result);
+		Assert.assertEquals(1, resultList.size());
+	}
 
 	@Test
 	public void findByLabelTest() {

@@ -127,10 +127,15 @@ public class MailService {
 		}
 	}
 	
-	public void sendMailText(PresentationDraft presentationDraft, String text) {
+	public List<Applicant> sendMailText(PresentationDraft presentationDraft, String text) {
+		List<Applicant> couldNotSendList = new ArrayList<>();
 		for (Applicant a : presentationDraft.getApplicants()) {
-			emailSender.send(prepareAndSend(a.getEmail(), a.getName(), text, "demo-template-text"));
+			try {
+				emailSender.send(prepareAndSend(a.getEmail(), a.getName(), text, "demo-template-text"));
+			} catch (MailException d) {
+				couldNotSendList.add(a);
+			}
 		}
+		return couldNotSendList;
 	}
-
 }

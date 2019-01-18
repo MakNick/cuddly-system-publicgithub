@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.HashSet;
 import java.util.Set;
+//import java.util.TreeSet;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -20,11 +21,13 @@ import javax.persistence.OneToOne;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.topicus.CFPApplication.domain.PresentationDraft.Label;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@ApiModel(value = "Conference", description = "Holds all value for the conference object")
+@ApiModel(value = "Conference", description = "Holds all value for the conference")
 public class Conference {
 
 	@Id
@@ -70,18 +73,54 @@ public class Conference {
 	@ApiModelProperty(position = 10, value = "Duration in days", hidden = true)
 	private Set<Day> days = new HashSet<Day>();
 
+	@Column(name = "mail_template")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "conference_id")
+	@ApiModelProperty(position = 11, value = "Available e-mail templates", hidden = true)
+	private Set<MailTemplate> mailTemplates = new HashSet<MailTemplate>();
+
 	@Column(name = "presentationdraft")
 	@OneToMany(fetch = FetchType.EAGER)
 	@JoinColumn(name = "conference_id")
-	@ApiModelProperty(position = 11, value = "All presentations from this conference will be added to this list", hidden = true)
-	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
+	@ApiModelProperty(position = 12, value = "All presentations from this conference will be added to this list", hidden = true)
+	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();				
+
+	@Column(name = "presentation")
+	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "conference_id")
+	@ApiModelProperty(position = 12, value = "All presentations from this conference will be added to this list", hidden = true)
+	private Set<Presentation> presentations = new HashSet<Presentation>();
 
 	@OneToOne
-	@ApiModelProperty(position = 12, value = "Form to be used for this conference", hidden = true)
+	@ApiModelProperty(position = 13, value = "Form to be used for this conference", hidden = true)
 	private PresentationDraftForm presentationDraftForm;
+
+	public void addCategorie(String categorie) {
+		this.categories.add(categorie);
+	}
+
+	public void addStage(Stage stage) {
+		this.stages.add(stage);
+	}
+
+	public void addExtra(Extra extra) {
+		this.extras.add(extra);
+	}
+
+	public void addDay(Day day) {
+		this.days.add(day);
+	}
+
+	public void addMailTemplate(MailTemplate mailTemplate) {
+		this.mailTemplates.add(mailTemplate);
+	}
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
 		this.presentationDrafts.add(presentationDraft);
+	}
+
+	public void addPresentation(Presentation presentation) {
+		this.presentations.add(presentation);
 	}
 
 	// Getters en Setters:
@@ -173,6 +212,14 @@ public class Conference {
 		this.presentationDraftForm = presentationDraftForm;
 	}
 
+	public Set<Presentation> getPresentations() {
+		return presentations;
+	}
+
+	public void setPresentations(Set<Presentation> presentations) {
+		this.presentations = presentations;
+	}
+
 	@Entity
 	@ApiModel(value = "Extra", description = "Any extra facilities that will be available for the conference")
 	public static class Extra {
@@ -210,7 +257,6 @@ public class Conference {
 		public void setDuration(Period duration) {
 			this.duration = duration;
 		}
-
 	}
 
 	@Entity
@@ -255,11 +301,12 @@ public class Conference {
 			@ApiModelProperty(position = 2, value = "Amount of the item needed")
 			private int amount;
 
+			// onderzoek hoe dit werkt
 			@ApiModelProperty(position = 3, value = "The image for this attribute", hidden = true)
 			private Blob icon;
 
 			@ManyToOne
-			@ApiModelProperty(position = 4, value = "The stage to which this attribute belongs")
+			@ApiModelProperty(position = 4, value = "The stage to which this attribute belongs", hidden = true)
 			private Stage stage;
 
 			public Blob getIcon() {
@@ -294,6 +341,35 @@ public class Conference {
 				this.name = name;
 			}
 
+		}
+
+	}
+
+	@Entity
+	@ApiModel(value = "MailTemplate", description = "Holds the value to fill in an e-mail template")
+	public static class MailTemplate {
+
+		@Id
+		@ApiModelProperty(position = 1, value = "Unique identifier for the template and type of the template")
+		private Label label;
+
+		@ApiModelProperty(position = 3, value = "Content of the mail")
+		private String content;
+
+		public String getContent() {
+			return content;
+		}
+
+		public void setContent(String content) {
+			this.content = content;
+		}
+
+		public Label getLabel() {
+			return this.label;
+		}
+
+		public void setLabel(Label label) {
+			this.label = label;
 		}
 
 	}

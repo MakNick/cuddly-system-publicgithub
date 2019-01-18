@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
@@ -21,7 +22,7 @@ import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.persistence.ConferenceService;
-import com.topicus.CFPApplication.persistence.PresentationDraftRepository;
+import com.topicus.CFPApplication.persistence.RequestCategorizedDraftsService;
 import com.topicus.CFPApplication.persistence.SubscribeService;
 
 import io.swagger.annotations.Api;
@@ -38,10 +39,14 @@ public class ConferenceEndpoint {
 
 	private SubscribeService subscribeService;
 
+	private RequestCategorizedDraftsService requestCategorizedDraftsService;
+
 	@Autowired
-	public ConferenceEndpoint(ConferenceService conferenceService, SubscribeService subscribeService) {
+	public ConferenceEndpoint(ConferenceService conferenceService, SubscribeService subscribeService,
+			RequestCategorizedDraftsService requestCategorizedDraftsService) {
 		this.conferenceService = conferenceService;
 		this.subscribeService = subscribeService;
+		this.requestCategorizedDraftsService = requestCategorizedDraftsService;
 	}
 
 	@ApiOperation("Retrieves all available conference from the database")
@@ -139,6 +144,35 @@ public class ConferenceEndpoint {
 		} else {
 			return ResponseEntity.status(404).build();
 		}
+	}
+
+	@ApiOperation("Retrieves Presentationdrafts for a conference of a certain category. If a non-existing category is passed, then all categories will be shown.")
+	@ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved the presentationDrafts with a certain category"), 
+		@ApiResponse(code = 404, message = "The conference passed does not exist"),
+		@ApiResponse(code = 400, message = "The conference or category passed is invalid"),
+		@ApiResponse(code = 417, message = "An unexpected situation occured.")})
+	@GetMapping(path = "api/findpresentationdraftsbycategory")
+	public ResponseEntity<Iterable<PresentationDraft>> findPresentationdraftsByCategory(
+			@RequestParam(value = "id", required = true) Long id,
+			@RequestParam(value = "category", required = true) String category) {
+		if (category != null && id != null && id > 0) {
+			category = category.substring(1, category.length() - 1);
+			Optional<Conference> conference = conferenceService.findById(id);
+			if (conference.isPresent()) {
+				if (conference.get().getCategories().contains(category)) {
+					Iterable<PresentationDraft> result = requestCategorizedDraftsService
+							.findPresentationDraftsByCategory(conference.get(), category);
+					return ResponseEntity.ok(result);
+				} else if (category.equals("Toon alle")) {
+					Iterable<PresentationDraft> result = conferenceService.findPresentationDrafts(conference.get(), 5);
+					return ResponseEntity.ok(result);
+				} else {
+					return ResponseEntity.status(417).build();
+				}
+			}
+			return ResponseEntity.status(404).build();
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 	}
 
 }
