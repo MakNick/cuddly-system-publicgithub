@@ -1,8 +1,13 @@
-<div (click)="goBack($event)" class="background center">
+<div *ngIf="PsDetail" (click)="goBack($event)" class="background center">
   <div class="row detail-box">
     <div class="col-ms">
-      <!-- {{selectedDraft.id}} -->
-      werkt nog niet
+      <h1>{{PsDetail.subject}}</h1>
+
+      <button class="labelbutton">{{PsDetail.label}}</button>
+
+      <div class="summary"> 
+        <textarea>{{PsDetail.summary}}</textarea>
+      </div>
     </div>
   </div>
 </div>
