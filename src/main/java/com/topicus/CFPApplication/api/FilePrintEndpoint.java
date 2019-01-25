@@ -1,28 +1,28 @@
 package com.topicus.CFPApplication.api;
-
-import java.awt.print.PrinterException;
-import java.io.IOException;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.topicus.CFPApplication.persistence.pdf.PdfService;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+//
+//import java.awt.print.PrinterException;
+//import java.io.IOException;
+//
+//import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.http.HttpStatus;
+//import org.springframework.http.ResponseEntity;
+//import org.springframework.web.bind.annotation.GetMapping;
+//import org.springframework.web.bind.annotation.PathVariable;
+//import org.springframework.web.bind.annotation.RestController;
+//
+//import com.topicus.CFPApplication.persistence.pdf.PdfService;
+//
+//import io.swagger.annotations.Api;
+//import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiParam;
+//import io.swagger.annotations.ApiResponse;
+//import io.swagger.annotations.ApiResponses;
 //import rst.pdfbox.layout.elements.Document;
-
-@RestController
-@Api(value = "FilePrintEndpoint", description = "Print files")
+//
+//@RestController
+//@Api(value = "FilePrintEndpoint", description = "Print files")
 public class FilePrintEndpoint {
-
+//
 //	private PdfService pdfService;
 //
 //	@Autowired
@@ -84,4 +84,5 @@ public class FilePrintEndpoint {
 //		}
 //		return new ResponseEntity<>("No conference available", HttpStatus.NOT_FOUND);
 //	}
+
 }
