@@ -17,6 +17,8 @@ import { injectComponentFactoryResolver } from '@angular/core/src/render3';
 })
 export class PresentationdraftComponent implements OnInit {
 
+  selectedPresentationdraft : PresentationDraft;
+
   conference: Conference = new Conference();
 
   pager: any = {};
@@ -90,8 +92,18 @@ export class PresentationdraftComponent implements OnInit {
     });
   }
 
-  showPresentationDetail(): void {
-    this.router.navigate([{ outlets: { presentationDraftDetail : [ 'presentationDraftDetail' ] } }])
+  emptySelected(){
+    alert();
+    this.selectedPresentationdraft = null;
+  }
+
+  showPresentationDetail(ps:PresentationDraft): void {
+    this.selectedPresentationdraft = ps;
+    // this.router.navigate([{ outlets: { presentationDraftDetail : [ 'presentationDraftDetail' ] } }])
+  }
+
+  talkBack(PsDetail: PresentationDraft) {
+    this.selectedPresentationdraft=PsDetail;
   }
 
   paginate(page: number): void{

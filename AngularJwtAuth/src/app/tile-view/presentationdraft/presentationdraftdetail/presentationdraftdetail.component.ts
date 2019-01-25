@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
@@ -11,7 +11,10 @@ import { viewParentEl } from '@angular/core/src/view/util';
 })
 export class PresentationdraftdetailComponent implements OnInit {
 
-  @Input()selectedDraft: PresentationDraft;
+  @Input() 
+  PsDetail: PresentationDraft;
+
+  @Output() onClose: EventEmitter<PresentationDraft> = new EventEmitter<PresentationDraft>();
 
   constructor(private location: Location) { }
 
@@ -22,7 +25,11 @@ export class PresentationdraftdetailComponent implements OnInit {
     if(event.target !== event.currentTarget){
       return;
     }
-    this.location.back()
+
+  this.PsDetail=null;
+  this.onClose.emit(this.PsDetail);
+   
+    
   }
 
 }
