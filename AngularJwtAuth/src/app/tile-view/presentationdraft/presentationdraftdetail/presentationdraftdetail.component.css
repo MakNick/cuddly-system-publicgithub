@@ -16,5 +16,21 @@
     left: 0px;
     background-color: rgba(0, 0, 0, 0.281);
     z-index: 10;
+}
 
+.summary{
+    width: 90%;
+}
+
+.summary > textarea {
+    position: inherit;
+    width: 1000px;
+    height: 300px;
+}
+
+.labelbutton {
+    width: 100px;
+   margin-bottom: 10px;
+   display: inherit;
+   margin-left: 100px;
 }
