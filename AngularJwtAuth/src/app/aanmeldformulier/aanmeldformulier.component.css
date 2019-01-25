@@ -1,4 +1,8 @@
 
+ h2{
+  font-size: 28px;
+ }
+ 
  .FormBackgroundStyle{
      position: relative;
      background-color: rgb(180, 180, 180, 0.15);
@@ -6,7 +10,6 @@
      padding-bottom: 20px;
      margin-left: 20px;
      margin-right: 20px;
-
  }
 
  .container {

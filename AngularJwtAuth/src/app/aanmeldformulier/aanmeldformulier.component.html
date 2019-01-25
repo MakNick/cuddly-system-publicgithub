@@ -2,7 +2,7 @@
 
   <div class="FormBackgroundStyle">
     <div class="container">
-      <h2 class="text-center">Presentatie aanmelden </h2>
+      <h2 class="text-center">Aanmeldformulier presentaties</h2>
 
         <div class="form-group">
           <label for="form_name">Naam:</label>
@@ -18,7 +18,7 @@
         </div>
         <div class="form-group">
           <label for="form_summary">Omschrijving:</label>
-          <textarea class="form-control" rows="5" maxlength="500" id="form_summary"></textarea>
+          <textarea class="form-control" rows="5" maxlength="500" id="form_summary" placeholder="Maximaal 500 tekens"></textarea>
         </div>
         <details name="optional_fields">
           <summary>Optionele velden</summary>
@@ -29,8 +29,10 @@
           </div>
           <div class="form-group">
             <label for="form_category">Categorie:</label>
-            <select class="form-control" id="form_category">
+            <select class="form-control" id="form_category" style="width: 50%">
               <option disabled selected value> -- Maak een keuze -- </option>
+
+              <!-- Verwijder opties. ng request aantal opties.-->
               <option>test 1</option>
               <option>test 2</option>
               <option>test 3</option>
@@ -38,7 +40,7 @@
           </div>
           <div class="form-group">
             <label for="form_duration">Tijdsduur presentatie:</label>
-            <select class="form-control" id="form_duration">
+            <select class="form-control" id="form_duration" style="width: 50%">
               <option disabled selected value> -- Maak een keuze -- </option>
               <option>15</option>
               <option>30
@@ -54,7 +56,7 @@
           </div>
           <div class="form-group">
             <label for="form_gender">Geslacht:</label>
-            <select class="form-control" id="form_gender">
+            <select class="form-control" id="form_gender" style="width: 50%">
               <option disabled selected value> -- Maak een keuze -- </option>
               <option>Man</option>
               <option>Vrouw</option>
@@ -67,13 +69,14 @@
           </div>
           <div class="form-group">
             <label for="form_cohost">Wil je mede-presentatoren aanmelden?</label>
-            <select class="form-control" id="form_cohost">
-              <option>nee</option>
-              <option>ja, 1</option>
-              <option>ja, 2</option>
-              <option>ja, 3</option>
+            <select class="form-control" id="form_cohost" style="width: 50%" (change)="toonMedepresentatoren($event);">
+              <option value="0">nee</option>
+              <option value="1">ja, 1</option>
+              <option value="2">ja, 2</option>
+              <option value="3">ja, 3</option>
             </select>
           </div>
+          <div id="extra"></div>
         </details>
         <br>
         <button type="checkbox" id="send_button" class="btn btn-default">Verzenden</button>
