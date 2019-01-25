@@ -1,22 +1,27 @@
 <div class="row tile-outer-box">
   <div id="navigation-box">
-      <button class="py-2" (click)="goBack()">Back</button>
-      <select id="categories" (click)="showPresentationDraftByCategory($event)">
-        <option value="" disabled selected>categories</option>
-        <option value="" *ngFor="let category of conference.categories">
-          {{category}}
-        </option>
-      </select>
-      <select id="tags">
-        <option value="" disabled selected>tags</option>
-        <!-- <option value="" *ngFor="let presentationDraft of conference.presentationDrafts"></option> -->
-      </select>
-      <button id="all-button py-2" (click)="showAllPresentationDrafts()">All</button>
-      <div class="w-100 py-2"></div>
-      <button class="label-button" (click)="getPresentationDraftByLabel(0)">New</button>
-      <button class="label-button" (click)="getPresentationDraftByLabel(2)">Accepted</button>
-      <button class="label-button" (click)="getPresentationDraftByLabel(1)">Denied</button>
-      <button class="label-button" (click)="getPresentationDraftByLabel(3)">Reserved</button>
+      <div id="navbox-top" class="mx-3 my-3">
+        <button (click)="goBack()">Back</button>
+        <select (click)="showPresentationDraftByCategory($event)">
+          <option disabled selected>categories</option>
+          <option *ngFor="let category of conference.categories">
+            {{category}}
+          </option>
+        </select>
+        <select>
+          <option value="" disabled selected>tags</option>
+          <!-- <option value="" *ngFor="let presentationDraft of conference.presentationDrafts"></option> -->
+        </select>
+        <button id="py-2" (click)="showAllPresentationDrafts()">All</button>
+      </div>
+      <div id="labelbox-top" class="mx-3">
+        <button (click)="getPresentationDraftByLabel(0)">New</button>
+        <button (click)="getPresentationDraftByLabel(2)">Accepted</button>
+      </div>
+      <div id="labelbox-bottom" class="mx-3">
+        <button (click)="getPresentationDraftByLabel(1)">Denied</button>
+        <button (click)="getPresentationDraftByLabel(3)">Reserved</button>
+      </div>
   </div>
   <div class="container margin-top-10" *ngIf="pagedItems; else listEmpty">
     <div class="presentation-box">

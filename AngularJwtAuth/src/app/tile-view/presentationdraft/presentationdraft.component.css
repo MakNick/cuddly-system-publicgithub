@@ -1,10 +1,53 @@
 #navigation-box{
-    /* width: 100%; */
+    width: 100%;
     display: grid;
+    grid-template-columns: repeat(4, 1fr)
 }
 
-.label-button{
-    grid-column: span 2
+#navbox-top{
+    display: flex;
+    justify-content: space-between;
+    grid-column: span 4;
+}
+
+#navbox-top > button{
+    width: 100px;
+}
+
+#navbox-top > select{
+    width: 100px;
+}
+
+#labelbox-top{
+    display: flex;
+    grid-column: span 2;
+}
+
+#labelbox-bottom{
+    display: flex;
+    grid-column: span 2;
+}
+
+#labelbox-top > button{
+    flex-grow: 1;
+    width: 100px;
+}
+
+#labelbox-bottom > button{
+    flex-grow: 1;
+    width: 100px;
+}
+
+@media screen and (max-width: 460px) {
+
+    #labelbox-top{
+        grid-column: span 4;
+    }
+
+    #labelbox-bottom{
+        grid-column: span 4;
+    }
+
 }
 
 .tile > button{
@@ -19,7 +62,7 @@
 
 .presentation-box{
     border: 1px solid;
-    min-height: 420px;
+    min-height: 468px;
     background: rgb(245, 245, 245);
 }
 
@@ -39,15 +82,15 @@
 
 @media screen and (max-width:680px){
     .tile{
-        font-size: 10px;
+        font-size: 12px;
         grid-column: span 2;
     }
 }
 
 @media screen and (max-width:460px){
     .tile{
-        font-size: 10px;
-        grid-column: span 4;
+        font-size: 12px;
+        grid-column: span 6;
     }
 }
 

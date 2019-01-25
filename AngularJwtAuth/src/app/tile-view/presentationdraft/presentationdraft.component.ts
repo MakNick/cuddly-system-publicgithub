@@ -8,7 +8,6 @@ import { Conference } from 'src/app/objects/conference/conference';
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { PresentationdraftService } from './presentationdraft.service';
 import { PagerService } from 'src/app/pager/pager.service';
-import { injectComponentFactoryResolver } from '@angular/core/src/render3';
 
 @Component({
   selector: 'app-presentationdraft',
