@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import {ConfigService} from '../config/config.service';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-aanmeldformulier',
@@ -7,13 +11,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AanmeldformulierComponent implements OnInit {
   title = 'aanmeldformulier';
+  
 
     changeTitle($event){
       this.title = $event.target.value;
     }
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   ngOnInit() {
+    this.checkAantalCategorieen();
   }
 
   toonMedepresentatoren(event: any){
@@ -48,12 +54,43 @@ export class AanmeldformulierComponent implements OnInit {
       document.getElementById("extra").appendChild(mailinputveld);
       document.getElementById("extra").innerHTML += "<br />";
     }
+  }
 
-    if(event.target.value)
+  checkAantalCategorieen(){
+    localStorage.setItem("conferenceID","5");
 
-    //for loop: maak aantal keren aan: 
-    // label naam, tekstveld naam, label e-mail, tekstveld e-mail
-    // vul div id="extra"
+    let conf_id = localStorage.conferenceID;
+    
+    //wat zijn de categorieen bij deze conference?
+    if(conf_id != 0){
+      this.leesCategorieen(conf_id);
+    }
+  }
+
+  leesCategorieen(x: Number){
+    alert("a");
+      // const url = "http://localhost:8082/api/conference/"+x;
+      // let currentList = this.http.get(url);
+      // var categorieen = currentList.categories;
+      // alert(categorieen);
+    
+
+
+
+    
+    // //xhr.onreadystatechange = function(){
+    //   //if(this.readyState == 4 && this.status == 200){
+    //     alert("b");
+    //     let currentList = JSON.parse(this.responseText);
+    //     var categorieen = currentList.categories;
+    //     for(let i=0; i<categorieen.length; i++){
+    //       alert("Cat" + i);
+    //       alert(categorieen[i]);
+    //     //}
+      //}
+    
+    
+    alert(x);
   }
 
 }
