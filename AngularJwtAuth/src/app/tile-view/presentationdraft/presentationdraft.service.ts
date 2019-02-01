@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Headers, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs';
 import { PresentationDraft } from '../../objects/presentation-draft';
@@ -15,7 +16,10 @@ export class PresentationdraftService {
     return this.http.get<PresentationDraft[]>(`http://localhost:8082/api/conference/${conferenceId}/findpresentationdraft/${labelId}`);
   }
 
-  // updatePresentationDraft (conferenceId: number, presentationDraft: PresentationDraft){
-  //   this.http.post<presentationDraft>(`http://localhost:8082/api/conference/${conferenceId}/savepresentationdraft`)
-  // }
+  updatePresentationDraft(conferenceId: number, presentationDraft: PresentationDraft): Observable<PresentationDraft>{
+    console.log(presentationDraft);
+    alert(presentationDraft);
+    return this.http.post<PresentationDraft>(`http://localhost:8082/api/presentationdraft/changepresentationdraft`, presentationDraft);
+  }
 }
+
