@@ -4,36 +4,32 @@ import { Location } from '@angular/common';
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { viewParentEl } from '@angular/core/src/view/util';
 import { Conference } from 'src/app/objects/conference/conference';
+import { PsDetailService } from '../psDetail.service';
 
 @Component({
+  
   selector: 'app-presentationdraftdetail',
   templateUrl: './presentationdraftdetail.component.html',
   styleUrls: ['./presentationdraftdetail.component.css']
 })
 export class PresentationdraftdetailComponent implements OnInit {
 
-  categoryList:any[];
-
-  @Input() 
   PsDetail: PresentationDraft;
 
-  @Input()
   conferenceDetail: Conference;
 
-   @Output() onClose: EventEmitter<PresentationDraft> = new EventEmitter<PresentationDraft>();
-
-  constructor(private location: Location) { }
+  constructor(private location: Location,
+              private psDetailService: PsDetailService) { }
 
   ngOnInit() {
-    console.log(this.conferenceDetail);
+    this.PsDetail=this.psDetailService.selectedPresentationDraft;
+    this.conferenceDetail=this.psDetailService.activeConference;
   }
 
   goBack(event): void{
     if(event.target !== event.currentTarget){
       return;
     }
-  this.onClose.emit(this.PsDetail);
-  this.PsDetail = null;
   }
 
   changeLabel(value){

@@ -9,6 +9,8 @@ import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { PresentationdraftService } from './presentationdraft.service';
 import { PagerService } from 'src/app/pager/pager.service';
 import { injectComponentFactoryResolver } from '@angular/core/src/render3';
+import { PsDetailService } from './psDetail.service';
+
 
 @Component({
   selector: 'app-presentationdraft',
@@ -16,8 +18,6 @@ import { injectComponentFactoryResolver } from '@angular/core/src/render3';
   styleUrls: ['./presentationdraft.component.css']
 })
 export class PresentationdraftComponent implements OnInit {
-
-  selectedPresentationdraft : PresentationDraft;
 
   conference : Conference = new Conference();
 
@@ -31,7 +31,8 @@ export class PresentationdraftComponent implements OnInit {
               private pagerService: PagerService,
               private route: ActivatedRoute,
               private location: Location,
-              private router: Router) { }
+              private router: Router,
+              private psDetailService: PsDetailService) { }
 
   ngOnInit() {
     this.getConferences();
@@ -93,8 +94,8 @@ export class PresentationdraftComponent implements OnInit {
   }
 
   showPresentationDetail(ps:PresentationDraft): void {
-    this.selectedPresentationdraft = ps;
-    // this.router.navigate([{ outlets: { presentationDraftDetail : [ 'presentationDraftDetail' ] } }])
+    this.psDetailService.selectedPresentationDraft = ps;
+    this.psDetailService.activeConference = this.conference;
   }
 
   talkBack(PsDetail: PresentationDraft) {
