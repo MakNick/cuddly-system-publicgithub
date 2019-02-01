@@ -37,7 +37,7 @@
       </div>
     </div>
       <div *ngIf='selectedPresentationdraft'>
-        <app-presentationdraftdetail [PsDetail]="selectedPresentationdraft" (onClose)="talkBack($event)"></app-presentationdraftdetail>
+        <app-presentationdraftdetail [PsDetail]="selectedPresentationdraft" [conferenceDetail]="conference" (onClose)="talkBack($event)"></app-presentationdraftdetail>
       </div>
     <div *ngIf="pager.pages && pager.pages.length" class="pagination row mx-2">
       <div class="row center-box">

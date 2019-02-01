@@ -19,7 +19,7 @@ export class PresentationdraftComponent implements OnInit {
 
   selectedPresentationdraft : PresentationDraft;
 
-  conference: Conference = new Conference();
+  conference : Conference = new Conference();
 
   pager: any = {};
   currentPageNumber: number;
