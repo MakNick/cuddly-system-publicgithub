@@ -45,31 +45,13 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   updatePresentationDraft(PsDetail) {
     this.presentationDraftService.updatePresentationDraft(this.conferenceDetail.id, PsDetail).subscribe(PresentationDraft => alert("Opslaan gelukt"));
+    this.location.back();
   }
 
   deletePresentationDraft(PsDetail) {
-    this.presentationDraftService.updatePresentationDraft(this.conferenceDetail.id, PsDetail).subscribe(PresentationDraft => alert("Opslaan gelukt"));
-
-  }
-
-  downloadSinglePdf(conferenceId, presentationDraftId) {
-    let xhr = new XMLHttpRequest();
-    xhr.responseType = 'arraybuffer';
-    xhr.open("GET", "http://localhost:8082/api/" + conferenceId + "/download/pdf/" + presentationDraftId, true);
-    xhr.onload = function () {
-      console.log(xhr.response);
-      var res = xhr.response;
-
-      let blob = new Blob([new Uint8Array(res)]);
-
-      console.log(blob);
-      var a = window.document.createElement('a');
-      a.href = window.URL.createObjectURL(blob);
-      a.download = 'PresentationDraft' + presentationDraftId + '.pdf';
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+    let conf = confirm("Weet je zeker dat je de presentatie wilt verwijderen?");
+    if(conf) {
+      this.presentationDraftService.deletePresentationDraft(PsDetail).subscribe();
     }
-    xhr.send();
   }
 }

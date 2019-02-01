@@ -1,12 +1,17 @@
 <div (click)="goBack($event)">
   <div class="row detail-box">
-    <div class="col-ms">
+    <div class="detailHeader">
       <h1>{{PsDetail.subject}}</h1>
     </div>
 
     <div class="detailMenu">
-      <div class="gridMenu">
 
+      <div class="gridMenu">
+        <div class="dropdown">
+          <div>
+            <button (click)="this.location.back()" class="dropbtn"><i class="fa fa-arrow-left"></i></button>
+          </div>
+        </div>
         <div class="dropdown">
           <button class="dropbtn" *ngIf="PsDetail.label; else showDefaultLabel">
             {{PsDetail.label}}
@@ -36,20 +41,20 @@
         </div>
       </div>
       <div class="dropdown">
-          <div>
-            <button (click)="downloadSinglePdf(conferenceDetail.id, PsDetail.id)" class="dropbtn"><i class="fa fa-download"></i></button>
-          </div>
+        <div>
+          <button (click)="downloadSinglePdf(conferenceDetail.id, PsDetail.id)" class="dropbtn"><i class="fa fa-download"></i></button>
         </div>
-        <div class="dropdown">
-          <div>
-            <button (click)="deletePresentationDraft(PsDetail.id)" class="dropbtn"><i class="fa fa-trash"></i></button>
-          </div>
+      </div>
+      <div class="dropdown">
+        <div>
+          <button (click)="deletePresentationDraft(PsDetail)" class="dropbtn"><i class="fa fa-trash"></i></button>
         </div>
-        <div class="dropdown">
-          <div>
-            <button (click)="updatePresentationDraft(PsDetail)" class="dropbtn"><i class="fa fa-save"></i></button>
-          </div>
+      </div>
+      <div class="dropdown">
+        <div>
+          <button (click)="updatePresentationDraft(PsDetail)" class="dropbtn"><i class="fa fa-save"></i></button>
         </div>
+      </div>
     </div>
 
     <div class="detailContainerGrid1">
