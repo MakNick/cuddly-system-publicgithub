@@ -92,18 +92,14 @@ export class PresentationdraftComponent implements OnInit {
     });
   }
 
-  emptySelected(){
-    alert();
-    this.selectedPresentationdraft = null;
-  }
-
   showPresentationDetail(ps:PresentationDraft): void {
     this.selectedPresentationdraft = ps;
     // this.router.navigate([{ outlets: { presentationDraftDetail : [ 'presentationDraftDetail' ] } }])
   }
 
   talkBack(PsDetail: PresentationDraft) {
-    this.selectedPresentationdraft=PsDetail;
+    this.presentationDraftService.updatePresentationDraft(this.conference.id, PsDetail).subscribe(PresentationDraft => alert("Opslaan gelukt"));
+    this.selectedPresentationdraft=null;
   }
 
   paginate(page: number): void{
