@@ -19,7 +19,7 @@ export class PresentationdraftComponent implements OnInit {
 
   selectedPresentationdraft : PresentationDraft;
 
-  conference: Conference = new Conference();
+  conference : Conference = new Conference();
 
   pager: any = {};
   currentPageNumber: number;
@@ -103,7 +103,7 @@ export class PresentationdraftComponent implements OnInit {
   }
 
   talkBack(PsDetail: PresentationDraft) {
-    this.selectedPresentationdraft=PsDetail;
+    this.selectedPresentationdraft = PsDetail;
   }
 
   paginate(page: number): void{

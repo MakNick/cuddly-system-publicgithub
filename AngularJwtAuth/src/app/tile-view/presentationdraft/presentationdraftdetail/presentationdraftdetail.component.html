@@ -4,18 +4,44 @@
       <h1>{{PsDetail.subject}}</h1>
 
       <div class="dropdown">
-          <button class="dropbtn">{{PsDetail.label}}</button>
-          <div class="dropdown-content">
-            <a (click)="changeLabel('Geaccepteerd')">Accepteren</a>
-            <a (click)="changeLabel('Afgewezen')">Afwijzen</a>
-            <a (click)="changeLabel('Reservebank')">Reserve</a>
-          </div>
+        <button class="dropbtn" *ngIf="PsDetail.label; else showDefaultLabel">
+          {{PsDetail.label}}
+        </button>
+        <ng-template #showDefaultLabel>
+          <button class="dropbtn">Kies label</button>
+        </ng-template>
+        <div class="dropdown-content">
+          <a (click)="changeLabel('Geaccepteerd')">Accepteren</a>
+          <a (click)="changeLabel('Afgewezen')">Afwijzen</a>
+          <a (click)="changeLabel('Reservebank')">Reserve</a>
         </div>
+      </div>
 
-      
-      
+      <div class="dropdown">
+        <button class="dropbtn" *ngIf="PsDetail.category; else showDefaultCategory">
+          {{PsDetail.category}}
+        </button>
+        <ng-template #showDefaultCategory>
+          <button class="dropbtn">Kies categorie</button>
+        </ng-template>
+        <div class="dropdown-content">
+          <a (click)="changeCategory(category)" *ngFor="let category of conferenceDetail.categories">
+            {{category}}
+          </a>
+        </div>
+      </div>
 
-      <div class="summary"> 
+      <div>
+        <span class="heads">ID:</span>
+        <span type="text">{{PsDetail.id}}</span>
+      </div>
+
+      <div>
+        <span class="heads">Type:</span>
+        <input type="text" value="{{PsDetail.type}}">
+      </div>
+
+      <div class="summary">
         <span class="heads">Samenvatting:</span><br>
         <textarea [(ngModel)]="PsDetail.summary"></textarea>
       </div>

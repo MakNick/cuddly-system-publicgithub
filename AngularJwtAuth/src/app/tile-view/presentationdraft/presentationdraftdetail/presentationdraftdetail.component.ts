@@ -3,6 +3,7 @@ import { Location } from '@angular/common';
 
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { viewParentEl } from '@angular/core/src/view/util';
+import { Conference } from 'src/app/objects/conference/conference';
 
 @Component({
   selector: 'app-presentationdraftdetail',
@@ -11,14 +12,20 @@ import { viewParentEl } from '@angular/core/src/view/util';
 })
 export class PresentationdraftdetailComponent implements OnInit {
 
+  categoryList:any[];
+
   @Input() 
   PsDetail: PresentationDraft;
 
-  @Output() onClose: EventEmitter<PresentationDraft> = new EventEmitter<PresentationDraft>();
+  @Input()
+  conferenceDetail: Conference;
+
+   @Output() onClose: EventEmitter<PresentationDraft> = new EventEmitter<PresentationDraft>();
 
   constructor(private location: Location) { }
 
   ngOnInit() {
+    console.log(this.conferenceDetail);
   }
 
   goBack(event): void{
@@ -31,6 +38,11 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   changeLabel(value){
     this.PsDetail.label = value;
+  }
+
+  changeCategory(value){
+    this.PsDetail.category = value;
+    console.log(this.PsDetail);
   }
 
 }
