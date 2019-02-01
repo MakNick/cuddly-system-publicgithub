@@ -25,12 +25,47 @@
 .summary > textarea {
     position: inherit;
     width: 1000px;
-    height: 300px;
+    height: 200px;
 }
 
-.labelbutton {
-    width: 100px;
-   margin-bottom: 10px;
-   display: inherit;
-   margin-left: 100px;
+.heads {
+    margin-left: 100px;
+    display: inline-block;
 }
+
+.dropbtn {
+    background-color: rgb(160, 160, 160);
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+    margin-left: -1000px;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    text-align: left
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {background-color: #ddd;}
+  
+  .dropdown:hover .dropdown-content {display: block;}
+  
+  .dropdown:hover .dropbtn {background-color: #4f3e8e;}

@@ -25,11 +25,12 @@ export class PresentationdraftdetailComponent implements OnInit {
     if(event.target !== event.currentTarget){
       return;
     }
-
-  this.PsDetail=null;
   this.onClose.emit(this.PsDetail);
-   
-    
+  this.PsDetail = null;
+  }
+
+  changeLabel(value){
+    this.PsDetail.label = value;
   }
 
 }

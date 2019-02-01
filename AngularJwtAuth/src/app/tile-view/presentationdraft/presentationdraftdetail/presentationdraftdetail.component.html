@@ -3,10 +3,21 @@
     <div class="col-ms">
       <h1>{{PsDetail.subject}}</h1>
 
-      <button class="labelbutton">{{PsDetail.label}}</button>
+      <div class="dropdown">
+          <button class="dropbtn">{{PsDetail.label}}</button>
+          <div class="dropdown-content">
+            <a (click)="changeLabel('Geaccepteerd')">Accepteren</a>
+            <a (click)="changeLabel('Afgewezen')">Afwijzen</a>
+            <a (click)="changeLabel('Reservebank')">Reserve</a>
+          </div>
+        </div>
+
+      
+      
 
       <div class="summary"> 
-        <textarea>{{PsDetail.summary}}</textarea>
+        <span class="heads">Samenvatting:</span><br>
+        <textarea [(ngModel)]="PsDetail.summary"></textarea>
       </div>
     </div>
   </div>
