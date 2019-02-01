@@ -100,7 +100,6 @@ export class PresentationdraftComponent implements OnInit {
 
   talkBack(PsDetail: PresentationDraft) {
     this.presentationDraftService.updatePresentationDraft(this.conference.id, PsDetail).subscribe(PresentationDraft => alert("Opslaan gelukt"));
-    this.selectedPresentationdraft=null;
   }
 
   paginate(page: number): void{

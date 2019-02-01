@@ -17,9 +17,11 @@ export class PresentationdraftService {
   }
 
   updatePresentationDraft(conferenceId: number, presentationDraft: PresentationDraft): Observable<PresentationDraft>{
-    console.log(presentationDraft);
-    alert(presentationDraft);
     return this.http.post<PresentationDraft>(`http://localhost:8082/api/presentationdraft/changepresentationdraft`, presentationDraft);
+  }
+
+  deletePresentationDraft(presentationDraft: PresentationDraft): Observable<PresentationDraft>{
+    return this.http.delete<PresentationDraft>(`http://localhost:8082/api/presentationdraft/delete/${presentationDraft.id}`);
   }
 }
 
