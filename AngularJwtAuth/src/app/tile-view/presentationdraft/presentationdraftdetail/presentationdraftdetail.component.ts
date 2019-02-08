@@ -44,8 +44,8 @@ export class PresentationdraftdetailComponent implements OnInit {
   }
 
   updatePresentationDraft(PsDetail) {
-    this.presentationDraftService.updatePresentationDraft(this.conferenceDetail.id, PsDetail).subscribe(PresentationDraft => alert("Opslaan gelukt"));
-    this.location.back();
+    this.presentationDraftService.updatePresentationDraft(this.conferenceDetail.id, PsDetail).subscribe(PresentationDraft => console.log("Opslaan gelukt"));
+    this.popup();
   }
 
   deletePresentationDraft(PsDetail) {
@@ -53,5 +53,10 @@ export class PresentationdraftdetailComponent implements OnInit {
     if(conf) {
       this.presentationDraftService.deletePresentationDraft(PsDetail).subscribe();
     }
+  }
+
+  popup() {
+    var popup = document.getElementById("myPopup");
+    popup.classList.toggle("show");
   }
 }
