@@ -26,9 +26,10 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @Api(value = "FileDownloadEndpoint", description = "Create Excel and PDF files")
 public class FileDownloadEndpoint {
-
-	private ExcelService excelService;
+	
+	private ExcelService excelService; 
 	private PdfService pdfService;
+
 
 	@Autowired
 	public FileDownloadEndpoint(ExcelService excelService, PdfService pdfService) {
@@ -141,3 +142,4 @@ public class FileDownloadEndpoint {
 		return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 	}
 }
+

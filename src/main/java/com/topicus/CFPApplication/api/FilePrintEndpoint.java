@@ -80,3 +80,4 @@ public class FilePrintEndpoint {
 		return new ResponseEntity<>("No conference available", HttpStatus.NOT_FOUND);
 	}
 }
+

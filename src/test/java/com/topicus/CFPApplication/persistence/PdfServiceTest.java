@@ -87,23 +87,4 @@ public class PdfServiceTest {
 		Assert.assertEquals(1, result);
 	}
 
-//	@Test
-//	public void printAllPdfTest() throws PrinterException {
-//		List<PresentationDraft> listpd = new ArrayList<>();
-//		Mockito.when(this.presentationDraftRepository.findAll()).thenReturn(listpd);
-//		int result = pdfService.printAllPdf();
-//		Mockito.verify(this.presentationDraftRepository).findAll();
-//		Assert.assertEquals(3, result);
-//	}
-//	
-//	@Test
-//	public void printSinglePdf() throws PrinterException {
-//		Optional<PresentationDraft> pd = Optional.of(new PresentationDraft());
-//		pd.get().setId(0);
-//		pd.get().setId(1);
-//		Mockito.when(this.presentationDraftRepository.findById((long) 1)).thenReturn(pd);
-//		int result = this.pdfService.printSinglePdf((long) 1);
-//		Mockito.verify(this.presentationDraftRepository).findById((long) 1);
-//		Assert.assertEquals(1, result);
-//	}
 }
