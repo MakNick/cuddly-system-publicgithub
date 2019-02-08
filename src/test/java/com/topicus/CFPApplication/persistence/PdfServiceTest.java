@@ -14,8 +14,8 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
+import com.topicus.CFPApplication.domain.conference.Conference;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PdfServiceTest {

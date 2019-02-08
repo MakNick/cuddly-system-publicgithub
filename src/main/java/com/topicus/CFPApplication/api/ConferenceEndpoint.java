@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
-import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
+import com.topicus.CFPApplication.domain.conference.Conference;
 import com.topicus.CFPApplication.persistence.ConferenceService;
 import com.topicus.CFPApplication.persistence.RequestCategorizedDraftsService;
 import com.topicus.CFPApplication.persistence.SubscribeService;
