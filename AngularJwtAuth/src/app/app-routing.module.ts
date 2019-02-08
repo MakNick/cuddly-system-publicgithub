@@ -10,7 +10,7 @@ import { AdminComponent } from './admin/admin.component';
 import { ConferenceComponent } from './tile-view/conference/conference.component';
 import { PresentationdraftComponent } from './tile-view/presentationdraft/presentationdraft.component';
 import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
-import { AanmeldformulierComponent } from './aanmeldformulier/aanmeldformulier.component';
+import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 
 const routes: Routes = [
     {
@@ -30,18 +30,20 @@ const routes: Routes = [
         component: AdminComponent
     },
     {
-        path: 'aanmeldformulier',
-        component: AanmeldformulierComponent
+        path: 'aanmeldformulierConference',
+        component: ConferenceFormComponent
     },
     {
         path: 'conference',
         component: ConferenceComponent
     },
-    
-    {   path: 'conference/:id', 
-        component: PresentationdraftComponent  
+
+    {
+        path: 'conference/:id',
+        component: PresentationdraftComponent
     },
-    {   path: 'conference/:id/presentationDraftDetail', 
+    {
+        path: 'conference/:id/presentationDraftDetail',
         component: PresentationdraftdetailComponent
     },
     {
