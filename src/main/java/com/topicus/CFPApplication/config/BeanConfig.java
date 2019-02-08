@@ -7,14 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.topicus.CFPApplication.domain.Conference;
+import com.topicus.CFPApplication.domain.conference.Extra;
+import com.topicus.CFPApplication.domain.conference.Stage;
 import com.topicus.CFPApplication.persistence.ConferenceRepository;
 
 @Configuration
 public class BeanConfig {
 
 	ConferenceRepository conferenceRepo;
-	
+
 	@Autowired
 	public BeanConfig(ConferenceRepository conferenceRepo) {
 		this.conferenceRepo = conferenceRepo;
@@ -27,15 +28,15 @@ public class BeanConfig {
 	}
 
 	@Bean
-	public Set<Conference.Stage> stages() {
-		Set<Conference.Stage> stages = new TreeSet<Conference.Stage>(
+	public Set<Stage> stages() {
+		Set<Stage> stages = new TreeSet<Stage>(
 				(o1, o2) -> o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase()));
 		return stages;
 	}
 
 	@Bean
-	public Set<Conference.Extra> extras() {
-		Set<Conference.Extra> extras = new TreeSet<Conference.Extra>(
+	public Set<Extra> extras() {
+		Set<Extra> extras = new TreeSet<Extra>(
 				(o1, o2) -> o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase()));
 		return extras;
 	}
