@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.topicus.CFPApplication.persistence.pdf.PdfService;
+import com.topicus.CFPApplication.persistence.PdfService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import rst.pdfbox.layout.elements.Document;
 
 @RestController
 @Api(value = "FilePrintEndpoint", description = "Print files")
@@ -39,8 +38,8 @@ public class FilePrintEndpoint {
 			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId) {
 		if (conferenceId > 0 && conferenceId != null) {
 			try {
-				Document result = pdfService.printAllPdf(conferenceId);
-				if (result != null) {
+				int result = pdfService.printAllPdf(conferenceId);
+				if (result != 0) {
 					return ResponseEntity.ok().build();
 				} else {
 					return new ResponseEntity<>("No presentationdrafts available", HttpStatus.NOT_FOUND);
@@ -48,8 +47,6 @@ public class FilePrintEndpoint {
 			} catch (PrinterException e) {
 				e.printStackTrace();
 				return new ResponseEntity<>("A error occured while trying to print file", HttpStatus.BAD_REQUEST);
-			} catch (IOException e) {
-				return new ResponseEntity<>("I/O Exception", HttpStatus.CONFLICT);
 			}
 		}
 		return new ResponseEntity<>("No conference available", HttpStatus.NOT_FOUND);
@@ -62,12 +59,12 @@ public class FilePrintEndpoint {
 	@GetMapping("api/print/pdf/{id}")
 	public ResponseEntity<?> printSinglePdf(
 			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id,
-			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId) {
+			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId) throws IOException {
 		if (conferenceId > 0 && conferenceId != null) {
 			if (id != null && id != 0) {
 				try {
-					Document result = pdfService.printSinglePdf(id, conferenceId);
-					if (result != null) {
+					int result = pdfService.printSinglePdf(id, conferenceId);
+					if (result != 0) {
 						return ResponseEntity.ok().build();
 					} else {
 						return new ResponseEntity<>("No presentationdrafts available", HttpStatus.NOT_FOUND);
@@ -75,8 +72,6 @@ public class FilePrintEndpoint {
 				} catch (PrinterException e) {
 					e.printStackTrace();
 					return new ResponseEntity<>("A error occured while trying to print file", HttpStatus.BAD_REQUEST);
-				} catch (IOException e) {
-					return new ResponseEntity<>("I/O Exception", HttpStatus.CONFLICT);
 				}
 			} else {
 				return new ResponseEntity<>("No presentationdrafts available", HttpStatus.NOT_FOUND);

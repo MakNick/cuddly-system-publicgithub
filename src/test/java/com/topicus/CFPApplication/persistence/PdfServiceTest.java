@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,9 +16,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.persistence.pdf.PdfService;
-
-import rst.pdfbox.layout.elements.Document;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PdfServiceTest {
@@ -36,14 +34,14 @@ public class PdfServiceTest {
 		Conference conf = new Conference();
 		conf.setId(1);
 
-		Document pdd = new Document();
+		PDDocument pdd = new PDDocument();
 
 		Mockito.when(this.conferenceService.findById(conf.getId())).thenReturn(Optional.of(conf));
 		Mockito.when(this.pdfService.getAllPresentationDraftsToPDF(conf.getId())).thenReturn(pdd);
 
 		int result = 0;
 		try {
-			Document document = pdfService.getAllPresentationDraftsToPDF(conf.getId());
+			PDDocument document = pdfService.getAllPresentationDraftsToPDF(conf.getId());
 			if (document == null) {
 				result = 4;
 			} else {
@@ -74,7 +72,7 @@ public class PdfServiceTest {
 		Mockito.when(this.conferenceService.findById(conf.getId())).thenReturn(Optional.of(conf));
 		int result = 0;
 		try {
-			Document document = this.pdfService.getSinglePresentationDraftToPDF(pd.getId(), conf.getId());
+			PDDocument document = this.pdfService.getSinglePresentationDraftToPDF(pd.getId(), conf.getId());
 			if (document == null) {
 				result = 1;
 			}

@@ -9,16 +9,13 @@ import org.apache.pdfbox.printing.PDFPageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import rst.pdfbox.layout.elements.Document;
-
 @Service
 @Transactional
 public class PrintService {
 
-	public void printDocument(Document document) {
-		PDDocument doc = document.getPDDocument();
+	public void printDocument(PDDocument document) {
 		PrinterJob job = PrinterJob.getPrinterJob();
-		job.setPageable(new PDFPageable(doc));
+		job.setPageable(new PDFPageable(document));
 		try {
 			if (job.printDialog()) {
 				try {
