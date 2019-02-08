@@ -192,7 +192,7 @@ public class PresentationDraftEndpoint {
 
 	@ApiOperation(value = "Adds a presentationdraft", hidden = true)
 	@PostMapping("api/presentationdraft/changepresentationdraft")
-	public PresentationDraft changePresentationDraft(PresentationDraft presentationDraft) {
+	public PresentationDraft changePresentationDraft(@RequestBody @Valid PresentationDraft presentationDraft) {
 		return presentationDraftService.save(presentationDraft);
 	}
 

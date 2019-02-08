@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.topicus.CFPApplication.domain.Conference;
-import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.persistence.ConferenceRepository;
 
 @Component

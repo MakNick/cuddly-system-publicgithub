@@ -41,9 +41,8 @@ const routes: Routes = [
     {   path: 'conference/:id', 
         component: PresentationdraftComponent  
     },
-    {   path: 'presentationDraftDetail', 
-        component: PresentationdraftdetailComponent,
-        outlet: 'presentationDraftDetail' 
+    {   path: 'conference/:id/presentationDraftDetail', 
+        component: PresentationdraftdetailComponent
     },
     {
         path: 'auth/login',

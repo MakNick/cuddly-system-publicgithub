@@ -24,25 +24,26 @@
       </div>
   </div>
   <div class="container margin-top-10" *ngIf="pagedItems; else listEmpty">
-    <div class="presentation-box">
-      <div class="presentation-drafts mx-2 my-2">
-        <div *ngFor="let presentationDraft of pagedItems" class="tile">
-          <button class="py-2" (click)="showPresentationDetail()">
-              <ul class="list-unstyled">
-                <li class="figure-caption text-center">
-                  {{presentationDraft.label | lowercase}}
-                </li>
-                <li>
-                  {{presentationDraft.subject}}
-                </li>
-                <li class="figure-caption text-right">
-                  {{getTimeOfCreation(presentationDraft)}}
-                </li>
-              </ul>
-          </button>
-        </div>
+    <div class="row presentation-box mx-2 py-2 px-2">
+      <div *ngFor="let presentationDraft of pagedItems" class="col-md-2 tile">
+        <button class="" routerLink="presentationDraftDetail" (click)="showPresentationDetail(presentationDraft)"> 
+            <ul class="list-unstyled">
+              <li class="figure-caption text-center">
+                {{presentationDraft.label | lowercase}}
+              </li>
+              <li>
+                {{presentationDraft.subject}}
+              </li>
+              <li class="figure-caption text-right">
+                {{getTimeOfCreation(presentationDraft)}}
+              </li>
+            </ul>
+        </button>
       </div>
     </div>
+      <!-- <div *ngIf='selectedPresentationdraft'>
+        <app-presentationdraftdetail [PsDetail]="selectedPresentationdraft" [conferenceDetail]="conference" (onClose)="talkBack($event)"></app-presentationdraftdetail>
+      </div> -->
     <div *ngIf="pager.pages && pager.pages.length" class="pagination row mx-2">
       <div class="row center-box">
         <div class="py-2 page-number"

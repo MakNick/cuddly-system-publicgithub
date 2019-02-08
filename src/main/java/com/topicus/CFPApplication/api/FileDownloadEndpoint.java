@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.persistence.ExcelService;
-import com.topicus.CFPApplication.persistence.pdf.PdfService;
+import com.topicus.CFPApplication.persistence.PdfService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -25,10 +26,18 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @Api(value = "FileDownloadEndpoint", description = "Create Excel and PDF files")
 public class FileDownloadEndpoint {
+<<<<<<< HEAD
 
 	private ExcelService excelService;
 //	private PdfService pdfService;
 	
+=======
+	
+	private ExcelService excelService; 
+	private PdfService pdfService;
+
+
+>>>>>>> develop
 	@Autowired
 	public FileDownloadEndpoint(ExcelService excelService, PdfService pdfService) {
 		this.excelService = excelService;
@@ -69,6 +78,7 @@ public class FileDownloadEndpoint {
 		return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 	}
 
+<<<<<<< HEAD
 //	@ApiOperation(value = "Get all presentationDrafts and create PDF")
 //	@ApiResponses({ @ApiResponse(code = 200, message = "Create PDF succesfully"),
 //			@ApiResponse(code = 404, message = "No presentationdraft and/or conference available"),
@@ -139,4 +149,77 @@ public class FileDownloadEndpoint {
 //		}
 //		return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 //	}
+=======
+	@ApiOperation(value = "Get all presentationDrafts and create PDF")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Create PDF succesfully"),
+			@ApiResponse(code = 404, message = "No presentationdraft and/or conference available"),
+			@ApiResponse(code = 412, message = "Cancelled save request") })
+	@GetMapping("api/{conferenceId}/download/pdf")
+	public ResponseEntity<byte[]> getAllPdf(
+			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId)
+			throws IOException {
+		if (conferenceId > 0 && conferenceId != null) {
+			PDDocument result = pdfService.getAllPresentationDraftsToPDF(conferenceId);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			if (result != null) {
+				try {
+					result.save(baos);
+					byte[] outputArray = baos.toByteArray();
+					HttpHeaders headers = new HttpHeaders();
+					headers.add("Content-Type", "application/octet-stream");
+					headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+					headers.setContentLength(outputArray.length);
+					ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(outputArray, headers, HttpStatus.OK);
+					baos.close();
+					return response;
+				} catch (IOException e) {
+					return new ResponseEntity<>(new byte[0], HttpStatus.CONFLICT);
+				}
+			} else {
+				return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
+			}
+		}
+		return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
+	}
+
+	@ApiOperation(value = "Get single presentationDraft and create PDF ")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Create PDF succesfully"),
+			@ApiResponse(code = 400, message = "Invalid conference ID and/or presentationdraft ID value"),
+			@ApiResponse(code = 404, message = "No presentationdraft ID available"),
+			@ApiResponse(code = 412, message = "Cancelled save request") })
+	@GetMapping("api/{conferenceId}/download/pdf/{id}")
+	public ResponseEntity<byte[]> getSinglePdf(
+			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id,
+			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId)
+			throws IOException {
+		if (conferenceId > 0 && conferenceId != null) {
+			if (id != null && id != 0) {
+				PDDocument result = pdfService.getSinglePresentationDraftToPDF(id, conferenceId);
+				ByteArrayOutputStream baos = new ByteArrayOutputStream();
+				if (result != null) {
+					try {
+						result.save(baos);
+						byte[] outputArray = baos.toByteArray();
+						HttpHeaders headers = new HttpHeaders();
+						headers.add("Content-Type", "application/octet-stream");
+						headers.setCacheControl("must-revalidate, post-check=0, pre-check=0");
+						headers.setContentLength(outputArray.length);
+						ResponseEntity<byte[]> response = new ResponseEntity<byte[]>(outputArray, headers,
+								HttpStatus.OK);
+						baos.close();
+						return response;
+					} catch (IOException e) {
+						return new ResponseEntity<>(new byte[0], HttpStatus.CONFLICT);
+					}
+				} else {
+					return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
+				}
+			} else {
+				return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
+			}
+		}
+		return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
+	}
+>>>>>>> develop
 }
+

@@ -8,6 +8,8 @@ import { Conference } from 'src/app/objects/conference/conference';
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { PresentationdraftService } from './presentationdraft.service';
 import { PagerService } from 'src/app/pager/pager.service';
+import { PsDetailService } from './psDetail.service';
+
 
 @Component({
   selector: 'app-presentationdraft',
@@ -16,7 +18,7 @@ import { PagerService } from 'src/app/pager/pager.service';
 })
 export class PresentationdraftComponent implements OnInit {
 
-  conference: Conference = new Conference();
+  conference : Conference = new Conference();
 
   pager: any = {};
   currentPageNumber: number;
@@ -28,7 +30,8 @@ export class PresentationdraftComponent implements OnInit {
               private pagerService: PagerService,
               private route: ActivatedRoute,
               private location: Location,
-              private router: Router) { }
+              private router: Router,
+              private psDetailService: PsDetailService) { }
 
   ngOnInit() {
     this.getConferences();
@@ -89,8 +92,13 @@ export class PresentationdraftComponent implements OnInit {
     });
   }
 
-  showPresentationDetail(): void {
-    this.router.navigate([{ outlets: { presentationDraftDetail : [ 'presentationDraftDetail' ] } }])
+  showPresentationDetail(ps:PresentationDraft): void {
+    this.psDetailService.selectedPresentationDraft = ps;
+    this.psDetailService.activeConference = this.conference;
+  }
+
+  talkBack(PsDetail: PresentationDraft) {
+    this.presentationDraftService.updatePresentationDraft(this.conference.id, PsDetail).subscribe(PresentationDraft => alert("Opslaan gelukt"));
   }
 
   paginate(page: number): void{
