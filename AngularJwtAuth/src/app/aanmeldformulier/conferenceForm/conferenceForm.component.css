@@ -1,0 +1,25 @@
+.header{
+    text-align: center;
+    font-size: 55px;
+    font-weight: bold;
+}
+
+.is-invalid{
+    color: red;
+}
+.redChar{
+    color: red;
+}
+
+.d-none{
+    display: none;
+}
+
+th,td {
+    text-align: center;
+    border: 1px solid rgba(128,128,128,0.4);
+    border-style: solid;
+    font-size: 12px;
+    margin-left: auto;
+    text-align: left;
+}
