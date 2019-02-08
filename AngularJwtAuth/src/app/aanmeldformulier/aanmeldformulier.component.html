@@ -1,7 +1,7 @@
 <div class="titel">{{title}}</div>
 <div class="form">
-
-  <form [formGroup]="presentationdraftForm">
+    {{presentationdraftForm.value | json}}
+  <form [formGroup]="presentationdraftForm" (submit)="submit();">
     <div class="form-group">
       <label>{{labels[0]}}:</label><br />
       <input type="text" class="form-control" formControlName="naam" required>
@@ -19,15 +19,16 @@
     </div>
     <div class="form-group">
       <label for="form_subject">{{labels[2]}}:</label>
-      <input #form_subject type="text" class="form-control" required>
+      <input #form_subject type="text" class="form-control" formControlName="subject" required>
       <div>
         <small></small>
       </div>
     </div>
     <div class="form-group">
       <label for="form_summary">{{labels[3]}}:</label>
-      <textarea #form_summary class="form-control" rows="5" maxlength="500" placeholder="Maximaal 500 tekens"></textarea>
+      <textarea #form_summary class="form-control" formControlName="description" rows="5" maxlength="500" placeholder="Maximaal 500 tekens"></textarea>
       <div>
+        
         <small></small>
       </div>
     </div>
@@ -36,18 +37,18 @@
       <br>
       <div class="form-group">
         <label for="form_type">{{labels[4]}}:</label>
-        <input #form_type type="text" class="form-control" value="">
+        <input #form_type type="text" class="form-control" formControlName="type" value="">
       </div>
       <div class="form-group" id="categorie_div">
         <label for="form_category">{{labels[5]}}:</label>
-        <select #form_category class="form-control" style="width: 50%" value="" (change)="setCategory($event);">
+        <select #form_category class="form-control" style="width: 50%" formControlName="category" (change)="$event.target.value">
           <option disabled selected value> -- Maak een keuze -- </option>
         </select>
       </div>
 
       <div class="form-group">
         <label for="form_duration">{{labels[6]}}:</label>
-        <select #form_duration class="form-control" style="width: 50%" value="" (change)="setDuration($event);">
+        <select #form_duration class="form-control" style="width: 50%" formControlName="duration" (change)="$event.target.value">
           <option disabled selected value> -- Maak een keuze -- </option>
           <option value="15">15</option>
           <option value="30">30</option>
@@ -59,12 +60,12 @@
       </div>
       <div class="form-group">
         <label for="form_occupation">{{labels[7]}}:</label>
-        <input #form_occupation type="text" class="form-control" value="">
+        <input #form_occupation type="text" class="form-control" formControlName="occupation" value="">
       </div>
 
       <div class="form-group">
         <label for="form_requests">{{labels[8]}}:</label>
-        <select #form_gender class="form-control" style="width: 50%" value="" (change)="setGeslacht($event);">
+        <select #form_gender class="form-control" style="width: 50%" formControlName="gender" (change)="$event.target.value">
           <option disabled selected value> -- Maak een keuze -- </option>
           <option>Man</option>
           <option>Vrouw</option>
@@ -74,7 +75,7 @@
 
       <div class="form-group">
         <label for="form_overigeopmerkingen">{{labels[9]}}:</label>
-        <input #form_overigeopmerkingen type="text" class="form-control" value="">
+        <input #form_overigeopmerkingen type="text" class="form-control" formControlName="extra" value="">
       </div>
 
       <div class="form-group">
