@@ -86,6 +86,7 @@ public class ConferenceEndpoint {
 		if (conference != null) {
 			return ResponseEntity.ok(conferenceService.save(conference));
 		}
+		
 		return ResponseEntity.badRequest().build();
 	}
 
