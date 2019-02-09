@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { PresentationDraft } from '../objects/presentation-draft';
-import { PresentationDraftApplicant } from '../objects/presentationDraftApplicant';
+import { PresentationDraft } from '../../objects/presentation-draft';
+import { PresentationDraftApplicant } from '../../objects/presentationDraftApplicant';
 
 @Injectable({
   providedIn: 'root'

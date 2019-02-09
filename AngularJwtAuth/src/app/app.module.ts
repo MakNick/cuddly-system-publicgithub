@@ -3,10 +3,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-<<<<<<< HEAD
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-=======
->>>>>>> develop
+
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -22,6 +20,7 @@ import { PresentationdraftComponent } from './tile-view/presentationdraft/presen
 import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
 import { PsDetailService } from './tile-view/presentationdraft/psDetail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
+import { AanmeldformulierComponent } from './aanmeldformulier/presentationdraftForm/aanmeldformulier.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +34,8 @@ import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/confe
     ConferenceComponent,
     PresentationdraftComponent,
     PresentationdraftdetailComponent,
-    ConferenceFormComponent
+    ConferenceFormComponent,
+    AanmeldformulierComponent
   ],
   imports: [ 
     BrowserModule,

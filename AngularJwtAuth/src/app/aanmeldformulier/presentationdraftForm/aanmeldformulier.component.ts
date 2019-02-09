@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NgModule } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, EmailValidator, FormArray, FormControl } from '@angular/forms';
-import { Applicant } from '../objects/applicant';
-import { draftAanmeldService} from '../aanmeldformulier/aanmeldformulier.service';
-import { PresentationDraftApplicant } from '../objects/presentationDraftApplicant';
-import { PresentationDraft } from '../objects/presentation-draft';
-import { PresentationDraftForm } from '../objects/presentationDraftForm';
+import { Validators, FormGroup, FormControl } from '@angular/forms';
+import { Applicant } from '../../objects/applicant';
+import { draftAanmeldService} from '../../aanmeldformulier/presentationdraftForm/aanmeldformulier.service';
+import { PresentationDraftApplicant } from '../../objects/presentationDraftApplicant';
+import { PresentationDraft } from '../../objects/presentation-draft';
 
 @Component({
   selector: 'app-aanmeldformulier',
@@ -171,12 +169,18 @@ export class AanmeldformulierComponent implements OnInit{
   submit(){
     console.log(this.presentationdraftForm); // Dit werkt
 
-    
+    // this.presentationDraftApplicant.applicant.name = this.presentationdraftForm.get('naam');
 
-    this.presentationDraftApplicant.applicant = this.applicant;
-    this.presentationDraftApplicant.presentationDraft = this.presentationDraft; 
+    // this.presentationDraftApplicant.applicant = this.applicant;
+    // this.presentationDraftApplicant.presentationDraft = this.presentationDraft; 
     
-    // this.draftAanmeldService.postPresentationDraftApplicant(this.presentationDraftApplicant).subscribe(presentationDraftApplicant => presentationDraftApplicant.push(presentationDraftApplicant));
+    this.draftAanmeldService.postPresentationDraftApplicant(this.presentationDraftApplicant)
+    .subscribe(presentationDraftApplicant => console.log(presentationDraftApplicant), 
+    error => function(error: Error){
+      alert(error.message);
+    }, function(){
+      alert("HOI!");
+    });
 
     // this.submitted = true;
   }
