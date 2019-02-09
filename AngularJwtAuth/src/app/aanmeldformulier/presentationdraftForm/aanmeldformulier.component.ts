@@ -20,8 +20,8 @@ export class AanmeldformulierComponent implements OnInit{
   public geslacht: string;
 
   public presentationDraftApplicant: PresentationDraftApplicant;
-  public presentationDraft: PresentationDraft;
-  public applicant: Applicant;
+  public presentationDraft: FormGroup;
+  public applicants: FormGroup;
   public submitted: boolean = false;
 
   presentationdraftForm: FormGroup;
@@ -31,51 +31,34 @@ export class AanmeldformulierComponent implements OnInit{
 
   ngOnInit(): void {
     this.numberCohosts = 0;
+    this.presentationDraftApplicant = new PresentationDraftApplicant();
     this.presentationdraftForm = new FormGroup({
-      'naam': new FormControl('', [       
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-      'email': new FormControl('', [
-        Validators.email                    
-      ]),
-      'subject': new FormControl('',[
-      ]),
-      'description': new FormControl('',[
-      ]),
-      'type': new FormControl('',[
-      ]),
-      'category': new FormControl('',[
-      ]),
-      'duration': new FormControl('',[
-      ]),
-      'occupation': new FormControl('',[
-      ]),
-      'gender': new FormControl('',[
-      ]),
-      'extra': new FormControl('',[
-      ]),
-      'naamCohost1': new FormControl(null, [       
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-      'emailCohost1': new FormControl(null, [
-        Validators.email                    
-      ]),
-      'naamCohost2': new FormControl(null, [       
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-      'emailCohost2': new FormControl(null, [
-        Validators.email                    
-      ]),
-      'naamCohost3': new FormControl(null, [       
-        Validators.required,
-        Validators.minLength(3)
-      ]),
-      'emailCohost3': new FormControl(null, [
-        Validators.email                   
-      ])
+      'applicants': new FormGroup({
+        'naam': new FormControl('', [ Validators.required, Validators.minLength(3)]),
+        'email': new FormControl('', [Validators.email]),
+        'occupation': new FormControl('',[]),
+        'gender': new FormControl('',[]),
+        'naamCohost1': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        'emailCohost1': new FormControl(null, [Validators.email]),
+        'naamCohost2': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        'emailCohost2': new FormControl(null, [Validators.email]),
+        'naamCohost3': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        'emailCohost3': new FormControl(null, [Validators.email])
+      }),
+      'presentationDraft': new FormGroup({
+        'subject': new FormControl('',[
+        ]),
+        'description': new FormControl('',[
+        ]),
+        'type': new FormControl('',[
+        ]),
+        'category': new FormControl('',[
+        ]),
+        'duration': new FormControl('',[
+        ]),
+        'extra': new FormControl('',[
+        ])
+      })
     });
   }
 
@@ -88,66 +71,66 @@ export class AanmeldformulierComponent implements OnInit{
   }
 
   get naam(){
-    return this.presentationdraftForm.get('naam');
+    return this.presentationdraftForm.get('applicants.naam');
   }
 
   get email(){
-    return this.presentationdraftForm.get('email');
+    return this.presentationdraftForm.get('applicants.email');
   }
 
   get subject(){
-    return this.presentationdraftForm.get('subject');
+    return this.presentationdraftForm.get('presentationDraft.subject');
   }
 
   get description(){
-    return this.presentationdraftForm.get('description');
+    return this.presentationdraftForm.get('presentationDraft.description');
   }
 
   get type(){
-    return this.presentationdraftForm.get('type');
+    return this.presentationdraftForm.get('presentationDraft.type');
   }
 
   get category(){
-    return this.presentationdraftForm.get('category');
+    return this.presentationdraftForm.get('presentationDraft.category');
   }
 
   get duration(){
-    return this.presentationdraftForm.get('duration');
+    return this.presentationdraftForm.get('presentationDraft.duration');
   }
 
   get occupation(){
-    return this.presentationdraftForm.get('occupation');
+    return this.presentationdraftForm.get('applicants.occupation');
   }
 
   get gender(){
-    return this.presentationdraftForm.get('gender');
+    return this.presentationdraftForm.get('applicants.gender');
   }
   get extra(){
-    return this.presentationdraftForm.get('extra');
+    return this.presentationdraftForm.get('presentationDraft.extra');
   }
 
   get naamCohost1(){
-    return this.presentationdraftForm.get('naamCohost1');
+    return this.presentationdraftForm.get('applicants.naamCohost1');
   }
 
   get emailCohost1(){
-    return this.presentationdraftForm.get('emailCohost1');
+    return this.presentationdraftForm.get('applicants.emailCohost1');
   }
 
   get naamCohost2(){
-    return this.presentationdraftForm.get('naamCohost2');
+    return this.presentationdraftForm.get('applicants.naamCohost2');
   }
 
   get emailCohost2(){
-    return this.presentationdraftForm.get('emailCohost2');
+    return this.presentationdraftForm.get('applicants.emailCohost2');
   }
 
   get naamCohost3(){
-    return this.presentationdraftForm.get('naamCohost3');
+    return this.presentationdraftForm.get('applicants.naamCohost3');
   }
 
   get emailCohost3(){
-    return this.presentationdraftForm.get('emailCohost3');
+    return this.presentationdraftForm.get('applicants.emailCohost3');
   }
 
   checkNumberCohosts(){
@@ -166,13 +149,19 @@ export class AanmeldformulierComponent implements OnInit{
     this.duration.setValue = event.target.value;
   }
 
+  presubmit(){
+    this.presentationDraftApplicant.applicants = [];
+      //new Applicant( ), new Applicant, new Applicant, new Applicant);      //wijs formwaarden toe
+    this.presentationDraftApplicant.presentationDraft = Object.assign(this.presentationdraftForm.get('presentationDraft'));
+    //console.log(applicants);
+  }
+
   submit(){
+    alert("Dit is form");
     console.log(this.presentationdraftForm); // Dit werkt
-
-    // this.presentationDraftApplicant.applicant.name = this.presentationdraftForm.get('naam');
-
-    // this.presentationDraftApplicant.applicant = this.applicant;
-    // this.presentationDraftApplicant.presentationDraft = this.presentationDraft; 
+    alert("Dit is DTO");
+    console.log(this.presentationDraftApplicant);
+    alert("einde");
     
     this.draftAanmeldService.postPresentationDraftApplicant(this.presentationDraftApplicant)
     .subscribe(presentationDraftApplicant => console.log(presentationDraftApplicant), 
@@ -182,6 +171,6 @@ export class AanmeldformulierComponent implements OnInit{
       alert("HOI!");
     });
 
-    // this.submitted = true;
+    this.submitted = true;
   }
 }

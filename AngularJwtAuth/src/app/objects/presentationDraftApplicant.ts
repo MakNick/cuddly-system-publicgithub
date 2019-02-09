@@ -3,7 +3,7 @@ import { PresentationDraft } from "./presentation-draft";
 
 export class PresentationDraftApplicant{
   
-  applicant: Applicant[];
+  applicants: Applicant[];
   presentationDraft: PresentationDraft;
   
 }

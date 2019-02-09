@@ -61,6 +61,7 @@ public class PresentationDraftEndpoint {
 	@PostMapping("api/presentationdraft")
 	public ResponseEntity<PresentationDraft> save(
 			@RequestBody @Valid PresentationDraftApplicant presentationDraftApplicant) {
+		System.out.println("We komen in backendland");
 		if (presentationDraftApplicant != null) {
 			PresentationDraft presentationDraft = presentationDraftApplicant.getPresentationDraft();
 			Set<Applicant> applicants = presentationDraftApplicant.getApplicants();

@@ -1,52 +1,46 @@
 <div class="titel">{{title}}</div>
 <div class="form">
     {{presentationdraftForm.value | json}}
-  <form [formGroup]="presentationdraftForm" (submit)="submit();">
-    <div class="form-group">
+  <form [formGroup]="presentationdraftForm" (submit)="presubmit(); submit();">
+  <!--<form [formGroup]="presentationdraftForm" (ngSubmit)="presubmit(this, $event); submit(this, $event)">-->
+    <div formGroupName="applicants" class="form-group">
       <label>{{labels[0]}}:</label><br />
-      <input type="text" class="form-control" formControlName="naam" required>
+      <input #form_naam type="text" class="form-control" formControlName="naam" required>
       <div *ngIf="checkFormControl(naam)">
         <small class="isInvalid">{{feedbackBerichten[0]}}</small>
       </div>
     </div>
 
-    <div class="form-group">
+    <div class="form-group" formGroupName="applicants">
       <label for="form_email">{{labels[1]}}:</label>
       <input #form_email type="email" class="form-control" formControlName="email" required>
       <div *ngIf="checkFormControl(email)">
         <small class="isInvalid">{{feedbackBerichten[1]}}</small>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" formGroupName="presentationDraft">
       <label for="form_subject">{{labels[2]}}:</label>
       <input #form_subject type="text" class="form-control" formControlName="subject" required>
-      <div>
-        <small></small>
-      </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" formGroupName="presentationDraft">
       <label for="form_summary">{{labels[3]}}:</label>
       <textarea #form_summary class="form-control" formControlName="description" rows="5" maxlength="500" placeholder="Maximaal 500 tekens"></textarea>
-      <div>
-        
-        <small></small>
-      </div>
     </div>
     <details name="optional_fields">
       <summary>Optionele velden</summary>
       <br>
-      <div class="form-group">
+      <div class="form-group" formGroupName="presentationDraft">
         <label for="form_type">{{labels[4]}}:</label>
         <input #form_type type="text" class="form-control" formControlName="type" value="">
       </div>
-      <div class="form-group" id="categorie_div">
+      <div class="form-group" id="categorie_div" formGroupName="presentationDraft">
         <label for="form_category">{{labels[5]}}:</label>
         <select #form_category class="form-control" style="width: 50%" formControlName="category" (change)="$event.target.value">
           <option disabled selected value> -- Maak een keuze -- </option>
         </select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" formGroupName="presentationDraft">
         <label for="form_duration">{{labels[6]}}:</label>
         <select #form_duration class="form-control" style="width: 50%" formControlName="duration" (change)="$event.target.value">
           <option disabled selected value> -- Maak een keuze -- </option>
@@ -58,12 +52,12 @@
           <option value="90">90</option>
         </select>
       </div>
-      <div class="form-group">
+      <div class="form-group" formGroupName="applicants">
         <label for="form_occupation">{{labels[7]}}:</label>
         <input #form_occupation type="text" class="form-control" formControlName="occupation" value="">
       </div>
 
-      <div class="form-group">
+      <div class="form-group" formGroupName="applicants">
         <label for="form_requests">{{labels[8]}}:</label>
         <select #form_gender class="form-control" style="width: 50%" formControlName="gender" (change)="$event.target.value">
           <option disabled selected value> -- Maak een keuze -- </option>
@@ -73,7 +67,7 @@
         </select>
       </div>
 
-      <div class="form-group">
+      <div class="form-group" formGroupName="presentationDraft">
         <label for="form_overigeopmerkingen">{{labels[9]}}:</label>
         <input #form_overigeopmerkingen type="text" class="form-control" formControlName="extra" value="">
       </div>
@@ -92,7 +86,7 @@
         <fieldset class="border p-2">
           <legend class="w-auto">Cohost 1</legend>
 
-          <div class="form-group">
+          <div class="form-group" formGroupName="applicants">
             <label>{{labels[0]}}:</label><br />
             <input type="text" class="form-control" formControlName="naamCohost1" required>
             <div *ngIf="checkFormControl(naamCohost1)">
@@ -100,7 +94,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" formGroupName="applicants">
             <label for="form_email">{{labels[1]}}:</label>
             <input #form_email type="email" class="form-control" formControlName="emailCohost1" required>
             <div *ngIf="checkFormControl(emailCohost1)">
@@ -113,7 +107,7 @@
       <div id="extra2" *ngIf="checkNumberCohosts() > 1">
         <fieldset class="border p-2">
           <legend class="w-auto">Cohost 2</legend>
-          <div class="form-group">
+          <div class="form-group" formGroupName="applicants">
             <label>{{labels[0]}}:</label><br />
             <input type="text" class="form-control" formControlName="naamCohost2" required>
             <div *ngIf="checkFormControl(naamCohost2)">
@@ -121,7 +115,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" formGroupName="applicants">
             <label for="form_email">{{labels[1]}}:</label>
             <input #form_email type="email" class="form-control" formControlName="emailCohost2" required>
             <div *ngIf="checkFormControl(emailCohost2)">
@@ -134,7 +128,7 @@
       <div id="extra3" *ngIf="checkNumberCohosts() > 2">
         <fieldset class="border p-2">
           <legend class="w-auto">Cohost 3</legend>
-          <div class="form-group">
+          <div class="form-group" formGroupName="applicants">
             <label>{{labels[0]}}:</label><br />
             <input type="text" class="form-control" formControlName="naamCohost3" required>
             <div *ngIf="checkFormControl(naamCohost3)">
@@ -142,7 +136,7 @@
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" formGroupName="applicants">
             <label for="form_email">{{labels[1]}}:</label>
             <input #form_email type="email" class="form-control" formControlName="emailCohost3" required>
             <div *ngIf="checkFormControl(emailCohost3)">

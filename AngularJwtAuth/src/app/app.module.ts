@@ -20,7 +20,7 @@ import { PresentationdraftComponent } from './tile-view/presentationdraft/presen
 import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
 import { PsDetailService } from './tile-view/presentationdraft/psDetail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
-import { AanmeldformulierComponent } from './aanmeldformulier/presentationdraftForm/aanmeldformulier.component';
+import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
 
 @NgModule({
   declarations: [

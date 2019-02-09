@@ -13,7 +13,7 @@ export class draftAanmeldService {
 
   constructor(private http: HttpClient) { }
 
-  postPresentationDraftApplicant(presentationDraftApplicant): Observable<PresentationDraftApplicant>{
+  postPresentationDraftApplicant(presentationDraftApplicant){
     return this.http.post<PresentationDraftApplicant>(this.userUrl, presentationDraftApplicant);
   }
 

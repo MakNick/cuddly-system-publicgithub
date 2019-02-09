@@ -11,7 +11,7 @@ import { ConferenceComponent } from './tile-view/conference/conference.component
 import { PresentationdraftComponent } from './tile-view/presentationdraft/presentationdraft.component';
 import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
-import { AanmeldformulierComponent } from './aanmeldformulier/presentationdraftForm/aanmeldformulier.component';
+import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
  
 const routes: Routes = [
     {
