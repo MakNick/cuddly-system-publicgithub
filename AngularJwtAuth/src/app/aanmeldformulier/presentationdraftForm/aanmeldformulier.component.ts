@@ -20,6 +20,7 @@ export class AanmeldformulierComponent implements OnInit{
   public geslacht: string;
 
   public presentationDraftApplicant: PresentationDraftApplicant;
+
   public presentationDraft: FormGroup;
   public applicants: FormGroup;
   public submitted: boolean = false;
@@ -32,32 +33,33 @@ export class AanmeldformulierComponent implements OnInit{
   ngOnInit(): void {
     this.numberCohosts = 0;
     this.presentationDraftApplicant = new PresentationDraftApplicant();
+
     this.presentationdraftForm = new FormGroup({
-      'applicants': new FormGroup({
-        'naam': new FormControl('', [ Validators.required, Validators.minLength(3)]),
-        'email': new FormControl('', [Validators.email]),
-        'occupation': new FormControl('',[]),
-        'gender': new FormControl('',[]),
-        'naamCohost1': new FormControl(null, [Validators.required, Validators.minLength(3)]),
-        'emailCohost1': new FormControl(null, [Validators.email]),
-        'naamCohost2': new FormControl(null, [Validators.required, Validators.minLength(3)]),
-        'emailCohost2': new FormControl(null, [Validators.email]),
-        'naamCohost3': new FormControl(null, [Validators.required, Validators.minLength(3)]),
-        'emailCohost3': new FormControl(null, [Validators.email])
-      }),
+        'indiener': new FormGroup({
+          'name': new FormControl(null, [ Validators.required, Validators.minLength(3)]),
+          'email': new FormControl(null, [Validators.email]),
+          'occupation': new FormControl(null,[]),
+          'gender': new FormControl(null,[]),
+          'requests': new FormControl(null,[])
+        }),
+        'cohost1': new FormGroup({
+          'name': new FormControl(null, [ Validators.required, Validators.minLength(3)]),
+          'email': new FormControl(null, [Validators.email])
+        }),
+        'cohost2': new FormGroup({
+          'name': new FormControl(null, [ Validators.required, Validators.minLength(3)]),
+          'email': new FormControl(null, [Validators.email])
+        }),
+        'cohost3': new FormGroup({
+          'name': new FormControl(null, [ Validators.required, Validators.minLength(3)]),
+          'email': new FormControl(null, [Validators.email])
+        }),
       'presentationDraft': new FormGroup({
-        'subject': new FormControl('',[
-        ]),
-        'description': new FormControl('',[
-        ]),
-        'type': new FormControl('',[
-        ]),
-        'category': new FormControl('',[
-        ]),
-        'duration': new FormControl('',[
-        ]),
-        'extra': new FormControl('',[
-        ])
+        'subject': new FormControl(null,[]),
+        'summary': new FormControl(null,[]),
+        'type': new FormControl(null,[]),
+        'category': new FormControl(null,[]),
+        'duration': new FormControl(null,[])
       })
     });
   }
@@ -70,20 +72,56 @@ export class AanmeldformulierComponent implements OnInit{
     }
   }
 
-  get naam(){
-    return this.presentationdraftForm.get('applicants.naam');
+  get name(){
+    return this.presentationdraftForm.get('indiener.name');
   }
 
   get email(){
-    return this.presentationdraftForm.get('applicants.email');
+    return this.presentationdraftForm.get('indiener.email');
+  }
+  
+  get occupation(){
+    return this.presentationdraftForm.get('indiener.occupation');
+  }
+
+  get gender(){
+    return this.presentationdraftForm.get('indiener.gender');
+  }
+  
+  get requests(){
+    return this.presentationdraftForm.get('indiener.requests');
+  }
+
+  get name1(){
+    return this.presentationdraftForm.get('cohost1.name');
+  }
+
+  get email1(){
+    return this.presentationdraftForm.get('cohost1.email');
+  }
+
+  get name2(){
+    return this.presentationdraftForm.get('cohost2.name');
+  }
+
+  get email2(){
+    return this.presentationdraftForm.get('cohost2.email');
+  }
+
+  get name3(){
+    return this.presentationdraftForm.get('cohost3.name');
+  }
+
+  get email3(){
+    return this.presentationdraftForm.get('cohost3.email');
   }
 
   get subject(){
     return this.presentationdraftForm.get('presentationDraft.subject');
   }
 
-  get description(){
-    return this.presentationdraftForm.get('presentationDraft.description');
+  get summary(){
+    return this.presentationdraftForm.get('presentationDraft.summary');
   }
 
   get type(){
@@ -98,47 +136,13 @@ export class AanmeldformulierComponent implements OnInit{
     return this.presentationdraftForm.get('presentationDraft.duration');
   }
 
-  get occupation(){
-    return this.presentationdraftForm.get('applicants.occupation');
-  }
-
-  get gender(){
-    return this.presentationdraftForm.get('applicants.gender');
-  }
-  get extra(){
-    return this.presentationdraftForm.get('presentationDraft.extra');
-  }
-
-  get naamCohost1(){
-    return this.presentationdraftForm.get('applicants.naamCohost1');
-  }
-
-  get emailCohost1(){
-    return this.presentationdraftForm.get('applicants.emailCohost1');
-  }
-
-  get naamCohost2(){
-    return this.presentationdraftForm.get('applicants.naamCohost2');
-  }
-
-  get emailCohost2(){
-    return this.presentationdraftForm.get('applicants.emailCohost2');
-  }
-
-  get naamCohost3(){
-    return this.presentationdraftForm.get('applicants.naamCohost3');
-  }
-
-  get emailCohost3(){
-    return this.presentationdraftForm.get('applicants.emailCohost3');
-  }
-
   checkNumberCohosts(){
     return this.numberCohosts;
   }
 
   setNumberCohosts(event: any){
     this.numberCohosts = event.target.value;
+    console.log(this.numberCohosts + " nummer sprekers");
   }
 
   setGeslacht(event: any){
@@ -149,26 +153,51 @@ export class AanmeldformulierComponent implements OnInit{
     this.duration.setValue = event.target.value;
   }
 
-  presubmit(){
+  setApplicants(x){
     this.presentationDraftApplicant.applicants = [];
-      //new Applicant( ), new Applicant, new Applicant, new Applicant);      //wijs formwaarden toe
-    this.presentationDraftApplicant.presentationDraft = Object.assign(this.presentationdraftForm.get('presentationDraft'));
-    //console.log(applicants);
+    let indiener = Object.assign(this.presentationdraftForm.get('indiener').value);
+    console.log(indiener);
+    // indiener.name = this.naam.value;
+    // indiener.email = this.email.value; 
+    this.presentationDraftApplicant.applicants.push(indiener);
+    
+    let counter = 0;
+    while(counter < x){
+      counter++;
+      let applicant = new Applicant;      
+      if(counter == 1){
+        applicant = Object.assign(this.presentationdraftForm.get('cohost1').value);
+        console.log(applicant);
+        //   console.log("Found" + counter+1);
+      // applicant.name = this.naamCohost1.value;
+      // applicant.email = this.emailCohost1.value; 
+      }else if(counter == 2){
+        applicant = Object.assign(this.presentationdraftForm.get('cohost2').value);
+        console.log(applicant);
+      }else if(counter==3){
+        applicant = Object.assign(this.presentationdraftForm.get('cohost3').value);
+        console.log(applicant);
+      }else{
+      }
+      this.presentationDraftApplicant.applicants.push(applicant);
+      console.log("Added" + counter+1);
+    }
+  }
+
+  presubmit(){
+    this.setApplicants(this.checkNumberCohosts());   
+    console.log("1");
+    this.presentationDraftApplicant.presentationDraft = Object.assign(this.presentationdraftForm.get('presentationDraft').value);
+    console.log("2");
   }
 
   submit(){
-    alert("Dit is form");
-    console.log(this.presentationdraftForm); // Dit werkt
-    alert("Dit is DTO");
-    console.log(this.presentationDraftApplicant);
-    alert("einde");
-    
     this.draftAanmeldService.postPresentationDraftApplicant(this.presentationDraftApplicant)
     .subscribe(presentationDraftApplicant => console.log(presentationDraftApplicant), 
     error => function(error: Error){
       alert(error.message);
     }, function(){
-      alert("HOI!");
+      console.log("Succesvol!");
     });
 
     this.submitted = true;
