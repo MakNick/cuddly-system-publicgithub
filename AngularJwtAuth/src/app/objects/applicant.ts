@@ -4,6 +4,7 @@ import { Presentation } from "./presentation";
 export class Applicant{
     id: number;
     name: string;
+    email: string;
     phonenumber: string;
     occupation: string;
     gender: string;

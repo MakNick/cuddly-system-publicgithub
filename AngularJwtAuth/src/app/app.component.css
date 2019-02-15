@@ -1,3 +1,18 @@
 .content-box{
     min-height: 520px;
 }
+
+body {
+   font-family: 'Roboto', sans-serif;
+   background-color: white;
+}
+
+.navbar{
+   background-color: black;
+   font-family: 'Ubuntu', Helvetica, Arial, sans-serif;
+   font-size: 16px;
+}
+
+.btn{
+   background-color: yellow;
+}

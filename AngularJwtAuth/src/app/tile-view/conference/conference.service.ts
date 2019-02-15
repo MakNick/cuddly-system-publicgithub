@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Conference } from 'src/app/objects/conference/conference';
+import { Conference } from '../../objects/conference/conference';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable({

@@ -1,0 +1,161 @@
+<div class="titel">{{title}}</div>
+<div class="form">
+  <form [formGroup]="presentationdraftForm" (submit)="presubmit();">
+    <div formGroupName="indiener" class="form-group">
+      <label>{{labels[0]}}:</label><br />
+      <input #form_naam type="text" class="form-control" formControlName="name" required>
+      <div *ngIf="checkFormControl(name)">
+        <small class="isInvalid">{{feedbackBerichten[0]}}</small>
+      </div>
+    </div>
+    <div class="form-group" formGroupName="indiener">
+      <label for="form_email">{{labels[1]}}:</label>
+      <input #form_email type="email" class="form-control" formControlName="email" required>
+      <div *ngIf="checkFormControl(email)">
+        <small class="isInvalid">{{feedbackBerichten[1]}}</small>
+      </div>
+    </div>
+    <div class="form-group" formGroupName="presentationDraft">
+      <label for="form_subject">{{labels[2]}}:</label>
+      <input #form_subject type="text" class="form-control" formControlName="subject" required>
+      <div *ngIf="subject.value == null || subject.value == ''">
+        <small class="isInvalid">{{feedbackBerichten[2]}}</small>
+      </div>
+    </div>
+    <div class="form-group" formGroupName="presentationDraft">
+      <label for="form_summary">{{labels[3]}}:</label>
+      <textarea #form_summary class="form-control" formControlName="summary" rows="5" maxlength="500" placeholder="Maximaal 500 tekens"></textarea>
+      <div *ngIf="summary.value == null || summary.value == ''">
+        <small class="isInvalid">{{feedbackBerichten[3]}}</small>
+      </div>
+    </div>
+    <details name="optional_fields">
+      <summary>Optionele velden</summary>
+      <br>
+      <div class="form-group" formGroupName="presentationDraft">
+        <label for="form_type">{{labels[4]}}:</label>
+        <input #form_type type="text" class="form-control" formControlName="type" value="">
+      </div>
+      <div class="form-group" id="categorie_div" formGroupName="presentationDraft">
+        <label for="form_category">{{labels[5]}}:</label>
+        <select #form_category class="form-control" style="width: 50%" formControlName="category" (change)="$event.target.value">
+          <option disabled selected value> -- Maak een keuze -- </option>
+          
+          <!--Zodra deze pagina een conference-id beschikbaar heeft, is deze select aan te vullen.
+            Daarom nu uitgecommentarieerd.
+            
+          <option *ngFor="let category of conference.categories">hierkomtcategorietekst</option> -->
+        </select>
+      </div>
+
+      <div class="form-group" formGroupName="presentationDraft">
+        <label for="form_duration">{{labels[6]}}:</label>
+        <select #form_duration class="form-control" style="width: 50%" formControlName="duration" (change)="$event.target.value">
+          <option disabled selected value> -- Maak een keuze -- </option>
+          <option value="15">15</option>
+          <option value="30">30</option>
+          <option value="45">45</option>
+          <option value="60">60</option>
+          <option value="75">75</option>
+          <option value="90">90</option>
+        </select>
+      </div>
+      <div class="form-group" formGroupName="indiener">
+        <label for="form_occupation">{{labels[7]}}:</label>
+        <input #form_occupation type="text" class="form-control" formControlName="occupation" value="">
+      </div>
+
+      <div class="form-group" formGroupName="indiener">
+        <label for="form_requests">{{labels[8]}}:</label>
+        <select #form_gender class="form-control" style="width: 50%" formControlName="gender" (change)="$event.target.value">
+          <option disabled selected value> -- Maak een keuze -- </option>
+          <option>Man</option>
+          <option>Vrouw</option>
+          <option>Overig</option>
+        </select>
+      </div>
+
+      <div class="form-group" formGroupName="indiener">
+        <label for="form_overigeopmerkingen">{{labels[9]}}:</label>
+        <input #form_overigeopmerkingen type="text" class="form-control" formControlName="requests" value="">
+      </div>
+
+      <div class="form-group">
+        <label for="form_cohost">{{labels[10]}}</label>
+        <select #form_cohost class="form-control" style="width: 50%" (change)="setNumberCohosts($event);">
+          <option value=0>nee</option>
+          <option value=1>ja, 1</option>
+          <option value=2>ja, 2</option>
+          <option value=3>ja, 3</option>
+        </select>
+      </div>
+
+      <div id="extra" *ngIf="checkNumberCohosts() > 0">
+        <fieldset class="border p-2">
+          <legend class="w-auto">Cohost 1</legend>
+
+          <div class="form-group" formGroupName="cohost1">
+            <label>{{labels[0]}}:</label><br />
+            <input type="text" class="form-control" formControlName="name" required>
+            <div *ngIf="checkFormControl(name1)">
+              <small class="isInvalid">{{feedbackBerichten[0]}}</small>
+            </div>
+          </div>
+
+          <div class="form-group" formGroupName="cohost1">
+            <label for="form_email">{{labels[1]}}:</label>
+            <input #form_email type="email" class="form-control" formControlName="email" required>
+            <div *ngIf="checkFormControl(email1)">
+              <small class="isInvalid">{{feedbackBerichten[1]}}</small>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div id="extra2" *ngIf="checkNumberCohosts() > 1">
+        <fieldset class="border p-2">
+          <legend class="w-auto">Cohost 2</legend>
+          <div class="form-group" formGroupName="cohost2">
+            <label>{{labels[0]}}:</label><br />
+            <input type="text" class="form-control" formControlName="name" required>
+            <div *ngIf="checkFormControl(name2)">
+              <small class="isInvalid">{{feedbackBerichten[0]}}</small>
+            </div>
+          </div>
+
+          <div class="form-group" formGroupName="cohost2">
+            <label for="form_email">{{labels[1]}}:</label>
+            <input #form_email type="email" class="form-control" formControlName="email" required>
+            <div *ngIf="checkFormControl(email2)">
+              <small class="isInvalid">{{feedbackBerichten[1]}}</small>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+
+      <div id="extra3" *ngIf="checkNumberCohosts() > 2">
+        <fieldset class="border p-2">
+          <legend class="w-auto">Cohost 3</legend>
+          <div class="form-group" formGroupName="cohost3">
+            <label>{{labels[0]}}:</label><br />
+            <input type="text" class="form-control" formControlName="name" required>
+            <div *ngIf="checkFormControl(name3)">
+              <small class="isInvalid">{{feedbackBerichten[0]}}</small>
+            </div>
+          </div>
+
+          <div class="form-group" formGroupName="cohost3">
+            <label for="form_email">{{labels[1]}}:</label>
+            <input #form_email type="email" class="form-control" formControlName="email" required>
+            <div *ngIf="checkFormControl(email3)">
+              <small class="isInvalid">{{feedbackBerichten[1]}}</small>
+            </div>
+          </div>
+        </fieldset>
+      </div>
+    </details>
+    <br />
+
+    <input id="send_button" type="submit" class="btn btn-default" value="Verzenden">
+  </form>
+</div>
