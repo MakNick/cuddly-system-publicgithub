@@ -1,85 +1,53 @@
-<div (click)="goBack($event)">
-  <div class="row detail-box">
-    <div class="detailHeader">
-      <div class="dropdown">
-        <div>
-          <button (click)="closeAndComparePresentationdraft(PsDetail)" class="dropbtn"><i
-              class="fa fa-arrow-left"></i></button>
-        </div>
-      </div>
-      <h1>{{PsDetail.subject}}</h1>
-    </div>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> {{PsDetail.subject}} </mat-card-title>
+    <mat-card-subtitle> {{PsDetail.id}} </mat-card-subtitle>
+  </mat-card-header>
 
-    <div class="detailMenu">
+  <mat-divider></mat-divider>
 
-      <div class="gridMenu">
-        <div class="dropdown">
-          <button class="dropbtn" *ngIf="PsDetail.label; else showDefaultLabel">
-            {{PsDetail.label}}
-          </button>
-          <ng-template #showDefaultLabel>
-            <button class="dropbtn">Kies label</button>
-          </ng-template>
-          <div class="dropdown-content">
-            <a (click)="changeLabel('ACCEPTED')">Accepteren</a>
-            <a (click)="changeLabel('DENIED')">Afwijzen</a>
-            <a (click)="changeLabel('RESERVED')">Reserve</a>
-          </div>
-        </div>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" matTooltip="Terug naar overzicht"
+      (click)="closeAndComparePresentationdraft(PsDetail)"><i class="fa fa-arrow-left"></i></button>
+    <button mat-raised-button color="primary" matTooltip="Download PDF"
+      (click)="downloadSinglePdf(conferenceDetail, PsDetail)"><i class="fa fa-download"></i></button>
+    <button mat-raised-button color="primary" matTooltip="Voorstel verwijderen"
+      (click)="deletePresentationDraft(PsDetail)"><i class="fa fa-trash"></i></button>
+    <button mat-raised-button color="primary" matTooltip="Voorstel opslaan"
+      (click)="updatePresentationDraft(PsDetail)"><i class="fa fa-save"></i></button>
+    <mat-form-field>
+      <mat-select placeholder="Label" [value]="PsDetail.label">
+        <mat-option *ngFor="let label of labels" (click)="changeLabel(label)" [value]="label">
+          {{label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-        <div class="dropdown">
-          <button class="dropbtn" *ngIf="PsDetail.category; else showDefaultCategory">
-            {{PsDetail.category}}
-          </button>
-          <ng-template #showDefaultCategory>
-            <button class="dropbtn">Kies categorie</button>
-          </ng-template>
-          <div class="dropdown-content">
-            <a (click)="changeCategory(category)" *ngFor="let category of conferenceDetail.categories">
-              {{category}}
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="dropdown">
-        <div>
-          <button (click)="downloadSinglePdf(conferenceDetail, PsDetail)" class="dropbtn"><i
-              class="fa fa-download"></i></button>
-        </div>
-      </div>
-      <div class="dropdown">
-        <div>
-          <button (click)="deletePresentationDraft(PsDetail)" class="dropbtn"><i class="fa fa-trash"></i></button>
-        </div>
-      </div>
-      <div class="dropdown popup">
-        <div>
-          <button (click)="updatePresentationDraft(PsDetail)" class="dropbtn"><i class="fa fa-save"></i></button>
-          <span class="popuptext" id="myPopup">Opgeslagen</span>
-        </div>
-      </div>
-    </div>
+    <mat-form-field>
+      <mat-select placeholder="Categorie" [value]="PsDetail.category">
+        <mat-option *ngFor="let category of conferenceDetail.categories" (click)="changeCategory(category)"
+          [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </mat-card-actions>
 
-    <div class="detailContainerGrid1">
-      <div>
-        <span class="heads">ID:</span>
-        <span type="text">{{PsDetail.id}}</span>
-      </div>
-      <div>
-        <span class="heads">Aanmelddatum:</span>
-        <span type="text">{{PsDetail.timeOfCreation}}</span>
-      </div>
-      <div>
-        <span class="heads">Type:</span>
-        <input type="text" [(ngModel)]="PsDetail.type">
-      </div>
-    </div>
+  <mat-divider></mat-divider>
 
-    <div class="detailContainerGrid2">
-      <div class="summary">
-        <span class="heads">Samenvatting:</span><br>
-        <textarea [(ngModel)]="PsDetail.summary"></textarea>
-      </div>
-    </div>
-  </div>
-</div>
+  <mat-card-content>
+    <span>Datum inzending: </span>
+      <span> {{PsDetail.timeOfCreation}} </span>
+    <span>Type voorstel: </span>
+      <input matInput [(ngModel)]="PsDetail.type" name="type">
+    <textarea matInput [(ngModel)]="PsDetail.summary" name="summary" rows="10"></textarea>
+  </mat-card-content>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-footer>
+    <mat-paginator [hidePageSize]="true" [length]="conferenceDetail.presentationDrafts.length"
+      [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+    </mat-paginator>
+  </mat-card-footer>
+</mat-card>

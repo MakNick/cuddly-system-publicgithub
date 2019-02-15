@@ -1,15 +1,12 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
-import { viewParentEl } from '@angular/core/src/view/util';
 import { Conference } from 'src/app/objects/conference/conference';
 import { PsDetailService } from '../psDetail.service';
 import { PresentationdraftService } from '../presentationdraft.service';
-import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
-
   selector: 'app-presentationdraftdetail',
   templateUrl: './presentationdraftdetail.component.html',
   styleUrls: ['./presentationdraftdetail.component.css']
@@ -21,6 +18,8 @@ export class PresentationdraftdetailComponent implements OnInit {
   PsCompare : String;
 
   conferenceDetail: Conference;
+
+  labels: String[] = [ "ACCEPTED", "DENIED", "RESERVED" ];
 
   constructor(private location: Location,
     private psDetailService: PsDetailService,
@@ -48,7 +47,7 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   updatePresentationDraft(PsDetail) {
     this.presentationDraftService.updatePresentationDraft(this.conferenceDetail.id, PsDetail).subscribe(PresentationDraft => console.log("Opslaan gelukt"));
-    this.popup();
+    this.PsCompare = JSON.stringify(this.psDetailService.selectedPresentationDraft);
   }
 
   deletePresentationDraft(PsDetail) {
@@ -79,10 +78,5 @@ export class PresentationdraftdetailComponent implements OnInit {
       }
     }
     this.location.back();
-  }
-
-  popup() {
-    var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
-  }
+  } 
 }

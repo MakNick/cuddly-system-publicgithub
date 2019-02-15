@@ -9,37 +9,6 @@
     z-index: 1;
 }
 
-.detailHeader{
-    display: flex;
-}
-
-.detailHeader > h1{
-    margin: auto;
-    text-align: center;
-}
-
-.detailMenu{
-    display: flex;
-}
-
-.gridMenu{
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-column-gap: 15px;
-}
-
-.detailContainerGrid1{
-    display: grid;
-    margin: auto;
-    grid-template-columns: repeat(4, 1fr);
-}
-
-.detailContainerGrid2{
-    display: grid;
-    margin: auto;
-    grid-template-columns: repeat(1, 1fr);
-}
-
 .background{
     position: fixed;
     width: 100%;
@@ -50,19 +19,7 @@
     z-index: 10;
 }
 
-.summary > textarea {
-    position: inherit;
-    margin-left: 2%;
-    width: 96%;
-    height: 200px;
-}
-
-.heads {
-    margin-left: 20px;
-    display: inline-block;
-}
-
-/* Dropdown */
+Dropdown
 .dropbtn {
     background-color: rgb(160, 160, 160);
     color: white;
@@ -101,45 +58,3 @@
   .dropdown:hover .dropdown-content {display: block;}
   
   .dropdown:hover .dropbtn {background-color: #4f3e8e;}
-
-  /* Popup */
-  /* Popup container */
-.popup {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-  }
-  
-  /* The actual popup (appears on top) */
-  .popup .popuptext {
-    visibility: hidden;
-    width: 160px;
-    background-color: #4f3e8e;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -80px;
-  }
-   
-  /* Toggle this class when clicking on the popup container (hide and show the popup) */
-  .popup .show {
-    visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
-  }
-  
-  /* Add animation (fade in the popup) */
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
-  }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
-  }
