@@ -18,7 +18,7 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   PsDetail: PresentationDraft;
 
-  PsCompare = this.psDetailService.selectedPresentationDraft;
+  PsCompare : String;
 
   conferenceDetail: Conference;
 
@@ -29,6 +29,7 @@ export class PresentationdraftdetailComponent implements OnInit {
   ngOnInit() {
     this.PsDetail = this.psDetailService.selectedPresentationDraft;
     this.conferenceDetail = this.psDetailService.activeConference;
+    this.PsCompare = JSON.stringify(this.psDetailService.selectedPresentationDraft);
   }
 
   goBack(event): void {
@@ -43,11 +44,6 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   changeCategory(value) {
     this.PsDetail.category = value;
-  }
-
-  jojoganster() {
-    console.log(this.PsDetail.summary);
-    console.log(this.PsCompare.summary);
   }
 
   updatePresentationDraft(PsDetail) {
@@ -74,12 +70,13 @@ export class PresentationdraftdetailComponent implements OnInit {
   }
 
   closeAndComparePresentationdraft(PsDetail) {
-    if (JSON.stringify(this.PsCompare) === JSON.stringify(PsDetail)) {
-      console.log("niks gewijzigd");
-      console.log(this.PsCompare.summary);
-      console.log(PsDetail.summary);
+    if (this.PsCompare === JSON.stringify(PsDetail)) {
+      console.log("Geen wijzigingen");
     } else {
-      console.log("wijzigingen");
+      let conf = confirm("Er zijn wijzigingen, wil je deze opslaan?");
+      if (conf) {
+        this.updatePresentationDraft(PsDetail);
+      }
     }
     this.location.back();
   }

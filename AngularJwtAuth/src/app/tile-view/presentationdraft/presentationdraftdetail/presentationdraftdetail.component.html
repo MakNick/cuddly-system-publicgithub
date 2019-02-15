@@ -1,17 +1,18 @@
 <div (click)="goBack($event)">
   <div class="row detail-box">
     <div class="detailHeader">
+      <div class="dropdown">
+        <div>
+          <button (click)="closeAndComparePresentationdraft(PsDetail)" class="dropbtn"><i
+              class="fa fa-arrow-left"></i></button>
+        </div>
+      </div>
       <h1>{{PsDetail.subject}}</h1>
     </div>
 
     <div class="detailMenu">
 
       <div class="gridMenu">
-        <div class="dropdown">
-          <div>
-            <button (click)="closeAndComparePresentationdraft(PsDetail)" class="dropbtn"><i class="fa fa-arrow-left"></i></button>
-          </div>
-        </div>
         <div class="dropdown">
           <button class="dropbtn" *ngIf="PsDetail.label; else showDefaultLabel">
             {{PsDetail.label}}
@@ -42,7 +43,8 @@
       </div>
       <div class="dropdown">
         <div>
-          <button (click)="downloadSinglePdf(conferenceDetail, PsDetail)" class="dropbtn"><i class="fa fa-download"></i></button>
+          <button (click)="downloadSinglePdf(conferenceDetail, PsDetail)" class="dropbtn"><i
+              class="fa fa-download"></i></button>
         </div>
       </div>
       <div class="dropdown">
@@ -76,7 +78,7 @@
     <div class="detailContainerGrid2">
       <div class="summary">
         <span class="heads">Samenvatting:</span><br>
-        <textarea [(ngModel)]="PsDetail.summary" (keyup)="jojoganster()"></textarea>
+        <textarea [(ngModel)]="PsDetail.summary"></textarea>
       </div>
     </div>
   </div>
