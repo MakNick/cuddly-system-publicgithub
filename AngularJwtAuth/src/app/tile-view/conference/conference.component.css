@@ -3,10 +3,23 @@
 }
 
 .tile > button{
-    width: 100%;
+    width: 12rem;
 }
 
 .title{
     margin: auto 0px;
 }
 
+.card{
+  color: white;
+  height: 35rem;
+  width: 20rem;
+}
+
+.card:hover{
+  color: yellow;
+}
+
+.card-deck{
+  margin-bottom: 5rem;
+}

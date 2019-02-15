@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NguCarouselModule } from '@ngu/carousel';
 
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -33,12 +34,13 @@ import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/confe
     PresentationdraftdetailComponent,
     ConferenceFormComponent
   ],
-  imports: [ 
+  imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NguCarouselModule
   ],
   providers: [httpInterceptorProviders, PsDetailService],
   bootstrap: [AppComponent]

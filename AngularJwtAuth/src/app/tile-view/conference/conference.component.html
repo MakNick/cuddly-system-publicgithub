@@ -1,3 +1,55 @@
+<!-- <div class="row tile-box">
+  <div class="col-md tile" *ngFor="let conference of conferences">
+    <button routerLink="/conference/{{conference.id}}">
+        <ul class="list-unstyled">
+          <li>
+            <strong>Title:</strong>
+          </li>
+          <li>
+            {{conference.name}}
+          </li>
+        </ul>
+    </button>
+  </div>
+</div> -->
+
+<div class="card-deck">
+  <div *ngFor="let conference of conferences; let i=index">
+    <button *ngIf="i==1"
+    routerLink="/conference/{{conference.id}}"
+    class="card" style="background:linear-gradient(to bottom,hsl(256, 88%, 20%),hsl(256, 71%, 14%));width:25rem">
+      <ul class="list-unstyled">
+        <li>
+          <strong>{{conference.name}}</strong>
+        </li>
+        <li>
+          {{conference.name}}
+        </li>
+      </ul>
+</button>
+
+    <button *ngIf="i<3 && i!=1"
+    routerLink="/conference/{{conference.id}}"
+    class="card" style="background:linear-gradient(to bottom,hsl(256, 88%, 20%),hsl(256, 71%, 14%));">
+
+  <!-- <button *ngFor="let conference of conferences; let i=index"
+      routerLink="/conference/{{conference.id}}"
+      class="card" style="background:linear-gradient(to bottom,hsl(256, 88%, 20%),hsl(256, 71%, 14%));">
+      <div *ngIf="i<3"> -->
+      <ul class="list-unstyled">
+        <li>
+          <strong>{{conference.name}}</strong>
+        </li>
+        <li>
+          {{conference.name}}
+        </li>
+      </ul>
+      <!-- </div>
+</button> -->
+</button>
+</div>
+</div>
+
 <div class="row tile-box">
   <div class="col-md tile" *ngFor="let conference of conferences">
     <button routerLink="/conference/{{conference.id}}">
