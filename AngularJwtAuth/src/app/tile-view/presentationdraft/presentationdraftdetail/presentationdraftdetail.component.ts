@@ -6,6 +6,7 @@ import { viewParentEl } from '@angular/core/src/view/util';
 import { Conference } from 'src/app/objects/conference/conference';
 import { PsDetailService } from '../psDetail.service';
 import { PresentationdraftService } from '../presentationdraft.service';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
 
@@ -16,6 +17,8 @@ import { PresentationdraftService } from '../presentationdraft.service';
 export class PresentationdraftdetailComponent implements OnInit {
 
   PsDetail: PresentationDraft;
+
+  PsCompare = this.psDetailService.selectedPresentationDraft;
 
   conferenceDetail: Conference;
 
@@ -40,7 +43,11 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   changeCategory(value) {
     this.PsDetail.category = value;
-    console.log(this.PsDetail);
+  }
+
+  jojoganster() {
+    console.log(this.PsDetail.summary);
+    console.log(this.PsCompare.summary);
   }
 
   updatePresentationDraft(PsDetail) {
@@ -50,9 +57,31 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   deletePresentationDraft(PsDetail) {
     let conf = confirm("Weet je zeker dat je de presentatie wilt verwijderen?");
-    if(conf) {
+    if (conf) {
       this.presentationDraftService.deletePresentationDraft(PsDetail).subscribe();
+      this.location.back();
     }
+  }
+
+  downloadSinglePdf(conferenceDetail, PsDetail) {
+    this.presentationDraftService.downloadSinglePdf(PsDetail, conferenceDetail).subscribe((response)=>{
+      let blob = new Blob([response], { type: 'application/pdf' });
+      var fileUrl = window.document.createElement('a');
+      fileUrl.href = window.URL.createObjectURL(blob);
+      fileUrl.download = 'PresentationDraft' + PsDetail.id + '.pdf';
+      fileUrl.click();
+    })
+  }
+
+  closeAndComparePresentationdraft(PsDetail) {
+    if (JSON.stringify(this.PsCompare) === JSON.stringify(PsDetail)) {
+      console.log("niks gewijzigd");
+      console.log(this.PsCompare.summary);
+      console.log(PsDetail.summary);
+    } else {
+      console.log("wijzigingen");
+    }
+    this.location.back();
   }
 
   popup() {
