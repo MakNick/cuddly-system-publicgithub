@@ -17,6 +17,9 @@
       <li *ngIf="authority === 'admin'" class="nav-item">
         <a class="nav-link" routerLink="aanmeldformulierConference">Conference aanmaken</a>
       </li>
+      <li *ngIf="authority === 'user'" class="nav-item">
+          <a class="nav-link" routerLink="aanmeldformulierPresentationDraftApplicant">Voorstel indienen</a>
+        </li>
       <li *ngIf="authority === 'admin'" class="nav-item">
           <a class="nav-link" routerLink="conference">Conference</a>
         </li>
