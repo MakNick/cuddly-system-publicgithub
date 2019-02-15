@@ -1,8 +1,7 @@
 <div class="titel">{{title}}</div>
 <div class="form">
     {{presentationdraftForm.value | json}}
-  <form [formGroup]="presentationdraftForm" (submit)="presubmit(); submit();">
-  <!--<form [formGroup]="presentationdraftForm" (ngSubmit)="presubmit(this, $event); submit(this, $event)">-->
+  <form [formGroup]="presentationdraftForm" (submit)="presubmit();">
     <div formGroupName="indiener" class="form-group">
       <label>{{labels[0]}}:</label><br />
       <input #form_naam type="text" class="form-control" formControlName="name" required>
@@ -21,10 +20,16 @@
     <div class="form-group" formGroupName="presentationDraft">
       <label for="form_subject">{{labels[2]}}:</label>
       <input #form_subject type="text" class="form-control" formControlName="subject" required>
+      <div *ngIf="subject.value == null || subject.value == ''">
+        <small class="isInvalid">{{feedbackBerichten[2]}}</small>
+      </div>
     </div>
     <div class="form-group" formGroupName="presentationDraft">
       <label for="form_summary">{{labels[3]}}:</label>
       <textarea #form_summary class="form-control" formControlName="summary" rows="5" maxlength="500" placeholder="Maximaal 500 tekens"></textarea>
+      <div *ngIf="summary.value == null || summary.value == ''">
+        <small class="isInvalid">{{feedbackBerichten[3]}}</small>
+      </div>
     </div>
     <details name="optional_fields">
       <summary>Optionele velden</summary>
@@ -37,6 +42,7 @@
         <label for="form_category">{{labels[5]}}:</label>
         <select #form_category class="form-control" style="width: 50%" formControlName="category" (change)="$event.target.value">
           <option disabled selected value> -- Maak een keuze -- </option>
+          <option *ngFor="let category of conference.categories">a</option>
         </select>
       </div>
 
