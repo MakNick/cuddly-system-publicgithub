@@ -47,7 +47,6 @@ export class PresentationdraftComponent implements OnInit {
     let formattedDate: string = "";
     for(let i = 2; i >= 0; i--){
       if(arrayOfDate[i] !== ","){
-        
         if(i == 0){
           formattedDate += arrayOfDate[i];
         }else{

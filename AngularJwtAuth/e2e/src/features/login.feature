@@ -1,5 +1,6 @@
 Feature: Login as an organizer
-    I will attempt to login as an organizor
+    I am an organizer with the role admin and i want to login. My username is admin and password is admin123.
+
 
     Scenario: I succesfully logged in
         Given I am on the login page

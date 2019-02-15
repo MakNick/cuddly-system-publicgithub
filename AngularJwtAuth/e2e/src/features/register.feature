@@ -8,7 +8,7 @@ Feature: I want to register a new account
         And I fill in "piet@msn.com" as my email
         And I fill in piet123 as my password
         And I press the register button
-        Then I should see the Your registration is successful. Please login! message
+        Then I should see the "Your registration is successful. Please login!" message
 
     Scenario: I fill in everything correctly but the user already exists
         Given I am on the register page
