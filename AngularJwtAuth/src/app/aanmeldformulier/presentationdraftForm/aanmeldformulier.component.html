@@ -42,7 +42,11 @@
         <label for="form_category">{{labels[5]}}:</label>
         <select #form_category class="form-control" style="width: 50%" formControlName="category" (change)="$event.target.value">
           <option disabled selected value> -- Maak een keuze -- </option>
-          <option *ngFor="let category of conference.categories">a</option>
+          
+          <!--Zodra deze pagina een conference-id beschikbaar heeft, is deze select aan te vullen.
+            Daarom nu uitgecommentarieerd.
+            
+          <option *ngFor="let category of conference.categories">hierkomtcategorietekst</option> -->
         </select>
       </div>
 
@@ -95,7 +99,7 @@
           <div class="form-group" formGroupName="cohost1">
             <label>{{labels[0]}}:</label><br />
             <input type="text" class="form-control" formControlName="name" required>
-            <div *ngIf="checkFormControl(name)">
+            <div *ngIf="checkFormControl(name1)">
               <small class="isInvalid">{{feedbackBerichten[0]}}</small>
             </div>
           </div>
@@ -103,7 +107,7 @@
           <div class="form-group" formGroupName="cohost1">
             <label for="form_email">{{labels[1]}}:</label>
             <input #form_email type="email" class="form-control" formControlName="email" required>
-            <div *ngIf="checkFormControl(email)">
+            <div *ngIf="checkFormControl(email1)">
               <small class="isInvalid">{{feedbackBerichten[1]}}</small>
             </div>
           </div>
@@ -116,7 +120,7 @@
           <div class="form-group" formGroupName="cohost2">
             <label>{{labels[0]}}:</label><br />
             <input type="text" class="form-control" formControlName="name" required>
-            <div *ngIf="checkFormControl(name)">
+            <div *ngIf="checkFormControl(name2)">
               <small class="isInvalid">{{feedbackBerichten[0]}}</small>
             </div>
           </div>
@@ -124,7 +128,7 @@
           <div class="form-group" formGroupName="cohost2">
             <label for="form_email">{{labels[1]}}:</label>
             <input #form_email type="email" class="form-control" formControlName="email" required>
-            <div *ngIf="checkFormControl(email)">
+            <div *ngIf="checkFormControl(email2)">
               <small class="isInvalid">{{feedbackBerichten[1]}}</small>
             </div>
           </div>
@@ -137,7 +141,7 @@
           <div class="form-group" formGroupName="cohost3">
             <label>{{labels[0]}}:</label><br />
             <input type="text" class="form-control" formControlName="name" required>
-            <div *ngIf="checkFormControl(name)">
+            <div *ngIf="checkFormControl(name3)">
               <small class="isInvalid">{{feedbackBerichten[0]}}</small>
             </div>
           </div>
@@ -145,7 +149,7 @@
           <div class="form-group" formGroupName="cohost3">
             <label for="form_email">{{labels[1]}}:</label>
             <input #form_email type="email" class="form-control" formControlName="email" required>
-            <div *ngIf="checkFormControl(email)">
+            <div *ngIf="checkFormControl(email3)">
               <small class="isInvalid">{{feedbackBerichten[1]}}</small>
             </div>
           </div>

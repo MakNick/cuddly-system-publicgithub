@@ -3,7 +3,6 @@ import { Validators, FormGroup, FormControl } from '@angular/forms';
 import { Applicant } from '../../objects/applicant';
 import { draftAanmeldService } from '../../aanmeldformulier/presentationdraftForm/aanmeldformulier.service';
 import { PresentationDraftApplicant } from '../../objects/presentationDraftApplicant';
-import { PresentationDraft } from '../../objects/presentation-draft';
 import { Conference } from '../../objects/conference/conference';
 
 @Component({
@@ -62,8 +61,8 @@ export class AanmeldformulierComponent implements OnInit {
         'email': new FormControl(null, [Validators.email])
       }),
       'presentationDraft': new FormGroup({
-        'subject': new FormControl(null, []),
-        'summary': new FormControl(null, []),
+        'subject': new FormControl(null, [Validators.required, Validators.minLength(1)]),
+        'summary': new FormControl(null, [Validators.required, Validators.minLength(1)]),
         'type': new FormControl(null, []),
         'category': new FormControl(null, []),
         'duration': new FormControl(null, [])
@@ -72,6 +71,7 @@ export class AanmeldformulierComponent implements OnInit {
   }
 
   checkFormControl(x) {
+
     if (x.status == 'INVALID') {
       return true;
     } else {
@@ -190,7 +190,7 @@ export class AanmeldformulierComponent implements OnInit {
     this.validFields[2] = (this.presentationdraftForm.get('cohost2').status == 'INVALID') ? false : true;
     this.validFields[3] = (this.presentationdraftForm.get('cohost3').status == 'INVALID') ? false : true;
 
-    if (this.validFields[0] == true) {
+    if (this.validFields[0] == true && this.presentationdraftForm.get('presentationDraft').status == 'VALID') {
       if (this.checkNumberCohosts() == 0){
         return true;
       }
@@ -215,7 +215,7 @@ export class AanmeldformulierComponent implements OnInit {
     if (this.checkIfSubmittable()) {
       this.submit();
     } else {
-      alert("Er zijn nog onjuiste gegevens. Verbeter en probeer opnieuw.");
+      alert("Er zijn nog onvolledige en/of onjuiste gegevens. Probeer opnieuw.");
     }
   }
 
