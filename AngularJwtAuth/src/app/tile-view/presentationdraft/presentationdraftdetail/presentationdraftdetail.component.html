@@ -9,7 +9,7 @@
       <div class="gridMenu">
         <div class="dropdown">
           <div>
-            <button (click)="this.location.back()" class="dropbtn"><i class="fa fa-arrow-left"></i></button>
+            <button (click)="closeAndComparePresentationdraft(PsDetail)" class="dropbtn"><i class="fa fa-arrow-left"></i></button>
           </div>
         </div>
         <div class="dropdown">
@@ -42,7 +42,7 @@
       </div>
       <div class="dropdown">
         <div>
-          <button (click)="downloadSinglePdf(conferenceDetail.id, PsDetail.id)" class="dropbtn"><i class="fa fa-download"></i></button>
+          <button (click)="downloadSinglePdf(conferenceDetail, PsDetail)" class="dropbtn"><i class="fa fa-download"></i></button>
         </div>
       </div>
       <div class="dropdown">
@@ -76,7 +76,7 @@
     <div class="detailContainerGrid2">
       <div class="summary">
         <span class="heads">Samenvatting:</span><br>
-        <textarea [(ngModel)]="PsDetail.summary"></textarea>
+        <textarea [(ngModel)]="PsDetail.summary" (keyup)="jojoganster()"></textarea>
       </div>
     </div>
   </div>
