@@ -1,0 +1,110 @@
+.content {
+  display: flex;
+}
+
+.filter-container {
+  justify-content: space-around;
+  display: flex;
+  min-height: 450px;
+  max-height: 500px;
+  flex: 1;
+}
+
+.filter-box {
+  padding: 0px 20px 0px 20px;
+  display: flex;
+  justify-content: space-evenly;
+  order:1;
+  flex-direction: column;
+}
+
+.filter-box .button {
+  margin-left: auto;
+}
+
+.filter-title {
+  background-color: #180A3D;
+  order: 2;
+  padding: 5px;
+}
+
+.filter-title h4 {
+  color: #fff;
+  margin: 0px;
+  padding: 0px;
+}
+
+.presentation-draft-box {
+  flex: 3;
+  margin-right: 20px;
+}
+
+.unlabeled-tile {
+  border: 1px solid #dfdfdf;
+}
+
+.undetermined-tile{
+  border: 1px solid #dfdfdf;
+}
+
+.accepted-tile{
+  border: 1px solid #dfdfdf;
+}
+
+.accepted-tile::after{
+  content: "";
+  width: 5px;
+  height: 30%;
+  display: block;
+  position: relative;
+  left: 95%;
+  background-color: #00ff1d;
+}
+
+.denied-tile{
+  border: 1px solid #dfdfdf;
+}
+
+.denied-tile::after{
+  content: "";
+  width: 5px;
+  height: 30%;
+  display: block;
+  position: relative;
+  left: 95%;
+  background-color: #ff1414;
+}
+
+.reserved-tile{
+  border: 1px solid #dfdfdf;
+}
+
+.reserved-tile::after{
+  content: "";
+  width: 5px;
+  height: 30%;
+  display: block;
+  position: relative;
+  left: 95%;
+  background-color: #ffb100;
+}
+
+@media only screen and (max-width: 650px) {
+
+  .content {
+    flex-direction: column;
+  }
+
+  .filter-container {
+    order: 1;
+    flex-direction: column;
+  }
+
+  .filter-title {
+    order: 1;
+  }
+
+  .presentation-draft-box {
+    order: 2;
+  }
+}

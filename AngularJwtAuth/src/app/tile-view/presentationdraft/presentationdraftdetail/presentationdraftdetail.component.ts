@@ -5,7 +5,7 @@ import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { viewParentEl } from '@angular/core/src/view/util';
 import { Conference } from 'src/app/objects/conference/conference';
 import { PsDetailService } from '../psDetail.service';
-import { PresentationdraftService } from '../presentationdraft.service';
+import { PresentationDraftService } from '../presentation-draft.service';
 import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @Component({
@@ -24,7 +24,7 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   constructor(private location: Location,
     private psDetailService: PsDetailService,
-    private presentationDraftService: PresentationdraftService) { }
+    private presentationDraftService: PresentationDraftService) { }
 
   ngOnInit() {
     this.PsDetail = this.psDetailService.selectedPresentationDraft;

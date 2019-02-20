@@ -1,19 +1,23 @@
 package com.topicus.CFPApplication.persistence;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 
 @Repository
-public interface PresentationDraftRepository extends CrudRepository<PresentationDraft, Long> {
+public interface PresentationDraftRepository extends PagingAndSortingRepository<PresentationDraft, Long> {
 
-//	@Query("SELECT COUNT(*) FROM PresentationDraft WHERE NOT (label='DENIED' OR label='ACCEPTED' OR label='RESERVED')")
-//	public int countPresentationsUndetermined();
+	Page<PresentationDraft> findPresentationDraftByConferenceIdAndLabelOrderBySubject(Long conferenceId, Label label, Pageable pageableRequest);
 
-	public Iterable<PresentationDraft> findPresentationDraftByLabel(Label label);
+	Page<PresentationDraft> findPresentationDraftByConferenceIdAndCategoryOrderBySubject(Long conferenceId, String category, Pageable pageableRequest);
 
-	public Iterable<PresentationDraft> findPresentationDraftByCategory(String category);
+	Page<PresentationDraft> findPresentationDraftByConferenceIdAndCategoryAndLabel(Long conferenceId, String category, Label label, Pageable pageableRequest);
+
+	Page<PresentationDraft> findPresentationDraftByConferenceIdOrderBySubject(Long conferenceId, Pageable pageableRequest);
 
 }
