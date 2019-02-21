@@ -10,29 +10,13 @@ import {PresentationDraftService} from './presentation-draft.service';
 import {ConferenceService} from "../conference/conference.service";
 import {PresentationDraft} from "../../objects/presentation-draft";
 import {PresentationDraftDetailService} from "./presentationdraftdetail/presentation-draft-detail.service";
-
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  // ...
-} from '@angular/animations';
+import {fadeOut} from "../../animations/presentation-draft-tile-view";
 
 @Component({
   selector: 'app-presentationdraft',
   templateUrl: './presentation-draft.component.html',
   styleUrls: ['./presentation-draft.component.css'],
-  animations: [
-    trigger('fadeOut', [
-      state('in', style({opacity: '*' })),
-      transition('* => void', [
-        style({opacity: '*' }),
-        animate(100, style({opacity: 0}))
-      ])
-    ])
-  ]
+  animations: [fadeOut]
 })
 export class PresentationDraftComponent implements OnInit {
 

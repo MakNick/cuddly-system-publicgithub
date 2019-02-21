@@ -1,52 +1,12 @@
-import {Component, OnInit, HostBinding} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from './auth/token-storage.service';
-
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  // ...
-} from '@angular/animations';
+import {fadeIn, navLink} from "./animations/nav-links";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
-  animations: [
-    trigger('fadeIn', [
-      transition(':enter', [
-        style({ opacity: 0}),
-        animate('.5s', style({ opacity: 1 })),
-      ]),
-      transition(':leave', [
-        animate('.5s', style({ opacity: 0}))
-      ])
-    ]),
-    trigger("nav-link", [
-
-      state('open', style({
-        left: "5px",
-        borderLeft: "2px solid #FFE600"
-      })),
-
-      state('closed', style({
-        left: "0px",
-        borderLeft: "0px solid #FFE600"
-      })),
-
-      transition('open => closed', [
-        animate('.5s')
-      ]),
-
-      transition('closed => open', [
-        animate('.2s')
-      ])
-
-    ])
-
-  ]
+  animations: [fadeIn, navLink]
 })
 
 export class AppComponent implements OnInit {

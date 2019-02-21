@@ -21,7 +21,7 @@ export class ConferenceService {
   }
 
   //DELETE
-  deleteConference(id: number): Observable<{}> {
-    return this.http.delete("http://localhost:8082/api/conference/delete/" + id);
+  deleteConference(id: number): Observable<Conference> {
+    return this.http.delete<Conference>(`http://localhost:8082/api/conference/delete/${id}`);
 }
 }

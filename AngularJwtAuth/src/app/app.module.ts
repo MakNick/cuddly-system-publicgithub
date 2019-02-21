@@ -27,6 +27,7 @@ import { HomeComponent } from './home/home.component';
 import { AdminComponent } from './admin/admin.component';
 import { PmComponent } from './pm/pm.component';
 
+import {FilterPipe} from "./pipes/filter-pipe";
 import { httpInterceptorProviders } from './auth/auth-interceptor';
 import { ConferenceComponent } from './tile-view/conference/conference.component';
 import { PresentationDraftComponent } from './tile-view/presentationdraft/presentation-draft.component';
@@ -34,7 +35,7 @@ import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/
 import { PresentationDraftDetailService } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
-import {FilterPipe} from "./pipes/filter-pipe";
+import {NguCarouselModule} from "@ngu/carousel";
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import {FilterPipe} from "./pipes/filter-pipe";
     MatPaginatorModule,
     MatSelectModule,
     MatInputModule,
-    MatRippleModule
+    MatRippleModule,
+    NguCarouselModule
     
   ],
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
