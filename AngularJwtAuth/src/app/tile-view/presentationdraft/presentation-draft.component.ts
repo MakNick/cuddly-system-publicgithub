@@ -1,14 +1,38 @@
 import {Component, OnInit} from '@angular/core';
-import {PresentationDraftService} from './presentation-draft.service';
+import {Location} from "@angular/common";
+
 import {ActivatedRoute} from '@angular/router';
-import {Page} from "../../objects/page";
+
 import {PageEvent} from "@angular/material";
+
+import {Page} from "../../objects/paging/page";
+import {PresentationDraftService} from './presentation-draft.service';
 import {ConferenceService} from "../conference/conference.service";
+import {PresentationDraft} from "../../objects/presentation-draft";
+import {PresentationDraftDetailService} from "./presentationdraftdetail/presentation-draft-detail.service";
+
+import {
+  trigger,
+  state,
+  style,
+  animate,
+  transition,
+  // ...
+} from '@angular/animations';
 
 @Component({
   selector: 'app-presentationdraft',
   templateUrl: './presentation-draft.component.html',
-  styleUrls: ['./presentation-draft.component.css']
+  styleUrls: ['./presentation-draft.component.css'],
+  animations: [
+    trigger('fadeOut', [
+      state('in', style({opacity: '*' })),
+      transition('* => void', [
+        style({opacity: '*' }),
+        animate(100, style({opacity: 0}))
+      ])
+    ])
+  ]
 })
 export class PresentationDraftComponent implements OnInit {
 
@@ -17,15 +41,19 @@ export class PresentationDraftComponent implements OnInit {
 
   breakpoint: number;
 
-  subjectFilter: string = "";
+  searchToken: string = "";
   labelFilter: number;
   categoryFilter: string;
 
   availableCategories: string[];
+
+  currentPageIndex: number;
   pageSizeOptions: number[] = [25,50,100];
 
   constructor(private presentationDraftService: PresentationDraftService,
-              private route: ActivatedRoute, private conferenceService: ConferenceService) {
+              private route: ActivatedRoute, private conferenceService: ConferenceService,
+              private presentationDraftDetailService: PresentationDraftDetailService,
+              private location: Location) {
 
   }
 
@@ -47,6 +75,35 @@ export class PresentationDraftComponent implements OnInit {
     this.getCategories();
 
   }
+  showAll() {
+    this.presentationDraftService.getPresentationDraftByConferenceId(this.conferenceId, this.currentPageIndex ? this.currentPageIndex : 1, this.page ? this.page.size : 25).subscribe(page => {
+      this.page = page;
+    });
+  }
+
+  paginate(pageEvent: PageEvent) {
+    this.savePageConfigs(pageEvent)
+    this.presentationDraftService.getPresentationDraftByConferenceId(this.conferenceId, pageEvent.pageIndex + 1, pageEvent.pageSize)
+      .subscribe(page => this.page = page);
+  }
+
+  savePageConfigs(event){
+    this.page.size = event.pageSize;
+    event.pageIndex == 1 ? this.currentPageIndex = 2 : this.currentPageIndex = event.pageIndex;
+  }
+
+  back(){
+    this.location.back();
+  }
+
+  showPresentationDraftDetail(ps:PresentationDraft): void {
+    this.presentationDraftDetailService.selectedPresentationDraft = ps;
+    this.presentationDraftDetailService.activeConferenceId = this.conferenceId;
+  }
+
+  getCategories() {
+    this.conferenceService.getConference(this.conferenceId).subscribe(conference => this.availableCategories = conference.categories);
+  }
 
   applyFilter() {
     if(this.categoryFilter != null && this.labelFilter != undefined){
@@ -61,20 +118,10 @@ export class PresentationDraftComponent implements OnInit {
     }
   }
 
-  getCategories() {
-    this.conferenceService.getConference(this.conferenceId).subscribe(conference => this.availableCategories = conference.categories);
-  }
-
-  showAll() {
-    this.presentationDraftService.getPresentationDraftByConferenceId(this.conferenceId, 1, 25).subscribe(page => {
-      this.page = page;
-    });
-  }
-
   resetFilters() {
     this.labelFilter = undefined;
     this.categoryFilter = null;
-    this.subjectFilter = "";
+    this.searchToken = "";
     this.showAll()
   }
 
@@ -89,11 +136,6 @@ export class PresentationDraftComponent implements OnInit {
     } else {
       this.breakpoint = 15;
     }
-  }
-
-  paginate(pageEvent: PageEvent) {
-    this.presentationDraftService.getPresentationDraftByConferenceId(this.conferenceId, pageEvent.pageIndex + 1, pageEvent.pageSize)
-      .subscribe(page => this.page = page);
   }
 
 }

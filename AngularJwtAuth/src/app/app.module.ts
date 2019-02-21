@@ -31,9 +31,10 @@ import { httpInterceptorProviders } from './auth/auth-interceptor';
 import { ConferenceComponent } from './tile-view/conference/conference.component';
 import { PresentationDraftComponent } from './tile-view/presentationdraft/presentation-draft.component';
 import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
-import { PsDetailService } from './tile-view/presentationdraft/psDetail.service';
+import { PresentationDraftDetailService } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
+import {FilterPipe} from "./pipes/filter-pipe";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftF
     PresentationDraftComponent,
     PresentationdraftdetailComponent,
     ConferenceFormComponent,
-    AanmeldformulierComponent
+    AanmeldformulierComponent,
+    FilterPipe,
   ],
   imports: [ 
     BrowserModule,
@@ -70,7 +72,7 @@ import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftF
     MatRippleModule
     
   ],
-  providers: [httpInterceptorProviders, PsDetailService],
+  providers: [httpInterceptorProviders, PresentationDraftDetailService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

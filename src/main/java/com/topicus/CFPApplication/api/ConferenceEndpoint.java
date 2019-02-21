@@ -1,5 +1,6 @@
 package com.topicus.CFPApplication.api;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -122,7 +123,7 @@ public class ConferenceEndpoint {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
-    @ApiOperation("Retrieves presentationdrafts from a conference with a certain label. 0=unlabeled, 1=denied, 2=accepted, 3=reserved, 4=undetermined, anyOtherNumber=all")
+    @ApiOperation("Retrieves presentation drafts from a conference with a certain label. 0=unlabeled, 1=denied, 2=accepted, 3=reserved, 4=undetermined, anyOtherNumber=all")
     @GetMapping("api/conference/{conferenceId}/presentationdrafts/label/{labelId}")
     public ResponseEntity<Page<PresentationDraft>> findPresentationdrafts(
             @ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId,
@@ -139,7 +140,7 @@ public class ConferenceEndpoint {
         }
     }
 
-    @ApiOperation("Retrieves presentationdrafts from a conference with a certain category")
+    @ApiOperation("Retrieves presentation drafts from a conference with a certain category")
     @GetMapping("api/conference/{conferenceId}/presentationdrafts/category/{category}")
     public ResponseEntity<Page<PresentationDraft>> findPresentationdrafts(
             @ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId,
@@ -156,7 +157,7 @@ public class ConferenceEndpoint {
         }
     }
 
-    @ApiOperation("Retrieves presentationdrafts from a conference with a certain category and label")
+    @ApiOperation("Retrieves presentation drafts from a conference with a certain category and label")
     @GetMapping("api/conference/{conferenceId}/presentationdrafts/category/{category}/labelId/{labelId}")
     public ResponseEntity<Page<PresentationDraft>> findPresentationdrafts(
             @ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId,
@@ -174,7 +175,7 @@ public class ConferenceEndpoint {
         }
     }
 
-    @ApiOperation("Retrieves all presentationdraft from a conference.")
+    @ApiOperation("Retrieves all presentation draft from a conference")
     @ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved the presentationDrafts with the given ID"),
             @ApiResponse(code = 404, message = "The conference passed does not exist")})
     @GetMapping(path = "api/conference/{id}/presentationdrafts")

@@ -29,6 +29,16 @@ mat-toolbar-row span a{
     margin: 20px 60px 0px 60px;
 }
 
+.nav-link{
+  height: 100%;
+}
+
+.active-nav-link{
+  border-bottom: 5px solid #FFE600 !important;
+  top: 10px;
+
+}
+
 .min-nav-links{
     display: none;
     margin-left: auto;
