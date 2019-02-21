@@ -12,26 +12,27 @@ import com.topicus.CFPApplication.domain.conference.Conference;
 @Transactional
 public class RequestCategorizedDraftsService {
 
-	private ConferenceService conferenceService;
+	private PresentationDraftRepository presentationDraftRepository;
+
 	private PresentationDraftConference presentationDraftConference;
 	
 	@Autowired
-	public RequestCategorizedDraftsService(ConferenceService conferenceService) {
-		this.conferenceService = conferenceService;
+	public RequestCategorizedDraftsService(PresentationDraftRepository presentationDraftRepository) {
+		this.presentationDraftRepository = presentationDraftRepository;
 	}
 	
 	//Method gets called when both Conference and Category exist
-	public Iterable<PresentationDraft> findPresentationDraftsByCategory(Conference conference, String category){
-		Iterable<PresentationDraft> allDraftsFromConference = conferenceService.findPresentationDrafts(conference, 5);
-		presentationDraftConference = new PresentationDraftConference();
-		
-		for(PresentationDraft pdraft : allDraftsFromConference) {
-			if(pdraft.getCategory().equals(category)) {
-				presentationDraftConference.addPresentationDraft(pdraft);
-			}
-		}
-		return presentationDraftConference.getPresentationDrafts();
-	}
+//	public Iterable<PresentationDraft> findPresentationDraftsByCategory(Conference conference, String category){
+//		Iterable<PresentationDraft> allDraftsFromConference = this.presentationDraftRepository.findPresentationDraftByConferenceId(conference.getId());
+//		presentationDraftConference = new PresentationDraftConference();
+//
+//		for(PresentationDraft pdraft : allDraftsFromConference) {
+//			if(pdraft.getCategory().equals(category)) {
+//				presentationDraftConference.addPresentationDraft(pdraft);
+//			}
+//		}
+//		return presentationDraftConference.getPresentationDrafts();
+//	}
 	
 	
 }

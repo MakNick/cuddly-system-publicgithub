@@ -1,10 +1,13 @@
 package com.topicus.CFPApplication.persistence;
 
-import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import com.topicus.CFPApplication.config.paging.PagingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +27,7 @@ public class ConferenceService {
 	}
 
 	public Iterable<Conference> findAll() {
-		Iterable<Conference> result = conferenceRepository.findAll();
+		Iterable<Conference> result = conferenceRepository.findAllByOrderByName();
 		return result;
 	}
 
@@ -38,43 +41,6 @@ public class ConferenceService {
 
 	public void delete(long id) {
 		conferenceRepository.deleteById(id);
-	}
-
-	public Iterable<PresentationDraft> findPresentationDrafts(Conference conference, int label) {
-		Set<PresentationDraft> set = conference.getPresentationDrafts();
-
-		Label L = null;
-		Label L2 = null;
-		switch (label) {
-		case 0:
-			L = Label.UNLABELED;
-			L2 = Label.UNDETERMINED;
-			break;
-		case 1:
-			L = Label.DENIED;
-			break;
-		case 2:
-			L = Label.ACCEPTED;
-			break;
-		case 3:
-			L = Label.RESERVED;
-			break;
-		case 4:
-			L = Label.UNDETERMINED;
-			L2 = Label.UNLABELED;
-			break;
-		case 5:
-			return set;
-		}
-
-		Set<PresentationDraft> sendset = new HashSet<PresentationDraft>();
-
-		for (PresentationDraft p : set) {
-			if (p.getLabel() == L || p.getLabel() == L2) {
-				sendset.add(p);
-			}
-		}
-		return sendset;
 	}
 
 }

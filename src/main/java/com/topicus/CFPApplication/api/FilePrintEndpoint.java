@@ -28,7 +28,6 @@ public class FilePrintEndpoint {
 	public FilePrintEndpoint(PdfService pdfService) {
 		this.pdfService = pdfService;
 	}
-
 	@ApiOperation(value = "Print all presentationDrafts")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Printing PDF succesfully"),
 			@ApiResponse(code = 400, message = "A error occured while trying to print file"),
@@ -80,4 +79,3 @@ public class FilePrintEndpoint {
 		return new ResponseEntity<>("No conference available", HttpStatus.NOT_FOUND);
 	}
 }
-

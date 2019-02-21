@@ -1,12 +1,9 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
-import { viewParentEl } from '@angular/core/src/view/util';
-import { Conference } from 'src/app/objects/conference/conference';
-import { PsDetailService } from '../psDetail.service';
-import { PresentationdraftService } from '../presentationdraft.service';
-import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
+import { PresentationDraftDetailService } from './presentation-draft-detail.service';
+import { PresentationDraftService } from '../presentation-draft.service';
 
 @Component({
 
@@ -14,21 +11,22 @@ import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrie
   templateUrl: './presentationdraftdetail.component.html',
   styleUrls: ['./presentationdraftdetail.component.css']
 })
+
 export class PresentationdraftdetailComponent implements OnInit {
 
   PsDetail: PresentationDraft;
 
   PsCompare = this.psDetailService.selectedPresentationDraft;
 
-  conferenceDetail: Conference;
+  conferenceId: number;
 
   constructor(private location: Location,
-    private psDetailService: PsDetailService,
-    private presentationDraftService: PresentationdraftService) { }
+    private psDetailService: PresentationDraftDetailService,
+    private presentationDraftService: PresentationDraftService) { }
 
   ngOnInit() {
     this.PsDetail = this.psDetailService.selectedPresentationDraft;
-    this.conferenceDetail = this.psDetailService.activeConference;
+    this.conferenceId = this.psDetailService.activeConferenceId;
   }
 
   goBack(event): void {
@@ -45,13 +43,8 @@ export class PresentationdraftdetailComponent implements OnInit {
     this.PsDetail.category = value;
   }
 
-  jojoganster() {
-    console.log(this.PsDetail.summary);
-    console.log(this.PsCompare.summary);
-  }
-
   updatePresentationDraft(PsDetail) {
-    this.presentationDraftService.updatePresentationDraft(this.conferenceDetail.id, PsDetail).subscribe(PresentationDraft => console.log("Opslaan gelukt"));
+    this.presentationDraftService.updatePresentationDraft(this.conferenceId, PsDetail).subscribe(PresentationDraft => console.log("Opslaan gelukt"));
     this.popup();
   }
 

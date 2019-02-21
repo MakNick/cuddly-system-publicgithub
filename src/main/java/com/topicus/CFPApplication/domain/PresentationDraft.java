@@ -4,20 +4,10 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.topicus.CFPApplication.domain.conference.Conference;
 import org.springframework.data.annotation.CreatedDate;
 
 import io.swagger.annotations.ApiModel;
@@ -56,6 +46,10 @@ public class PresentationDraft {
 		UNLABELED, DENIED, ACCEPTED, RESERVED, UNDETERMINED
 	}
 
+	@JsonIgnore()
+	@ManyToOne(fetch = FetchType.EAGER)
+	private Conference conference;
+
 	@Enumerated(EnumType.STRING)
 	@ApiModelProperty(position = 8, value = "The label of this presentationdraft. If no label is given, the default label will be: UNLABELED", hidden = true)
 	private Label label = Label.UNLABELED;
@@ -66,11 +60,21 @@ public class PresentationDraft {
 	@ApiModelProperty(position = 9, required = true, value = "This list hold the hosts of this presentationdraft")
 	private Set<Applicant> applicants = new HashSet<Applicant>();
 
+
+
 	public void addApplicant(Applicant applicant) {
 		this.applicants.add(applicant);
 	}
 
 	// Getters en Setters:
+	public Conference getConference() {
+		return conference;
+	}
+
+	public void setConference(Conference conference) {
+		this.conference = conference;
+	}
+
 	public long getId() {
 		return id;
 	}

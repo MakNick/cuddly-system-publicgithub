@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class PrintService {
 
-	public void printDocument(PDDocument document) {
+public void printDocument(PDDocument document) {
 		PrinterJob job = PrinterJob.getPrinterJob();
 		job.setPageable(new PDFPageable(document));
 		try {
