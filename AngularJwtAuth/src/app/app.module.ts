@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
@@ -21,6 +20,9 @@ import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/
 import { PsDetailService } from './tile-view/presentationdraft/psDetail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
+import { AanmeldformulierMaterialComponent } from './aanmeldformulier/presentationdraftformMaterial/aanmeldformulierMaterial.component';
+import { MaterialsModule } from '../material-module';
+import { DialogWindowComponent } from './aanmeldformulier/dialogWindow/dialogWindow.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftF
     PresentationdraftComponent,
     PresentationdraftdetailComponent,
     ConferenceFormComponent,
-    AanmeldformulierComponent
+    AanmeldformulierComponent,
+    AanmeldformulierMaterialComponent,
+    DialogWindowComponent
   ],
   imports: [ 
     BrowserModule,
@@ -43,8 +47,10 @@ import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftF
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MaterialsModule
   ],
+  entryComponents: [DialogWindowComponent],
   providers: [httpInterceptorProviders, PsDetailService],
   bootstrap: [AppComponent]
 })
