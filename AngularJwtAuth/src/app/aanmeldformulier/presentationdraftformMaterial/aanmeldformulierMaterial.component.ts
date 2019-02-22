@@ -19,6 +19,7 @@ export class AanmeldformulierMaterialComponent implements OnInit {
   public feedbackBerichten = ['Voer a.u.b. een naam in die 3 tekens of langer is.', 'Voer a.u.b. een geldig e-mailadres in.', 'Voer a.u.b. een geldig onderwerp in.', 'Voeg a.u.b. een beschrijving toe.'];
   public numberCohosts: number;
   public conference: Conference;
+  public tableApplicants: Applicant[];
 
   public presentationDraftApplicant: PresentationDraftApplicant;
 
@@ -43,6 +44,7 @@ export class AanmeldformulierMaterialComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tableApplicants = [];
     this.iconNameFeedback = "sentiment_dissatisfied";
     this.iconEmailFeedback = "sentiment_dissatisfied";
     this.iconSubjectFeedback = "sentiment_dissatisfied";
@@ -56,21 +58,21 @@ export class AanmeldformulierMaterialComponent implements OnInit {
         'gender': new FormControl(null, []),
         'requests': new FormControl(null, [])
       }),
-      'cohost1': new FormGroup({
-        'name': new FormControl(null, [Validators.required, Validators.minLength(3)]),
-        'email': new FormControl(null, [Validators.email])
-      }),
-      'cohost2': new FormGroup({
-        'name': new FormControl(null, [Validators.required, Validators.minLength(3)]),
-        'email': new FormControl(null, [Validators.email])
-      }),
-      'cohost3': new FormGroup({
-        'name': new FormControl(null, [Validators.required, Validators.minLength(3)]),
-        'email': new FormControl(null, [Validators.email])
-      }),
+      // 'cohost1': new FormGroup({
+      //   'name': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      //   'email': new FormControl(null, [Validators.email])
+      // }),
+      // 'cohost2': new FormGroup({
+      //   'name': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      //   'email': new FormControl(null, [Validators.email])
+      // }),
+      // 'cohost3': new FormGroup({
+      //   'name': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      //   'email': new FormControl(null, [Validators.email])
+      // }),
       'presentationDraft': new FormGroup({
-        'subject': new FormControl(null, [Validators.required, Validators.minLength(1)]),
-        'summary': new FormControl(null, [Validators.required, Validators.minLength(1)]),
+        'subject': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+        'summary': new FormControl(null, [Validators.required, Validators.minLength(3)]),
         'type': new FormControl(null, []),
         'category': new FormControl(null, []),
         'duration': new FormControl(null, [])
@@ -102,7 +104,6 @@ export class AanmeldformulierMaterialComponent implements OnInit {
   }
 
   popUpAddCohosts(){
-
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -115,12 +116,26 @@ export class AanmeldformulierMaterialComponent implements OnInit {
     const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
-      data => console.log("Dialog output: ", data)
+      data => {
+        console.log("Dialog output: ", data);
+        this.maakCohost([data.cohostNaam, data.cohostEmail]);
+      }
     );
-  
+
     console.log("Werkt");
   }
 
+  maakCohost(applicantInfo: string[]){
+    let applicant = new Applicant();
+    applicant.name = applicantInfo[0];
+    applicant.email = applicantInfo[1];
+    applicant.requests = 'Ik ben een cohost';
+    this.tableApplicants.push(applicant);
+    console.log(this.tableApplicants);
+  }
 
-    
+  deleteCohost(applicant: Applicant){
+    this.tableApplicants.splice(this.tableApplicants.indexOf(applicant), 1);
+    console.log(this.tableApplicants);
+  }
 }

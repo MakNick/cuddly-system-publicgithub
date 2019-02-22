@@ -1,13 +1,13 @@
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <form [formGroup]="presentationdraftForm" (submit)="presubmit();">
   <!--VANAF HIER DE VERPLICHTE VELDEN-->
+  <h2 mat-title>Voorstel indienen</h2>
   <p>
     <mat-form-field appearance="legacy" formGroupName="indiener">
       <mat-label>Naam</mat-label>
       <input matInput placeholder="Naam" #form_naam type="text" formControlName="name"
         (change)="getIconFeedback($event)" required>
       <mat-icon matSuffix>{{iconNameFeedback}}</mat-icon>
-      <!--<mat-hint>Hint</mat-hint>-->
     </mat-form-field>
   </p>
 
@@ -17,7 +17,6 @@
       <input matInput placeholder="E-mailadres" #form_email type="email" formControlName="email"
         (change)="getIconFeedback($event)" required>
       <mat-icon matSuffix>{{iconEmailFeedback}}</mat-icon>
-      <!--<mat-hint>Hint</mat-hint>-->
     </mat-form-field>
   </p>
 
@@ -27,20 +26,6 @@
       <input matInput placeholder="Onderwerp" #form_subject type="text" formControlName="subject"
         (change)="getIconFeedback($event)" required>
       <mat-icon matSuffix>{{iconSubjectFeedback}}</mat-icon>
-      <!--<mat-hint>Hint</mat-hint>-->
-    </mat-form-field>
-
-    <mat-form-field id="mat-form-duration" appearance="legacy" formGroupName="presentationDraft">
-      <mat-label>Tijdsduur</mat-label>
-      <mat-select matInput placeholder="Tijdsduur" #form_duration type="text" formControlName="duration">
-        <!--NG for?-->
-        <mat-option value=1>15</mat-option>
-        <mat-option value=2>30</mat-option>
-        <mat-option value=1>45</mat-option>
-        <mat-option value=2>60</mat-option>
-        <mat-option value=1>75</mat-option>
-        <mat-option value=2>90</mat-option>
-      </mat-select>
     </mat-form-field>
   </p>
 
@@ -52,6 +37,7 @@
       <mat-icon matSuffix>{{iconSummaryFeedback}}</mat-icon>
     </mat-form-field>
   </p>
+  <br />
 
   <!--EINDE VERPLICHTE VELDEN-->
   <!--VANAF HIER DE OPTIONELE VELDEN-->
@@ -76,23 +62,25 @@
           <mat-option value=2>2</mat-option>
         </mat-select>
       </mat-form-field>
-    </div>
 
-    <!--<p>
-      <mat-form-field appearance="legacy" formGroupName="indiener">
-        <mat-label>Geslacht</mat-label>
-        <mat-select matInput placeholder="Geslacht" #form_gender type="text" formControlName="gender">
-          <mat-option value="man">man</mat-option>
-          <mat-option value="vrouw">vrouw</mat-option>
-          <mat-option value="overig">overig</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </p>-->
+      <mat-form-field id="mat-form-duration" appearance="legacy" formGroupName="presentationDraft">
+          <mat-label>Tijdsduur</mat-label>
+          <mat-select matInput placeholder="Tijdsduur" #form_duration type="text" formControlName="duration">
+            <!--NG for?-->
+            <mat-option value=1>15</mat-option>
+            <mat-option value=2>30</mat-option>
+            <mat-option value=1>45</mat-option>
+            <mat-option value=2>60</mat-option>
+            <mat-option value=1>75</mat-option>
+            <mat-option value=2>90</mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
 
     <div class="d-flex p-2">
       <mat-form-field id="mat-form-requests" appearance="legacy" formGroupName="indiener">
         <mat-label>Overige opmerkingen</mat-label>
-        <textarea matInput placeholder="Overige opmerkingen" rows="5" #form_requests type="text"
+        <textarea matInput placeholder="Overige opmerkingen" rows="10" #form_requests type="text"
           formControlName="requests"></textarea>
       </mat-form-field>
 
@@ -105,50 +93,23 @@
           <tr>
             <td mat-cell class="tdHeaderText" (click)=popUpAddCohosts()>Mede-presentator toevoegen (Max. 8)</td>
             <td>
-              <mat-icon aria-label="icon_new_cohost">person_add</mat-icon>
+              <mat-icon aria-label="icon_new_cohost" (click)=popUpAddCohosts()>person_add</mat-icon>
             </td>
           </tr>
-          <tr>
-            <td mat-cell>Henk Henksen</td>
-            <td>
-              <mat-icon matSuffix>delete</mat-icon>
-            </td>
-          </tr>
-          <tr>
-            <td mat-cell>Piet Henksen</td>
-            <td>
-              <mat-icon matSuffix>delete</mat-icon>
-            </td>
+          <tr *ngFor="let applicant of tableApplicants">
+              <td (click)="deleteCohost(this.applicant)">{{applicant.name}}</td>
+              <mat-icon aria-label="icon_delete_cohost" (click)="deleteCohost(this.applicant)">delete</mat-icon>
           </tr>
         </ng-container>
-
       </table>
     </div>
-
     <!--TABLE MATERIAL END-->
-
-
-    <!--<p>  
-      <mat-form-field appearance="legacy">
-        <mat-label>Zijn er mede-presentatoren?</mat-label>
-        <mat-select matInput placeholder="Zijn er mede-presentatoren?">
-            <mat-option value=0>Nee</mat-option>
-            <!-NG for?->
-            <mat-option value=1>Ja, 1</mat-option>
-            <mat-option value=2>Ja, 2</mat-option>
-            <mat-option value=3>Ja, 3</mat-option>
-          </mat-select>
-      </mat-form-field>
-    </p>-->
-    <!--aantal cohosts: {{cohostCount}}-->
-
   </details>
 
   <br /><br />
-  <button mat-icon-button type="submit">
+  <button mat-icon-button type="submit" [disabled]="this.presentationdraftForm.get('indiener').invalid || this.presentationdraftForm.get('presentationDraft').invalid">
     <mat-icon aria-label="icon_verzenden">mail_outline</mat-icon>
-    <mat-label>Verzend aanmelding</mat-label>
+    <mat-label *ngIf="this.presentationdraftForm.get('indiener').invalid || this.presentationdraftForm.get('presentationDraft').invalid">Vul minimaal de verplichte velden in a.u.b.</mat-label>
+    <mat-label *ngIf="!this.presentationdraftForm.get('indiener').invalid && !this.presentationdraftForm.get('presentationDraft').invalid">Voorstel versturen</mat-label>
   </button>
-
-  <!--<input id="send_button" type="submit" class="btn btn-default" value="Verzenden">-->
 </form>
