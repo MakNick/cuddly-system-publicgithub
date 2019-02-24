@@ -67,31 +67,4 @@ public class ConferenceServiceTest {
 
 		Assert.assertEquals(1, testItem.getId());
 	}
-	
-	@Test
-	public void findPresentationDraftTest() {
-		
-		PresentationDraft d1 = new PresentationDraft();
-		PresentationDraft d2 = new PresentationDraft();
-		PresentationDraft d3 = new PresentationDraft();
-		
-		List<Label> labelList = Arrays.asList(Label.UNLABELED, Label.DENIED, Label.ACCEPTED, Label.RESERVED, Label.UNDETERMINED);
-		
-		for (int a = 0 ; a <= 5 ; a++) {
-			Conference c = new Conference();
-			if (a == 5) {
-				c.addPresentationDraft(d1);
-				c.addPresentationDraft(d2);
-				c.addPresentationDraft(d3);
-			} else {
-				d1.setLabel(labelList.get(a)); c.addPresentationDraft(d1);
-				d2.setLabel(labelList.get(a)); c.addPresentationDraft(d2);
-				d3.setLabel(labelList.get(a)); c.addPresentationDraft(d3);
-			}
-			
-			Set<PresentationDraft> testList = (Set<PresentationDraft>) this.conferenceService.findPresentationDrafts(c, a);
-			
-			Assert.assertEquals(3, testList.size());
-		}
-	}
 }

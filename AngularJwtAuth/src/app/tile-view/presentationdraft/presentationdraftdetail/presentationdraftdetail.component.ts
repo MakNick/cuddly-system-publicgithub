@@ -14,6 +14,7 @@ import { DeleteDialog } from './deletedialog.component';
   templateUrl: './presentationdraftdetail.component.html',
   styleUrls: ['./presentationdraftdetail.component.css']
 })
+
 export class PresentationdraftdetailComponent implements OnInit {
 
   PsDetail: PresentationDraft;

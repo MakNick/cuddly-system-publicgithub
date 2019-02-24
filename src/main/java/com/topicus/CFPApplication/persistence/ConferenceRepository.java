@@ -7,5 +7,7 @@ import com.topicus.CFPApplication.domain.conference.Conference;
 
 @Component
 public interface ConferenceRepository extends CrudRepository<Conference, Long> {
+	
+	Iterable<Conference> findAllByOrderByName();
 
 }
