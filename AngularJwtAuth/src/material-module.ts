@@ -1,8 +1,9 @@
 import { NgModule } from "@angular/core";
-import { MatFormFieldModule, MatSelectModule, MatOptionModule, MatInputModule, MatExpansionModule, MatButtonModule, MatDialogModule, MatSnackBarModule, MatToolbarModule, MatGridListModule, MatMenuModule } from "@angular/material";
+import { MatFormFieldModule, MatSelectModule, MatOptionModule, MatInputModule, MatExpansionModule, MatButtonModule, MatDialogModule, MatSnackBarModule, MatToolbarModule, MatGridListModule, MatMenuModule, MatDatepickerModule } from "@angular/material";
 import { MatIconModule } from '@angular/material/icon';
 import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatRippleModule } from '@angular/material/core';
+import { MatRippleModule, MatNativeDateModule } from '@angular/material/core';
+
 
 @NgModule({
     exports: [
@@ -20,7 +21,9 @@ import { MatRippleModule } from '@angular/material/core';
         MatButtonModule,
         MatToolbarModule,
         MatGridListModule,
-        MatMenuModule
+        MatMenuModule,
+        MatDatepickerModule,
+        MatNativeDateModule
     ]
 
 })

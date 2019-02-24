@@ -1,3 +1,43 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<form [formGroup]="conferenceForm" (submit)="createConference()">
+    <h2 mat-title>Aanmeldingsformulier conferentie</h2>
+
+    <div class="input-conference-name">
+        <mat-form-field appearance="legacy">
+            <mat-label>Conferentie naam: </mat-label>
+            <input matInput placeholder="Naam" type="text" formControlName="name" required>
+            <mat-hint *ngIf="name.invalid && name.touched">
+                <small class="redChar" *ngIf="name.errors?.required"> Conferentie naam is verplicht </small>
+                <small class="redChar" *ngIf="name.errors?.minlength"> Conferentie naam moet minimaal drie
+                    karakters bevatten </small>
+                <small class="redChar" *ngIf="name.errors?.forbiddenConferenceName"> Conferentie naam:
+                    "{{name.errors?.forbiddenConferenceName.value }}" is helaas niet toegestaan </small>
+            </mat-hint>
+        </mat-form-field>
+    </div>
+
+    <div class="input-start-date">
+        <mat-form-field>
+            <mat-label>Begindatum:</mat-label>
+            <input matInput [matDatepicker]="dp3" placeholder="Begindatum" disabled>
+            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        </mat-form-field>
+        <!-- 
+            <label> Begindatum: </label>
+            <input formControlName="startDate" [(ngModel)]="selectedDate" min="{{dateOfTomorrow | date:'yyyy-MM-dd'}}"
+                type="date" class="form-control"> -->
+    </div>
+
+    <div class="input-start-time">
+            <label> Starttijd: </label>
+            <input formControlName="startTime" [(ngModel)]="selectedTime" type="time" class="form-control">
+        </div>
+
+</form>
+
+<p>OUD: </p>
+
 <div class="header"> Aanmeldingsformulier conferentie </div>
 
 <div class="container">
@@ -94,9 +134,9 @@
     </form>
 
     <br>
-    
+
     {{conferenceForm.value | json}}
-    
+
     <br><br><br>
     <button (click)="getConferences()" class="submitButton">Show all conferences</button>
 
