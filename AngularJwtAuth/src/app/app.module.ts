@@ -20,7 +20,7 @@ import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/
 import { PsDetailService } from './tile-view/presentationdraft/psDetail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
-import { AanmeldformulierMaterialComponent } from './aanmeldformulier/presentationdraftformMaterial/aanmeldformulierMaterial.component';
+import { AanmeldformulierMaterialComponent, AanmeldformulierFeedbackComponent } from './aanmeldformulier/presentationdraftformMaterial/aanmeldformulierMaterial.component';
 import { MaterialsModule } from '../material-module';
 import { DialogWindowComponent } from './aanmeldformulier/dialogWindow/dialogWindow.component';
 
@@ -39,7 +39,8 @@ import { DialogWindowComponent } from './aanmeldformulier/dialogWindow/dialogWin
     ConferenceFormComponent,
     AanmeldformulierComponent,
     AanmeldformulierMaterialComponent,
-    DialogWindowComponent
+    DialogWindowComponent,
+    AanmeldformulierFeedbackComponent
   ],
   imports: [ 
     BrowserModule,
@@ -50,7 +51,7 @@ import { DialogWindowComponent } from './aanmeldformulier/dialogWindow/dialogWin
     ReactiveFormsModule,
     MaterialsModule
   ],
-  entryComponents: [DialogWindowComponent],
+  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent],
   providers: [httpInterceptorProviders, PsDetailService],
   bootstrap: [AppComponent]
 })

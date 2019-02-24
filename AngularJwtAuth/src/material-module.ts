@@ -1,7 +1,6 @@
 import { NgModule } from "@angular/core";
-import { MatFormFieldModule, MatSelectModule, MatOptionModule, MatInputModule, MatExpansionModule, MatButtonModule, MatDialogModule } from "@angular/material";
+import { MatFormFieldModule, MatSelectModule, MatOptionModule, MatInputModule, MatExpansionModule, MatButtonModule, MatDialogModule, MatSnackBarModule } from "@angular/material";
 import {MatIconModule} from '@angular/material/icon';
-import { DialogWindowComponent } from "./app/aanmeldformulier/dialogWindow/dialogWindow.component";
 
 @NgModule({
     exports: [
@@ -12,7 +11,8 @@ import { DialogWindowComponent } from "./app/aanmeldformulier/dialogWindow/dialo
         MatIconModule,
         MatInputModule,
         MatExpansionModule,
-        MatDialogModule
+        MatDialogModule,
+        MatSnackBarModule
     ]
 
 })
