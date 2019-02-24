@@ -5,6 +5,9 @@ import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { Conference } from 'src/app/objects/conference/conference';
 import { PsDetailService } from '../psDetail.service';
 import { PresentationdraftService } from '../presentationdraft.service';
+import { MatDialog } from '@angular/material';
+import { SaveDialog } from './savedialog.component';
+import { DeleteDialog } from './deletedialog.component';
 
 @Component({
   selector: 'app-presentationdraftdetail',
@@ -15,13 +18,14 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   PsDetail: PresentationDraft;
 
-  PsCompare : String;
+  PsCompare: String;
 
   conferenceDetail: Conference;
 
-  labels: String[] = [ "ACCEPTED", "DENIED", "RESERVED" ];
+  labels: String[] = ["ACCEPTED", "DENIED", "RESERVED"];
 
-  constructor(private location: Location,
+  constructor(private dialog: MatDialog,
+    private location: Location,
     private psDetailService: PsDetailService,
     private presentationDraftService: PresentationdraftService) { }
 
@@ -50,16 +54,12 @@ export class PresentationdraftdetailComponent implements OnInit {
     this.PsCompare = JSON.stringify(this.psDetailService.selectedPresentationDraft);
   }
 
-  deletePresentationDraft(PsDetail) {
-    let conf = confirm("Weet je zeker dat je de presentatie wilt verwijderen?");
-    if (conf) {
-      this.presentationDraftService.deletePresentationDraft(PsDetail).subscribe();
-      this.location.back();
-    }
+  deletePresentationDraft() {
+    this.openDeleteDialog();
   }
 
   downloadSinglePdf(conferenceDetail, PsDetail) {
-    this.presentationDraftService.downloadSinglePdf(PsDetail, conferenceDetail).subscribe((response)=>{
+    this.presentationDraftService.downloadSinglePdf(PsDetail, conferenceDetail).subscribe((response) => {
       let blob = new Blob([response], { type: 'application/pdf' });
       var fileUrl = window.document.createElement('a');
       fileUrl.href = window.URL.createObjectURL(blob);
@@ -70,13 +70,38 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   closeAndComparePresentationdraft(PsDetail) {
     if (this.PsCompare === JSON.stringify(PsDetail)) {
-      console.log("Geen wijzigingen");
+      this.location.back();
     } else {
-      let conf = confirm("Er zijn wijzigingen, wil je deze opslaan?");
-      if (conf) {
-        this.updatePresentationDraft(PsDetail);
-      }
+      this.openSaveDialog();
     }
-    this.location.back();
-  } 
+  }
+  
+  openSaveDialog(): void {
+    const dialogRef = this.dialog.open(SaveDialog, {
+      width: '250px',
+      height: '150px',
+      data: {
+        conference: this.conferenceDetail,
+        presentationDraft: this.PsDetail
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("dialog closed");
+    });
+  }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(DeleteDialog, {
+      width: '270px',
+      height: '150px',
+      data: {
+        presentationDraft: this.PsDetail
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("dialog closed");
+    });
+  }
 }

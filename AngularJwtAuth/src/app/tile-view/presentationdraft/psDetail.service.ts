@@ -7,11 +7,8 @@ export class PsDetailService {
 
   selectedPresentationDraft: PresentationDraft;
   activeConference: Conference;
-
-  comparePd: String;
-  
+ 
   constructor() { 
-    this.comparePd = JSON.stringify(this.selectedPresentationDraft);
   }
 
 }

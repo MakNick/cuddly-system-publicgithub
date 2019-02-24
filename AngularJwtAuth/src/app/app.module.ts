@@ -21,6 +21,8 @@ import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/
 import { PsDetailService } from './tile-view/presentationdraft/psDetail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
+import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
+import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftF
     PresentationdraftComponent,
     PresentationdraftdetailComponent,
     ConferenceFormComponent,
-    AanmeldformulierComponent
+    AanmeldformulierComponent,
+    SaveDialog,
+    DeleteDialog
   ],
   imports: [ 
     BrowserModule,
@@ -47,6 +51,7 @@ import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftF
     BrowserAnimationsModule
   ],
   providers: [httpInterceptorProviders, PsDetailService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [SaveDialog, DeleteDialog]  
 })
 export class AppModule { }
