@@ -5,20 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatMenuModule,
-  MatIconModule,
-  MatToolbarModule,
-  MatGridListModule
-} from '@angular/material';
-
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatRippleModule} from '@angular/material/core';
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
@@ -34,6 +20,10 @@ import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/
 import { PresentationDraftDetailService } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
+import { AanmeldformulierFeedbackComponent } from './aanmeldformulier/presentationdraftForm/aanmeldformulier.component';
+import { MaterialsModule } from '../material-module';
+import { DialogWindowComponent } from './aanmeldformulier/dialogWindow/dialogWindow.component';
+
 import {FilterPipe} from "./pipes/filter-pipe";
 
 @NgModule({
@@ -50,7 +40,9 @@ import {FilterPipe} from "./pipes/filter-pipe";
     PresentationdraftdetailComponent,
     ConferenceFormComponent,
     AanmeldformulierComponent,
-    FilterPipe,
+    DialogWindowComponent,
+    AanmeldformulierFeedbackComponent,
+    FilterPipe
   ],
   imports: [ 
     BrowserModule,
@@ -59,19 +51,9 @@ import {FilterPipe} from "./pipes/filter-pipe";
     HttpClientModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatMenuModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatPaginatorModule,
-    MatSelectModule,
-    MatInputModule,
-    MatRippleModule
-    
+    MaterialsModule
   ],
+  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent],
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
   bootstrap: [AppComponent]
 })
