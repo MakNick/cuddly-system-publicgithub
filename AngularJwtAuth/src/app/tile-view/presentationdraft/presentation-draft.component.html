@@ -1,0 +1,77 @@
+<div class="content">
+  <div class="back-button">
+    <a (click)="back()" class="button" mat-button>Back</a>
+  </div>
+  <div class="presentation-draft-box">
+    <span *ngIf="page">
+      <mat-paginator
+        [length]=page.totalElements
+        [pageSize]=page.size
+        [pageSizeOptions]=pageSizeOptions (page)="paginate($event)">
+      </mat-paginator>
+    </span>
+    <mat-grid-list cols="{{breakpoint}}" rowHeight="80" gutterSize="4"
+                   (window:resize)="onResize($event)">
+     <span *ngIf="page">
+        <mat-grid-tile
+          [@fadeOut]
+          (click)="showPresentationDraftDetail(presentationDraft)"
+                       [ngClass]="[presentationDraft.label.toLowerCase() + '-tile' + ' mat-grid-tile' + 'mat-ripple']"
+                       *ngFor="let presentationDraft of page.content | filterPipe: searchToken"
+                        matRipple
+                       [colspan]="2">
+
+            {{presentationDraft.subject}}
+        </mat-grid-tile>
+     </span>
+      <span *ngIf="page">
+          <mat-grid-tile *ngIf="page.totalElements == 0" [colspan]="2" class="nothing-to-show">
+            Nothing to show
+          </mat-grid-tile>
+        </span>
+    </mat-grid-list>
+  </div>
+  <div class="filter-container">
+    <div class="filter-title">
+      <h4>Filters</h4>
+    </div>
+    <div class="filter-box">
+      <mat-form-field>
+        <input matInput [(ngModel)]="searchToken" placeholder="Subject">
+        <mat-icon matSuffix>
+          search
+        </mat-icon>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select (closed)="applyFilter()" [(value)]="categoryFilter" placeholder="Category">
+          <mat-option value={{category}} *ngFor="let category of availableCategories">
+            {{category}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select (closed)="applyFilter()" [(value)]="labelFilter" placeholder="Label">
+          <mat-option value="0">
+            New
+          </mat-option>
+          <mat-option value="2">
+            Accepted
+          </mat-option>
+          <mat-option value="1">
+            Denied
+          </mat-option>
+          <mat-option value="3">
+            Reserved
+          </mat-option>
+          <mat-option value="4">
+            Undetermined
+          </mat-option>
+          <mat-option value="5">
+            All
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <a (click)="resetFilters()" class="button" mat-button>Reset filters</a>
+    </div>
+  </div>
+</div>
