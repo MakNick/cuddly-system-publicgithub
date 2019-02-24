@@ -3,8 +3,8 @@ import { Location } from '@angular/common';
 
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
 import { Conference } from 'src/app/objects/conference/conference';
-import { PsDetailService } from '../psDetail.service';
-import { PresentationdraftService } from '../presentationdraft.service';
+import { PresentationDraftDetailService } from './presentation-draft-detail.service';
+import { PresentationDraftService } from '../presentation-draft.service';
 import { MatDialog } from '@angular/material';
 import { SaveDialog } from './savedialog.component';
 import { DeleteDialog } from './deletedialog.component';
@@ -27,8 +27,8 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
     private location: Location,
-    private psDetailService: PsDetailService,
-    private presentationDraftService: PresentationdraftService) { }
+    private psDetailService: PresentationDraftDetailService,
+    private presentationDraftService: PresentationDraftService) { }
 
   ngOnInit() {
     this.PsDetail = this.psDetailService.selectedPresentationDraft;

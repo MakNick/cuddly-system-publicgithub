@@ -1,28 +1,63 @@
-import { NgModule } from "@angular/core";
-import { MatFormFieldModule, MatSelectModule, MatOptionModule, MatInputModule, MatExpansionModule, MatButtonModule, MatDialogModule, MatSnackBarModule, MatToolbarModule, MatGridListModule, MatMenuModule } from "@angular/material";
-import { MatIconModule } from '@angular/material/icon';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatRippleModule } from '@angular/material/core';
+// moved this to independent file keeping the app.module cleaner
+import { NgModule } from '@angular/core';
+import {
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatSlideToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatAutocompleteModule,
+    MatExpansionModule
+} from '@angular/material';
+
+const materialModules = [
+    MatCheckboxModule,
+    MatInputModule,
+    MatSelectModule,
+    MatRadioModule,
+    MatMenuModule,
+    MatToolbarModule,
+    MatListModule,
+    MatGridListModule,
+    MatCardModule,
+    MatTabsModule,
+    MatButtonModule,
+    MatChipsModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatProgressBarModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatSnackBarModule,
+    MatSlideToggleModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatAutocompleteModule,
+    MatExpansionModule
+];
 
 @NgModule({
-    exports: [
-        MatFormFieldModule,
-        MatButtonModule,
-        MatSelectModule,
-        MatOptionModule,
-        MatIconModule,
-        MatInputModule,
-        MatExpansionModule,
-        MatDialogModule,
-        MatSnackBarModule,
-        MatPaginatorModule,
-        MatRippleModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatGridListModule,
-        MatMenuModule
-    ]
-
+    declarations: [
+    ],
+    imports: materialModules,
+    exports: materialModules
 })
-
 export class MaterialsModule { }

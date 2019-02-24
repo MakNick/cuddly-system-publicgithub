@@ -3,13 +3,8 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-<<<<<<< HEAD
-import { MaterialModule } from './material.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; 
-=======
->>>>>>> develop
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
@@ -25,16 +20,13 @@ import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/
 import { PresentationDraftDetailService } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
-<<<<<<< HEAD
-import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
-import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
-=======
 import { AanmeldformulierFeedbackComponent } from './aanmeldformulier/presentationdraftForm/aanmeldformulier.component';
 import { MaterialsModule } from '../material-module';
 import { DialogWindowComponent } from './aanmeldformulier/dialogWindow/dialogWindow.component';
 
-import {FilterPipe} from "./pipes/filter-pipe";
->>>>>>> develop
+import { FilterPipe } from "./pipes/filter-pipe";
+import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
+import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
 
 @NgModule({
   declarations: [
@@ -50,36 +42,23 @@ import {FilterPipe} from "./pipes/filter-pipe";
     PresentationdraftdetailComponent,
     ConferenceFormComponent,
     AanmeldformulierComponent,
-<<<<<<< HEAD
-    SaveDialog,
-    DeleteDialog
-=======
     DialogWindowComponent,
     AanmeldformulierFeedbackComponent,
-    FilterPipe
->>>>>>> develop
+    FilterPipe,
+    SaveDialog,
+    DeleteDialog
   ],
-  imports: [ 
+  imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
-<<<<<<< HEAD
-    MaterialModule,
-    BrowserAnimationsModule
-  ],
-  providers: [httpInterceptorProviders, PsDetailService],
-  bootstrap: [AppComponent],
-  entryComponents: [SaveDialog, DeleteDialog]  
-=======
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MaterialsModule
   ],
-  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent],
+  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog],
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
   bootstrap: [AppComponent]
->>>>>>> develop
 })
 export class AppModule { }

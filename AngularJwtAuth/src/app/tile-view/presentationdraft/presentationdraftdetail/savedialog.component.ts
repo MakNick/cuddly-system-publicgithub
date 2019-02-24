@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Location } from '@angular/common';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { PresentationdraftService } from '../presentationdraft.service';
+import { PresentationDraftService } from '../presentation-draft.service';
 
 @Component({
   selector: 'savedialog',
@@ -10,7 +10,7 @@ import { PresentationdraftService } from '../presentationdraft.service';
 export class SaveDialog {
 
   constructor(private location: Location,
-    private presentationdraftService: PresentationdraftService,
+    private presentationdraftService: PresentationDraftService,
     public dialogRef: MatDialogRef<SaveDialog>,
     @Inject(MAT_DIALOG_DATA) public data: any) {}
 
