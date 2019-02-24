@@ -12,7 +12,6 @@ import { PresentationdraftComponent } from './tile-view/presentationdraft/presen
 import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentationdraftdetail.component';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
-import { AanmeldformulierMaterialComponent } from './aanmeldformulier/presentationdraftformMaterial/aanmeldformulierMaterial.component';
  
 const routes: Routes = [
     {
@@ -38,10 +37,6 @@ const routes: Routes = [
     {
         path: 'aanmeldformulierPresentationDraftApplicant',
         component: AanmeldformulierComponent
-    },
-    {
-        path: 'aanmeldformulierPresentationDraftApplicant2',
-        component: AanmeldformulierMaterialComponent
     },
     {
         path: 'conference',
