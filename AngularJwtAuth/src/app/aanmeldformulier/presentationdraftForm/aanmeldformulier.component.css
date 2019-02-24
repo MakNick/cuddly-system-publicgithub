@@ -46,6 +46,7 @@ div.example-button-row{
 
 mat-table{
   width: 45%;
+  margin: 0%;
 }
 
 tr:hover {
@@ -62,11 +63,17 @@ tr:active {
   font-weight: bold;
 }
 
-#mat-form-addCohostTable{
+
+#mat-form-addCohostTable, #mat-form-requests{
   width: 45%;
-  margin-left: 5%;
+  margin-left: 0%;
+  float: left;
 }
 
 input, textarea{
   cursor: pointer;
+}
+
+button{
+  width: 100%;
 }

@@ -4,9 +4,8 @@ import { Applicant } from '../../objects/applicant';
 import { draftAanmeldService } from '../presentationdraftForm/aanmeldformulier.service';
 import { PresentationDraftApplicant } from '../../objects/presentationDraftApplicant';
 import { Conference } from '../../objects/conference/conference';
-import { MatDialog, MatDialogActions, MatDialogRef, MatDialogConfig, MatSnackBar } from '@angular/material';
+import { MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { DialogWindowComponent } from '../dialogWindow/dialogWindow.component';
-
 
 @Component({
   selector: 'app-aanmeldformulier',

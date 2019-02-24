@@ -84,10 +84,6 @@
           formControlName="requests"></textarea>
       </mat-form-field>
 
-      <!--ON CLICK: POPUP EN ADD TO TABLE-->
-
-      <!--TABLE MATERIAL-->
-
       <table id="mat-form-addCohostTable">
         <ng-container>
           <tr>
@@ -103,10 +99,8 @@
         </ng-container>
       </table>
     </div>
-    <!--TABLE MATERIAL END-->
   </details>
 
-  <br /><br />
   <button mat-icon-button type="submit" [disabled]="this.presentationdraftForm.get('indiener').invalid || this.presentationdraftForm.get('presentationDraft').invalid">
     <mat-icon aria-label="icon_verzenden">mail_outline</mat-icon>
     <mat-label *ngIf="this.presentationdraftForm.get('indiener').invalid || this.presentationdraftForm.get('presentationDraft').invalid">Vul minimaal de verplichte velden in a.u.b.</mat-label>
