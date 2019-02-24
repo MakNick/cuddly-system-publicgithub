@@ -79,13 +79,13 @@ export class ConferenceFormComponent implements OnInit {
 
   ngOnInit() {
     this.conferenceForm = this.fb.group({
-      'name': ['', [Validators.required, Validators.minLength(3), forbiddenConferenceNameValidator(/javiel/)]],
-      'startDate': [''],
-      'startTime': [''],
-      'endDate': [''],
-      'endTime': [''],
-      'deadlineDate': [''],
-      'deadlineTime': [''],
+      'name': [null, [Validators.required, Validators.minLength(3), forbiddenConferenceNameValidator(/javiel/)]],
+      'startDate': [{ disabled: true, value: '' }],
+      'startTime': [null],
+      'endDate': [{ disabled: true, value: '' }],
+      'endTime': [null],
+      'deadlineDate': [{ disabled: true, value: '' }],
+      'deadlineTime': [null],
       'stages': this.fb.array([]),
       'categories': this.fb.array([])
     },
