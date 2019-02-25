@@ -1,24 +1,24 @@
 <!--<div class="row tile-box">-->
-<!--<div class="col-md tile" *ngFor="let conference of conferences">-->
-<!--<button routerLink="/conference/{{conference.id}}">-->
-<!--<ul class="list-unstyled">-->
-<!--<li>-->
-<!--<strong>Title:</strong>-->
-<!--</li>-->
-<!--<li>-->
-<!--{{conference.name}}-->
-<!--</li>-->
-<!--</ul>-->
-<!--</button>-->
-<!--</div>-->
+  <!--<div class="col-md tile" *ngFor="let conference of conferences">-->
+    <!--<button routerLink="/conference/{{conference.id}}">-->
+      <!--<ul class="list-unstyled">-->
+        <!--<li>-->
+          <!--<strong>Title:</strong>-->
+        <!--</li>-->
+        <!--<li>-->
+          <!--{{conference.name}}-->
+        <!--</li>-->
+      <!--</ul>-->
+    <!--</button>-->
+  <!--</div>-->
 <!--</div>-->
 <ngu-carousel #myCarousel [inputs]="carouselTile" [dataSource]="carouselTileItems">
   <ngu-tile *nguCarouselDef="let item; let i = index">
 
     <ngu-carousel #myCarousel [inputs]="carouselTile" (carouselLoad)="carouselTileLoad(i)" [dataSource]="carouselTiles[i]">
       <ngu-tile *nguCarouselDef="let item; let j = index">
-        <div class="tile" [style.background]="'url(' + item + ')'" style="min-height: 200px">
-          <h1>{{j}}</h1>
+        <div class="tile" routerLink="{{conferences[j].id}}" (click)="showConference(j)" [style.background]="'url(' + item + ')'" style="min-height: 200px">
+          <h1>{{conferences[j].name}}</h1>
         </div>
       </ngu-tile>
       <button NguCarouselPrev class="leftRs" [style.opacity]="myCarousel.isFirst ? 0.5:1">&lt;</button>

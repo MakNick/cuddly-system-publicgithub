@@ -83,6 +83,7 @@ export class PresentationDraftComponent implements OnInit {
   showPresentationDraftDetail(ps:PresentationDraft): void {
     this.presentationDraftDetailService.selectedPresentationDraft = ps;
     this.presentationDraftDetailService.activeConferenceId = this.conferenceId;
+    this.presentationDraftDetailService.categories = this.availableCategories;
   }
 
   getCategories() {

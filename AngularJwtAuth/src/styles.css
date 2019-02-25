@@ -48,15 +48,33 @@ mat-toolbar-row span a{
   background-color: #180A3D;
 }
 
+.share-space{
+  display: flex;
+}
+
+.back-button{
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.back-button button{
+  color: #4f4078;
+  cursor: pointer;
+  padding: 0px;
+  border: none;
+  background: transparent;
+}
+
 .button{
-  background-color: #180A3D;
+  background-color: #fff;
+  border: 1px solid #dfdfdf !important;
   transition: background-color 2s cubic-bezier(0.24, 0.85, 0, 1.07);
-  color: #fff;
+  color: #4f4078;
 }
 
 .button:hover{
-  background-color: #4f3e8e;
-  color: #fff;
+  background-color: #FAFAFA;
 }
 
 @media only screen and (max-width: 718px) {

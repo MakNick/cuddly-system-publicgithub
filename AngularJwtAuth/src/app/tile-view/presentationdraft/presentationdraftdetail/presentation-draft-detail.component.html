@@ -1,20 +1,20 @@
 <div (click)="goBack($event)">
   <div class="row detail-box">
     <div class="detailHeader">
-      <h1>{{PsDetail.subject}}</h1>
+      <h1>{{psDetail.subject}}</h1>
     </div>
 
     <div class="detailMenu">
-
       <div class="gridMenu">
         <div class="dropdown">
           <div>
-            <button (click)="closeAndComparePresentationdraft(PsDetail)" class="dropbtn"><i class="fa fa-arrow-left"></i></button>
+            <button (click)="closeAndComparePresentationdraft(psDetail)" class="dropbtn"><i
+              class="fa fa-arrow-left"></i></button>
           </div>
         </div>
         <div class="dropdown">
-          <button class="dropbtn" *ngIf="PsDetail.label; else showDefaultLabel">
-            {{PsDetail.label}}
+          <button class="dropbtn" *ngIf="psDetail.label; else showDefaultLabel">
+            {{psDetail.label}}
           </button>
           <ng-template #showDefaultLabel>
             <button class="dropbtn">Kies label</button>
@@ -27,14 +27,14 @@
         </div>
 
         <div class="dropdown">
-          <button class="dropbtn" *ngIf="PsDetail.category; else showDefaultCategory">
-            {{PsDetail.category}}
+          <button class="dropbtn" *ngIf="psDetail.category; else showDefaultCategory">
+            {{psDetail.category}}
           </button>
           <ng-template #showDefaultCategory>
             <button class="dropbtn">Kies categorie</button>
           </ng-template>
           <div class="dropdown-content">
-            <a (click)="changeCategory(category)" *ngFor="let category of conferenceDetail.categories">
+            <a (click)="changeCategory(category)" *ngFor="let category of categories">
               {{category}}
             </a>
           </div>
@@ -42,17 +42,18 @@
       </div>
       <div class="dropdown">
         <div>
-          <button (click)="downloadSinglePdf(conferenceDetail, PsDetail)" class="dropbtn"><i class="fa fa-download"></i></button>
+          <button (click)="downloadSinglePdf(conferenceDetail, psDetail)" class="dropbtn"><i class="fa fa-download"></i>
+          </button>
         </div>
       </div>
       <div class="dropdown">
         <div>
-          <button (click)="deletePresentationDraft(PsDetail)" class="dropbtn"><i class="fa fa-trash"></i></button>
+          <button (click)="deletePresentationDraft(psDetail)" class="dropbtn"><i class="fa fa-trash"></i></button>
         </div>
       </div>
       <div class="dropdown popup">
         <div>
-          <button (click)="updatePresentationDraft(PsDetail)" class="dropbtn"><i class="fa fa-save"></i></button>
+          <button (click)="updatePresentationDraft(psDetail)" class="dropbtn"><i class="fa fa-save"></i></button>
           <span class="popuptext" id="myPopup">Opgeslagen</span>
         </div>
       </div>
@@ -61,22 +62,22 @@
     <div class="detailContainerGrid1">
       <div>
         <span class="heads">ID:</span>
-        <span type="text">{{PsDetail.id}}</span>
+        <span type="text">{{psDetail.id}}</span>
       </div>
       <div>
         <span class="heads">Aanmelddatum:</span>
-        <span type="text">{{PsDetail.timeOfCreation}}</span>
+        <span type="text">{{psDetail.timeOfCreation}}</span>
       </div>
       <div>
         <span class="heads">Type:</span>
-        <input type="text" [(ngModel)]="PsDetail.type">
+        <input type="text" [(ngModel)]="psDetail.type">
       </div>
     </div>
 
     <div class="detailContainerGrid2">
       <div class="summary">
         <span class="heads">Samenvatting:</span><br>
-        <textarea [(ngModel)]="PsDetail.summary" (keyup)="jojoganster()"></textarea>
+        <textarea [(ngModel)]="psDetail.summary" (keyup)="jojoganster()"></textarea>
       </div>
     </div>
   </div>

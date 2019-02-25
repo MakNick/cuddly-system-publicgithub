@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnInit} from '@angular/core';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 
 import {ConferenceService} from './conference.service';
 
@@ -27,13 +27,11 @@ export class ConferenceComponent implements OnInit {
     'assets/holi.jpg'
   ];
 
-  public carouselTileItems: Array<any> = [0];
-  public carouselTiles = {
-    0: [this.conferences]
-  };
+  private carouselTileItems: Array<any>;
+  private carouselTiles;
 
   public carouselTile: NguCarouselConfig = {
-    grid: { xs: 1, sm: 1, md: 1, lg: 1, all: 0 },
+    grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
     slide: 3,
     speed: 250,
     point: {
@@ -47,14 +45,14 @@ export class ConferenceComponent implements OnInit {
 
   public carouselTileItems$: Observable<number[]>;
   public carouselTileConfig: NguCarouselConfig = {
-    grid: { xs: 10, sm: 10, md: 10, lg: 10, all: 0 },
+    grid: {xs: 10, sm: 10, md: 10, lg: 10, all: 0},
     speed: 250,
     point: {
       visible: true
     },
     touch: true,
     loop: true,
-    interval: { timing: 1500 },
+    interval: {timing: 1500},
     animation: 'lazy'
   };
   tempData: any[];
@@ -64,9 +62,46 @@ export class ConferenceComponent implements OnInit {
 
   ngOnInit() {
     this.fillConferences();
-    this.carouselTileItems.forEach(el => {
-      this.carouselTileLoad(el);
-    });
+  }
+
+  // to give each tile it's image
+  public carouselTileLoad(j) {
+  //   // alert(this.carouselTiles[j].length);
+  //   // const len = this.carouselTiles[j].length;
+  //   // for (let i = len; i < len; i++) {
+  //   //   this.carouselTiles[j].push(
+  //   //     this.images[Math.floor(Math.random() * this.images.length)]
+  //   //   );
+  //   // }
+  }
+
+  fillConferences() {
+    this.conferenceService.getConferences()
+      .subscribe(conferences =>
+          this.conferences = conferences,
+        error => console.log(error),
+        () => this.initializeCarousel()
+      );
+
+  }
+
+  showConference(j){
+    console.log(this.conferences[j]);
+  }
+
+  initializeCarousel() {
+    this.carouselTileItems = [0];
+    this.carouselTiles = {
+      0: this.conferences
+    }
+    // for (let i = 0; i < this.conferences.length; i++) {
+    //   this.carouselTiles = {
+    //     i: [this.conferences[i]]
+    //   }
+    // }
+    // this.carouselTileItems.forEach(el => {
+    //   this.carouselTileLoad(el);
+    // });
     this.tempData = [];
     this.carouselTileItems$ = interval(500).pipe(
       startWith(-1),
@@ -79,22 +114,6 @@ export class ConferenceComponent implements OnInit {
         return data;
       })
     );
-  }
-
-  public carouselTileLoad(j) {
-    const len = this.carouselTiles[j].length;
-    if (len <= 30) {
-      for (let i = len; i < len + 15; i++) {
-        this.carouselTiles[j].push(
-          this.images[Math.floor(Math.random() * this.images.length)]
-        );
-      }
-    }
-  }
-
-  fillConferences(): void {
-    this.conferenceService.getConferences()
-      .subscribe(conferences => this.conferences = conferences);
   }
 
 }

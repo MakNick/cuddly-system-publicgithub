@@ -1,14 +1,9 @@
 package com.topicus.CFPApplication.persistence;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.naming.CannotProceedException;
 
 import com.topicus.CFPApplication.config.paging.PagingConstants;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +37,7 @@ public class PresentationDraftService {
 
         Pageable pageableRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
 
-        return presentationDraftRepository.findPresentationDraftByConferenceIdOrderBySubject(conferenceId, pageableRequest);
+        return presentationDraftRepository.findPresentationDraftByConferenceIdOrderByLabelDesc(conferenceId, pageableRequest);
 
     }
 
@@ -88,7 +83,7 @@ public class PresentationDraftService {
         Pageable pageableRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
 
         if (labelId == 5) {
-            return this.presentationDraftRepository.findPresentationDraftByConferenceIdOrderBySubject(conferenceId, pageableRequest);
+            return this.presentationDraftRepository.findPresentationDraftByConferenceIdOrderByLabelDesc(conferenceId, pageableRequest);
         }
 
         for (Label label : Label.values()) {
