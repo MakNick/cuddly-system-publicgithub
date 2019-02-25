@@ -27,8 +27,7 @@ export class ConferenceComponent implements OnInit {
     'assets/holi.jpg'
   ];
 
-  private carouselTileItems: Array<any>;
-  private carouselTiles;
+  public carouselTiles;
 
   public carouselTile: NguCarouselConfig = {
     grid: {xs: 1, sm: 1, md: 1, lg: 3, all: 0},
@@ -44,7 +43,7 @@ export class ConferenceComponent implements OnInit {
     easing: 'cubic-bezier(0, 0, 0.2, 1)'
   };
 
-  public carouselTileItems$: Observable<number[]>;
+  public carouselTileItems$: Observable<Conference[]>;
   public carouselTileConfig: NguCarouselConfig = {
     grid: {xs: 10, sm: 10, md: 10, lg: 10, all: 0},
     speed: 250,
@@ -56,7 +55,8 @@ export class ConferenceComponent implements OnInit {
     interval: {timing: 1500},
     animation: 'lazy'
   };
-  tempData: any[];
+
+  private tempData: any[];
 
   constructor(private conferenceService: ConferenceService) {
   }
@@ -86,12 +86,7 @@ export class ConferenceComponent implements OnInit {
 
   }
 
-  showConference(j){
-    console.log(this.conferences[j]);
-  }
-
   initializeCarousel() {
-    this.carouselTileItems = [0];
     this.carouselTiles = {
       0: this.conferences
     }
@@ -106,11 +101,10 @@ export class ConferenceComponent implements OnInit {
     this.tempData = [];
     this.carouselTileItems$ = interval(500).pipe(
       startWith(-1),
-      take(this.conferences.length-2),
+      take(this.conferences.length),
       map(val => {
         const data = (this.tempData = [
-          ...this.tempData,
-          this.conferences
+          ...this.conferences
         ]);
         return data;
       })
