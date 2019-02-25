@@ -209,5 +209,3 @@ styles: [`
 })
 export class AanmeldformulierConferenceFeedbackComponent {}
 
-
-}
