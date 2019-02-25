@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>{{popUpTitel}}</h1>
 
-<mat-dialog-content [formGroup]="cohostForm">
+<mat-dialog-content [formGroup]="cohostForm" *ngIf="getPopUpType()==0">
     <mat-form-field>
         <input matInput placeholder="Naam" formControlName="cohostNaam" type="text" (change)="getIconFeedback($event)" required>
         <mat-icon matSuffix>{{iconNameFeedback}}</mat-icon>
@@ -14,6 +14,21 @@
     <p>{{popUpInhoud}}</p>
 </mat-dialog-content>
 
+
+<mat-dialog-content [formGroup]="categorieForm" *ngIf="getPopUpType()==1">
+    <mat-form-field>
+        <input matInput placeholder="Categorie" formControlName="category" type="text" required>
+    </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-content [formGroup]="stageForm" *ngIf="getPopUpType()==2">
+    <mat-form-field>
+        <input matInput placeholder="Stage" formControlName="stage" type="text" required>
+    </mat-form-field>
+</mat-dialog-content>
+
 <mat-dialog-actions>
-    <button class="mat-raised-button mat-primary" (click)="save()" [disabled]="this.cohostForm.invalid">Toevoegen</button>
+    <button *ngIf="getPopUpType()==0" class="mat-raised-button mat-primary" (click)="save()" [disabled]="this.cohostForm.invalid">Toevoegen</button>
+    <button *ngIf="getPopUpType()==1" class="mat-raised-button mat-primary" (click)="save()" [disabled]="this.categorieForm.invalid">Toevoegen</button>
+    <button *ngIf="getPopUpType()==2" class="mat-raised-button mat-primary" (click)="save()" [disabled]="this.stageForm.invalid">Toevoegen</button>
 </mat-dialog-actions>
