@@ -4,9 +4,8 @@ import { forbiddenConferenceNameValidator } from './shared/conferenceName.valida
 import { ConferenceDateValidator } from './shared/conferenceDate.validator';
 import { ConferenceService } from './conferenceForm.service';
 import { Conference } from './conferenceForm';
-import { Time } from '@angular/common'
-import { Stage } from './stages/stage';
-
+import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
+import { DialogWindowComponent } from '../dialogWindow/dialogWindow.component';
 
 @Component({
   selector: 'conferenceForm',
@@ -17,7 +16,8 @@ export class ConferenceFormComponent implements OnInit {
 
   conferenceForm: FormGroup;
   conferences: Conference[] = [];
-  stages: Stage;
+  categories: string[] = [];
+  stages: string[] = [];
   defaultDateTime: string = "2099-01-01T01:00";
   dateOfToday = new Date(Date.now());
   dateOfTomorrow = new Date(this.dateOfToday.setDate(this.dateOfToday.getDate() + 1));
@@ -75,7 +75,7 @@ export class ConferenceFormComponent implements OnInit {
     // event.target.min = this.selectedTime;
   }
 
-  constructor(private fb: FormBuilder, private conferenceService: ConferenceService) { }
+  constructor(private fb: FormBuilder, private conferenceService: ConferenceService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
 
   ngOnInit() {
     this.conferenceForm = this.fb.group({
@@ -123,18 +123,6 @@ export class ConferenceFormComponent implements OnInit {
       .subscribe(conference => this.conferences.push(conference));
   }
 
-  loadApi() {
-    this.conferenceForm.patchValue({ //patchValue / setValue
-      name: 'Topiconf',
-      startDate: '2019-01-09',
-      startTime: '23:00',
-      endDate: '2019-01-09',
-      endTime: '23:00',
-      deadlineDate: '2019-01-09',
-      deadlineTime: '23:00',
-    });
-  }
-
   getConferences() {
     this.conferenceService.getConferences().subscribe(conference => this.conferences = conference);
   }
@@ -142,4 +130,84 @@ export class ConferenceFormComponent implements OnInit {
   deleteConference(id: number) {
     this.conferenceService.deleteConference(id).subscribe(conference => this.getConferences());
   }
+
+  popUpAddCategories(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      popUpTitel: 'Categorie toevoegen',
+      popUpInhoud: '',
+      popUpType: 1
+    }
+    
+    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        this.categories.push(data.category);
+      }
+    );
+  }
+
+  deleteCategory(x: string){
+    let category = x;
+    this.categories.splice(this.categories.indexOf(category), 1);
+  }
+
+  popUpAddStages(){
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+    dialogConfig.data = {
+      popUpTitel: 'Stage toevoegen',
+      popUpInhoud: '',
+      popUpType: 2
+    }
+    
+    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
+
+    dialogRef.afterClosed().subscribe(
+      data => {
+        this.stages.push(data.stage);
+      }
+    );
+  }
+
+  deleteStage(x: string){
+    let stage = x;
+    this.stages.splice(this.stages.indexOf(stage), 1);
+  }
+ 
+  submit() {
+    this.createConference();
+    this.openSnackBar();
+}
+
+openSnackBar() {
+  this.conferenceForm.reset();
+  this.categories = [];
+  this.stages = [];
+  this.snackBar.openFromComponent(AanmeldformulierConferenceFeedbackComponent, {
+    duration: 5000,
+  });
+}
+}
+
+@Component({
+selector: 'snack-bar-component-example-snack',
+template: `
+<span>De conferentie is aangemaakt.</span>
+`,
+styles: [`
+  span {
+    color: white;
+  }
+`],
+})
+export class AanmeldformulierConferenceFeedbackComponent {}
+
+
 }
