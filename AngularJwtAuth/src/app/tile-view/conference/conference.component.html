@@ -12,12 +12,10 @@
     <!--</button>-->
   <!--</div>-->
 <!--</div>-->
-<ngu-carousel #myCarousel [inputs]="carouselTile" [dataSource]="carouselTileItems">
-  <ngu-tile *nguCarouselDef="let item; let i = index">
 
-    <ngu-carousel #myCarousel [inputs]="carouselTile" (carouselLoad)="carouselTileLoad(i)" [dataSource]="carouselTiles[i]">
+    <ngu-carousel #myCarousel [inputs]="carouselTile" (carouselLoad)="carouselTileLoad(0)" [dataSource]="carouselTiles[0]">
       <ngu-tile *nguCarouselDef="let item; let j = index">
-        <div class="tile" routerLink="{{conferences[j].id}}" (click)="showConference(j)" [style.background]="'url(' + item + ')'" style="min-height: 200px">
+        <div class="tile" routerLink="{{conferences[j].id}}" (click)="showConference(j)" [style.background]="'url(' + item + ')'">
           <h1>{{conferences[j].name}}</h1>
         </div>
       </ngu-tile>
@@ -29,13 +27,11 @@
       </ul>
     </ngu-carousel>
 
-  </ngu-tile>
-</ngu-carousel>
 <hr><hr><hr>
 <ngu-carousel #myMiniCarousel [inputs]="carouselTileConfig" [dataSource]="carouselTileItems$ | async">
   <ngu-tile *nguCarouselDef="let item; let i = index; let ani = animate"> <!-- [@slider]="ani" PLease this animation to this tile to see animation. stackblitz have error with animations -->
-    <div class="tile" [style.background]="'url('+item+')'">
-      <h1>{{i + 1}}</h1>
+    <div class="tile" [style.background]="'url('+item+')'" style="max-height: 100px;">
+      <h1>{{conferences[i].id}}</h1>
     </div>
   </ngu-tile>
 

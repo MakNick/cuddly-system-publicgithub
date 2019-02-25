@@ -31,7 +31,7 @@ export class ConferenceComponent implements OnInit {
   private carouselTiles;
 
   public carouselTile: NguCarouselConfig = {
-    grid: {xs: 1, sm: 1, md: 1, lg: 1, all: 0},
+    grid: {xs: 1, sm: 1, md: 1, lg: 3, all: 0},
     slide: 3,
     speed: 250,
     point: {
@@ -39,6 +39,7 @@ export class ConferenceComponent implements OnInit {
     },
     load: 3,
     velocity: 0,
+    loop: true,
     touch: true,
     easing: 'cubic-bezier(0, 0, 0.2, 1)'
   };
@@ -105,11 +106,11 @@ export class ConferenceComponent implements OnInit {
     this.tempData = [];
     this.carouselTileItems$ = interval(500).pipe(
       startWith(-1),
-      take(30),
+      take(this.conferences.length-2),
       map(val => {
         const data = (this.tempData = [
           ...this.tempData,
-          this.images[Math.floor(Math.random() * this.images.length)]
+          this.conferences
         ]);
         return data;
       })
