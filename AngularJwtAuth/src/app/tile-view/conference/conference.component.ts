@@ -20,33 +20,10 @@ export class ConferenceComponent implements OnInit {
   public conferences: Conference[];
 
   public carouselTiles;
-
-  public mainConferenceTileConfigs: NguCarouselConfig = {
-    grid: {xs: 1, sm: 1, md: 1, lg: 3, all: 0},
-    slide: 3,
-    speed: 250,
-    point: {
-      visible: true
-    },
-    load: 3,
-    velocity: 0,
-    loop: true,
-    touch: true,
-    easing: 'cubic-bezier(0, 0, 0.2, 1)'
-  };
+  public mainConferenceTileConfigs: NguCarouselConfig;
 
   public carouselTilesMiniView: Observable<Conference[]>;
-  public miniConferenceTileConfigs: NguCarouselConfig = {
-    grid: {xs: 10, sm: 10, md: 10, lg: 10, all: 0},
-    speed: 250,
-    point: {
-      visible: true
-    },
-    touch: true,
-    loop: true,
-    interval: {timing: 1500},
-    animation: 'lazy'
-  };
+  public miniConferenceTileConfigs: NguCarouselConfig;
 
   constructor(private conferenceService: ConferenceService) {
   }
@@ -91,10 +68,39 @@ export class ConferenceComponent implements OnInit {
   }
 
   initializeCarousel() {
+
     this.carouselTiles = {
       0: this.conferences
     };
-    // this.tempData = [];
+
+    const mainTileAmount = this.conferences.length < 3 ? this.conferences.length : 3;
+    this.mainConferenceTileConfigs= {
+      grid: {xs: 1, sm: 2, md: mainTileAmount, lg: mainTileAmount, all: 0},
+      slide: 3,
+      speed: 250,
+      point: {
+        visible: true
+      },
+      load: 3,
+      velocity: 0,
+      loop: true,
+      touch: true,
+      easing: 'cubic-bezier(0, 0, 0.2, 1)'
+    };
+
+    const miniTileAmount: number = this.conferences.length < this.conferences.length ? 4 : 10;
+    this.miniConferenceTileConfigs = {
+      grid: {xs: miniTileAmount, sm: miniTileAmount, md: miniTileAmount, lg: miniTileAmount, all: 0},
+      speed: 250,
+      point: {
+        visible: true
+      },
+      touch: true,
+      loop: true,
+      interval: {timing: 5000},
+      animation: 'lazy'
+    };
+
     this.carouselTilesMiniView = interval(500).pipe(
       startWith(-1),
       take(this.conferences.length),

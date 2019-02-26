@@ -37,29 +37,31 @@
         </div>
       </div>
     </ngu-tile>
+
     <button NguCarouselPrev class="leftRs" [style.opacity]="myCarousel.isFirst ? 0.5:1">&lt;</button>
     <button NguCarouselNext class="rightRs" [style.opacity]="myCarousel.isLast ? 0.5:1">&gt;</button>
-    <ul class="myPoint" NguCarouselPoint>
-      <li *ngFor="let j of myCarousel.pointNumbers; let j = index" [class.active]="j==myCarousel.activePoint"
-          (click)="myCarousel.moveTo(j)"></li>
-    </ul>
+
+    <!--<ul class="myPoint" NguCarouselPoint>-->
+      <!--<li *ngFor="let j of myCarousel.pointNumbers; let j = index" [class.active]="j==myCarousel.activePoint"-->
+          <!--(click)="myCarousel.moveTo(j)"></li>-->
+    <!--</ul>-->
   </ngu-carousel>
 
-  <ngu-carousel #myMiniCarousel [inputs]="miniConferenceTileConfigs" [dataSource]="carouselTilesMiniView | async">
+  <ngu-carousel #myMiniCarousel [inputs]="miniConferenceTileConfigs" [dataSource]="carouselTilesMiniView | async" style="margin-top: 50px">
     <ngu-tile *nguCarouselDef="let item; let i = index; let ani = animate">
       <!-- [@slider]="ani" PLease this animation to this tile to see animation. stackblitz have error with animations -->
-      <div class="tile-small" [style.background]="'url('+item+')'" style="max-height: 100px;">
-        <h1>{{conferences[i].id}}</h1>
+      <div class="tile-small">
+        <img src="../../../assets/TopiconfHeaderLogo.png">
       </div>
     </ngu-tile>
 
     <button NguCarouselPrev class="leftRs" [style.opacity]="myMiniCarousel.isFirst ? 0.5:1">&lt;</button>
     <button NguCarouselNext class="rightRs" [style.opacity]="myMiniCarousel.isLast ? 0.5:1">&gt;</button>
 
-    <ul class="myPoint" NguCarouselPoint>
-      <li *ngFor="let i of myMiniCarousel.pointNumbers; let i = index" [class.active]="i==myMiniCarousel.activePoint"
-          (click)="myMiniCarousel.moveTo(i)"></li>
-    </ul>
+    <!--<ul class="myPoint" NguCarouselPoint>-->
+      <!--<li *ngFor="let i of myMiniCarousel.pointNumbers; let i = index" [class.active]="i==myMiniCarousel.activePoint"-->
+          <!--(click)="myMiniCarousel.moveTo(i)"></li>-->
+    <!--</ul>-->
   </ngu-carousel>
 </div>
 <!--</span>-->
