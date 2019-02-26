@@ -1,78 +1,78 @@
 /* You can add global styles to this file, and also import other style files */
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-body{
-    font-family: "Times New Roman", Times, serif;
-    margin: 0;
-    padding: 0;
+body {
+  font-family: "Times New Roman", Times, serif;
+  margin: 0;
+  padding: 0;
 }
 
-img{
-    width: 100%;
-    height: 100%;
+img {
+  width: 100%;
+  height: 100%;
 }
 
-p{
+p {
   margin: 0;
   color: #575E64;
 }
 
-h1{
+h1 {
   margin: 0;
 }
 
-h3{
+h3 {
   margin: 0;
   color: #fff;
 }
 
-mat-toolbar-row span{
-    margin-left: 10px;
+mat-toolbar-row span {
+  margin-left: 10px;
 }
 
-mat-toolbar-row span:hover{
-    margin-left: 10px;
+mat-toolbar-row span:hover {
+  margin-left: 10px;
 }
 
-mat-toolbar-row span a{
-    text-decoration: none;
-    color: #fff;
+mat-toolbar-row span a {
+  text-decoration: none;
+  color: #fff;
 }
 
-.container{
-    margin: 20px 60px 0px 60px;
+.container {
+  margin: 20px 60px 0px 60px;
 }
 
-.nav-link{
+.nav-link {
   height: 100%;
 }
 
-.active-nav-link{
+.active-nav-link {
   border-bottom: 5px solid #FFE600 !important;
   top: 10px;
 
 }
 
-.min-nav-links{
-    display: none;
-    margin-left: auto;
+.min-nav-links {
+  display: none;
+  margin-left: auto;
 }
 
-.mat-toolbar.mat-primary{
+.mat-toolbar.mat-primary {
   background-color: #180A3D;
 }
 
-.share-space{
+.share-space {
   display: flex;
 }
 
-.back-button{
+.back-button {
   font-weight: bold;
   display: flex;
   align-items: center;
 }
 
-.back-button button{
+.back-button button {
   color: #4f4078;
   cursor: pointer;
   padding: 0px;
@@ -80,23 +80,44 @@ mat-toolbar-row span a{
   background: transparent;
 }
 
-.button{
+.button {
   background-color: #fff;
   border: 1px solid #dfdfdf !important;
   transition: background-color 2s cubic-bezier(0.24, 0.85, 0, 1.07);
   color: #4f4078;
 }
 
-.button:hover{
+.button:hover {
   background-color: #FAFAFA;
 }
 
-@media only screen and (max-width: 718px) {
-    .max-nav-links{
-        display: none;
-    }
+.mobile-hide{
+  visibility: visible;
+}
 
-    .min-nav-links{
-        display: initial;
-    }
+@media only screen and (max-width: 718px) {
+
+  .mobile-hide{
+    visibility: hidden;
+  }
+
+  .max-nav-links {
+    display: none;
+  }
+
+  .min-nav-links {
+    display: initial;
+  }
+
+  h1 {
+    font-size: 1.2vw;
+  }
+
+  h3 {
+    font-size: 3.5vw;
+  }
+
+  p {
+    font-size: 3vw;
+  }
 }

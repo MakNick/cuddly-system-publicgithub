@@ -1,19 +1,17 @@
 <div class="content">
+  <div class="back-button">
+    <button (click)="back()" matRipple class="material-icons">
+      arrow_back_ios
+    </button>
+  </div>
   <div class="presentation-draft-box">
-    <div class="share-space">
-      <div class="back-button">
-        <button (click)="back()" matRipple class="material-icons">
-          arrow_back_ios
-        </button>
-      </div>
-      <span *ngIf="page">
+    <span *ngIf="page">
       <mat-paginator
         [length]=page.totalElements
         [pageSize]=page.size
         [pageSizeOptions]=pageSizeOptions (page)="paginate($event)">
       </mat-paginator>
     </span>
-    </div>
     <mat-grid-list cols="{{breakpoint}}" rowHeight="80" gutterSize="4"
                    (window:resize)="onResize($event)">
      <span *ngIf="page">

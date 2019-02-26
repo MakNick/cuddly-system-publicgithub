@@ -68,7 +68,6 @@ export class ConferenceComponent implements OnInit {
   }
 
   initializeCarousel() {
-
     this.carouselTiles = {
       0: this.conferences
     };
@@ -88,15 +87,14 @@ export class ConferenceComponent implements OnInit {
       easing: 'cubic-bezier(0, 0, 0.2, 1)'
     };
 
-    const miniTileAmount: number = this.conferences.length < this.conferences.length ? 4 : 10;
+    const miniTileAmount: number = this.conferences.length < 10 ? this.conferences.length : 10;
     this.miniConferenceTileConfigs = {
-      grid: {xs: miniTileAmount, sm: miniTileAmount, md: miniTileAmount, lg: miniTileAmount, all: 0},
+      grid: {xs: 2, sm: 3, md: miniTileAmount-2, lg: miniTileAmount, all: 0},
       speed: 250,
       point: {
         visible: true
       },
       touch: true,
-      loop: true,
       interval: {timing: 5000},
       animation: 'lazy'
     };
