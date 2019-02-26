@@ -17,19 +17,11 @@ import {map, startWith, take} from "rxjs/operators";
 })
 export class ConferenceComponent implements OnInit {
 
-  private conferences: Conference[];
-
-  @Input() name: string;
-  images = [
-    'assets/bg.jpg',
-    'assets/car.png',
-    'assets/canberra.jpg',
-    'assets/holi.jpg'
-  ];
+  public conferences: Conference[];
 
   public carouselTiles;
 
-  public carouselTile: NguCarouselConfig = {
+  public mainConferenceTileConfigs: NguCarouselConfig = {
     grid: {xs: 1, sm: 1, md: 1, lg: 3, all: 0},
     slide: 3,
     speed: 250,
@@ -43,8 +35,8 @@ export class ConferenceComponent implements OnInit {
     easing: 'cubic-bezier(0, 0, 0.2, 1)'
   };
 
-  public carouselTileItems$: Observable<Conference[]>;
-  public carouselTileConfig: NguCarouselConfig = {
+  public carouselTilesMiniView: Observable<Conference[]>;
+  public miniConferenceTileConfigs: NguCarouselConfig = {
     grid: {xs: 10, sm: 10, md: 10, lg: 10, all: 0},
     speed: 250,
     point: {
@@ -56,8 +48,6 @@ export class ConferenceComponent implements OnInit {
     animation: 'lazy'
   };
 
-  private tempData: any[];
-
   constructor(private conferenceService: ConferenceService) {
   }
 
@@ -65,15 +55,30 @@ export class ConferenceComponent implements OnInit {
     this.fillConferences();
   }
 
-  // to give each tile it's image
-  public carouselTileLoad(j) {
-  //   // alert(this.carouselTiles[j].length);
-  //   // const len = this.carouselTiles[j].length;
-  //   // for (let i = len; i < len; i++) {
-  //   //   this.carouselTiles[j].push(
-  //   //     this.images[Math.floor(Math.random() * this.images.length)]
-  //   //   );
-  //   // }
+  // to give each tile it's image call in the carousel tag like so: (carouselLoad)="carouselTileLoad(0)"
+  // public carouselTileLoad(j) {
+  //   const len = this.carouselTiles[j].length;
+  //   for (let i = len; i < len; i++) {
+  //     this.carouselTiles[j].push(
+  //       this.images[Math.floor(Math.random() * this.images.length)]
+  //     );
+  //   }
+  // }
+
+  showCorrectDate(date: Date) {
+    let arrayOfDate: string[] = String(date).split(",");
+    let formattedDate: string = "";
+    for (let i = 2; i >= 0; i--) {
+      if (arrayOfDate[i] !== ",") {
+        if (i == 0) {
+          +arrayOfDate[i] < 10 ? formattedDate += ("0" + arrayOfDate[i]) : formattedDate += arrayOfDate[i];
+        } else {
+          // formattedDate +=correctDate + "-";
+          +arrayOfDate[i] < 10 ? formattedDate += ("0" + arrayOfDate[i] + "-") : formattedDate += arrayOfDate[i] + "-";
+        }
+      }
+    }
+    return formattedDate;
   }
 
   fillConferences() {
@@ -83,32 +88,23 @@ export class ConferenceComponent implements OnInit {
         error => console.log(error),
         () => this.initializeCarousel()
       );
-
   }
 
   initializeCarousel() {
     this.carouselTiles = {
       0: this.conferences
-    }
-    // for (let i = 0; i < this.conferences.length; i++) {
-    //   this.carouselTiles = {
-    //     i: [this.conferences[i]]
-    //   }
-    // }
+    };
+    // this.tempData = [];
+    this.carouselTilesMiniView = interval(500).pipe(
+      startWith(-1),
+      take(this.conferences.length),
+      map(() => {
+        return [...this.conferences];
+      })
+    );
     // this.carouselTileItems.forEach(el => {
     //   this.carouselTileLoad(el);
     // });
-    this.tempData = [];
-    this.carouselTileItems$ = interval(500).pipe(
-      startWith(-1),
-      take(this.conferences.length),
-      map(val => {
-        const data = (this.tempData = [
-          ...this.conferences
-        ]);
-        return data;
-      })
-    );
   }
 
 }

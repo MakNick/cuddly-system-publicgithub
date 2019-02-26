@@ -11,7 +11,7 @@ import {
 export const EXPANSION_PANEL_ANIMATION_TIMING =
   '225ms cubic-bezier(0.4,0.0,0.2,1)';
 
-/** Animations used by the Material expansion panel. */
+/** Animations used by the MaterialModule expansion panel. */
 export const slider: AnimationTriggerMetadata = trigger('slider', [
   state('true', style({ transform: 'translate3d({{distance}}px,0,0)' }), {
     params: { distance: '0' }

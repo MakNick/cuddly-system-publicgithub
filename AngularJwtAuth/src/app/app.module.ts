@@ -35,6 +35,7 @@ import { PresentationDraftDetailComponent } from './tile-view/presentationdraft/
 import { PresentationDraftDetailService } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.service';
 import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
+import {MaterialModule} from "./material.module";
 import {NguCarouselModule} from "@ngu/carousel";
 
 @NgModule({
@@ -58,20 +59,9 @@ import {NguCarouselModule} from "@ngu/carousel";
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule,
+    NguCarouselModule,
     ReactiveFormsModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatMenuModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatGridListModule,
-    MatPaginatorModule,
-    MatSelectModule,
-    MatInputModule,
-    MatRippleModule,
-    NguCarouselModule
+    MaterialModule
     
   ],
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
