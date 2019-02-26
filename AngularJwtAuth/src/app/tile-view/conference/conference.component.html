@@ -15,62 +15,59 @@
 
 <!--<span *ngIf="carouselTiles">-->
 <div class="conf-view-container">
-  <span *ngIf="conferences">
-    <ngu-carousel #myCarousel [inputs]="mainConferenceTileConfigs"
-                  [dataSource]="carouselTiles[0]">
-        <ngu-tile *nguCarouselDef="let item; let j = index">
-          <div class="tile" routerLink="{{conferences[j].id}}"
-               [style.background]="'url(' + item + ')'">
-            <div class="conference-info-container">
-              <div class="conference-submissions-info">
-                <p>submissions: {{conferences[j].presentationDrafts.length}}</p>
-              </div>
-              <div class="conference-title">
-                <h3>{{conferences[j].name}}</h3>
-              </div>
-              <div class="conference-date-info">
-                <p>start: {{showCorrectDate(conferences[j].startDate)}}</p>
-                <p>end: {{showCorrectDate(conferences[j].endDate)}}</p>
-              </div>
-            </div>
-            <div class="conference-img-container">
-              <img src="https://topicus.nl/wp-content/uploads/2018/05/TopiConf-Logo-website.jpg" alt="conference image">
-            </div>
+  <!--<span *ngIf="conferences">-->
+  <ngu-carousel #myCarousel [inputs]="mainConferenceTileConfigs"
+                [dataSource]="carouselTiles[0]">
+    <ngu-tile *nguCarouselDef="let item; let j = index">
+      <div class="tile" routerLink="{{item.id}}">
+        <div class="conference-info-container">
+          <div class="conference-submissions-info">
+            <p>submissions: {{item.presentationDrafts.length}}</p>
           </div>
-        </ngu-tile>
-
-      <button NguCarouselPrev class="leftRs-main fas fa-angle-left" matRipple
-              [disabled]="conferences.length < 3"></button>
-      <button NguCarouselNext class="rightRs-main fas fa-angle-right" matRipple
-              [disabled]="conferences.length < 3"></button>
-
-      <!--<ul class="myPoint" NguCarouselPoint>-->
-      <!--<li *ngFor="let j of myCarousel.pointNumbers; let j = index" [class.active]="j==myCarousel.activePoint"-->
-      <!--(click)="myCarousel.moveTo(j)"></li>-->
-      <!--</ul>-->
-    </ngu-carousel>
-  </span>
-
-  <span *ngIf="conferences">
-    <ngu-carousel class="mobile-hide" #myMiniCarousel [inputs]="miniConferenceTileConfigs"
-                  [dataSource]="carouselTilesMiniView | async" style="margin-top: 50px">
-        <ngu-tile *nguCarouselDef="let item; let i = index; let ani = animate">
-          <!-- [@slider]="ani" PLease this animation to this tile to see animation. stackblitz have error with animations -->
-            <div class="tile-small" routerLink="{{conferences[i].id}}">
-            <div class="conference-tile-small-info">
-              <p>{{conferences[i].name}}</p>
-              <img src="../../../assets/TopiconfHeaderLogo.png">
-            </div>
+          <div class="conference-title">
+            <h3>{{item.name}}</h3>
           </div>
-        </ngu-tile>
-      <button NguCarouselPrev class="leftRs-mini fas fa-angle-left" matRipple [disabled]=myMiniCarousel.isFirst></button>
-      <button NguCarouselNext class="rightRs-mini fas fa-angle-right" matRipple [disabled]=myMiniCarousel.isLast></button>
+          <div class="conference-date-info">
+            <p>start: {{showCorrectDate(item.startDate)}}</p>
+            <p>end: {{showCorrectDate(item.endDate)}}</p>
+          </div>
+        </div>
+        <div class="conference-img-container">
+          <img src="https://topicus.nl/wp-content/uploads/2018/05/TopiConf-Logo-website.jpg" alt="conference image">
+        </div>
+      </div>
+    </ngu-tile>
 
-      <!--<ul class="myPoint" NguCarouselPoint>-->
-      <!--<li *ngFor="let i of myMiniCarousel.pointNumbers; let i = index" [class.active]="i==myMiniCarousel.activePoint"-->
-      <!--(click)="myMiniCarousel.moveTo(i)"></li>-->
-      <!--</ul>-->
-    </ngu-carousel>
-  </span>
+    <button NguCarouselPrev class="leftRs-main fas fa-angle-left" matRipple></button>
+    <button NguCarouselNext class="rightRs-main fas fa-angle-right" matRipple></button>
+
+    <!--<ul class="myPoint" NguCarouselPoint>-->
+    <!--<li *ngFor="let j of myCarousel.pointNumbers; let j = index" [class.active]="j==myCarousel.activePoint"-->
+    <!--(click)="myCarousel.moveTo(j)"></li>-->
+    <!--</ul>-->
+  </ngu-carousel>
+  <!--</span>-->
+
+  <!--<span *ngIf="conferences">-->
+  <ngu-carousel class="mobile-hide" #myMiniCarousel [inputs]="miniConferenceTileConfigs"
+                [dataSource]="carouselTiles[0]">
+    <ngu-tile *nguCarouselDef="let item; let i = index">
+      <div class="tile-small" routerLink="{{item.id}}">
+        <div class="conference-tile-small-info">
+          <p>{{i}} {{item.name}}</p>
+          <img src="../../../assets/TopiconfHeaderLogo.png">
+        </div>
+      </div>
+    </ngu-tile>
+
+    <button NguCarouselPrev class="leftRs-mini fas fa-angle-left" matRipple></button>
+    <button NguCarouselNext class="rightRs-mini fas fa-angle-right" matRipple></button>
+
+    <!--<ul class="myPoint" NguCarouselPoint>-->
+    <!--<li *ngFor="let i of myMiniCarousel.pointNumbers; let i = index" [class.active]="i==myMiniCarousel.activePoint"-->
+    <!--(click)="myMiniCarousel.moveTo(i)"></li>-->
+    <!--</ul>-->
+  </ngu-carousel>
+  <!--</span>-->
 </div>
 <!--</span>-->

@@ -21,8 +21,6 @@ export class ConferenceComponent implements OnInit {
 
   public carouselTiles;
   public mainConferenceTileConfigs: NguCarouselConfig;
-
-  public carouselTilesMiniView: Observable<Conference[]>;
   public miniConferenceTileConfigs: NguCarouselConfig;
 
   constructor(private conferenceService: ConferenceService) {
@@ -42,7 +40,7 @@ export class ConferenceComponent implements OnInit {
   //   }
   // }
 
-  showCorrectDate(date: Date) {
+  private showCorrectDate(date: Date) {
     let arrayOfDate: string[] = String(date).split(",");
     let formattedDate: string = "";
     for (let i = 2; i >= 0; i--) {
@@ -89,23 +87,16 @@ export class ConferenceComponent implements OnInit {
 
     const miniTileAmount: number = this.conferences.length < 10 ? this.conferences.length : 10;
     this.miniConferenceTileConfigs = {
-      grid: {xs: 2, sm: 3, md: miniTileAmount-2, lg: miniTileAmount, all: 0},
+      grid: {xs: 2, sm: 3, md: 4, lg: miniTileAmount, all: 0},
       speed: 250,
       point: {
         visible: true
       },
       touch: true,
-      interval: {timing: 5000},
+      loop: true,
+      interval: {timing: 3000},
       animation: 'lazy'
     };
-
-    this.carouselTilesMiniView = interval(500).pipe(
-      startWith(-1),
-      take(this.conferences.length),
-      map(() => {
-        return [...this.conferences];
-      })
-    );
     // this.carouselTileItems.forEach(el => {
     //   this.carouselTileLoad(el);
     // });

@@ -115,7 +115,7 @@
   bottom: 0;
   width: 50px;
   height: 100px;
-  left: 0px;
+  left: 0;
   transition: background-color .5s ease;
 }
 
