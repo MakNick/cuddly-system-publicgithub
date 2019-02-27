@@ -4,9 +4,20 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import {
   MatButtonModule,
   MatCheckboxModule,
+  MatDatepickerModule,
+  MatDialogModule,
+  MatExpansionModule,
+  MatFormFieldModule,
   MatGridListModule,
-  MatIconModule, MatInputModule,
-  MatMenuModule, MatPaginatorModule, MatRippleModule, MatSelectModule,
+  MatIconModule,
+  MatInputModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatOptionModule,
+  MatPaginatorModule,
+  MatRippleModule,
+  MatSelectModule,
+  MatSnackBarModule,
   MatToolbarModule
 } from "@angular/material";
 
@@ -23,7 +34,14 @@ import {
     MatSelectModule,
     MatInputModule,
     MatRippleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatFormFieldModule,
+    MatOptionModule,
+    MatExpansionModule,
+    MatDialogModule,
+    MatSnackBarModule,
+    MatDatepickerModule,
+    MatNativeDateModule
 
   ]
 })
