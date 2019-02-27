@@ -28,20 +28,6 @@ public class ConferenceServiceTest {
 	ConferenceService conferenceService;
 
 	@Test
-	public void findAllTest() {
-		Conference conf = new Conference();
-		List<Conference> list = new ArrayList<>();
-		list.add(conf);
-
-		Mockito.when(this.conferenceRepo.findAll()).thenReturn(list);
-		List<Conference> testList = (List<Conference>) this.conferenceService.findAll();
-
-		Mockito.verify(this.conferenceRepo).findAll();
-
-		Assert.assertEquals(1, testList.size());
-	}
-
-	@Test
 	public void saveTest() {
 		Conference conf = new Conference();
 
