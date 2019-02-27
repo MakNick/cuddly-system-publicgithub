@@ -1,145 +1,236 @@
-.detail-box{
-    border: 1px solid black;
-    background-color: white;
-    display: inline-block;
-    text-align: left;
-    margin: 80px 0;
-    width: 100%;
-    height: 70%;
-    z-index: 1;
+h1{
+  color: #575E64;
 }
 
-.detailHeader{
-    display: flex;
+textarea{
+  resize: none;
 }
 
-.detailHeader > h1{
-    margin: auto;
-    text-align: center;
+.back-button-box{
+  align-items: start;
 }
 
-.detailMenu{
-    display: flex;
+.detail-container {
+  display: flex;
+  flex-wrap: wrap;
 }
 
-.gridMenu{
-    display: grid;
-    grid-template-columns: repeat(8, 1fr);
-    grid-column-gap: 15px;
+.detail-presentation-draft-box{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
-.detailContainerGrid1{
-    display: grid;
-    margin: auto;
-    grid-template-columns: repeat(4, 1fr);
+.info-field-box{
+  display: grid;
+  grid-gap: 10px 50px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: 50px 200px;
 }
 
-.detailContainerGrid2{
-    display: grid;
-    margin: auto;
-    grid-template-columns: repeat(1, 1fr);
+.info-first-layer{
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  margin-bottom: 50px;
 }
 
-.background{
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0px;
-    left: 0px;
-    background-color: rgba(0, 0, 0, 0.281);
-    z-index: 10;
+.info-second-layer{
+  display: flex;
 }
 
-.summary > textarea {
-    position: inherit;
-    margin-left: 2%;
-    width: 96%;
-    height: 200px;
+.duration-box{
+  grid-column: 2;
 }
 
-.heads {
-    margin-left: 20px;
-    display: inline-block;
+.summary-box{
+  display: flex;
+  grid-row: 2;
+  grid-column: 5 span;
 }
 
-/* Dropdown */
-.dropbtn {
-    background-color: rgb(160, 160, 160);
-    color: white;
-    padding: 16px;
-    text-align: left;
-    font-size: 16px;
-    width: auto;
-    border: none;
-  }
-  
-  .dropdown {
-    position: relative;
-    display: inline-block;
-    margin: 10px;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f1f1f1;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-    text-align: left
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {background-color: #ddd;}
-  
-  .dropdown:hover .dropdown-content {display: block;}
-  
-  .dropdown:hover .dropbtn {background-color: #4f3e8e;}
+.summary-box mat-form-field{
+  width: 100%;
+}
 
-  /* Popup */
-  /* Popup container */
+.tag-box{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.label-box{
+  margin-bottom: 10px;
+}
+
+.label-button {
+  font-weight: bold;
+  color: #4f3e8e;
+}
+
+.dropdown {
+  border: 1px solid #180A3D;
+  text-align: center;
+  padding: 10px;
+  width: 100px;
+}
+
+.dropdown:hover {
+  background-color: rgba(79, 62, 142, 0.4);
+  color: #fff;
+}
+
+.dropdown:hover .label-button{
+  /*background-color: rgba(79, 62, 142, 0.8);*/
+  color: #fff;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  border: 1px solid #180A3D;
+  text-align: center;
+  width: 120px;
+}
+
+.dropdown-content p {
+  padding: 10px;
+  color: #fff;
+  background-color: rgba(79, 62, 142, 0.8);
+}
+
+.dropdown-content p:hover {
+  background-color: rgba(79, 62, 142, 0.4);
+  color: #4f3e8e;
+}
+
+.label-box:hover .dropdown-content {
+  display: block;
+}
+
+.category-box:hover .dropdown-content {
+  display: block;
+}
+
+.config-button-box{
+  display: flex;
+  flex-direction: column;
+}
+
+.save-button-box {
+  background-color: #4f3e8e;
+  padding: 8px 10px 8px 10px;
+
+}
+
+.save-button {
+  color: #fff;
+  font-size: 30px;
+}
+
+.download-button{
+  font-size: 30px;
+  color: #4f3e8e;
+  padding: 8px 8px 8px 8px;
+}
+
+.delete-button{
+  color: #fff;
+  font-size: 30px;
+}
+
+.delete-button-box {
+  margin-top: auto;
+  background-color: #ff1414;
+  padding: 8px 10px 8px 10px;
+}
+
+/* Popup */
+/* Popup container */
 .popup {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+.popup .popuptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: #4f3e8e;
+  color: #fff;
+  text-align: center;
+  border-radius: 5px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Toggle this class when clicking on the popup container (hide and show the popup) */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  /* The actual popup (appears on top) */
-  .popup .popuptext {
-    visibility: hidden;
-    width: 160px;
-    background-color: #4f3e8e;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 8px 0;
-    position: absolute;
-    z-index: 1;
-    bottom: 125%;
-    left: 50%;
-    margin-left: -80px;
+  to {
+    opacity: 1;
   }
-   
-  /* Toggle this class when clicking on the popup container (hide and show the popup) */
-  .popup .show {
-    visibility: visible;
-    -webkit-animation: fadeIn 1s;
-    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
   }
-  
-  /* Add animation (fade in the popup) */
-  @-webkit-keyframes fadeIn {
-    from {opacity: 0;} 
-    to {opacity: 1;}
+  to {
+    opacity: 1;
   }
-  
-  @keyframes fadeIn {
-    from {opacity: 0;}
-    to {opacity: 1;}
+}
+
+@media only screen and (max-width: 600px){
+
+  .back-button-box{
+    margin-bottom: 20px;
   }
+
+  .config-button-box{
+    flex-direction: row;
+    margin: 0 auto;
+  }
+
+  .info-field-box {
+    display: initial;
+  }
+
+  .duration-box{
+    grid-column: 1;
+
+  }
+
+  .summary-box{
+    grid-row: 3;
+    grid-column: 1 span;
+  }
+}
+
+@media only screen and (max-width: 1350px) and (min-width: 770px){
+
+  .summary-box{
+    grid-column: 4 span;
+  }
+}
+
+@media only screen and (max-width: 769px) and (min-width: 601px){
+
+  .summary-box{
+    grid-column: 2 span;
+  }
+}

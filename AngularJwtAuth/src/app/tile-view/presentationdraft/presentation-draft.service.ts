@@ -37,9 +37,9 @@ export class PresentationDraftService {
     return this.http.delete<PresentationDraft>(`http://localhost:8082/api/presentationdraft/delete/${presentationDraft.id}`);
   }
 
-  downloadSinglePdf(presentationDraft: PresentationDraft, conference: Conference){
+  downloadSinglePdf(presentationDraft: PresentationDraft, conferenceId: number){
     const httpOptions = {'responseType'  : 'arraybuffer' as 'json'};
-    return this.http.get<any>(`http://localhost:8082/api/${conference.id}/download/pdf/${presentationDraft.id}`, httpOptions);
+    return this.http.get<any>(`http://localhost:8082/api/${conferenceId}/download/pdf/${presentationDraft.id}`, httpOptions);
   }
 
 

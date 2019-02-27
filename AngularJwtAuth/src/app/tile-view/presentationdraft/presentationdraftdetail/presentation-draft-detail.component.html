@@ -1,84 +1,97 @@
-<div (click)="goBack($event)">
-  <div class="row detail-box">
-    <div class="detailHeader">
-      <h1>{{psDetail.subject}}</h1>
+<div class="detail-container">
+  <div class="back-button-box">
+    <button (click)="closeAndComparePresentationdraft(presentationDraftDetail)"
+            matRipple class="material-icons"
+            matTooltip="Back" matTooltipPosition="below">
+      arrow_back_ios
+    </button>
+  </div>
+  <div class="detail-presentation-draft-box">
+    <div class="info-first-layer">
+      <div class="detail-title">
+        <h1>{{presentationDraftDetail.subject}}</h1>
+      </div>
+      <div class="creation-time-box">
+        <p>Submitted on: {{showCorrectDate(presentationDraftDetail.timeOfCreation)}}</p>
+      </div>
     </div>
 
-    <div class="detailMenu">
-      <div class="gridMenu">
-        <div class="dropdown">
-          <div>
-            <button (click)="closeAndComparePresentationdraft(psDetail)" class="dropbtn"><i
-              class="fa fa-arrow-left"></i></button>
+    <div class="info-second-layer">
+      <div class="info-field-box">
+        <div class="type-box">
+          <p>
+            <mat-form-field appearance="legacy">
+              <mat-label>Type</mat-label>
+              <input matInput placeholder="Placeholder" [(ngModel)]="presentationDraftDetail.type">
+            </mat-form-field>
+          </p>
+        </div>
+        <div class="duration-box">
+          <p>
+            <mat-form-field appearance="legacy">
+              <mat-label>Duration</mat-label>
+              <input matInput placeholder="Placeholder" [(ngModel)]="presentationDraftDetail.duration">
+            </mat-form-field>
+          </p>
+        </div>
+        <div class="summary-box">
+          <mat-form-field>
+            <textarea rows="8" matInput placeholder="Summary" [(ngModel)]="presentationDraftDetail.summary"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="tag-box">
+        <div class="label-box">
+          <div class="dropdown">
+            <button class="label-button" *ngIf="presentationDraftDetail.label; else showDefaultLabel">
+              {{presentationDraftDetail.label | lowercase}}
+            </button>
+            <ng-template #showDefaultLabel>
+              <button class="label-button">Kies label</button>
+            </ng-template>
+          </div>
+          <div class="dropdown-content">
+            <p (click)="changeLabel('ACCEPTED')">Accepted</p>
+            <p (click)="changeLabel('DENIED')">Denied</p>
+            <p (click)="changeLabel('RESERVED')">Reserved</p>
           </div>
         </div>
-        <div class="dropdown">
-          <button class="dropbtn" *ngIf="psDetail.label; else showDefaultLabel">
-            {{psDetail.label}}
-          </button>
-          <ng-template #showDefaultLabel>
-            <button class="dropbtn">Kies label</button>
-          </ng-template>
-          <div class="dropdown-content">
-            <a (click)="changeLabel('ACCEPTED')">Accepteren</a>
-            <a (click)="changeLabel('DENIED')">Afwijzen</a>
-            <a (click)="changeLabel('RESERVED')">Reserve</a>
+        <div class="category-box">
+          <div class="dropdown">
+            <button class="label-button" *ngIf="presentationDraftDetail.category; else showDefaultCategory">
+              {{presentationDraftDetail.category}}
+            </button>
+            <ng-template #showDefaultCategory>
+              <button class="label-button">Kies categorie</button>
+            </ng-template>
           </div>
-        </div>
-
-        <div class="dropdown">
-          <button class="dropbtn" *ngIf="psDetail.category; else showDefaultCategory">
-            {{psDetail.category}}
-          </button>
-          <ng-template #showDefaultCategory>
-            <button class="dropbtn">Kies categorie</button>
-          </ng-template>
           <div class="dropdown-content">
-            <a (click)="changeCategory(category)" *ngFor="let category of categories">
+            <p (click)="changeCategory(category)" *ngFor="let category of categories">
               {{category}}
-            </a>
+            </p>
           </div>
         </div>
       </div>
-      <div class="dropdown">
-        <div>
-          <button (click)="downloadSinglePdf(conferenceDetail, psDetail)" class="dropbtn"><i class="fa fa-download"></i>
-          </button>
-        </div>
-      </div>
-      <div class="dropdown">
-        <div>
-          <button (click)="deletePresentationDraft(psDetail)" class="dropbtn"><i class="fa fa-trash"></i></button>
-        </div>
-      </div>
-      <div class="dropdown popup">
-        <div>
-          <button (click)="updatePresentationDraft(psDetail)" class="dropbtn"><i class="fa fa-save"></i></button>
-          <span class="popuptext" id="myPopup">Opgeslagen</span>
-        </div>
-      </div>
     </div>
 
-    <div class="detailContainerGrid1">
-      <div>
-        <span class="heads">ID:</span>
-        <span type="text">{{psDetail.id}}</span>
-      </div>
-      <div>
-        <span class="heads">Aanmelddatum:</span>
-        <span type="text">{{psDetail.timeOfCreation}}</span>
-      </div>
-      <div>
-        <span class="heads">Type:</span>
-        <input type="text" [(ngModel)]="psDetail.type">
-      </div>
+
+  </div>
+
+  <div class="config-button-box">
+
+    <div class="save-button-box">
+      <button (click)="updatePresentationDraft(presentationDraftDetail)" class="save-button far fa-save">
+      </button>
+    </div>
+    <div class="download-button-box">
+      <button (click)="downloadSinglePdf(presentationDraftDetail)" class="download-button fa fa-download">
+      </button>
+    </div>
+    <div class="delete-button-box">
+      <button (click)="downloadSinglePdf(presentationDraftDetail)" class="delete-button far fa-trash-alt">
+      </button>
     </div>
 
-    <div class="detailContainerGrid2">
-      <div class="summary">
-        <span class="heads">Samenvatting:</span><br>
-        <textarea [(ngModel)]="psDetail.summary" (keyup)="jojoganster()"></textarea>
-      </div>
-    </div>
   </div>
 </div>
+
