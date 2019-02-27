@@ -25,6 +25,7 @@ export class PresentationDraftDetailComponent implements OnInit {
     private presentationDraftService: PresentationDraftService) { }
 
   ngOnInit() {
+    console.log(this.psDetailService.selectedPresentationDraft);
     this.psDetail = this.psDetailService.selectedPresentationDraft;
     this.conferenceId = this.psDetailService.activeConferenceId;
     this.categories = this.psDetailService.categories;

@@ -4,21 +4,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {
-  MatButtonModule,
-  MatCheckboxModule,
-  MatMenuModule,
-  MatIconModule,
-  MatToolbarModule,
-  MatGridListModule
-} from '@angular/material';
-
-import {MatPaginatorModule} from '@angular/material/paginator';
-import {MatSelectModule} from '@angular/material/select';
-import {MatInputModule} from '@angular/material/input';
-import {MatRippleModule} from '@angular/material/core';
-
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { UserComponent } from './user/user.component';
@@ -37,6 +22,7 @@ import { ConferenceFormComponent } from './aanmeldformulier/conferenceForm/confe
 import { AanmeldformulierComponent } from "./aanmeldformulier/presentationdraftForm/aanmeldformulier.component";
 import {MaterialModule} from "./material.module";
 import {NguCarouselModule} from "@ngu/carousel";
+import {ScrollingModule} from "@angular/cdk/scrolling";
 
 @NgModule({
   declarations: [
@@ -61,7 +47,8 @@ import {NguCarouselModule} from "@ngu/carousel";
     HttpClientModule,
     NguCarouselModule,
     ReactiveFormsModule,
-    MaterialModule
+    MaterialModule,
+    ScrollingModule
     
   ],
   providers: [httpInterceptorProviders, PresentationDraftDetailService],

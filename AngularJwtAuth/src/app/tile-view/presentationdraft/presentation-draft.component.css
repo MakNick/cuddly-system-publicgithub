@@ -43,8 +43,13 @@
   margin-right: 20px;
 }
 
+.draft-tile{
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
 .draft-tile:hover{
-  border: 1px solid #180A3D;
+  box-shadow: -1px 1px 0px 0px #180A3D;
 }
 
 .unlabeled-tile {

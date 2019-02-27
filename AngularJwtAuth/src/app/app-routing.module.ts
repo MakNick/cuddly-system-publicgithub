@@ -31,7 +31,7 @@ const routes: Routes = [
         component: AdminComponent
     },
     {
-        path: 'aanmeldformulierConference',
+        path: 'conference/conferenceForm',
         component: ConferenceFormComponent
     },
     {

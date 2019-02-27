@@ -3,6 +3,19 @@
   flex-direction: column;
 }
 
+.main-conf-view-carousel{
+  display: flex;
+}
+
+.add-conf-box{
+   margin-top: 10px;
+ }
+
+.add-conf-box button{
+  font-size: 40px;
+  color: #4f3e8e;
+}
+
 .tile{
   cursor: pointer;
   background-color: #fff;

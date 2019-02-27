@@ -1,5 +1,6 @@
 import {NgModule} from "@angular/core";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -22,6 +23,8 @@ import {
     MatSelectModule,
     MatInputModule,
     MatRippleModule,
+    MatTooltipModule
+
   ]
 })
 export class MaterialModule{}

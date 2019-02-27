@@ -6,6 +6,7 @@ import java.util.Optional;
 
 
 import com.topicus.CFPApplication.config.paging.PagingConstants;
+import com.topicus.CFPApplication.domain.conference.Conference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,13 +23,15 @@ import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 public class PresentationDraftService {
 
     private PresentationDraftRepository presentationDraftRepository;
+    private ConferenceRepository conferenceRepository;
 
     private final List<Label> labelList = Arrays.asList(Label.UNLABELED, Label.DENIED, Label.ACCEPTED, Label.RESERVED,
             Label.UNDETERMINED);
 
     @Autowired
-    public PresentationDraftService(PresentationDraftRepository presentationDraftRepository) {
+    public PresentationDraftService(PresentationDraftRepository presentationDraftRepository, ConferenceRepository conferenceRepository) {
         this.presentationDraftRepository = presentationDraftRepository;
+        this.conferenceRepository = conferenceRepository;
     }
 
     public Page<PresentationDraft> findAllByConferenceId(Long conferenceId, int page, int limit) {
@@ -41,7 +44,11 @@ public class PresentationDraftService {
 
     }
 
-    public PresentationDraft save(PresentationDraft presentationDraft) {
+    public PresentationDraft save(long conferenceId, PresentationDraft presentationDraft) {
+
+        Conference currentConference = this.conferenceRepository.findById(conferenceId)
+                .orElseThrow(() -> new RuntimeException("The current conference could not be found"));
+        presentationDraft.setConference(currentConference);
         return presentationDraftRepository.save(presentationDraft);
     }
 

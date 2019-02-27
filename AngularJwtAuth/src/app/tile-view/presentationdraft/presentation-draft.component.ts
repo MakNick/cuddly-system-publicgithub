@@ -63,6 +63,7 @@ export class PresentationDraftComponent implements OnInit {
     this.presentationDraftService.getPresentationDraftByConferenceId(this.conferenceId, this.currentPageIndex ? this.currentPageIndex : 1, this.page ? this.page.size : 25).subscribe(page => {
       this.page = page;
     });
+
   }
 
   paginate(pageEvent: PageEvent) {

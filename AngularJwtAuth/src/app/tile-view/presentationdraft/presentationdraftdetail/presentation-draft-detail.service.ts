@@ -10,7 +10,6 @@ export class PresentationDraftDetailService{
   
   constructor() {
   }
-
 //   downloadSinglePdf(conferenceId, presentationDraftId){
 //     let xhr = new XMLHttpRequest();
 //     xhr.responseType = 'arraybuffer';

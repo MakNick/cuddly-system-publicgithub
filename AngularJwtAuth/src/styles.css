@@ -26,6 +26,12 @@ h3 {
   color: #fff;
 }
 
+button{
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
 mat-toolbar-row span {
   margin-left: 10px;
 }
@@ -74,10 +80,7 @@ mat-toolbar-row span a {
 
 .back-button button {
   color: #4f4078;
-  cursor: pointer;
   padding: 0px;
-  border: none;
-  background: transparent;
 }
 
 .button {

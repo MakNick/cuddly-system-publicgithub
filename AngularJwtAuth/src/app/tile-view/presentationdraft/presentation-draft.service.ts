@@ -31,7 +31,7 @@ export class PresentationDraftService {
   }
 
   updatePresentationDraft(conferenceId: number, presentationDraft: PresentationDraft): Observable<PresentationDraft>{
-    return this.http.post<PresentationDraft>(`http://localhost:8082/api/presentationdraft/changepresentationdraft`, presentationDraft);
+    return this.http.put<PresentationDraft>(`http://localhost:8082/api/save_presentationdraft/conferenceId/${conferenceId}`, presentationDraft);
   }
 
   deletePresentationDraft(presentationDraft: PresentationDraft): Observable<PresentationDraft>{
