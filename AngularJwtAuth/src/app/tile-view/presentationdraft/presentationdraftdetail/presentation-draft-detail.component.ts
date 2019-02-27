@@ -8,25 +8,27 @@ import { PresentationDraftService } from '../presentation-draft.service';
 @Component({
 
   selector: 'app-presentationdraftdetail',
-  templateUrl: './presentationdraftdetail.component.html',
-  styleUrls: ['./presentationdraftdetail.component.css']
+  templateUrl: './presentation-draft-detail.component.html',
+  styleUrls: ['./presentation-draft-detail.component.css']
 })
 
-export class PresentationdraftdetailComponent implements OnInit {
+export class PresentationDraftDetailComponent implements OnInit {
 
-  PsDetail: PresentationDraft;
+  private psDetail: PresentationDraft;
+  private categories: string[];
+  private psCompare = this.psDetailService.selectedPresentationDraft;
 
-  PsCompare = this.psDetailService.selectedPresentationDraft;
-
-  conferenceId: number;
+  private conferenceId: number;
 
   constructor(private location: Location,
     private psDetailService: PresentationDraftDetailService,
     private presentationDraftService: PresentationDraftService) { }
 
   ngOnInit() {
-    this.PsDetail = this.psDetailService.selectedPresentationDraft;
+    console.log(this.psDetailService.selectedPresentationDraft);
+    this.psDetail = this.psDetailService.selectedPresentationDraft;
     this.conferenceId = this.psDetailService.activeConferenceId;
+    this.categories = this.psDetailService.categories;
   }
 
   goBack(event): void {
@@ -36,15 +38,15 @@ export class PresentationdraftdetailComponent implements OnInit {
   }
 
   changeLabel(value) {
-    this.PsDetail.label = value;
+    this.psDetail.label = value;
   }
 
   changeCategory(value) {
-    this.PsDetail.category = value;
+    this.psDetail.category = value;
   }
 
   updatePresentationDraft(PsDetail) {
-    this.presentationDraftService.updatePresentationDraft(this.conferenceId, PsDetail).subscribe(PresentationDraft => console.log("Opslaan gelukt"));
+    this.presentationDraftService.updatePresentationDraft(this.conferenceId, PsDetail).subscribe(presentationDraft => this.psDetail = presentationDraft);
     this.popup();
   }
 
@@ -67,9 +69,9 @@ export class PresentationdraftdetailComponent implements OnInit {
   }
 
   closeAndComparePresentationdraft(PsDetail) {
-    if (JSON.stringify(this.PsCompare) === JSON.stringify(PsDetail)) {
+    if (JSON.stringify(this.psCompare) === JSON.stringify(PsDetail)) {
       console.log("niks gewijzigd");
-      console.log(this.PsCompare.summary);
+      console.log(this.psCompare.summary);
       console.log(PsDetail.summary);
     } else {
       console.log("wijzigingen");

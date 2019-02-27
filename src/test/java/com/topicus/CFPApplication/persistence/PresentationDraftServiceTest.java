@@ -75,20 +75,6 @@ public class PresentationDraftServiceTest {
 	}
 
 	@Test
-	public void saveTest() {
-		PresentationDraft pres = new PresentationDraft();
-
-		Mockito.when(this.draftRepo.save(pres)).thenReturn(pres);
-
-		PresentationDraft testItem = this.draftService.save(pres);
-
-		Mockito.verify(this.draftRepo).save(Mockito.any(PresentationDraft.class));
-
-		Assert.assertEquals(pres, testItem);
-
-	}
-
-	@Test
 	public void deleteOkTest() {
 		PresentationDraft pres = new PresentationDraft();
 		Optional<PresentationDraft> opt = Optional.of(pres);

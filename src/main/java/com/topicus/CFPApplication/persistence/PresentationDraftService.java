@@ -1,16 +1,12 @@
 package com.topicus.CFPApplication.persistence;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.naming.CannotProceedException;
 
 import com.topicus.CFPApplication.config.paging.PagingConstants;
+import com.topicus.CFPApplication.domain.conference.Conference;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,13 +23,15 @@ import com.topicus.CFPApplication.domain.PresentationDraft.Label;
 public class PresentationDraftService {
 
     private PresentationDraftRepository presentationDraftRepository;
+    private ConferenceRepository conferenceRepository;
 
     private final List<Label> labelList = Arrays.asList(Label.UNLABELED, Label.DENIED, Label.ACCEPTED, Label.RESERVED,
             Label.UNDETERMINED);
 
     @Autowired
-    public PresentationDraftService(PresentationDraftRepository presentationDraftRepository) {
+    public PresentationDraftService(PresentationDraftRepository presentationDraftRepository, ConferenceRepository conferenceRepository) {
         this.presentationDraftRepository = presentationDraftRepository;
+        this.conferenceRepository = conferenceRepository;
     }
 
     public Page<PresentationDraft> findAllByConferenceId(Long conferenceId, int page, int limit) {
@@ -42,11 +40,15 @@ public class PresentationDraftService {
 
         Pageable pageableRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
 
-        return presentationDraftRepository.findPresentationDraftByConferenceIdOrderBySubject(conferenceId, pageableRequest);
+        return presentationDraftRepository.findPresentationDraftByConferenceIdOrderByLabelDesc(conferenceId, pageableRequest);
 
     }
 
-    public PresentationDraft save(PresentationDraft presentationDraft) {
+    public PresentationDraft save(long conferenceId, PresentationDraft presentationDraft) {
+
+        Conference currentConference = this.conferenceRepository.findById(conferenceId)
+                .orElseThrow(() -> new RuntimeException("The current conference could not be found"));
+        presentationDraft.setConference(currentConference);
         return presentationDraftRepository.save(presentationDraft);
     }
 
@@ -88,7 +90,7 @@ public class PresentationDraftService {
         Pageable pageableRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
 
         if (labelId == 5) {
-            return this.presentationDraftRepository.findPresentationDraftByConferenceIdOrderBySubject(conferenceId, pageableRequest);
+            return this.presentationDraftRepository.findPresentationDraftByConferenceIdOrderByLabelDesc(conferenceId, pageableRequest);
         }
 
         for (Label label : Label.values()) {

@@ -1,6 +1,9 @@
 <div class="content">
   <div class="back-button">
-    <a (click)="back()" class="button" mat-button>Back</a>
+    <button (click)="back()" matRipple class="material-icons"
+            matTooltip="Back" matTooltipPosition="right">
+      arrow_back_ios
+    </button>
   </div>
   <div class="presentation-draft-box">
     <span *ngIf="page">
@@ -10,26 +13,26 @@
         [pageSizeOptions]=pageSizeOptions (page)="paginate($event)">
       </mat-paginator>
     </span>
-    <mat-grid-list cols="{{breakpoint}}" rowHeight="80" gutterSize="4"
-                   (window:resize)="onResize($event)">
-     <span *ngIf="page">
-        <mat-grid-tile
-          [@fadeOut]
-          (click)="showPresentationDraftDetail(presentationDraft)"
-                       [ngClass]="[presentationDraft.label.toLowerCase() + '-tile' + ' mat-grid-tile' + 'mat-ripple']"
-                       *ngFor="let presentationDraft of page.content | filterPipe: searchToken"
-                        matRipple
-                       [colspan]="2">
-
-            {{presentationDraft.subject}}
-        </mat-grid-tile>
-     </span>
-      <span *ngIf="page">
+    <cdk-virtual-scroll-viewport itemSize="100" style="height: 500px; padding: 10px">
+      <mat-grid-list cols="{{breakpoint}}" rowHeight="100" gutterSize="4" style="margin: 20px"
+                     (window:resize)="onResize($event)">
+       <span *ngIf="page">
+          <mat-grid-tile
+            [@fadeOut] (click)="showPresentationDraftDetail(presentationDraft)" routerLink="presentationDraftDetail"
+            [ngClass]="[presentationDraft.label.toLowerCase() + '-tile' + ' mat-grid-tile' + 'mat-ripple']"
+            *ngFor="let presentationDraft of page.content | filterPipe: searchToken"
+            matRipple class="draft-tile"
+            [colspan]="2">
+              {{presentationDraft.subject}}
+          </mat-grid-tile>
+       </span>
+        <span *ngIf="page">
           <mat-grid-tile *ngIf="page.totalElements == 0" [colspan]="2" class="nothing-to-show">
             Nothing to show
           </mat-grid-tile>
         </span>
-    </mat-grid-list>
+      </mat-grid-list>
+    </cdk-virtual-scroll-viewport>
   </div>
   <div class="filter-container">
     <div class="filter-title">
