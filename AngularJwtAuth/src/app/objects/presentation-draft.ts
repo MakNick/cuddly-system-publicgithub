@@ -1,8 +1,7 @@
 import { Applicant } from "./applicant";
+import {Conference} from "./conference/conference";
 
 export class PresentationDraft{
-
-  private presentationDraftUrl: string = "presentationDraftDetail";
   
   id: number;
   subject: string;

@@ -10,29 +10,13 @@ import {PresentationDraftService} from './presentation-draft.service';
 import {ConferenceService} from "../conference/conference.service";
 import {PresentationDraft} from "../../objects/presentation-draft";
 import {PresentationDraftDetailService} from "./presentationdraftdetail/presentation-draft-detail.service";
-
-import {
-  trigger,
-  state,
-  style,
-  animate,
-  transition,
-  // ...
-} from '@angular/animations';
+import {fadeOut} from "../../animations/presentation-draft-tile-view";
 
 @Component({
   selector: 'app-presentationdraft',
   templateUrl: './presentation-draft.component.html',
   styleUrls: ['./presentation-draft.component.css'],
-  animations: [
-    trigger('fadeOut', [
-      state('in', style({opacity: '*' })),
-      transition('* => void', [
-        style({opacity: '*' }),
-        animate(100, style({opacity: 0}))
-      ])
-    ])
-  ]
+  animations: [fadeOut]
 })
 export class PresentationDraftComponent implements OnInit {
 
@@ -79,6 +63,7 @@ export class PresentationDraftComponent implements OnInit {
     this.presentationDraftService.getPresentationDraftByConferenceId(this.conferenceId, this.currentPageIndex ? this.currentPageIndex : 1, this.page ? this.page.size : 25).subscribe(page => {
       this.page = page;
     });
+
   }
 
   paginate(pageEvent: PageEvent) {
@@ -99,6 +84,7 @@ export class PresentationDraftComponent implements OnInit {
   showPresentationDraftDetail(ps:PresentationDraft): void {
     this.presentationDraftDetailService.selectedPresentationDraft = ps;
     this.presentationDraftDetailService.activeConferenceId = this.conferenceId;
+    this.presentationDraftDetailService.categories = this.availableCategories;
   }
 
   getCategories() {

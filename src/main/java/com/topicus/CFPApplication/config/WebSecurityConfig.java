@@ -21,12 +21,15 @@ import com.topicus.CFPApplication.security.jwt.JwtAuthEntryPoint;
 import com.topicus.CFPApplication.security.jwt.JwtAuthTokenFilter;
 import com.topicus.CFPApplication.security.services.UserDetailsServiceImpl;
 
+import java.util.Arrays;
+
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
 		prePostEnabled = true
 )
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     UserDetailsServiceImpl userDetailsService;
 
@@ -88,8 +91,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	    @Bean
 	    CorsConfigurationSource corsConfigurationSource() {
+	        CorsConfiguration configuration = new CorsConfiguration();
+	        configuration.applyPermitDefaultValues();
+	        configuration.setAllowedMethods(Arrays.asList("POST", "GET", "OPTIONS", "DELETE", "PUT"));
 	        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-	        source.registerCorsConfiguration("/**", new CorsConfiguration().applyPermitDefaultValues());
+	        source.registerCorsConfiguration("/**", configuration);
 	        return source;
 	    }    
 }

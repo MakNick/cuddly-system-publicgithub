@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Configuration;
 import com.topicus.CFPApplication.domain.conference.Extra;
 import com.topicus.CFPApplication.domain.conference.Stage;
 import com.topicus.CFPApplication.persistence.ConferenceRepository;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration
 public class BeanConfig {

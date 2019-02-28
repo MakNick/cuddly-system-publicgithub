@@ -1,69 +1,129 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-img{
-    width: 100%;
-    height: 100%;
+body {
+  font-family: "Times New Roman", Times, serif;
+  margin: 0;
+  padding: 0;
 }
 
-body{
-    font-family: "Times New Roman", Times, serif;
-    margin: 0;
-    padding: 0;
-}
-
-mat-toolbar-row span{
-    margin-left: 10px;
-}
-
-mat-toolbar-row span:hover{
-    margin-left: 10px;
-}
-
-mat-toolbar-row span a{
-    text-decoration: none;
-    color: #fff;
-}
-
-.container{
-    margin: 20px 60px 0px 60px;
-}
-
-.nav-link{
+img {
+  width: 100%;
   height: 100%;
 }
 
-.active-nav-link{
+p {
+  margin: 0;
+  color: #575E64;
+}
+
+h1 {
+  margin: 0;
+  color: #575E64;
+}
+
+h3 {
+  margin: 0;
+  color: #fff;
+}
+
+button{
+  background: transparent;
+  border: none;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+}
+
+mat-toolbar-row span {
+  margin-left: 10px;
+}
+
+mat-toolbar-row span:hover {
+  margin-left: 10px;
+}
+
+mat-toolbar-row span a {
+  text-decoration: none;
+  color: #fff;
+}
+
+.container {
+  margin: 20px 60px 0px 60px;
+}
+
+.nav-link {
+  height: 100%;
+}
+
+.active-nav-link {
   border-bottom: 5px solid #FFE600 !important;
   top: 10px;
 
 }
 
-.min-nav-links{
-    display: none;
-    margin-left: auto;
+.min-nav-links {
+  display: none;
+  margin-left: auto;
 }
 
-.mat-toolbar.mat-primary{
+.mat-toolbar.mat-primary {
   background-color: #180A3D;
 }
 
-.button{
-  background-color: #180A3D;
+.share-space {
+  display: flex;
+}
+
+.back-button-box {
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.back-button-box button {
+  color: #4f4078;
+  padding: 0;
+  font-size: 40px;
+}
+
+.button {
+  background-color: #fff;
+  border: 1px solid #dfdfdf !important;
   transition: background-color 2s cubic-bezier(0.24, 0.85, 0, 1.07);
-  color: #fff;
+  color: #4f4078;
 }
 
-.button:hover{
-  background-color: #4f3e8e;
-  color: #fff;
+.button:hover {
+  background-color: #FAFAFA;
+}
+
+.mobile-hide{
+  visibility: visible;
 }
 
 @media only screen and (max-width: 718px) {
-    .max-nav-links{
-        display: none;
-    }
 
-    .min-nav-links{
-        display: initial;
-    }
+  .mobile-hide{
+    visibility: hidden;
+  }
+
+  .max-nav-links {
+    display: none;
+  }
+
+  .min-nav-links {
+    display: initial;
+  }
+
+  h1 {
+    font-size: 4vw;
+  }
+
+  h3 {
+    font-size: 3.5vw;
+  }
+
+  p {
+    font-size: 3vw;
+  }
 }

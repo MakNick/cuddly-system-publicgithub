@@ -46,7 +46,7 @@ public class PresentationDraft {
 		UNLABELED, DENIED, ACCEPTED, RESERVED, UNDETERMINED
 	}
 
-	@JsonIgnore()
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Conference conference;
 

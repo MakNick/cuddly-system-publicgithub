@@ -33,7 +33,7 @@
     /* flex-shrink: 5; */
 }
 
-.back-button{
+.back-button-box{
     order: 1 !important;
     flex: 2 !important;
     align-self: center;

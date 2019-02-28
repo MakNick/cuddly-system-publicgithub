@@ -1,0 +1,63 @@
+.is-invalid{
+    color: red;
+}
+.redChar{
+    color: red;
+}
+
+.d-none{
+    display: none;
+}
+
+#mat-form-addCategories, #mat-form-addStages{
+    width: 45%;
+    margin-left: 0%;
+    float: left;
+}
+
+div{
+    align-content: center;
+    margin-left: 0px;
+}
+
+mat-form-field{
+  width: 25%;
+}
+
+.input-conference-name{
+  width: 75%;
+}
+
+mat-form-field-flex{
+  float: left;
+  margin: 0px;
+  width: 100%;
+}
+
+tr:hover {
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+tr:active {
+  background: #efefef;
+}
+
+.tdHeaderText{
+  color: hsl(256, 71%, 14%);
+  font-weight: bold;
+}
+
+.div1{
+  float: left;
+  width: 40%;
+}
+
+.div2, .div3, .div4{
+  float: left;
+  width: 25%;
+}
+
+button{
+  width: 100%;
+}

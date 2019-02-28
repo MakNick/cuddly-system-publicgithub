@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.back-button-box{
+  align-items: start;
+}
+
 .filter-container {
   justify-content: space-around;
   display: flex;
@@ -11,7 +15,7 @@
 }
 
 .filter-box {
-  padding: 0px 20px 0px 20px;
+  padding: 0 20px 0 20px;
   display: flex;
   justify-content: space-evenly;
   order:1;
@@ -30,13 +34,22 @@
 
 .filter-title h4 {
   color: #fff;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
 }
 
 .presentation-draft-box {
   flex: 3;
   margin-right: 20px;
+}
+
+.draft-tile{
+  cursor: pointer;
+  transition: all .5s ease;
+}
+
+.draft-tile:hover{
+  box-shadow: -1px 1px 0px 0px #180A3D;
 }
 
 .unlabeled-tile {
@@ -54,6 +67,9 @@
 .accepted-tile::after{
   content: "";
   width: 5px;
+  border-bottom: 1px solid #180A3D;
+  border-left: 1px solid #180A3D;
+  border-right: 1px solid #180A3D;
   height: 30%;
   display: block;
   position: relative;
@@ -68,6 +84,9 @@
 .denied-tile::after{
   content: "";
   width: 5px;
+  border-bottom: 1px solid #180A3D;
+  border-left: 1px solid #180A3D;
+  border-right: 1px solid #180A3D;
   height: 30%;
   display: block;
   position: relative;
@@ -82,6 +101,9 @@
 .reserved-tile::after{
   content: "";
   width: 5px;
+  border-bottom: 1px solid #180A3D;
+  border-left: 1px solid #180A3D;
+  border-right: 1px solid #180A3D;
   height: 30%;
   display: block;
   position: relative;

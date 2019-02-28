@@ -1,0 +1,139 @@
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<form [formGroup]="conferenceForm" (submit)="createConference()">
+    <h2 mat-title>Aanmeldingsformulier conferentie</h2>
+
+    <div class="div1">
+        <div class="input-conference-name">
+            <mat-form-field appearance="legacy" class="input-conference-name">
+                <mat-label>Conferentie naam: </mat-label>
+                <input matInput placeholder="Naam" type="text" formControlName="name" required>
+                <mat-hint *ngIf="name.invalid && name.touched">
+                    <small class="redChar" *ngIf="name.errors?.required"> Conferentie naam is verplicht </small>
+                    <small class="redChar" *ngIf="name.errors?.minlength"> Conferentie naam moet minimaal drie
+                        karakters bevatten </small>
+                    <small class="redChar" *ngIf="name.errors?.forbiddenConferenceName"> Conferentie naam:
+                        "{{name.errors?.forbiddenConferenceName.value }}" is helaas niet toegestaan </small>
+                </mat-hint>
+            </mat-form-field>
+        </div>
+
+        <div class="startinput">
+            <div class="input-start-date">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Begindatum:</mat-label>
+                    <input matInput [matDatepicker]="dp3" placeholder="Begindatum" formControlName="startDate">
+                    <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                    <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="input-start-time">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Begintijd:</mat-label>
+                    <input matInput formControlName="startTime" placeholder="Begintijd" type="time">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="endinput">
+            <div class="input-end-date">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Einddatum:</mat-label>
+                    <input matInput [matDatepicker]="dp4" placeholder="Einddatum" formControlName="endDate">
+                    <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+                    <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="input-end-time">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Eindtijd:</mat-label>
+                    <input matInput formControlName="endTime" placeholder="Eindtijd" type="time">
+                </mat-form-field>
+            </div>
+        </div>
+        <div class="deadlineinput">
+            <div class="input-inputdeadline-date">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Datum deadline:</mat-label>
+                    <input matInput [matDatepicker]="dp5" placeholder="Datum deadline" formControlName="deadlineDate">
+                    <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
+                    <mat-datepicker #dp5 disabled="false" (click)="maxDateDeadlineDate($event)"></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div class="input-deadline-time">
+                <mat-form-field appearance="legacy">
+                    <mat-label>Tijd deadline:</mat-label>
+                    <input matInput formControlName="deadlineTime" placeholder="Tijd deadline" type="time">
+                </mat-form-field>
+            </div>
+        </div>
+    </div>
+    <div class="div2">
+        <table id="mat-form-addStages">
+            <ng-container>
+                <tr>
+                    <td mat-cell class="tdHeaderText" (click)=popUpAddStages()>Stage toevoegen</td>
+                    <td>
+                        <mat-icon aria-label="icon_new_category" (click)=popUpAddStages()>add_location</mat-icon>
+                    </td>
+                </tr>
+                <tr *ngFor="let stage of stages">
+                    <td (click)="deleteStage(stage)">{{stage}}</td>
+                    <mat-icon aria-label="icon_delete_category" (click)="deleteStage(stage)">delete</mat-icon>
+                </tr>
+            </ng-container>
+        </table>
+    </div>
+    <div class="div3">
+        <table id="mat-form-addCategories">
+            <ng-container>
+                <tr>
+                    <td mat-cell class="tdHeaderText" (click)=popUpAddCategories()>Categorie toevoegen</td>
+                    <td>
+                        <mat-icon aria-label="icon_new_category" (click)=popUpAddCategories()>note</mat-icon>
+                    </td>
+                </tr>
+                <tr *ngFor="let category of categories">
+                    <td (click)="deleteCategory(category)">{{category}}</td>
+                    <mat-icon aria-label="icon_delete_category" (click)="deleteCategory(category)">delete</mat-icon>
+                </tr>
+            </ng-container>
+        </table>
+    </div>
+    <div class="div4">
+        <p></p>
+    </div>
+
+    <button mat-icon-button type="submit" [disabled]="this.conferenceForm.invalid">
+        <mat-icon aria-label="icon_verzenden">save</mat-icon>
+        <mat-label *ngIf="this.conferenceForm.invalid">Vul minimaal de verplichte velden in a.u.b.</mat-label>
+        <mat-label *ngIf="!this.conferenceForm.invalid">Conferentie aanmaken</mat-label>
+    </button>
+
+</form>
+
+
+<!-- <div [class.d-none]="categories">
+    <button type="button" class="btn btn-secondary btn-sm m-2" (click)="addAlternateCategory()">Voeg categorie
+        toe</button>
+    <div formArrayName="categories" *ngFor="let alternateCategories of alternateCategoryMethod.controls; let i = index">
+        <label class="form-check-label"> Categorie naam: </label>
+        <input type="text" class="form-control" [formControlName]="i">
+        <button type="button" class=" btn btn-secondary btn-sm m-2"
+            (click)="removeAlternateCategory(i)">Verwijderen</button>
+    </div>
+</div>
+
+<div [class.d-none]="stages">
+    <button type="button" class="btn btn-secondary btn-sm m-2" (click)="addAlternateStages()">Voeg stage
+        toe</button>
+    <div formArrayName="stages" *ngFor="let alternateStage of alternateStagesMethod.controls; let i = index">
+        <label class="form-check-label"> Stage naam: </label>
+        <input type="text" class="form-control" [formControlName]="i">
+        <button type="button" class=" btn btn-secondary btn-sm m-2"
+            (click)="removeAlternateStages(i)">Verwijderen</button>
+    </div>
+</div>
+
+</form> -->

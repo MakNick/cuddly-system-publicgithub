@@ -131,7 +131,6 @@ export class AanmeldformulierComponent implements OnInit {
 
   getIconFeedback(event: any){
     let formcontrolname = event.target.getAttribute('formcontrolname');
-    console.log(event.target);
 
     switch(formcontrolname){
       case "name":
@@ -159,19 +158,17 @@ export class AanmeldformulierComponent implements OnInit {
 
     dialogConfig.data = {
       popUpTitel: 'Mede-presentator aanmelden',
-      popUpInhoud: ''
+      popUpInhoud: '',
+      popUpType: 0
     }
     
     const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       data => {
-        console.log("Dialog output: ", data);
         this.maakCohost([data.cohostNaam, data.cohostEmail]);
       }
     );
-
-    console.log("Werkt");
   }
 
   maakCohost(applicantInfo: string[]){
@@ -180,22 +177,16 @@ export class AanmeldformulierComponent implements OnInit {
     applicant.email = applicantInfo[1];
     applicant.requests = 'Ik ben een cohost';
     this.tableApplicants.push(applicant);
-    console.log(this.tableApplicants);
   }
 
   deleteCohost(applicant: Applicant){
     this.tableApplicants.splice(this.tableApplicants.indexOf(applicant), 1);
-    console.log(this.tableApplicants);
   }
 
   prepareApplicants() {
     this.presentationDraftApplicant.applicants = this.tableApplicants;
     let indiener = Object.assign(this.presentationdraftForm.get('indiener').value);
     this.presentationDraftApplicant.applicants.push(indiener);
-    
-    //this.presentationDraftApplicant.applicants = [];
-    //let indiener = Object.assign(this.presentationdraftForm.get('indiener').value);
-    //this.presentationDraftApplicant.applicants.push(indiener);
   }
     
   submit() {
