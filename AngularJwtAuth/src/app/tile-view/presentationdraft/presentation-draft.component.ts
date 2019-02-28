@@ -30,6 +30,7 @@ export class PresentationDraftComponent implements OnInit {
   categoryFilter: string;
 
   availableCategories: string[];
+  numberOfDrafts: number;
 
   currentPageIndex: number;
   pageSizeOptions: number[] = [25,50,100];
@@ -85,10 +86,12 @@ export class PresentationDraftComponent implements OnInit {
     this.presentationDraftDetailService.selectedPresentationDraft = ps;
     this.presentationDraftDetailService.activeConferenceId = this.conferenceId;
     this.presentationDraftDetailService.categories = this.availableCategories;
+    this.presentationDraftDetailService.numberOfDrafts = this.numberOfDrafts;
   }
 
   getCategories() {
     this.conferenceService.getConference(this.conferenceId).subscribe(conference => this.availableCategories = conference.categories);
+    this.conferenceService.getConference(this.conferenceId).subscribe(conference => this.numberOfDrafts = conference.presentationDrafts.length);
   }
 
   applyFilter() {

@@ -20,7 +20,7 @@ export class SaveDialog {
   }
 
   onSave(): void {
-    this.presentationdraftService.updatePresentationDraft(this.data.conference.id, this.data.presentationDraft).subscribe(this.data.presentationDraft);
+    this.presentationdraftService.updatePresentationDraft(this.data.number, this.data.presentationDraft).subscribe(this.data.presentationDraft);
     this.location.back();
   }
 

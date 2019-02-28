@@ -1,14 +1,15 @@
-import {Injectable, OnInit} from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { PresentationDraft } from 'src/app/objects/presentation-draft';
-import { Conference } from 'src/app/objects/conference/conference';
 
 @Injectable()
-export class PresentationDraftDetailService{
+export class PresentationDraftDetailService {
 
   selectedPresentationDraft: PresentationDraft;
-  activeConference: Conference;
- 
-  constructor() { 
+  categories: string[];
+  activeConferenceId: number;
+  numberOfDrafts: number;
+
+  constructor() {
   }
 
 }

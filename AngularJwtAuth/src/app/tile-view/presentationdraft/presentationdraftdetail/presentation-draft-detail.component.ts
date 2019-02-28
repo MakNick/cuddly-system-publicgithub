@@ -1,112 +1,74 @@
-import {Component, OnInit} from '@angular/core';
-import {Location} from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
-import {PresentationDraft} from 'src/app/objects/presentation-draft';
-import {PresentationDraftDetailService} from './presentation-draft-detail.service';
-import {PresentationDraftService} from '../presentation-draft.service';
-import {MatSnackBar} from "@angular/material";
+import { PresentationDraft } from 'src/app/objects/presentation-draft';
+import { Conference } from 'src/app/objects/conference/conference';
+import { PresentationDraftDetailService } from './presentation-draft-detail.service';
+import { PresentationDraftService } from '../presentation-draft.service';
+import { MatDialog } from '@angular/material';
+import { SaveDialog } from './savedialog.component';
+import { DeleteDialog } from './deletedialog.component';
+import { ConferenceService } from '../../conference/conference.service';
 
 @Component({
-
   selector: 'app-presentationdraftdetail',
   templateUrl: './presentation-draft-detail.component.html',
   styleUrls: ['./presentation-draft-detail.component.css']
 })
 
-export class PresentationDraftDetailComponent implements OnInit {
+export class PresentationdraftdetailComponent implements OnInit {
 
-  public presentationDraftDetail: PresentationDraft;
-  public categories: string[];
-  private presentationDraftCompare;
+  PsDetail: PresentationDraft;
 
-  private conferenceId: number;
+  PsCompare: String;
 
-  constructor(private location: Location,
-              private presentationDraftDetailService: PresentationDraftDetailService,
-              private presentationDraftService: PresentationDraftService,
-              private snackBar: MatSnackBar) {
-  }
+  conferenceId: number;
+  availableCategories: string[];
+  numberOfDrafts: number;
+
+  conferenceDetail: Conference;
+
+  labels: String[] = ["ACCEPTED", "DENIED", "RESERVED"];
+
+  constructor(private dialog: MatDialog,
+    private location: Location, private conferenceService: ConferenceService,
+    private psDetailService: PresentationDraftDetailService,
+    private presentationDraftService: PresentationDraftService) { }
 
   ngOnInit() {
-    if (!localStorage.getItem("psDetail")) {
-      this.presentationDraftDetail = this.presentationDraftDetailService.selectedPresentationDraft;
-      this.presentationDraftCompare = this.presentationDraftDetailService.selectedPresentationDraft;
-      this.saveToStorage(this.presentationDraftDetail, "psDetail");
-
-      this.conferenceId = this.presentationDraftDetailService.activeConferenceId;
-      localStorage.setItem("conferenceId", "" + this.conferenceId);
-
-      this.categories = this.presentationDraftDetailService.categories;
-      this.saveToStorage(this.categories, "categories");
-    } else {
-      this.presentationDraftDetail = JSON.parse(localStorage.getItem("psDetail"));
-      this.presentationDraftCompare = JSON.parse(localStorage.getItem("psDetail"));
-      this.categories = JSON.parse(localStorage.getItem("categories"));
-      this.conferenceId = JSON.parse(localStorage.getItem("conferenceId"));
-    }
+    this.PsDetail = this.psDetailService.selectedPresentationDraft;
+    this.PsCompare = JSON.stringify(this.psDetailService.selectedPresentationDraft);
+    this.conferenceId = this.psDetailService.activeConferenceId;
+    this.availableCategories = this.psDetailService.categories;
+    this.numberOfDrafts = this.psDetailService.numberOfDrafts;
   }
 
-  saveToStorage(item: object, key: string) {
-    localStorage.setItem(key, JSON.stringify(item))
+  goBack(event): void {
+    if (event.target !== event.currentTarget) {
+      return;
+    }
   }
 
   changeLabel(value) {
-    this.presentationDraftDetail.label = value;
+    this.PsDetail.label = value;
   }
 
   changeCategory(value) {
-    this.presentationDraftDetail.category = value;
+    this.PsDetail.category = value;
   }
 
   updatePresentationDraft(PsDetail) {
-    let validConferenceId = +(this.conferenceId == null ? localStorage.getItem("conferenceId") : this.conferenceId);
-    this.presentationDraftService.updatePresentationDraft(validConferenceId, PsDetail)
-      .subscribe(
-        presentationDraft => this.presentationDraftDetail = presentationDraft,
-        error => this.showFail(error),
-        () => this.showSucces());
-    // this.popup();
+    this.presentationDraftService.updatePresentationDraft(this.conferenceId, PsDetail).subscribe();
+    this.PsCompare = JSON.stringify(this.psDetailService.selectedPresentationDraft);
   }
 
-  showSucces() {
-    this.snackBar.open("Succes!", "The presentation draft has been saved", {
-      duration: 2000
-    });
-  }
-
-  showFail(error: Error) {
-    this.snackBar.open("Could not save", error.name, {
-      duration: 2000
-    });
-  }
-
-  deletePresentationDraft(PsDetail) {
-    let conf = confirm("Weet je zeker dat je de presentatie wilt verwijderen?");
-    if (conf) {
-      this.presentationDraftService.deletePresentationDraft(PsDetail).subscribe();
-      this.location.back();
-    }
-  }
-
-  public showCorrectDate(date: Date) {
-    let arrayOfDate: string[] = String(date).split(",");
-    let formattedDate: string = "";
-    for (let i = 2; i >= 0; i--) {
-      if (arrayOfDate[i] !== ",") {
-        if (i == 0) {
-          +arrayOfDate[i] < 10 ? formattedDate += ("0" + arrayOfDate[i]) : formattedDate += arrayOfDate[i];
-        } else {
-          // formattedDate +=correctDate + "-";
-          +arrayOfDate[i] < 10 ? formattedDate += ("0" + arrayOfDate[i] + "-") : formattedDate += arrayOfDate[i] + "-";
-        }
-      }
-    }
-    return formattedDate;
+  deletePresentationDraft() {
+    this.openDeleteDialog();
   }
 
   downloadSinglePdf(PsDetail) {
     this.presentationDraftService.downloadSinglePdf(PsDetail, this.conferenceId).subscribe((response) => {
-      let blob = new Blob([response], {type: 'application/pdf'});
+      let blob = new Blob([response], { type: 'application/pdf' });
       var fileUrl = window.document.createElement('a');
       fileUrl.href = window.URL.createObjectURL(blob);
       fileUrl.download = 'PresentationDraft' + PsDetail.id + '.pdf';
@@ -115,19 +77,39 @@ export class PresentationDraftDetailComponent implements OnInit {
   }
 
   closeAndComparePresentationdraft(PsDetail) {
-    if (JSON.stringify(this.presentationDraftCompare) === JSON.stringify(PsDetail)) {
-      localStorage.clear();
-      console.log("niks gewijzigd");
-      console.log(this.presentationDraftCompare.summary);
-      console.log(PsDetail.summary);
+    if (this.PsCompare === JSON.stringify(PsDetail)) {
+      this.location.back();
     } else {
-      console.log("wijzigingen");
+      this.openSaveDialog();
     }
-    this.location.back();
   }
 
-  popup() {
-    var popup = document.getElementById("myPopup");
-    popup.classList.toggle("show");
+  openSaveDialog(): void {
+    const dialogRef = this.dialog.open(SaveDialog, {
+      width: '250px',
+      height: '150px',
+      data: {
+        number: this.conferenceId,
+        presentationDraft: this.PsDetail
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("dialog closed");
+    });
+  }
+
+  openDeleteDialog(): void {
+    const dialogRef = this.dialog.open(DeleteDialog, {
+      width: '270px',
+      height: '150px',
+      data: {
+        presentationDraft: this.PsDetail
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("dialog closed");
+    });
   }
 }
