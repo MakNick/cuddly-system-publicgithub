@@ -72,7 +72,7 @@ export class ConferenceComponent implements OnInit {
 
     const mainTileAmount = this.conferences.length < 3 ? this.conferences.length : 3;
     this.mainConferenceTileConfigs= {
-      grid: {xs: 1, sm: 2, md: mainTileAmount, lg: mainTileAmount, all: 0},
+      grid: {xs: 1, sm: 1, md: 1, lg: mainTileAmount, all: 0},
       slide: 3,
       speed: 250,
       point: {

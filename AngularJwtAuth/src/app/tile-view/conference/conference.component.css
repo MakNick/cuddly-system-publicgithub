@@ -5,6 +5,7 @@
 
 .main-conf-view-carousel{
   display: flex;
+  justify-content: center;
 }
 
 .add-conf-box{
@@ -273,4 +274,12 @@
   /*transition: .3s ease all;*/
 /*}*/
 
+
+@media only screen and (max-width: 1110px){
+
+  .main-conf-view-tiles{
+    width: 70vw;
+  }
+
+}
 

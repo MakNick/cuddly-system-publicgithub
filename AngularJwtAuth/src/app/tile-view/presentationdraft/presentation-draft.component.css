@@ -7,11 +7,9 @@
 }
 
 .filter-container {
-  justify-content: space-around;
   display: flex;
   min-height: 520px;
   max-height: 550px;
-  flex: 1;
 }
 
 .filter-box {
@@ -39,7 +37,7 @@
 }
 
 .presentation-draft-box {
-  flex: 3;
+  flex: 1;
   margin-right: 20px;
 }
 
@@ -49,7 +47,7 @@
 }
 
 .draft-tile:hover{
-  box-shadow: -1px 1px 0px 0px #180A3D;
+  box-shadow: -1px 1px 5px 0px #180A3D;
 }
 
 .unlabeled-tile {
