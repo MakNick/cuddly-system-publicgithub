@@ -274,3 +274,11 @@
 /*}*/
 
 
+@media only screen and (max-width: 1110px){
+
+  .main-conf-view-tiles{
+    width: 70vw;
+  }
+
+}
+

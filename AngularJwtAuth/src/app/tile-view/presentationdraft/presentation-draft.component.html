@@ -14,7 +14,7 @@
       </mat-paginator>
     </span>
     <cdk-virtual-scroll-viewport itemSize="100" style="height: 500px; padding: 10px">
-      <mat-grid-list cols="{{breakpoint}}" rowHeight="100" gutterSize="4" style="margin: 20px"
+      <mat-grid-list cols="{{breakpoint}}" rowHeight="100" gutterSize="10" style="margin: 20px"
                      (window:resize)="onResize($event)">
        <span *ngIf="page">
           <mat-grid-tile

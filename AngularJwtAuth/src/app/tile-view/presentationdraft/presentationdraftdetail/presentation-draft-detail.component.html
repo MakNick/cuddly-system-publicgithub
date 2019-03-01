@@ -65,7 +65,7 @@
               <button class="label-button">Kies categorie</button>
             </ng-template>
           </div>
-          <div class="dropdown-content">
+          <div class="dropdown-content bt-trs">
             <p (click)="changeCategory(category)" *ngFor="let category of categories">
               {{category}}
             </p>
@@ -88,7 +88,7 @@
       </button>
     </div>
     <div class="delete-button-box">
-      <button (click)="downloadSinglePdf(presentationDraftDetail)" class="delete-button far fa-trash-alt">
+      <button (click)="deletePresentationDraft(presentationDraftDetail)" class="delete-button far fa-trash-alt">
       </button>
     </div>
 
