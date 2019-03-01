@@ -90,6 +90,10 @@ mat-toolbar-row span a {
   transition: background-color 2s cubic-bezier(0.24, 0.85, 0, 1.07);
 }
 
+.snackbar-color {
+  background: #4f3e8e;
+}
+
 .button {
   background-color: #fff;
   border: 1px solid #180A3D !important;
