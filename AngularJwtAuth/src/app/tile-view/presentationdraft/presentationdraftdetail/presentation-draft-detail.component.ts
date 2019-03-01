@@ -88,7 +88,7 @@ export class PresentationdraftdetailComponent implements OnInit {
   openSaveDialog(): void {
     const dialogRef = this.dialog.open(SaveDialog, {
       width: '250px',
-      height: '150px',
+      height: '180px',
       data: {
         number: this.conferenceId,
         presentationDraft: this.PsDetail
@@ -103,7 +103,7 @@ export class PresentationdraftdetailComponent implements OnInit {
   openDeleteDialog(): void {
     const dialogRef = this.dialog.open(DeleteDialog, {
       width: '270px',
-      height: '150px',
+      height: '180px',
       data: {
         presentationDraft: this.PsDetail
       }
