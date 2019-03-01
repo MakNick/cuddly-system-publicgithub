@@ -5,6 +5,7 @@
 
 .main-conf-view-carousel{
   display: flex;
+  justify-content: center;
 }
 
 .add-conf-box{
