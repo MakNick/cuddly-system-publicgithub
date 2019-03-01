@@ -1,15 +1,18 @@
-h1{
-  color: #575E64;
+.full-width {
+  width: 98%;
 }
 
-textarea{
-  resize: none;
+.left-spacing {
+  margin-left: 15px;
 }
 
-.back-button-box{
-  align-items: start;
+.top-spacing {
+  margin-top: 20px;
 }
 
+.divider-bottom {
+  margin-bottom: 0px;
+}
 .detail-container {
   display: flex;
   flex-wrap: wrap;
