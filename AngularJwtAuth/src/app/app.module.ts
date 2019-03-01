@@ -26,6 +26,7 @@ import { AanmeldformulierFeedbackComponent } from './forms/presentationdraftForm
 import { DialogWindowComponent } from './forms/dialogWindow/dialogWindow.component';
 import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
 import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
+import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetail/maildialog.component';
 
 
 @NgModule({
@@ -46,7 +47,8 @@ import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdet
     AanmeldformulierFeedbackComponent,
     FilterPipe,
     SaveDialog,
-    DeleteDialog
+    DeleteDialog,
+    MailDialog
   ],
   imports: [
     BrowserModule,
@@ -58,7 +60,7 @@ import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdet
     MaterialModule,
     ScrollingModule
   ],
-  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog],
+  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog, MailDialog],
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
   bootstrap: [AppComponent]
 })

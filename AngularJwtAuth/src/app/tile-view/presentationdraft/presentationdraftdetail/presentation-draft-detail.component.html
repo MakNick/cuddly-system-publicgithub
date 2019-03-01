@@ -9,27 +9,27 @@
 
   <mat-card-actions class="divider-bottom left-spacing">
     <button mat-raised-button color="primary" matTooltip="Terug naar overzicht" matTooltipPosition="right"
-      (click)="closeAndComparePresentationdraft(PsDetail)"><i class="fa fa-th"></i></button>
+      (click)="closeAndComparePresentationdraft(PsDetail)"><mat-icon>grid_on</mat-icon></button>
 
     <button style="float:right" color="primary" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Opties"
       matTooltipPosition="left">
-      <mat-icon><i class="fa fa-bars"></i></mat-icon>
+      <mat-icon>menu</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="downloadSinglePdf(PsDetail)">
-        <i class="fa fa-file-pdf"></i>
+        <mat-icon>picture_as_pdf</mat-icon>
         <span>&emsp;Voorstel downloaden</span>
       </button>
-      <button mat-menu-item>
-        <i class="fa fa-envelope"></i>
+      <button mat-menu-item (click)="openMailDialog()">
+        <mat-icon>mail</mat-icon>
         <span>&emsp;Aanvrager mailen</span>
       </button>
       <button mat-menu-item (click)="updatePresentationDraft(PsDetail)">
-        <i class="fa fa-save"></i>
+        <mat-icon>save</mat-icon>
         <span>&emsp;Voorstel opslaan</span>
       </button>
       <button mat-menu-item (click)="deletePresentationDraft()">
-        <i class="fa fa-trash"></i>
+        <mat-icon>delete</mat-icon>
         <span>&emsp;Voorstel verwijderen</span>
       </button>
     </mat-menu>
@@ -66,7 +66,6 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-
 
     <br>
     <mat-form-field class="full-width left-spacing">

@@ -9,6 +9,7 @@ import { MatDialog } from '@angular/material';
 import { SaveDialog } from './savedialog.component';
 import { DeleteDialog } from './deletedialog.component';
 import { ConferenceService } from '../../conference/conference.service';
+import { MailDialog } from './maildialog.component';
 
 @Component({
   selector: 'app-presentationdraftdetail',
@@ -103,6 +104,20 @@ export class PresentationdraftdetailComponent implements OnInit {
     const dialogRef = this.dialog.open(DeleteDialog, {
       width: '270px',
       height: '150px',
+      data: {
+        presentationDraft: this.PsDetail
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log("dialog closed");
+    });
+  }
+
+  openMailDialog(): void {
+    const dialogRef = this.dialog.open(MailDialog, {
+      width: '400px',
+      height: '600px',
       data: {
         presentationDraft: this.PsDetail
       }
