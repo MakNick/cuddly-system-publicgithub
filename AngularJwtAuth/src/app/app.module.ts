@@ -28,6 +28,7 @@ import { PresentationDraftTileComponent } from './tile-view/presentationdraft/pr
 import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
 import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
 import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetail/maildialog.component';
+import { LoginFailComponent } from './login/snackbar-loginfail.component';
 
 
 @NgModule({
@@ -50,6 +51,7 @@ import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetai
     PresentationDraftTileComponent,
     DeleteDialog,
     MailDialog,
+    LoginFailComponent,
     SaveDialog
   ],
   imports: [
@@ -62,7 +64,7 @@ import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetai
     MaterialModule,
     ScrollingModule
   ],
-  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog, MailDialog],
+  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog, MailDialog, LoginFailComponent],
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
   bootstrap: [AppComponent]
 })
