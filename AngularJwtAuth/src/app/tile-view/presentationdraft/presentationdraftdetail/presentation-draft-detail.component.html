@@ -1,97 +1,83 @@
-<div class="detail-container">
-  <div class="back-button-box">
-    <button (click)="closeAndComparePresentationdraft(presentationDraftDetail)"
-            matRipple class="material-icons"
-            matTooltip="Back" matTooltipPosition="below">
-      arrow_back_ios
+<mat-card>
+  <mat-card-header>
+    <mat-card-title> {{presentationDraftDetail.subject}} </mat-card-title>
+    <mat-card-subtitle> Voorstel ID: {{presentationDraftDetail.id}} </mat-card-subtitle>
+    <mat-card-subtitle> Datum inzending: {{presentationDraftDetail.timeOfCreation}} </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-actions class="divider-bottom left-spacing">
+    <button mat-raised-button color="primary" matTooltip="Terug naar overzicht" matTooltipPosition="right"
+      (click)="closeAndComparePresentationdraft(presentationDraftDetail)"><mat-icon>grid_on</mat-icon></button>
+
+    <button style="float:right" color="primary" mat-icon-button [matMenuTriggerFor]="menu" matTooltip="Opties"
+      matTooltipPosition="left">
+      <mat-icon>menu</mat-icon>
     </button>
-  </div>
-  <div class="detail-presentation-draft-box">
-    <div class="info-first-layer">
-      <div class="detail-title">
-        <h1>{{presentationDraftDetail.subject}}</h1>
-      </div>
-      <div class="creation-time-box">
-        <p>Submitted on: {{showCorrectDate(presentationDraftDetail.timeOfCreation)}}</p>
-      </div>
-    </div>
-
-    <div class="info-second-layer">
-      <div class="info-field-box">
-        <div class="type-box">
-          <p>
-            <mat-form-field appearance="legacy">
-              <mat-label>Type</mat-label>
-              <input matInput placeholder="Placeholder" [(ngModel)]="presentationDraftDetail.type">
-            </mat-form-field>
-          </p>
-        </div>
-        <div class="duration-box">
-          <p>
-            <mat-form-field appearance="legacy">
-              <mat-label>Duration</mat-label>
-              <input matInput placeholder="Placeholder" [(ngModel)]="presentationDraftDetail.duration">
-            </mat-form-field>
-          </p>
-        </div>
-        <div class="summary-box">
-          <mat-form-field>
-            <textarea rows="8" matInput placeholder="Summary" [(ngModel)]="presentationDraftDetail.summary"></textarea>
-          </mat-form-field>
-        </div>
-      </div>
-      <div class="tag-box">
-        <div class="label-box">
-          <div class="dropdown">
-            <button class="label-button" *ngIf="presentationDraftDetail.label; else showDefaultLabel">
-              {{presentationDraftDetail.label | lowercase}}
-            </button>
-            <ng-template #showDefaultLabel>
-              <button class="label-button">Kies label</button>
-            </ng-template>
-          </div>
-          <div class="dropdown-content">
-            <p (click)="changeLabel('ACCEPTED')">Accepted</p>
-            <p (click)="changeLabel('DENIED')">Denied</p>
-            <p (click)="changeLabel('RESERVED')">Reserved</p>
-          </div>
-        </div>
-        <div class="category-box">
-          <div class="dropdown">
-            <button class="label-button" *ngIf="presentationDraftDetail.category; else showDefaultCategory">
-              {{presentationDraftDetail.category}}
-            </button>
-            <ng-template #showDefaultCategory>
-              <button class="label-button">Kies categorie</button>
-            </ng-template>
-          </div>
-          <div class="dropdown-content bt-trs">
-            <p (click)="changeCategory(category)" *ngFor="let category of categories">
-              {{category}}
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div>
-
-  <div class="config-button-box">
-
-    <div class="save-button-box">
-      <button (click)="updatePresentationDraft(presentationDraftDetail)" class="save-button far fa-save">
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="downloadSinglePdf(presentationDraftDetail)">
+        <mat-icon>picture_as_pdf</mat-icon>
+        <span>&emsp;Voorstel downloaden</span>
       </button>
-    </div>
-    <div class="download-button-box">
-      <button (click)="downloadSinglePdf(presentationDraftDetail)" class="download-button fa fa-download">
+      <button mat-menu-item (click)="openMailDialog()">
+        <mat-icon>mail</mat-icon>
+        <span>&emsp;Aanvrager mailen</span>
       </button>
-    </div>
-    <div class="delete-button-box">
-      <button (click)="deletePresentationDraft(presentationDraftDetail)" class="delete-button far fa-trash-alt">
+      <button mat-menu-item (click)="updatePresentationDraft(presentationDraftDetail)">
+        <mat-icon>save</mat-icon>
+        <span>&emsp;Voorstel opslaan</span>
       </button>
-    </div>
+      <button mat-menu-item (click)="deletePresentationDraft()">
+        <mat-icon>delete</mat-icon>
+        <span>&emsp;Voorstel verwijderen</span>
+      </button>
+    </mat-menu>
+  </mat-card-actions>
 
-  </div>
-</div>
+  <mat-divider></mat-divider>
 
+  <mat-card-content>
+    <mat-form-field class="left-spacing top-spacing">
+      <input matInput placeholder="Onderwerp" [(ngModel)]="presentationDraftDetail.subject">
+    </mat-form-field>
+
+    <mat-form-field class="left-spacing top-spacing">
+      <input matInput placeholder="Type voorstel" [(ngModel)]="presentationDraftDetail.type">
+    </mat-form-field>
+
+    <mat-form-field class="left-spacing top-spacing">
+      <input matInput placeholder="Geschatte tijdsduur" [(ngModel)]="presentationDraftDetail.duration">
+    </mat-form-field>
+
+    <mat-form-field class="left-spacing">
+      <mat-select placeholder="Label" [value]="presentationDraftDetail.label">
+        <mat-option *ngFor="let label of labels" (click)="changeLabel(label)" [value]="label">
+          {{label}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="left-spacing">
+      <mat-select placeholder="Categorie" [value]="presentationDraftDetail.category">
+        <mat-option *ngFor="let category of this.availableCategories" (click)="changeCategory(category)"
+          [value]="category">
+          {{category}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <br>
+    <mat-form-field class="full-width left-spacing">
+      <textarea matInput placeholder="Samenvatting" [(ngModel)]="presentationDraftDetail.summary" rows="10" width="100%"></textarea>
+    </mat-form-field>
+  </mat-card-content>
+
+  <mat-divider></mat-divider>
+
+  <mat-card-footer>
+    <mat-paginator [hidePageSize]="true" [length]="numberOfDrafts"
+      (page)="pageEvent = $event">
+    </mat-paginator>
+  </mat-card-footer>
+</mat-card>
