@@ -5,11 +5,8 @@
 
 .main-conf-view-carousel{
   display: flex;
+  justify-content: center;
 }
-
-.add-conf-box{
-   margin-top: 10px;
- }
 
 .add-conf-box button{
   font-size: 40px;
@@ -68,6 +65,11 @@
 
 .conference-img-container{
   margin: 10px;
+}
+
+.mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content{
+  right: 0;
+  top: 0;
 }
 
 .conference-tile-small-info{
@@ -273,4 +275,12 @@
   /*transition: .3s ease all;*/
 /*}*/
 
+
+@media only screen and (max-width: 1110px){
+
+  .main-conf-view-tiles{
+    width: 70vw;
+  }
+
+}
 

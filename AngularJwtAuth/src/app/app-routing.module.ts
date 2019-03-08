@@ -9,7 +9,7 @@ import { PmComponent } from './pm/pm.component';
 import { AdminComponent } from './admin/admin.component';
 import { ConferenceComponent } from './tile-view/conference/conference.component';
 import { PresentationDraftComponent } from './tile-view/presentationdraft/presentation-draft.component';
-import { PresentationDraftDetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.component';
+import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.component';
 import { ConferenceFormComponent } from './forms/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./forms/presentationdraftForm/aanmeldformulier.component";
  
@@ -41,7 +41,7 @@ const routes: Routes = [
     },
     //
     {
-        path: 'aanmeldformulierPresentationDraftApplicant',
+        path: 'presentationDraftApplicantForm',
         component: AanmeldformulierComponent
     },
     {
@@ -54,7 +54,7 @@ const routes: Routes = [
     },
     {
         path: 'conference/:id/presentationDraftDetail',
-        component: PresentationDraftDetailComponent
+        component: PresentationdraftdetailComponent
     },
     {
         path: 'auth/login',

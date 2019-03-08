@@ -1,6 +1,6 @@
-import {NgModule} from "@angular/core";
-import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { NgModule } from "@angular/core";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   MatButtonModule,
   MatCheckboxModule,
@@ -18,7 +18,10 @@ import {
   MatRippleModule,
   MatSelectModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatBadgeModule,
+  MatCardModule,
+  MatDividerModule
 } from "@angular/material";
 
 @NgModule({
@@ -41,8 +44,10 @@ import {
     MatDialogModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
-
+    MatNativeDateModule,
+    MatBadgeModule,
+    MatCardModule,
+    MatDividerModule
   ]
 })
-export class MaterialModule{}
+export class MaterialModule { }

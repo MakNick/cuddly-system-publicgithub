@@ -57,10 +57,10 @@
     <!--<span *ngIf="conferences">-->
     <ngu-carousel class="mobile-hide" #myMiniCarousel [inputs]="miniConferenceTileConfigs"
                   [dataSource]="carouselTiles[0]">
-      <ngu-tile *nguCarouselDef="let item; let i = index">
+      <ngu-tile *nguCarouselDef="let item; let i = index" matBadge={{item.presentationDrafts.length}} matBadgeColor="warn">
         <div class="tile-small" routerLink="{{item.id}}">
           <div class="conference-tile-small-info">
-            <p>{{i}} {{item.name}}</p>
+            <p>{{i}}. {{item.name}}</p>
             <img src="../../../assets/TopiconfHeaderLogo.png">
           </div>
         </div>

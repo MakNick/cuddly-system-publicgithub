@@ -1,7 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PresentationDraftComponent } from './presentation-draft.component';
-import { PresentationDraftDetailComponent } from './presentationdraftdetail/presentation-draft-detail.component';
+import { PresentationdraftdetailComponent } from './presentationdraftdetail/presentation-draft-detail.component';
 
 describe('PresentationDraftComponent', () => {
   let component: PresentationDraftComponent;
