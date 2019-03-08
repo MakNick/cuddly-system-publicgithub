@@ -18,11 +18,5 @@ export class HomeComponent implements OnInit {
       username: this.token.getUsername(),
       authorities: this.token.getAuthorities()
     };
-    console.log(this.token); //remove again
-  }
-
-  logout() {
-    this.token.signOut();
-    window.location.reload();
   }
 }
