@@ -34,6 +34,12 @@ const routes: Routes = [
         path: 'conference/conferenceForm',
         component: ConferenceFormComponent
     },
+    //
+    {
+        path: 'aanmeldformulierConference',
+        component: ConferenceFormComponent
+    },
+    //
     {
         path: 'presentationDraftApplicantForm',
         component: AanmeldformulierComponent

@@ -20,7 +20,7 @@ export class ConferenceComponent implements OnInit {
 
   public conferences: Conference[];
 
-  public carouselTiles;
+  public carouselTiles: any;
   public mainConferenceTileConfigs: NguCarouselConfig;
   public miniConferenceTileConfigs: NguCarouselConfig;
 

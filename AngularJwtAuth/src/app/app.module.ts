@@ -19,11 +19,12 @@ import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/
 import { PresentationDraftDetailService } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.service';
 import { ConferenceFormComponent } from './forms/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./forms/presentationdraftForm/aanmeldformulier.component";
+import { AanmeldformulierDialogComponent } from './forms/presentationdraftForm/presentationdraftFormDialog/aanmeldformulier-dialog.component';
+import { ConferenceFormDialogComponent } from './forms/conferenceForm/conferenceFormDialog/conferenceForm-dialog.component';
 import { MaterialModule } from "../material.module";
 import { NguCarouselModule } from "@ngu/carousel";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { AanmeldformulierFeedbackComponent } from './forms/presentationdraftForm/aanmeldformulier.component';
-import { DialogWindowComponent } from './forms/dialogWindow/dialogWindow.component';
 import { PresentationDraftTileComponent } from './tile-view/presentationdraft/presentation-draft-tile/presentation-draft-tile.component';
 import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
 import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
@@ -45,7 +46,8 @@ import { LoginFailComponent } from './login/snackbar-loginfail.component';
     PresentationdraftdetailComponent,
     ConferenceFormComponent,
     AanmeldformulierComponent,
-    DialogWindowComponent,
+    AanmeldformulierDialogComponent,
+    ConferenceFormDialogComponent,
     AanmeldformulierFeedbackComponent,
     FilterPipe,
     PresentationDraftTileComponent,
@@ -64,7 +66,8 @@ import { LoginFailComponent } from './login/snackbar-loginfail.component';
     MaterialModule,
     ScrollingModule
   ],
-  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog, MailDialog, LoginFailComponent],
+  entryComponents: [AanmeldformulierDialogComponent, ConferenceFormDialogComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog, MailDialog, LoginFailComponent],
+
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
   bootstrap: [AppComponent]
 })
