@@ -96,16 +96,18 @@ export class PresentationDraftComponent implements OnInit {
   }
 
   applyFilter() {
-    if (this.categoryFilter != null && this.labelFilter != undefined) {
-      this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategoryAndLabelId(this.conferenceId, this.categoryFilter.toLowerCase(), this.labelFilter, 1, 25)
-        .subscribe(page => this.page = page);
-    } else if (this.categoryFilter != null) {
-      this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategory(this.conferenceId, this.categoryFilter.toLowerCase(), 1, 25)
-        .subscribe(page => this.page = page);
-    } else if (this.labelFilter != undefined) {
-      this.presentationDraftService.getPresentationDraftsByConferenceIdAndLabelId(this.conferenceId, this.labelFilter, 1, 25)
-        .subscribe(page => this.page = page)
-    }
+    this.presentationDraftService.searchPresentationDraft(this.conferenceId, this.searchToken, this.categoryFilter, this.labelFilter
+      , 0, this.page.size)
+    // if (this.categoryFilter != null && this.labelFilter != undefined) {
+    //   this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategoryAndLabelId(this.conferenceId, this.categoryFilter.toLowerCase(), this.labelFilter, 1, 25)
+    //     .subscribe(page => this.page = page);
+    // } else if (this.categoryFilter != null) {
+    //   this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategory(this.conferenceId, this.categoryFilter.toLowerCase(), 1, 25)
+    //     .subscribe(page => this.page = page);
+    // } else if (this.labelFilter != undefined) {
+    //   this.presentationDraftService.getPresentationDraftsByConferenceIdAndLabelId(this.conferenceId, this.labelFilter, 1, 25)
+    //     .subscribe(page => this.page = page)
+    // }
   }
 
   resetFilters() {

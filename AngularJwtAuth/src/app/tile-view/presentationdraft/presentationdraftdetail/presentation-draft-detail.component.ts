@@ -34,8 +34,7 @@ export class PresentationdraftdetailComponent implements OnInit {
   labels: String[] = ["ACCEPTED", "DENIED", "RESERVED"];
 
   constructor(private dialog: MatDialog,
-    private location: Location, private conferenceService: ConferenceService,
-    private presentationDraftDetailService: PresentationDraftDetailService,
+    private location: Location,
     private psDetailService: PresentationDraftDetailService,
     private presentationDraftService: PresentationDraftService,
     private snackBar: MatSnackBar,

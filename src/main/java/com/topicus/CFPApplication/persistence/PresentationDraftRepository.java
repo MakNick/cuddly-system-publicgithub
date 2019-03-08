@@ -18,6 +18,9 @@ public interface PresentationDraftRepository extends PagingAndSortingRepository<
 
 	Page<PresentationDraft> findPresentationDraftByConferenceIdAndCategoryAndLabel(Long conferenceId, String category, Label label, Pageable pageableRequest);
 
+	Page<PresentationDraft> findPresentationDraftByConferenceIdAndSubjectContainingAndCategoryAndLabelOrderByLabelDesc(long conferenceId, String subject, String category,
+																													   Label label, Pageable pageableRequest);
+
 	Page<PresentationDraft> findPresentationDraftByConferenceIdOrderByLabelDesc(Long conferenceId, Pageable pageableRequest);
 
 }

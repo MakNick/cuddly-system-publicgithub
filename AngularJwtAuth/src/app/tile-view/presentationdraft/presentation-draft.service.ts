@@ -12,6 +12,11 @@ export class PresentationDraftService {
 
   constructor(private http : HttpClient) { }
 
+  searchPresentationDraft(conferenceId: number, subject: string, category: string, labelId: number, page: number, limit: number): Observable<Page>{
+    return this.http.get<Page>(`http://localhost:8082/api/conference/${conferenceId}/presentationdrafts/search?
+    s=${subject}&c=${category}&l=${labelId}&page=${page}&limit=${limit}`);
+  }
+
   getPresentationDraftByConferenceId(conferenceId: number, page: number, limit: number): Observable<Page>{
     return this.http.get<Page>(`http://localhost:8082/api/conference/${conferenceId}/presentationdrafts?page=${page}&limit=${limit}`);
   }

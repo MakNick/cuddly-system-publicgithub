@@ -44,6 +44,23 @@ public class PresentationDraftService {
 
     }
 
+    public Page<PresentationDraft> findAllBySearchCriteria(long conferenceId, String subject, String category, int labelId, int page, int limit) {
+
+        List<Integer> pageConfigs = PagingConstants.defaultPageConfigurations(page, limit);
+
+        Label label = Label.UNLABELED;
+
+        for(Label l : Label.values()){
+            if(labelId == l.ordinal()){
+                label = l;
+            }
+        }
+
+        return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndSubjectContainingAndCategoryAndLabelOrderByLabelDesc(conferenceId, subject, category,
+                label, PageRequest.of(pageConfigs.get(0), pageConfigs.get(1)));
+
+    }
+
     public PresentationDraft save(long conferenceId, PresentationDraft presentationDraft) {
 
         Conference currentConference = this.conferenceRepository.findById(conferenceId)

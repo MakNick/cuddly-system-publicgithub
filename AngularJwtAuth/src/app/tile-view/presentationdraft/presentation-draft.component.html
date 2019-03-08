@@ -20,7 +20,7 @@
           <mat-grid-tile
             [@fadeOut] (click)="showPresentationDraftDetail(presentationDraft)" routerLink="presentationDraftDetail"
             [ngClass]="[presentationDraft.label.toLowerCase() + '-tile' + ' mat-grid-tile' + 'mat-ripple']"
-            *ngFor="let presentationDraft of page.content | filterPipe: searchToken" class="draft-tile"
+            *ngFor="let presentationDraft of page.content" class="draft-tile"
             [colspan]="2">
               <!--[{{presentationDraft.id}}]-->
               <!--<div class="draft-tile-info">-->
@@ -50,7 +50,7 @@
     </div>
     <div class="filter-box">
       <mat-form-field>
-        <input matInput [(ngModel)]="searchToken" placeholder="Subject">
+        <input matInput (keyup)="applyFilter()" [(ngModel)]="searchToken" placeholder="Subject">
         <mat-icon matSuffix>
           search
         </mat-icon>
