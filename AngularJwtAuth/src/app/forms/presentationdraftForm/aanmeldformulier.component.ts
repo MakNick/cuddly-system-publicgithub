@@ -208,13 +208,13 @@ export class AanmeldformulierComponent implements OnInit {
     this.iconInit();
     this.tableApplicants = [];
     this.snackBar.openFromComponent(AanmeldformulierFeedbackComponent, {
-      duration: 5000,
+      duration: 5000
     });
   }
 }
 
 @Component({
-  selector: 'snack-bar-component-example-snack',
+  selector: 'aanmeldingsformulier-feedback-snack',
   template: `
   <span>De aanmelding is verstuurd. Bedankt voor het indienen!</span>
 `,
@@ -222,6 +222,6 @@ export class AanmeldformulierComponent implements OnInit {
     span {
       color: white;
     }
-  `],
+  `]
 })
 export class AanmeldformulierFeedbackComponent {}

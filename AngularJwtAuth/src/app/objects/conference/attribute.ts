@@ -1,9 +1,8 @@
 import { Stage } from "./stage";
 
 export class Attribute{
-    name:string;
+    name: string;
     amount: number;
-    icon:Blob;
+    icon: Blob;
     stage: Stage;
-    
 }
