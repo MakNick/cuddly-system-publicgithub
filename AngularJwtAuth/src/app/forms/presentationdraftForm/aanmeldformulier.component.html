@@ -42,7 +42,7 @@
   <!--EINDE VERPLICHTE VELDEN-->
   <!--VANAF HIER DE OPTIONELE VELDEN-->
 
-  <details>
+  <details ng-open="expandOptions">
     <summary>Optionele velden</summary>
     <div class="d-flex p-2">
       <mat-form-field id="mat-form-type" appearance="legacy" formGroupName="presentationDraft">
@@ -92,7 +92,7 @@
               <mat-icon aria-label="icon_new_cohost" (click)=popUpAddCohosts(1)>person_add</mat-icon>
             </td>
           </tr>
-          <tr *ngFor="let applicant of tableApplicants">
+          <tr *ngFor="let applicant of getApplicants()">
               <td (click)="deleteCohost(this.applicant)">{{applicant.name}}</td>
               <mat-icon aria-label="icon_delete_cohost" (click)="deleteCohost(this.applicant)">delete</mat-icon>
           </tr>

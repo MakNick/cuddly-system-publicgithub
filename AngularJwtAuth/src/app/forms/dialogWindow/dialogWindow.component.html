@@ -1,13 +1,15 @@
+<button class="mdc-icon-button material-icons" (click)="close()">close</button>
+
 <h1 mat-dialog-title>{{popUpTitel}}</h1>
 
 <mat-dialog-content [formGroup]="cohostForm" *ngIf="getPopUpType()==0">
     <mat-form-field>
-        <input matInput placeholder="Naam" formControlName="cohostNaam" type="text" (change)="getIconFeedback($event)" required>
+        <input matInput placeholder="Naam" formControlName="name" type="text" (change)="getIconFeedback($event)" required>
         <mat-icon matSuffix>{{iconNameFeedback}}</mat-icon>
     </mat-form-field>
     <br />
     <mat-form-field>
-        <input matInput placeholder="E-mailadres" formControlName="cohostEmail" type="email" (change)="getIconFeedback($event)" required>
+        <input matInput placeholder="E-mailadres" formControlName="email" type="email" (change)="getIconFeedback($event)" required>
         <mat-icon matSuffix>{{iconEmailFeedback}}</mat-icon>
     </mat-form-field>
 

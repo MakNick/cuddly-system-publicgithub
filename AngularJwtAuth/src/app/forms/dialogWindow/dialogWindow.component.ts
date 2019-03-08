@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogActions, MAT_DIALOG_DATA, MatDialogTitle, MatDialogRef } from '@angular/material';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
+import {dialogWindowService} from './dialogWindow.service';
 
 
 export interface DialogData{
@@ -33,7 +34,7 @@ public iconHappy = "sentiment_very_satisfied";
 public iconNameFeedback: string;
 public iconEmailFeedback: string;
 
-  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<DialogWindowComponent>, @Inject(MAT_DIALOG_DATA) private data) {
+  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<DialogWindowComponent>, @Inject(MAT_DIALOG_DATA) private data, private dialogwindowservice: dialogWindowService) {
     this.description = data.description;
   }
 
@@ -46,8 +47,8 @@ public iconEmailFeedback: string;
     this.popUpInhoud = this.data.popUpInhoud;
 
     this.cohostForm = new FormGroup({
-      'cohostNaam': new FormControl(null, [Validators.required, Validators.minLength(3)]),
-      'cohostEmail': new FormControl(null, [Validators.email]),
+      'name': new FormControl(null, [Validators.required, Validators.minLength(3)]),
+      'email': new FormControl(null, [Validators.email]),
     });
 
     this.categorieForm = new FormGroup({
@@ -62,7 +63,8 @@ public iconEmailFeedback: string;
   }
 
   save(){
-    this.dialogRef.close(this.forms[this.popUpType].value);
+    this.dialogwindowservice.saved.push(this.forms[this.popUpType].value);
+    console.log(this.dialogwindowservice.saved);
   }
 
   close(){
@@ -78,12 +80,12 @@ public iconEmailFeedback: string;
     console.log(event.target);
 
     switch(formcontrolname){
-      case "cohostNaam":
-      this.iconNameFeedback = (this.cohostForm.get('cohostNaam').invalid == true) ? this.iconUnhappy : this.iconHappy;
+      case 'name':
+      this.iconNameFeedback = (this.cohostForm.get('name').invalid == true) ? this.iconUnhappy : this.iconHappy;
       break;
 
-      case "cohostEmail":
-      this.iconEmailFeedback = (this.cohostForm.get('cohostEmail').invalid == true) ? this.iconUnhappy : this.iconHappy;
+      case 'email':
+      this.iconEmailFeedback = (this.cohostForm.get('email').invalid == true) ? this.iconUnhappy : this.iconHappy;
       break;
     }
   }

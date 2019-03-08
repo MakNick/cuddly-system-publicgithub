@@ -6,6 +6,7 @@ import { PresentationDraftApplicant } from '../../objects/presentationDraftAppli
 import { Conference } from '../../objects/conference/conference';
 import { MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { DialogWindowComponent } from '../dialogWindow/dialogWindow.component';
+import {dialogWindowService} from '../dialogWindow/dialogWindow.service';
 
 @Component({
   selector: 'app-aanmeldformulier',
@@ -35,11 +36,13 @@ export class AanmeldformulierComponent implements OnInit {
   public iconSubjectFeedback: string;
   public iconSummaryFeedback: string;
 
+  public expandOptions: boolean;
+
   presentationdraftForm: FormGroup;
 
   fileNameDialogRef: MatDialogRef<DialogWindowComponent>;
 
-  constructor(private draftAanmeldService: draftAanmeldService, public dialog: MatDialog, private snackBar: MatSnackBar) {
+  constructor(private draftAanmeldService: draftAanmeldService, public dialog: MatDialog, private snackBar: MatSnackBar, private dialogwindowservice: dialogWindowService) {
   }
 
   ngOnInit(): void {
@@ -162,31 +165,24 @@ export class AanmeldformulierComponent implements OnInit {
       popUpType: 0
     }
     
-    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      data => {
-        this.maakCohost([data.cohostNaam, data.cohostEmail]);
-      }
-    );
+    this.dialog.open(DialogWindowComponent, dialogConfig);
   }
 
-  maakCohost(applicantInfo: string[]){
-    let applicant = new Applicant();
-    applicant.name = applicantInfo[0];
-    applicant.email = applicantInfo[1];
-    applicant.requests = 'Ik ben een cohost';
-    this.tableApplicants.push(applicant);
+  getApplicants(){
+    for (const applicant of this.dialogwindowservice.saved){
+      applicant.requests = 'Ik ben een cohost';
+    }
+    return this.dialogwindowservice.saved;
   }
 
   deleteCohost(applicant: Applicant){
-    this.tableApplicants.splice(this.tableApplicants.indexOf(applicant), 1);
+    this.getApplicants().splice(this.tableApplicants.indexOf(applicant), 1);
   }
 
   prepareApplicants() {
-    this.presentationDraftApplicant.applicants = this.tableApplicants;
-    let indiener = Object.assign(this.presentationdraftForm.get('indiener').value);
-    this.presentationDraftApplicant.applicants.push(indiener);
+    this.presentationDraftApplicant.applicants = this.getApplicants();
+    const indiener = Object.assign(this.presentationdraftForm.get('indiener').value);
+    this.presentationDraftApplicant.applicants.unshift(indiener);
   }
     
   submit() {
@@ -200,6 +196,8 @@ export class AanmeldformulierComponent implements OnInit {
         });
 
     this.submitted = true;
+    this.expandOptions = false;
+    this.dialogwindowservice.saved = [];
     this.openSnackBar();
   }
 
