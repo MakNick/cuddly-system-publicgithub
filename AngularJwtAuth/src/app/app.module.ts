@@ -24,6 +24,7 @@ import {NguCarouselModule} from "@ngu/carousel";
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import { AanmeldformulierFeedbackComponent } from './forms/presentationdraftForm/aanmeldformulier.component';
 import { DialogWindowComponent } from './forms/dialogWindow/dialogWindow.component';
+import { PresentationDraftTileComponent } from './tile-view/presentationdraft/presentation-draft-tile/presentation-draft-tile.component';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import { DialogWindowComponent } from './forms/dialogWindow/dialogWindow.compone
     AanmeldformulierComponent,
     DialogWindowComponent,
     AanmeldformulierFeedbackComponent,
-    FilterPipe
+    FilterPipe,
+    PresentationDraftTileComponent
   ],
   imports: [ 
     BrowserModule,

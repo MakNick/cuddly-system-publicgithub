@@ -8,10 +8,6 @@
   justify-content: center;
 }
 
-.add-conf-box{
-   margin-top: 10px;
- }
-
 .add-conf-box button{
   font-size: 40px;
   color: #4f3e8e;
@@ -69,6 +65,11 @@
 
 .conference-img-container{
   margin: 10px;
+}
+
+.mat-badge-medium.mat-badge-overlap.mat-badge-after .mat-badge-content{
+  right: 0;
+  top: 0;
 }
 
 .conference-tile-small-info{

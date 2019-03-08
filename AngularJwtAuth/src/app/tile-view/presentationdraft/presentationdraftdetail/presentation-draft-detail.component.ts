@@ -5,6 +5,7 @@ import {PresentationDraft} from 'src/app/objects/presentation-draft';
 import {PresentationDraftDetailService} from './presentation-draft-detail.service';
 import {PresentationDraftService} from '../presentation-draft.service';
 import {MatSnackBar} from "@angular/material";
+import {DateFormatService} from "../../../services/date-format.service";
 
 @Component({
 
@@ -24,7 +25,8 @@ export class PresentationDraftDetailComponent implements OnInit {
   constructor(private location: Location,
               private presentationDraftDetailService: PresentationDraftDetailService,
               private presentationDraftService: PresentationDraftService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private dateFormatService: DateFormatService) {
   }
 
   ngOnInit() {
@@ -65,7 +67,6 @@ export class PresentationDraftDetailComponent implements OnInit {
         presentationDraft => this.presentationDraftDetail = presentationDraft,
         error => this.showFail(error),
         () => this.showSucces());
-    // this.popup();
   }
 
   showSucces() {
@@ -89,19 +90,7 @@ export class PresentationDraftDetailComponent implements OnInit {
   }
 
   public showCorrectDate(date: Date) {
-    let arrayOfDate: string[] = String(date).split(",");
-    let formattedDate: string = "";
-    for (let i = 2; i >= 0; i--) {
-      if (arrayOfDate[i] !== ",") {
-        if (i == 0) {
-          +arrayOfDate[i] < 10 ? formattedDate += ("0" + arrayOfDate[i]) : formattedDate += arrayOfDate[i];
-        } else {
-          // formattedDate +=correctDate + "-";
-          +arrayOfDate[i] < 10 ? formattedDate += ("0" + arrayOfDate[i] + "-") : formattedDate += arrayOfDate[i] + "-";
-        }
-      }
-    }
-    return formattedDate;
+    return this.dateFormatService.showCorrectDate(date);
   }
 
   downloadSinglePdf(PsDetail) {

@@ -11,6 +11,7 @@ import {ConferenceService} from "../conference/conference.service";
 import {PresentationDraft} from "../../objects/presentation-draft";
 import {PresentationDraftDetailService} from "./presentationdraftdetail/presentation-draft-detail.service";
 import {fadeOut} from "../../animations/presentation-draft-tile-view";
+import {DateFormatService} from "../../services/date-format.service";
 
 @Component({
   selector: 'app-presentationdraft',
@@ -32,7 +33,7 @@ export class PresentationDraftComponent implements OnInit {
   availableCategories: string[];
 
   currentPageIndex: number;
-  pageSizeOptions: number[] = [25,50,100];
+  pageSizeOptions: number[] = [25, 50, 100];
 
   constructor(private presentationDraftService: PresentationDraftService,
               private route: ActivatedRoute, private conferenceService: ConferenceService,
@@ -59,11 +60,11 @@ export class PresentationDraftComponent implements OnInit {
     this.getCategories();
 
   }
+
   showAll() {
     this.presentationDraftService.getPresentationDraftByConferenceId(this.conferenceId, this.currentPageIndex ? this.currentPageIndex : 1, this.page ? this.page.size : 25).subscribe(page => {
       this.page = page;
     });
-
   }
 
   paginate(pageEvent: PageEvent) {
@@ -72,16 +73,16 @@ export class PresentationDraftComponent implements OnInit {
       .subscribe(page => this.page = page);
   }
 
-  savePageConfigs(event){
+  savePageConfigs(event) {
     this.page.size = event.pageSize;
     event.pageIndex == 1 ? this.currentPageIndex = 2 : this.currentPageIndex = event.pageIndex;
   }
 
-  back(){
+  back() {
     this.location.back();
   }
 
-  showPresentationDraftDetail(ps:PresentationDraft): void {
+  showPresentationDraftDetail(ps: PresentationDraft): void {
     this.presentationDraftDetailService.selectedPresentationDraft = ps;
     this.presentationDraftDetailService.activeConferenceId = this.conferenceId;
     this.presentationDraftDetailService.categories = this.availableCategories;
@@ -92,13 +93,13 @@ export class PresentationDraftComponent implements OnInit {
   }
 
   applyFilter() {
-    if(this.categoryFilter != null && this.labelFilter != undefined){
+    if (this.categoryFilter != null && this.labelFilter != undefined) {
       this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategoryAndLabelId(this.conferenceId, this.categoryFilter.toLowerCase(), this.labelFilter, 1, 25)
         .subscribe(page => this.page = page);
-    }else if(this.categoryFilter != null){
+    } else if (this.categoryFilter != null) {
       this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategory(this.conferenceId, this.categoryFilter.toLowerCase(), 1, 25)
         .subscribe(page => this.page = page);
-    }else if(this.labelFilter != undefined){
+    } else if (this.labelFilter != undefined) {
       this.presentationDraftService.getPresentationDraftsByConferenceIdAndLabelId(this.conferenceId, this.labelFilter, 1, 25)
         .subscribe(page => this.page = page)
     }

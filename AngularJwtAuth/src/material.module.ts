@@ -18,7 +18,8 @@ import {
   MatRippleModule,
   MatSelectModule,
   MatSnackBarModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatBadgeModule
 } from "@angular/material";
 
 @NgModule({
@@ -41,7 +42,8 @@ import {
     MatDialogModule,
     MatSnackBarModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatBadgeModule
 
   ]
 })
