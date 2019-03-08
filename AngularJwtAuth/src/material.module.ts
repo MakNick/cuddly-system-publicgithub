@@ -19,6 +19,7 @@ import {
   MatSelectModule,
   MatSnackBarModule,
   MatToolbarModule,
+  MatBadgeModule,
   MatCardModule,
   MatDividerModule
 } from "@angular/material";
@@ -44,6 +45,7 @@ import {
     MatSnackBarModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatBadgeModule,
     MatCardModule,
     MatDividerModule
   ]

@@ -50,11 +50,8 @@
       <span *ngIf="authority === 'admin'" class="nav-item">
         <a mat-button [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link" routerLink="admin" routerLinkActive #isOpen="routerLinkActive">Admin Board</a>
       </span>
-      <span *ngIf="authority === 'admin'" class="nav-item">
-        <a mat-button  [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link" routerLink="aanmeldformulierConference" routerLinkActive #isOpen="routerLinkActive">Conference aanmaken</a>
-      </span>
       <span *ngIf="authority === 'user'" class="nav-item">
-        <a mat-button [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link" routerLink="aanmeldformulierPresentationDraftApplicant" routerLinkActive #isOpen="routerLinkActive">Voorstel indienen</a>
+        <a mat-button [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link" routerLink="presentationDraftApplicantForm" routerLinkActive #isOpen="routerLinkActive">Voorstel indienen</a>
       </span>
       <span *ngIf="authority === 'admin'" class="nav-item">
         <a mat-button [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link" routerLink="conference" routerLinkActive #isOpen="routerLinkActive">Conference</a>
@@ -76,11 +73,8 @@
       <span mat-menu-item *ngIf="authority === 'admin'" class="nav-item">
         <a mat-button class="nav-link" routerLink="admin" routerLinkActive="active-nav-link">Admin Board</a>
       </span>
-      <span mat-menu-item *ngIf="authority === 'admin'" class="nav-item">
-        <a mat-button class="nav-link" routerLink="aanmeldformulierConference" routerLinkActive="active-nav-link">Conference aanmaken</a>
-      </span>
       <span mat-menu-item *ngIf="authority === 'user'" class="nav-item">
-        <a mat-button class="nav-link" routerLink="aanmeldformulierPresentationDraftApplicant" routerLinkActive="active-nav-link">Voorstel indienen</a>
+        <a mat-button class="nav-link" routerLink="presentationDraftApplicantForm" routerLinkActive="active-nav-link">Voorstel indienen</a>
       </span>
       <span mat-menu-item *ngIf="authority === 'admin'" class="nav-item">
         <a mat-button class="nav-link" routerLink="conference" routerLinkActive="active-nav-link">Conference</a>

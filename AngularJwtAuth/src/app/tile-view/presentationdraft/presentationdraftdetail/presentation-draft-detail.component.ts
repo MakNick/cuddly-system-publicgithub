@@ -1,10 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {Location} from '@angular/common';
 
-import { PresentationDraft } from 'src/app/objects/presentation-draft';
+import {PresentationDraft} from 'src/app/objects/presentation-draft';
+import {PresentationDraftDetailService} from './presentation-draft-detail.service';
+import {PresentationDraftService} from '../presentation-draft.service';
+import {MatSnackBar} from "@angular/material";
+import {DateFormatService} from "../../../services/date-format.service";
+
 import { Conference } from 'src/app/objects/conference/conference';
-import { PresentationDraftDetailService } from './presentation-draft-detail.service';
-import { PresentationDraftService } from '../presentation-draft.service';
 import { MatDialog } from '@angular/material';
 import { SaveDialog } from './savedialog.component';
 import { DeleteDialog } from './deletedialog.component';
@@ -19,10 +22,9 @@ import { MailDialog } from './maildialog.component';
 
 export class PresentationdraftdetailComponent implements OnInit {
 
-  PsDetail: PresentationDraft;
+  presentationDraftDetail: PresentationDraft;
 
   PsCompare: String;
-
   conferenceId: number;
   availableCategories: string[];
   numberOfDrafts: number;
@@ -33,11 +35,14 @@ export class PresentationdraftdetailComponent implements OnInit {
 
   constructor(private dialog: MatDialog,
     private location: Location, private conferenceService: ConferenceService,
+    private presentationDraftDetailService: PresentationDraftDetailService,
     private psDetailService: PresentationDraftDetailService,
-    private presentationDraftService: PresentationDraftService) { }
+    private presentationDraftService: PresentationDraftService,
+    private snackBar: MatSnackBar,
+    private dateFormatService: DateFormatService) { }
 
   ngOnInit() {
-    this.PsDetail = this.psDetailService.selectedPresentationDraft;
+    this.presentationDraftDetail = this.psDetailService.selectedPresentationDraft;
     this.PsCompare = JSON.stringify(this.psDetailService.selectedPresentationDraft);
     this.conferenceId = this.psDetailService.activeConferenceId;
     this.availableCategories = this.psDetailService.categories;
@@ -51,16 +56,36 @@ export class PresentationdraftdetailComponent implements OnInit {
   }
 
   changeLabel(value) {
-    this.PsDetail.label = value;
+    this.presentationDraftDetail.label = value;
   }
 
   changeCategory(value) {
-    this.PsDetail.category = value;
+    this.presentationDraftDetail.category = value;
   }
 
   updatePresentationDraft(PsDetail) {
-    this.presentationDraftService.updatePresentationDraft(this.conferenceId, PsDetail).subscribe();
-    this.PsCompare = JSON.stringify(this.psDetailService.selectedPresentationDraft);
+    let validConferenceId = +(this.conferenceId == null ? localStorage.getItem("conferenceId") : this.conferenceId);
+    this.presentationDraftService.updatePresentationDraft(validConferenceId, PsDetail)
+      .subscribe(
+        presentationDraft => this.presentationDraftDetail = presentationDraft,
+        error => this.showFail(error),
+        () => this.showSucces());
+  }
+
+  showSucces() {
+    this.snackBar.open("Succes!", "The presentation draft has been saved", {
+      duration: 2000
+    });
+  }
+
+  showFail(error: Error) {
+    this.snackBar.open("Could not save", error.name, {
+      duration: 2000
+    });
+  }
+
+  public showCorrectDate(date: Date) {
+    return this.dateFormatService.showCorrectDate(date);
   }
 
   deletePresentationDraft() {
@@ -91,7 +116,7 @@ export class PresentationdraftdetailComponent implements OnInit {
       height: '180px',
       data: {
         number: this.conferenceId,
-        presentationDraft: this.PsDetail
+        presentationDraft: this.presentationDraftDetail
       }
     });
 
@@ -105,7 +130,7 @@ export class PresentationdraftdetailComponent implements OnInit {
       width: '270px',
       height: '180px',
       data: {
-        presentationDraft: this.PsDetail
+        presentationDraft: this.presentationDraftDetail
       }
     });
 
@@ -119,7 +144,7 @@ export class PresentationdraftdetailComponent implements OnInit {
       width: '400px',
       height: '600px',
       data: {
-        presentationDraft: this.PsDetail
+        presentationDraft: this.presentationDraftDetail
       }
     });
 
