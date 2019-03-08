@@ -7,6 +7,7 @@ import {slider} from "../../animations/carousel";
 import {NguCarouselConfig} from "@ngu/carousel";
 import {interval, Observable} from "rxjs";
 import {map, startWith, take} from "rxjs/operators";
+import {DateFormatService} from "../../services/date-format.service";
 
 @Component({
   selector: 'app-conference',
@@ -23,7 +24,8 @@ export class ConferenceComponent implements OnInit {
   public mainConferenceTileConfigs: NguCarouselConfig;
   public miniConferenceTileConfigs: NguCarouselConfig;
 
-  constructor(private conferenceService: ConferenceService) {
+  constructor(private conferenceService: ConferenceService,
+              private dateFormatService: DateFormatService) {
   }
 
   ngOnInit() {
@@ -40,22 +42,6 @@ export class ConferenceComponent implements OnInit {
   //   }
   // }
 
-  public showCorrectDate(date: Date) {
-    let arrayOfDate: string[] = String(date).split(",");
-    let formattedDate: string = "";
-    for (let i = 2; i >= 0; i--) {
-      if (arrayOfDate[i] !== ",") {
-        if (i == 0) {
-          +arrayOfDate[i] < 10 ? formattedDate += ("0" + arrayOfDate[i]) : formattedDate += arrayOfDate[i];
-        } else {
-          // formattedDate +=correctDate + "-";
-          +arrayOfDate[i] < 10 ? formattedDate += ("0" + arrayOfDate[i] + "-") : formattedDate += arrayOfDate[i] + "-";
-        }
-      }
-    }
-    return formattedDate;
-  }
-
   fillConferences() {
     this.conferenceService.getConferences()
       .subscribe(conferences =>
@@ -63,6 +49,10 @@ export class ConferenceComponent implements OnInit {
         error => console.log(error),
         () => this.initializeCarousel()
       );
+  }
+
+  showCorrectDate(date: Date){
+    return this.dateFormatService.showCorrectDate(date);
   }
 
   initializeCarousel() {
@@ -85,7 +75,7 @@ export class ConferenceComponent implements OnInit {
       easing: 'cubic-bezier(0, 0, 0.2, 1)'
     };
 
-    const miniTileAmount: number = this.conferences.length < 10 ? this.conferences.length : 10;
+    const miniTileAmount: number = this.conferences.length < 10 ? this.conferences.length : 8;
     this.miniConferenceTileConfigs = {
       grid: {xs: 2, sm: 3, md: 4, lg: miniTileAmount, all: 0},
       speed: 250,

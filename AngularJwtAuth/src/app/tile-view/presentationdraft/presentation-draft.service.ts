@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { PresentationDraft } from '../../objects/presentation-draft';
-import { Conference } from 'src/app/forms/conferenceForm/conferenceForm';
 import {Page} from "../../objects/paging/page";
 
 @Injectable({

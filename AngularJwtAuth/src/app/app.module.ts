@@ -24,6 +24,7 @@ import { NguCarouselModule } from "@ngu/carousel";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { AanmeldformulierFeedbackComponent } from './forms/presentationdraftForm/aanmeldformulier.component';
 import { DialogWindowComponent } from './forms/dialogWindow/dialogWindow.component';
+import { PresentationDraftTileComponent } from './tile-view/presentationdraft/presentation-draft-tile/presentation-draft-tile.component';
 import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
 import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
 import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetail/maildialog.component';
@@ -47,10 +48,11 @@ import { LoginFailComponent } from './login/snackbar-loginfail.component';
     DialogWindowComponent,
     AanmeldformulierFeedbackComponent,
     FilterPipe,
-    SaveDialog,
+    PresentationDraftTileComponent,
     DeleteDialog,
     MailDialog,
-    LoginFailComponent
+    LoginFailComponent,
+    SaveDialog
   ],
   imports: [
     BrowserModule,
