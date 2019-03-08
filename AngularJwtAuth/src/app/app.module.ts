@@ -20,10 +20,11 @@ import { PresentationDraftDetailService } from './tile-view/presentationdraft/pr
 import { ConferenceFormComponent } from './forms/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./forms/presentationdraftForm/aanmeldformulier.component";
 import {MaterialModule} from "../material.module";
-import {NguCarouselModule} from "@ngu/carousel";
+import {NguCarouselModule} from '@ngu/carousel';
 import {ScrollingModule} from "@angular/cdk/scrolling";
 import { AanmeldformulierFeedbackComponent } from './forms/presentationdraftForm/aanmeldformulier.component';
-import { DialogWindowComponent } from './forms/dialogWindow/dialogWindow.component';
+import { AanmeldformulierDialogComponent } from './forms/presentationdraftForm/presentationdraftFormDialog/aanmeldformulier-dialog.component';
+import { ConferenceFormDialogComponent } from './forms/conferenceForm/conferenceFormDialog/conferenceForm-dialog.component';
 
 
 @NgModule({
@@ -40,7 +41,8 @@ import { DialogWindowComponent } from './forms/dialogWindow/dialogWindow.compone
     PresentationDraftDetailComponent,
     ConferenceFormComponent,
     AanmeldformulierComponent,
-    DialogWindowComponent,
+    AanmeldformulierDialogComponent,
+    ConferenceFormDialogComponent,
     AanmeldformulierFeedbackComponent,
     FilterPipe
   ],
@@ -55,7 +57,7 @@ import { DialogWindowComponent } from './forms/dialogWindow/dialogWindow.compone
     ScrollingModule
 
   ],
-  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent],
+  entryComponents: [AanmeldformulierDialogComponent, AanmeldformulierFeedbackComponent, ConferenceFormDialogComponent],
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
   bootstrap: [AppComponent]
 })

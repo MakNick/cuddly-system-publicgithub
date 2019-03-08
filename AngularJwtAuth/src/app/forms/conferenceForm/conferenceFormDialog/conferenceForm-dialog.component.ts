@@ -9,17 +9,14 @@ export interface DialogData{
 }
 
 @Component({
-  selector: 'app-dialogwindow',
-  templateUrl: './dialogWindow.component.html',
-  styleUrls: ['./dialogWindow.component.css']
+  selector: 'app-conferenceformulier-dialog',
+  templateUrl: './conferenceForm-dialog.component.html',
+  styleUrls: ['./conferenceForm-dialog.component.css']
 })
-export class DialogWindowComponent implements OnInit {
-cohostForm: FormGroup;
+export class ConferenceFormDialogComponent implements OnInit {
 categorieForm: FormGroup;
 stageForm: FormGroup;
 description: string;
-cohostNaam: string;
-cohostEmail: string;
 
 forms: FormGroup[];
 
@@ -33,22 +30,17 @@ public iconHappy = "sentiment_very_satisfied";
 public iconNameFeedback: string;
 public iconEmailFeedback: string;
 
-  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<DialogWindowComponent>, @Inject(MAT_DIALOG_DATA) private data) {
+  constructor(private fb: FormBuilder, private dialogRef: MatDialogRef<ConferenceFormDialogComponent>, @Inject(MAT_DIALOG_DATA) private data) {
     this.description = data.description;
   }
 
   ngOnInit(): void {
-    this.popUpType = this.data.popUpType;
     this.iconNameFeedback = "sentiment_dissatisfied";
     this.iconEmailFeedback = "sentiment_dissatisfied";
 
     this.popUpTitel = this.data.popUpTitel;
     this.popUpInhoud = this.data.popUpInhoud;
-
-    this.cohostForm = new FormGroup({
-      'cohostNaam': new FormControl(null, [Validators.required, Validators.minLength(3)]),
-      'cohostEmail': new FormControl(null, [Validators.email]),
-    });
+    this.popUpType = this.data.popUpType;
 
     this.categorieForm = new FormGroup({
       'category': new FormControl(null, [Validators.required, Validators.minLength(1)])
@@ -58,7 +50,7 @@ public iconEmailFeedback: string;
       'stage': new FormControl(null, [Validators.required, Validators.minLength(1)])
     });
 
-    this.forms = [this.cohostForm, this.categorieForm, this.stageForm];
+    this.forms = [this.categorieForm, this.stageForm];
   }
 
   save(){
@@ -72,22 +64,6 @@ public iconEmailFeedback: string;
   getPopUpType(){
     return this.popUpType;
   }
-
-  getIconFeedback(event: any){
-    let formcontrolname = event.target.getAttribute('formcontrolname');
-    console.log(event.target);
-
-    switch(formcontrolname){
-      case "cohostNaam":
-      this.iconNameFeedback = (this.cohostForm.get('cohostNaam').invalid == true) ? this.iconUnhappy : this.iconHappy;
-      break;
-
-      case "cohostEmail":
-      this.iconEmailFeedback = (this.cohostForm.get('cohostEmail').invalid == true) ? this.iconUnhappy : this.iconHappy;
-      break;
-    }
-  }
-
-    
+ 
 }
 

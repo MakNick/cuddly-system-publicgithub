@@ -87,9 +87,9 @@
       <table id="mat-form-addCohostTable">
         <ng-container>
           <tr>
-            <td mat-cell class="tdHeaderText" (click)=popUpAddCohosts(1)>Mede-presentator toevoegen (Max. 8)</td>
+            <td mat-cell class="tdHeaderText" (click)=popUpAddCohosts()>Mede-presentator toevoegen (Max. 8)</td>
             <td>
-              <mat-icon aria-label="icon_new_cohost" (click)=popUpAddCohosts(1)>person_add</mat-icon>
+              <mat-icon aria-label="icon_new_cohost" (click)=popUpAddCohosts()>person_add</mat-icon>
             </td>
           </tr>
           <tr *ngFor="let applicant of tableApplicants">
