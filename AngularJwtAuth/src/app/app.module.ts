@@ -28,6 +28,7 @@ import { PresentationDraftTileComponent } from './tile-view/presentationdraft/pr
 import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
 import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
 import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetail/maildialog.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 
 
 @NgModule({
@@ -60,7 +61,8 @@ import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetai
     NguCarouselModule,
     ReactiveFormsModule,
     MaterialModule,
-    ScrollingModule
+    ScrollingModule,
+    AngularFontAwesomeModule
   ],
   entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog, MailDialog],
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
