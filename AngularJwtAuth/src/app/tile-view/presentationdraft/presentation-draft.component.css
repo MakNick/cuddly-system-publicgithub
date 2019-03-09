@@ -2,13 +2,6 @@
   display: flex;
 }
 
-.loading-container{
-  position: absolute;
-  left: 40%;
-  top: 40%;
-  z-index: 1;
-}
-
 .back-button-box{
   align-items: start;
 }
