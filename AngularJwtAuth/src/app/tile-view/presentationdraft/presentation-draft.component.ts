@@ -12,6 +12,7 @@ import {PresentationDraft} from "../../objects/presentation-draft";
 import {PresentationDraftDetailService} from "./presentationdraftdetail/presentation-draft-detail.service";
 import {fadeOut} from "../../animations/presentation-draft-tile-view";
 import {DateFormatService} from "../../services/date-format.service";
+import {LoadingService} from "../../services/loading.service";
 
 @Component({
   selector: 'app-presentationdraft',
@@ -21,6 +22,7 @@ import {DateFormatService} from "../../services/date-format.service";
 })
 export class PresentationDraftComponent implements OnInit {
 
+  // in de service?
   page: Page;
   conferenceId: number;
 
@@ -39,7 +41,7 @@ export class PresentationDraftComponent implements OnInit {
   constructor(private presentationDraftService: PresentationDraftService,
               private route: ActivatedRoute, private conferenceService: ConferenceService,
               private presentationDraftDetailService: PresentationDraftDetailService,
-              private location: Location) {
+              private location: Location, private loadingService: LoadingService) {
 
   }
 
@@ -83,6 +85,10 @@ export class PresentationDraftComponent implements OnInit {
     this.location.back();
   }
 
+  isLoading(){
+    return this.loadingService.isLoading();
+  }
+
   showPresentationDraftDetail(ps: PresentationDraft): void {
     this.presentationDraftDetailService.selectedPresentationDraft = ps;
     this.presentationDraftDetailService.activeConferenceId = this.conferenceId;
@@ -96,18 +102,14 @@ export class PresentationDraftComponent implements OnInit {
   }
 
   applyFilter() {
-    this.presentationDraftService.searchPresentationDraft(this.conferenceId, this.searchToken, this.categoryFilter, this.labelFilter
-      , 0, this.page.size)
-    // if (this.categoryFilter != null && this.labelFilter != undefined) {
-    //   this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategoryAndLabelId(this.conferenceId, this.categoryFilter.toLowerCase(), this.labelFilter, 1, 25)
-    //     .subscribe(page => this.page = page);
-    // } else if (this.categoryFilter != null) {
-    //   this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategory(this.conferenceId, this.categoryFilter.toLowerCase(), 1, 25)
-    //     .subscribe(page => this.page = page);
-    // } else if (this.labelFilter != undefined) {
-    //   this.presentationDraftService.getPresentationDraftsByConferenceIdAndLabelId(this.conferenceId, this.labelFilter, 1, 25)
-    //     .subscribe(page => this.page = page)
-    // }
+    this.loadingService.setLoading(true);
+    this.presentationDraftService.searchPresentationDraft(this.conferenceId, this.searchToken != undefined ? this.searchToken : ""
+      , this.categoryFilter != undefined ? this.categoryFilter : "", this.labelFilter != undefined ? this.labelFilter : -1
+      , 0, this.page.size).subscribe(
+        page => this.page = page,
+        error => console.log(error.message),
+      () => this.loadingService.setLoading(false)
+      );
   }
 
   resetFilters() {

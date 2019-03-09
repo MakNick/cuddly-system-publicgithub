@@ -13,24 +13,11 @@ export class PresentationDraftService {
   constructor(private http : HttpClient) { }
 
   searchPresentationDraft(conferenceId: number, subject: string, category: string, labelId: number, page: number, limit: number): Observable<Page>{
-    return this.http.get<Page>(`http://localhost:8082/api/conference/${conferenceId}/presentationdrafts/search?
-    s=${subject}&c=${category}&l=${labelId}&page=${page}&limit=${limit}`);
+    return this.http.get<Page>(`http://localhost:8082/api/conference/${conferenceId}/presentationdrafts/search?s=${subject}&c=${category}&l=${labelId}&page=${page}&limit=${limit}`);
   }
 
   getPresentationDraftByConferenceId(conferenceId: number, page: number, limit: number): Observable<Page>{
     return this.http.get<Page>(`http://localhost:8082/api/conference/${conferenceId}/presentationdrafts?page=${page}&limit=${limit}`);
-  }
-
-  getPresentationDraftsByConferenceIdAndLabelId(conferenceId: number, labelId: number, page: number, limit: number): Observable<Page>{
-    return this.http.get<Page>(`http://localhost:8082/api/conference/${conferenceId}/presentationdrafts/label/${labelId}?page=${page}&limit=${limit}`);
-  }
-
-  getPresentationDraftsByConferenceIdAndCategory(conferenceId: number, category: string, page: number, limit: number): Observable<Page>{
-    return this.http.get<Page>(`http://localhost:8082/api/conference/${conferenceId}/presentationdrafts/category/${category}?page=${page}&limit=${limit}`);
-  }
-
-  getPresentationDraftsByConferenceIdAndCategoryAndLabelId(conferenceId: number, category: string, labelId: number, page: number, limit: number): Observable<Page>{
-    return this.http.get<Page>(`http://localhost:8082/api/conference/${conferenceId}/presentationdrafts/category/${category}/labelId/${labelId}?page=${page}&limit=${limit}`);
   }
 
   updatePresentationDraft(conferenceId: number, presentationDraft: PresentationDraft): Observable<PresentationDraft>{

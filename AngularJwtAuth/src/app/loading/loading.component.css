@@ -1,0 +1,11 @@
+.loading-box{
+  padding: 10px;
+  background: #180A3D;
+  border: 2px solid #000;
+}
+
+.loading-box h1{
+  color: #fff;
+}
+
+

@@ -48,16 +48,40 @@ public class PresentationDraftService {
 
         List<Integer> pageConfigs = PagingConstants.defaultPageConfigurations(page, limit);
 
-        Label label = Label.UNLABELED;
+        Pageable pageRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
 
-        for(Label l : Label.values()){
-            if(labelId == l.ordinal()){
-                label = l;
+        Label correctLabel = null;
+
+        for(Label label : Label.values()){
+            if(labelId == label.ordinal()){
+                correctLabel = label;
             }
         }
 
-        return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndSubjectContainingAndCategoryAndLabelOrderByLabelDesc(conferenceId, subject, category,
-                label, PageRequest.of(pageConfigs.get(0), pageConfigs.get(1)));
+        if(subject.isEmpty() && category.isEmpty() && labelId == -1 || labelId == 5){
+            return this.presentationDraftRepository.findPresentationDraftByConferenceIdOrderByLabelDesc(conferenceId,pageRequest);
+        }
+
+        if(subject.isEmpty()){
+            if(category.isEmpty()){ // filter by label
+                return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndLabelOrderBySubject(conferenceId, correctLabel, pageRequest);
+            }else if(labelId != -1){ // filter by category and label
+                return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndCategoryAndLabelOrderBySubject(conferenceId, category, correctLabel, pageRequest);
+            }else{ // filter by category
+                return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndCategoryOrderByLabelDesc(conferenceId, category, pageRequest);
+
+            }
+        }else{
+            if(category.isEmpty() && labelId == -1){ // filter by subject
+                return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndSubjectContainingOrderByLabelDesc(conferenceId,subject,pageRequest);
+            }else if(category.isEmpty()){ // filter by subject and label
+                return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndSubjectContainingAndLabel(conferenceId,subject,correctLabel,pageRequest);
+            }else if (labelId == -1){ // filter by subject and category
+                return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndSubjectContainingAndCategoryOrderByLabelDesc(conferenceId,subject,category,pageRequest);
+            }
+        }
+
+        return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndSubjectContainingAndCategoryAndLabel(conferenceId,subject,category,correctLabel,pageRequest);
 
     }
 
@@ -117,35 +141,6 @@ public class PresentationDraftService {
         }
         throw new RuntimeException("Could not find a presentation draft with the label id of " + labelId);
     }
-
-    public Page<PresentationDraft> findPresentationDraftsByCategory(Long conferenceId, String category, int page, int limit) {
-
-        List<Integer> pageConfigs = PagingConstants.defaultPageConfigurations(page, limit);
-
-        Pageable pageableRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
-
-        return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndCategoryOrderBySubject(conferenceId, category, pageableRequest);
-    }
-
-    public Page<PresentationDraft> findPresentationDraftsByCategoryAndLabel(Long conferenceId, String category, byte labelId, int page, int limit) {
-
-        List<Integer> pageConfigs = PagingConstants.defaultPageConfigurations(page, limit);
-
-        Pageable pageableRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
-
-        if (labelId == 5) {
-            return this.findPresentationDraftsByCategory(conferenceId, category, page, limit);
-        }
-
-        for (Label label : Label.values()) {
-            if (labelId == label.ordinal()) {
-                return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndCategoryAndLabel(conferenceId, category, label, pageableRequest);
-            }
-        }
-
-        throw new RuntimeException("Could not find a presentation draft with the label id of " + labelId);
-    }
-
 //	public List<PresentationDraft> makePresentationDraftsFinal(long conferenceId, int label)
 //			throws CannotProceedException,NoSuchElementException {
 //		Optional<Conference> conference = conferenceService.findById(conferenceId);

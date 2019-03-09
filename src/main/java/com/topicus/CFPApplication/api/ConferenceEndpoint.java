@@ -155,41 +155,6 @@ public class ConferenceEndpoint {
         }
     }
 
-    @ApiOperation("Retrieves presentation drafts from a conference with a certain category")
-    @GetMapping("api/conference/{conferenceId}/presentationdrafts/category/{category}")
-    public ResponseEntity<Page<PresentationDraft>> findPresentationdrafts(
-            @ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId,
-            @ApiParam(required = true, name = "category", value = "Category value") @PathVariable("category") String category,
-            int page, int limit) {
-        if (category != null && category.length() > 0) {
-            try {
-                return ResponseEntity.ok(presentationDraftService.findPresentationDraftsByCategory(conferenceId, category, page, limit));
-            }catch(RuntimeException re){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).varyBy("Could not find any presentation draft with the given category").build();
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-    @ApiOperation("Retrieves presentation drafts from a conference with a certain category and label")
-    @GetMapping("api/conference/{conferenceId}/presentationdrafts/category/{category}/labelId/{labelId}")
-    public ResponseEntity<Page<PresentationDraft>> findPresentationdrafts(
-            @ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId,
-            @ApiParam(required = true, name = "category", value = "Category value") @PathVariable("category") String category,
-            @ApiParam(required = true, name = "labelId", value = "label numeric value") @PathVariable("labelId") byte labelId,
-            int page, int limit) {
-        if (category != null && category.length() > 0 && labelId <= 5 && labelId >= 0) {
-            try {
-                return ResponseEntity.ok(presentationDraftService.findPresentationDraftsByCategoryAndLabel(conferenceId, category, labelId, page, limit));
-            }catch(RuntimeException re){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).varyBy("Could not find any presentation drafts with the given category and label combination").build();
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
     @ApiOperation("Retrieves all presentation draft from a conference")
     @ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved the presentationDrafts with the given ID"),
             @ApiResponse(code = 404, message = "The conference passed does not exist")})
