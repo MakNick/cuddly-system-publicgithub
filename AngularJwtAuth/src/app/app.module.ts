@@ -29,6 +29,7 @@ import { PresentationDraftTileComponent } from './tile-view/presentationdraft/pr
 import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
 import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
 import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetail/maildialog.component';
+import { LoadingComponent } from './loading/loading.component';
 import { LoginFailComponent } from './login/snackbar-loginfail.component';
 
 
@@ -53,6 +54,7 @@ import { LoginFailComponent } from './login/snackbar-loginfail.component';
     PresentationDraftTileComponent,
     DeleteDialog,
     MailDialog,
+    LoadingComponent,
     LoginFailComponent,
     SaveDialog
   ],
