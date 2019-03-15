@@ -2,19 +2,26 @@
 
   <mat-card class="account-box">
     <mat-card-header>
-      <mat-card-title>Account informatie</mat-card-title>
+      <mat-card-title>
+        <span>Account informatie</span>
+      </mat-card-title>
+      <span class="fill-remaining-space"></span>
+      <mat-icon>person</mat-icon>
     </mat-card-header>
 
+    <mat-divider></mat-divider>
+
     <mat-card-content>
+      <br><br>
       <p>
         <strong>Gebruikersnaam:</strong> {{info.username}}
-      </p>
+      </p><br>
       <p>
         <strong>Rol:</strong> {{info.authorities}}
-      </p>
+      </p><br>
       <p class="txt">
         <strong>Token:</strong> {{info.token}}
-      </p>
+      </p><br>
     </mat-card-content>
   </mat-card>
 </div>

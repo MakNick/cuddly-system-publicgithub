@@ -122,6 +122,10 @@ mat-toolbar-row span a {
   visibility: visible;
 }
 
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+
 @media only screen and (max-width: 718px) {
 
   .mobile-hide{
