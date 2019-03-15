@@ -5,7 +5,7 @@ import { ConferenceDateValidator } from './shared/conferenceDate.validator';
 import { ConferenceService } from './conferenceForm.service';
 import { Conference } from './conferenceForm';
 import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
-import { DialogWindowComponent } from '../dialogWindow/dialogWindow.component';
+import { ConferenceFormDialogComponent } from './conferenceFormDialog/conferenceForm-dialog.component';
 
 @Component({
   selector: 'conferenceForm',
@@ -139,10 +139,10 @@ export class ConferenceFormComponent implements OnInit {
     dialogConfig.data = {
       popUpTitel: 'Categorie toevoegen',
       popUpInhoud: '',
-      popUpType: 1
+      popUpType: 0
     }
     
-    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ConferenceFormDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       data => {
@@ -164,10 +164,10 @@ export class ConferenceFormComponent implements OnInit {
     dialogConfig.data = {
       popUpTitel: 'Stage toevoegen',
       popUpInhoud: '',
-      popUpType: 2
+      popUpType: 1
     }
     
-    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
+    const dialogRef = this.dialog.open(ConferenceFormDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       data => {

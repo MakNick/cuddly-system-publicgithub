@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(value = "PresentationdraftEndpoint", description = "Manipulate presentationdrafts")
+@Api(value = "PresentationDraftEndpoint", description = "Manipulate presentationdrafts")
 public class PresentationDraftEndpoint {
 
 	private PresentationDraftService presentationDraftService;
@@ -44,7 +44,7 @@ public class PresentationDraftEndpoint {
 		this.subscribeService = subscribeService;
 	}
 
-	@ApiOperation(value = "Adds a new presentationdraft. This object contains a presentationdraft and a list of applicants")
+	@ApiOperation(value = "Adds a new presentation draft. This object contains a presentationdraft and a list of applicants")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully added a presentationdraft and the host") })
 	@PostMapping("api/presentationdraft")
 	public ResponseEntity<PresentationDraft> save(
@@ -58,9 +58,9 @@ public class PresentationDraftEndpoint {
 		return ResponseEntity.badRequest().build();
 	}
 
-	@ApiOperation("Retrieves a presentationdraft by ID")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a presentationdraft with the given ID"),
-			@ApiResponse(code = 404, message = "Could not retrieve a presentationdraft with the given ID") })
+	@ApiOperation("Looks for a draft based on the search criteria's")
+	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a presentation draft with the given ID"),
+			@ApiResponse(code = 404, message = "Could not retrieve a presentation draft with the given criteria's") })
 	@GetMapping("api/presentationdraft/{id}")
 	public ResponseEntity<?> findById(
 			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id) {

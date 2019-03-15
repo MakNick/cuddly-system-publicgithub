@@ -81,5 +81,6 @@
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="container">
+  <app-loading *ngIf="isLoading()" class="loading-container"></app-loading>
   <router-outlet></router-outlet>
 </div>

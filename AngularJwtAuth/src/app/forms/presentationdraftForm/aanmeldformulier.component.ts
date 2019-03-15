@@ -5,7 +5,7 @@ import { draftAanmeldService } from '../presentationdraftForm/aanmeldformulier.s
 import { PresentationDraftApplicant } from '../../objects/presentationDraftApplicant';
 import { Conference } from '../../objects/conference/conference';
 import { MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar } from '@angular/material';
-import { DialogWindowComponent } from '../dialogWindow/dialogWindow.component';
+import { AanmeldformulierDialogComponent } from './presentationdraftFormDialog/aanmeldformulier-dialog.component';
 
 @Component({
   selector: 'app-aanmeldformulier',
@@ -37,7 +37,7 @@ export class AanmeldformulierComponent implements OnInit {
 
   presentationdraftForm: FormGroup;
 
-  fileNameDialogRef: MatDialogRef<DialogWindowComponent>;
+  fileNameDialogRef: MatDialogRef<AanmeldformulierDialogComponent>;
 
   constructor(private draftAanmeldService: draftAanmeldService, public dialog: MatDialog, private snackBar: MatSnackBar) {
   }
@@ -162,7 +162,7 @@ export class AanmeldformulierComponent implements OnInit {
       popUpType: 0
     }
     
-    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
+    const dialogRef = this.dialog.open(AanmeldformulierDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
       data => {
