@@ -31,11 +31,13 @@ import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdet
 import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetail/maildialog.component';
 import { LoadingComponent } from './loading/loading.component';
 import { LoginFailComponent } from './login/snackbar-loginfail.component';
+import { AccountComponent } from './account/account.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AccountComponent,
     LoginComponent,
     UserComponent,
     RegisterComponent,

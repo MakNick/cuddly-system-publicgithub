@@ -38,7 +38,8 @@ export class AppComponent implements OnInit {
   logout() {
     this.tokenStorage.signOut();
     window.location.reload();
-  }
+    window.location.pathname = "/auth/login";
+    }
 
   isLoading(){
     return this.loadingService.isLoading();
