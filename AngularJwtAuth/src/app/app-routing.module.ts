@@ -12,6 +12,7 @@ import { PresentationDraftComponent } from './tile-view/presentationdraft/presen
 import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.component';
 import { ConferenceFormComponent } from './forms/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./forms/presentationdraftForm/aanmeldformulier.component";
+import { AccountComponent } from './account/account.component';
  
 const routes: Routes = [
     {
@@ -63,6 +64,10 @@ const routes: Routes = [
     {
         path: 'signup',
         component: RegisterComponent
+    },
+    {
+        path: 'account',
+        component: AccountComponent
     },
     {
         path: '',

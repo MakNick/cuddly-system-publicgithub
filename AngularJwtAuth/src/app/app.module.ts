@@ -33,11 +33,13 @@ import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetai
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { LoadingComponent } from './loading/loading.component';
 import { LoginFailComponent } from './login/snackbar-loginfail.component';
+import { AccountComponent } from './account/account.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AccountComponent,
     LoginComponent,
     UserComponent,
     RegisterComponent,

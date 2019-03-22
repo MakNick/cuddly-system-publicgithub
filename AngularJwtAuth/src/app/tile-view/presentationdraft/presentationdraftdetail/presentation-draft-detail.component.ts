@@ -72,14 +72,16 @@ export class PresentationdraftdetailComponent implements OnInit {
   }
 
   showSucces() {
-    this.snackBar.open("Succes!", "The presentation draft has been saved", {
-      duration: 2000
+    this.snackBar.open("Succes!", "Wijzingen zijn opgeslagen", {
+      duration: 3500,
+      panelClass: ['snackbar-color']
     });
   }
-
+  
   showFail(error: Error) {
-    this.snackBar.open("Could not save", error.name, {
-      duration: 2000
+    this.snackBar.open("Opslaan niet gelukt", error.name, {
+      duration: 3500,
+      panelClass: ['snackbar-color']
     });
   }
 

@@ -193,7 +193,8 @@ openSnackBar() {
   this.categories = [];
   this.stages = [];
   this.snackBar.openFromComponent(AanmeldformulierConferenceFeedbackComponent, {
-    duration: 5000
+    duration: 5000,
+    panelClass: ['snackbar-color']
   });
 }
 }
@@ -203,11 +204,6 @@ selector: 'conferentieformulier-feedback-snack',
 template: `
 <span>De conferentie is aangemaakt.</span>
 `,
-styles: [`
-  span {
-    color: white;
-  }
-`]
 })
 export class AanmeldformulierConferenceFeedbackComponent {}
 
