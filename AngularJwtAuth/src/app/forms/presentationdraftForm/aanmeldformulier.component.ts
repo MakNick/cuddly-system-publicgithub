@@ -132,7 +132,7 @@ export class AanmeldformulierComponent implements OnInit {
     this.duration.setValue = event.target.value;
   }
 
-  getIconFeedback(event: any){
+  getIconFeedback(event: any) {
     let formcontrolname = event.target.getAttribute('formcontrolname');
 
     switch(formcontrolname){
@@ -154,7 +154,7 @@ export class AanmeldformulierComponent implements OnInit {
     }
   }
 
-  popUpAddCohosts(){
+  popUpAddCohosts() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -168,11 +168,11 @@ export class AanmeldformulierComponent implements OnInit {
     this.dialog.open(DialogWindowComponent, dialogConfig);
   }
 
-  getApplicants(){
-    for (const applicant of this.dialogwindowservice.saved){
+  getApplicants() {
+    for (const applicant of this.dialogwindowservice.savedApplicants){
       applicant.requests = 'Ik ben een cohost';
     }
-    return this.dialogwindowservice.saved;
+    return this.dialogwindowservice.savedApplicants;
   }
 
   deleteCohost(applicant: Applicant){
@@ -197,7 +197,7 @@ export class AanmeldformulierComponent implements OnInit {
 
     this.submitted = true;
     this.expandOptions = false;
-    this.dialogwindowservice.saved = [];
+    this.dialogwindowservice.savedApplicants = [];
     this.openSnackBar();
   }
 

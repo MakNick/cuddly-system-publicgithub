@@ -6,6 +6,8 @@ import { ConferenceService } from './conferenceForm.service';
 import { Conference } from './conferenceForm';
 import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
 import { DialogWindowComponent } from '../dialogWindow/dialogWindow.component';
+import {dialogWindowService} from '../dialogWindow/dialogWindow.service';
+
 
 @Component({
   selector: 'conferenceForm',
@@ -75,7 +77,7 @@ export class ConferenceFormComponent implements OnInit {
     // event.target.min = this.selectedTime;
   }
 
-  constructor(private fb: FormBuilder, private conferenceService: ConferenceService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private conferenceService: ConferenceService, private dialog: MatDialog, private snackBar: MatSnackBar, private dialogwindowservice: dialogWindowService) { }
 
   ngOnInit() {
     this.conferenceForm = this.fb.group({
@@ -115,6 +117,7 @@ export class ConferenceFormComponent implements OnInit {
         conference.deadlinePresentationDraft = this.conferenceForm.get('deadlineDate').value + "T" + this.conferenceForm.get('deadlineTime').value;
       }
     }
+    console.log(conference);
     this.addConference(conference);
   }
 
@@ -144,16 +147,20 @@ export class ConferenceFormComponent implements OnInit {
     
     const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(
-      data => {
-        this.categories.push(data.category);
-      }
-    );
+    // dialogRef.afterClosed().subscribe(
+    //   data => {
+    //     this.categories.push(data.category);
+    //   }
+    // );
   }
 
-  deleteCategory(x: string){
+  getCategories(){
+    return this.dialogwindowservice.savedCategories;
+  }
+
+  deleteCategory(x: string) {
     let category = x;
-    this.categories.splice(this.categories.indexOf(category), 1);
+    this.dialogwindowservice.savedCategories.splice(this.dialogwindowservice.savedCategories.indexOf(category), 1);
   }
 
   popUpAddStages(){
@@ -167,18 +174,22 @@ export class ConferenceFormComponent implements OnInit {
       popUpType: 2
     }
     
-    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
+    this.dialog.open(DialogWindowComponent, dialogConfig);
 
-    dialogRef.afterClosed().subscribe(
-      data => {
-        this.stages.push(data.stage);
-      }
-    );
+    // dialogRef.afterClosed().subscribe(
+    //   data => {
+    //     this.stages.push(data.stage);
+    //   }
+    // );
   }
 
-  deleteStage(x: string){
+  getStages() {
+    return this.dialogwindowservice.savedStages;
+  }
+
+  deleteStage(x: string) {
     let stage = x;
-    this.stages.splice(this.stages.indexOf(stage), 1);
+    this.dialogwindowservice.savedStages.splice(this.dialogwindowservice.savedStages.indexOf(stage), 1);
   }
  
   submit() {

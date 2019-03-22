@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms'
 import {dialogWindowService} from './dialogWindow.service';
 
 
-export interface DialogData{
+export interface DialogData {
   popUpTitel: string;
   popUpInhoud: string;
 }
@@ -62,24 +62,32 @@ public iconEmailFeedback: string;
     this.forms = [this.cohostForm, this.categorieForm, this.stageForm];
   }
 
-  save(){
-    this.dialogwindowservice.saved.push(this.forms[this.popUpType].value);
-    console.log(this.dialogwindowservice.saved);
+  save(value) {
+    console.log(this);
+    console.log(value);
+    switch (value) {
+      case 0:
+        return this.dialogwindowservice.savedApplicants.push(this.forms[this.popUpType].value);
+      case 1:
+        return this.dialogwindowservice.savedCategories.push(this.forms[this.popUpType].value);
+      case 2:
+        return this.dialogwindowservice.savedStages.push(this.forms[this.popUpType].value);
+    }
   }
 
-  close(){
+  close() {
     this.dialogRef.close();
   }
 
-  getPopUpType(){
+  getPopUpType() {
     return this.popUpType;
   }
 
-  getIconFeedback(event: any){
+  getIconFeedback(event: any) {
     let formcontrolname = event.target.getAttribute('formcontrolname');
     console.log(event.target);
 
-    switch(formcontrolname){
+    switch(formcontrolname) {
       case 'name':
       this.iconNameFeedback = (this.cohostForm.get('name').invalid == true) ? this.iconUnhappy : this.iconHappy;
       break;
