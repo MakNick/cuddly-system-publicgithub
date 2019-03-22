@@ -22,7 +22,7 @@
     </span>
     <span *ngIf="authority === 'admin'" class="nav-item">
       <a mat-button [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link" routerLink="conference"
-        routerLinkActive #isOpen="routerLinkActive">Conference</a>
+        routerLinkActive #isOpen="routerLinkActive">Conferenties</a>
     </span>
     <span *ngIf="authority === 'pm'" class="nav-item">
       <a mat-button [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link" routerLink="pm"
@@ -37,16 +37,16 @@
 
     <span *ngIf="authority === 'admin' || authority === 'pm' || authority === 'user'">
       <button color="white" mat-icon-button [matMenuTriggerFor]="menu">
-        <mat-icon>menu</mat-icon>
+        <i class="fas fa-bars"></i>
       </button>
       <mat-menu #menu="matMenu">
         <button mat-menu-item routerLink="account">
-          <mat-icon>person</mat-icon>
-          <span>Account</span>
+          <i class="fas fa-user"></i>
+          <span>&nbsp;&nbsp;Account</span>
         </button>
         <button mat-menu-item (click)="logout()" routerLink="auth/login">
-          <mat-icon>exit_to_app</mat-icon>
-          <span>Logout</span>
+          <i class="fas fa-sign-out-alt"></i>
+          <span>&nbsp;&nbsp;Logout</span>
         </button>
       </mat-menu>
     </span>
@@ -73,7 +73,7 @@
           routerLinkActive="active-nav-link">Voorstel indienen</a>
       </span>
       <span mat-menu-item *ngIf="authority === 'admin'" class="nav-item">
-        <a mat-button class="nav-link" routerLink="conference" routerLinkActive="active-nav-link">Conference</a>
+        <a mat-button class="nav-link" routerLink="conference" routerLinkActive="active-nav-link">Conferenties</a>
       </span>
       <span mat-menu-item *ngIf="authority === 'pm'" class="nav-item">
         <a mat-button class="nav-link" routerLink="pm" routerLinkActive="active-nav-link">PM Board</a>

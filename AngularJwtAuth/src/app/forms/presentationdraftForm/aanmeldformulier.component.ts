@@ -209,6 +209,7 @@ export class AanmeldformulierComponent implements OnInit {
     this.tableApplicants = [];
     this.snackBar.openFromComponent(AanmeldformulierFeedbackComponent, {
       duration: 5000,
+      panelClass: ['snackbar-color']
     });
   }
 }
@@ -218,10 +219,5 @@ export class AanmeldformulierComponent implements OnInit {
   template: `
   <span>De aanmelding is verstuurd. Bedankt voor het indienen!</span>
 `,
-  styles: [`
-    span {
-      color: white;
-    }
-  `],
 })
 export class AanmeldformulierFeedbackComponent {}
