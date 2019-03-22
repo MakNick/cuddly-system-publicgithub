@@ -132,4 +132,19 @@ export class PresentationDraftComponent implements OnInit {
     }
   }
 
+  downloadAllePDF() {
+    this.conferenceService.getAllPdfByConferenceId(this.conferenceId).subscribe((response) => {let blob = new Blob([response], { type: 'application/pdf' });
+    var fileUrl = window.document.createElement('a');
+    fileUrl.href = window.URL.createObjectURL(blob);
+    fileUrl.download = 'PresentationDrafts.pdf';
+    fileUrl.click()});
+  }
+
+  downloadExcelOverzicht() {
+    this.conferenceService.getExcelByConferenceId(this.conferenceId).subscribe((response) => {let blob = new Blob([response], { type: 'application/pdf' });
+    var fileUrl = window.document.createElement('a');
+    fileUrl.href = window.URL.createObjectURL(blob);
+    fileUrl.download = 'PresentationDrafts.xlsx';
+    fileUrl.click()});
+  }
 }

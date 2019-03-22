@@ -5,13 +5,22 @@
       arrow_back_ios
     </button>
   </div>
+  
   <div class="presentation-draft-box">
     <span *ngIf="page">
+      <button mat-icon-button (click)="downloadAllePDF()" matTooltip="Download alle voorstellen als PDF" matTooltipPosition="right">
+        <fa class="fa-3x" name="file-pdf"></fa>
+      </button>
+      <button mat-icon-button (click)="downloadExcelOverzicht()" matTooltip="Download alle voorstellen als Excel-spreadsheet" matTooltipPosition="right">
+        <fa class="fa-3x" name="file-excel"></fa>
+      </button>
+         
       <mat-paginator
         [length]=page.totalElements
         [pageSize]=page.size
         [pageSizeOptions]=pageSizeOptions (page)="paginate($event)">
       </mat-paginator>
+
     </span>
     <cdk-virtual-scroll-viewport itemSize="100" style="height: 500px; padding: 10px">
       <mat-grid-list cols="{{breakpoint}}" rowHeight="100" gutterSize="10" style="margin: 20px"
