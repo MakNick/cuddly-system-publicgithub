@@ -146,21 +146,17 @@ export class ConferenceFormComponent implements OnInit {
     }
     
     const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
-
-    // dialogRef.afterClosed().subscribe(
-    //   data => {
-    //     this.categories.push(data.category);
-    //   }
-    // );
   }
 
   getCategories(){
+    this.categories = this.dialogwindowservice.savedCategories;
     return this.dialogwindowservice.savedCategories;
   }
 
   deleteCategory(x: string) {
     let category = x;
     this.dialogwindowservice.savedCategories.splice(this.dialogwindowservice.savedCategories.indexOf(category), 1);
+    this.categories = this.dialogwindowservice.savedCategories;
   }
 
   popUpAddStages(){
@@ -175,21 +171,17 @@ export class ConferenceFormComponent implements OnInit {
     }
     
     this.dialog.open(DialogWindowComponent, dialogConfig);
-
-    // dialogRef.afterClosed().subscribe(
-    //   data => {
-    //     this.stages.push(data.stage);
-    //   }
-    // );
   }
 
   getStages() {
+    this.stages = this.dialogwindowservice.savedStages;
     return this.dialogwindowservice.savedStages;
   }
 
   deleteStage(x: string) {
     let stage = x;
     this.dialogwindowservice.savedStages.splice(this.dialogwindowservice.savedStages.indexOf(stage), 1);
+    this.stages = this.dialogwindowservice.savedStages;
   }
  
   submit() {

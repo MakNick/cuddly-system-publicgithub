@@ -63,8 +63,6 @@ public iconEmailFeedback: string;
   }
 
   save(value) {
-    console.log(this);
-    console.log(value);
     switch (value) {
       case 0:
         return this.dialogwindowservice.savedApplicants.push(this.forms[this.popUpType].value);
@@ -85,7 +83,6 @@ public iconEmailFeedback: string;
 
   getIconFeedback(event: any) {
     let formcontrolname = event.target.getAttribute('formcontrolname');
-    console.log(event.target);
 
     switch(formcontrolname) {
       case 'name':
