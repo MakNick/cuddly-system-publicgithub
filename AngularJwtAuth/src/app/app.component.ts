@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {TokenStorageService} from './auth/token-storage.service';
 import {fadeIn, navLink} from "./animations/nav-links";
+import {LoadingService} from "./services/loading.service";
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ export class AppComponent implements OnInit {
   private roles: string[];
   private authority: string;
 
-  constructor(private tokenStorage: TokenStorageService) {
+  constructor(private tokenStorage: TokenStorageService, private loadingService: LoadingService) {
   }
 
   ngOnInit() {
@@ -32,5 +33,9 @@ export class AppComponent implements OnInit {
         return true;
       });
     }
+  }
+
+  isLoading(){
+    return this.loadingService.isLoading();
   }
 }

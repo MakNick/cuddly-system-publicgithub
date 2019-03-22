@@ -72,6 +72,21 @@ public class ConferenceEndpoint {
         return ResponseEntity.badRequest().build();
     }
 
+    @ApiOperation("Retrieves all available presentation draft from a conference, based of the search criteria's")
+    @ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved all drafts based of the search criteria's"),
+            @ApiResponse(code = 404, message = "No drafts were found with the current search criteria")})
+    @GetMapping("api/conference/{id}/presentationdrafts/search")
+    public ResponseEntity<Page<PresentationDraft>> searchPresentationDrafts(
+            @PathVariable("id") long conferenceID,
+            @RequestParam("s") String subject,
+            @RequestParam("c") String category,
+            @RequestParam("l") int labelId,
+            @RequestParam("page") int page,
+            @RequestParam("limit") int limit) {
+        return ResponseEntity.ok(this.presentationDraftService.findAllBySearchCriteria(conferenceID, subject, category, labelId, page, limit));
+
+    }
+
     @ApiOperation(value = "Adds a new conference")
     @ApiResponses({@ApiResponse(code = 200, message = "Successfully added a conference"),
             @ApiResponse(code = 400, message = "Invalid conference object")})
@@ -134,41 +149,6 @@ public class ConferenceEndpoint {
                 return ResponseEntity.ok(presentationDraftService.findPresentationDraftsByLabel(conferenceId, labelId, page, limit));
             }catch(RuntimeException re){
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).varyBy("Could not find any presentation draft with the given label").build();
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-    @ApiOperation("Retrieves presentation drafts from a conference with a certain category")
-    @GetMapping("api/conference/{conferenceId}/presentationdrafts/category/{category}")
-    public ResponseEntity<Page<PresentationDraft>> findPresentationdrafts(
-            @ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId,
-            @ApiParam(required = true, name = "category", value = "Category value") @PathVariable("category") String category,
-            int page, int limit) {
-        if (category != null && category.length() > 0) {
-            try {
-                return ResponseEntity.ok(presentationDraftService.findPresentationDraftsByCategory(conferenceId, category, page, limit));
-            }catch(RuntimeException re){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).varyBy("Could not find any presentation draft with the given category").build();
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-    @ApiOperation("Retrieves presentation drafts from a conference with a certain category and label")
-    @GetMapping("api/conference/{conferenceId}/presentationdrafts/category/{category}/labelId/{labelId}")
-    public ResponseEntity<Page<PresentationDraft>> findPresentationdrafts(
-            @ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId,
-            @ApiParam(required = true, name = "category", value = "Category value") @PathVariable("category") String category,
-            @ApiParam(required = true, name = "labelId", value = "label numeric value") @PathVariable("labelId") byte labelId,
-            int page, int limit) {
-        if (category != null && category.length() > 0 && labelId <= 5 && labelId >= 0) {
-            try {
-                return ResponseEntity.ok(presentationDraftService.findPresentationDraftsByCategoryAndLabel(conferenceId, category, labelId, page, limit));
-            }catch(RuntimeException re){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).varyBy("Could not find any presentation drafts with the given category and label combination").build();
             }
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
