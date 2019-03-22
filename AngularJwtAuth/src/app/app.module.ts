@@ -29,6 +29,7 @@ import { PresentationDraftTileComponent } from './tile-view/presentationdraft/pr
 import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
 import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
 import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetail/maildialog.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { LoadingComponent } from './loading/loading.component';
 import { LoginFailComponent } from './login/snackbar-loginfail.component';
 
@@ -66,7 +67,8 @@ import { LoginFailComponent } from './login/snackbar-loginfail.component';
     NguCarouselModule,
     ReactiveFormsModule,
     MaterialModule,
-    ScrollingModule
+    ScrollingModule,
+    AngularFontAwesomeModule
   ],
   entryComponents: [AanmeldformulierDialogComponent, ConferenceFormDialogComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog, MailDialog, LoginFailComponent],
 

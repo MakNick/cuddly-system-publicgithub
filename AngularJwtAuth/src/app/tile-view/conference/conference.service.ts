@@ -18,4 +18,14 @@ export class ConferenceService {
   getConference(id: number): Observable<Conference>{
     return this.http.get<Conference>(`http://localhost:8082/api/conference/${id}`);
   }
+
+  getAllPdfByConferenceId(id: number){
+    const httpOptions = {'responseType'  : 'arraybuffer' as 'json'};
+    return this.http.get(`http://localhost:8082/api/${id}/download/pdf`, httpOptions);
+  }
+
+  getExcelByConferenceId(id: number){
+    const httpOptions = {'responseType'  : 'arraybuffer' as 'json'};
+    return this.http.get(`http://localhost:8082/api/${id}/download/excel`, httpOptions);
+  }
 }
