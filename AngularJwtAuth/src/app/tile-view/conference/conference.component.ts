@@ -8,6 +8,7 @@ import {NguCarouselConfig} from "@ngu/carousel";
 import {interval, Observable} from "rxjs";
 import {map, startWith, take} from "rxjs/operators";
 import {DateFormatService} from "../../services/date-format.service";
+import {LoadingService} from "../../services/loading.service";
 
 @Component({
   selector: 'app-conference',
@@ -25,7 +26,7 @@ export class ConferenceComponent implements OnInit {
   public miniConferenceTileConfigs: NguCarouselConfig;
 
   constructor(private conferenceService: ConferenceService,
-              private dateFormatService: DateFormatService) {
+              private dateFormatService: DateFormatService, private loadingService: LoadingService) {
   }
 
   ngOnInit() {
@@ -43,11 +44,13 @@ export class ConferenceComponent implements OnInit {
   // }
 
   fillConferences() {
+    this.loadingService.setLoading(true)
     this.conferenceService.getConferences()
       .subscribe(conferences =>
           this.conferences = conferences,
         error => console.log(error),
-        () => this.initializeCarousel()
+        () =>
+          this.initializeCarousel()
       );
   }
 
@@ -75,7 +78,7 @@ export class ConferenceComponent implements OnInit {
       easing: 'cubic-bezier(0, 0, 0.2, 1)'
     };
 
-    const miniTileAmount: number = this.conferences.length < 10 ? this.conferences.length : 8;
+    const miniTileAmount: number = this.conferences.length < 8 ? this.conferences.length : 8;
     this.miniConferenceTileConfigs = {
       grid: {xs: 2, sm: 3, md: 4, lg: miniTileAmount, all: 0},
       speed: 250,
@@ -87,6 +90,8 @@ export class ConferenceComponent implements OnInit {
       interval: {timing: 3000},
       animation: 'lazy'
     };
+
+    this.loadingService.setLoading(false);
     // this.carouselTileItems.forEach(el => {
     //   this.carouselTileLoad(el);
     // });

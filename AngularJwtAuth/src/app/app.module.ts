@@ -30,6 +30,7 @@ import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetai
 import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
 import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetail/maildialog.component';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { LoadingComponent } from './loading/loading.component';
 import { LoginFailComponent } from './login/snackbar-loginfail.component';
 
 
@@ -54,6 +55,7 @@ import { LoginFailComponent } from './login/snackbar-loginfail.component';
     PresentationDraftTileComponent,
     DeleteDialog,
     MailDialog,
+    LoadingComponent,
     LoginFailComponent,
     SaveDialog
   ],

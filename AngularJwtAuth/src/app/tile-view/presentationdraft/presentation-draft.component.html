@@ -25,23 +25,14 @@
     <cdk-virtual-scroll-viewport itemSize="100" style="height: 500px; padding: 10px">
       <mat-grid-list cols="{{breakpoint}}" rowHeight="100" gutterSize="10" style="margin: 20px"
                      (window:resize)="onResize($event)">
-       <span *ngIf="page" >
+        <span *ngIf="page">
           <mat-grid-tile
             [@fadeOut] (click)="showPresentationDraftDetail(presentationDraft)" routerLink="presentationDraftDetail"
             [ngClass]="[presentationDraft.label.toLowerCase() + '-tile' + ' mat-grid-tile' + 'mat-ripple']"
-            *ngFor="let presentationDraft of page.content | filterPipe: searchToken" class="draft-tile"
+            *ngFor="let presentationDraft of page.content" class="draft-tile"
             [colspan]="2">
-              <!--[{{presentationDraft.id}}]-->
-              <!--<div class="draft-tile-info">-->
-                <!--<p>-->
-                  <!--{{presentationDraft.subject}}-->
-                <!--</p>-->
-                <!--<p>-->
-                  <!--{{showCorrectDate(presentationDraft.timeOfCreation)}}-->
-                <!--</p>-->
-              <!--</div>-->
             <div class="draft-tile-info-container" matRipple>
-              <app-presentation-draft-tile [presentationDraft]=presentationDraft ></app-presentation-draft-tile>
+              <app-presentation-draft-tile [presentationDraft]=presentationDraft></app-presentation-draft-tile>
             </div>
           </mat-grid-tile>
        </span>
@@ -59,7 +50,7 @@
     </div>
     <div class="filter-box">
       <mat-form-field>
-        <input matInput [(ngModel)]="searchToken" placeholder="Subject">
+        <input matInput (keyup)="applyFilter()" [(ngModel)]="searchToken" placeholder="Subject">
         <mat-icon matSuffix>
           search
         </mat-icon>
