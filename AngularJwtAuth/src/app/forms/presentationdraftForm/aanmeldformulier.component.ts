@@ -215,7 +215,7 @@ export class AanmeldformulierComponent implements OnInit {
 }
 
 @Component({
-  selector: 'snack-bar-component-example-snack',
+  selector: 'aanmeldingsformulier-feedback-snack',
   template: `
   <span>De aanmelding is verstuurd. Bedankt voor het indienen!</span>
 `,

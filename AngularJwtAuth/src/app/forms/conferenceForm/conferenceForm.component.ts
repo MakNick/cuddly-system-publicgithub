@@ -6,6 +6,7 @@ import { ConferenceService } from './conferenceForm.service';
 import { Conference } from './conferenceForm';
 import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
 import { ConferenceFormDialogComponent } from './conferenceFormDialog/conferenceForm-dialog.component';
+import { Stage } from '../../objects/conference/stage';
 
 @Component({
   selector: 'conferenceForm',
@@ -18,6 +19,7 @@ export class ConferenceFormComponent implements OnInit {
   conferences: Conference[] = [];
   categories: string[] = [];
   stages: string[] = [];
+
   defaultDateTime: string = "2099-01-01T01:00";
   dateOfToday = new Date(Date.now());
   dateOfTomorrow = new Date(this.dateOfToday.setDate(this.dateOfToday.getDate() + 1));
@@ -184,7 +186,7 @@ export class ConferenceFormComponent implements OnInit {
   submit() {
     this.createConference();
     this.openSnackBar();
-}
+  }
 
 openSnackBar() {
   this.conferenceForm.reset();
@@ -198,7 +200,7 @@ openSnackBar() {
 }
 
 @Component({
-selector: 'snack-bar-component-example-snack',
+selector: 'conferentieformulier-feedback-snack',
 template: `
 <span>De conferentie is aangemaakt.</span>
 `,

@@ -24,6 +24,7 @@ import { ConferenceFormDialogComponent } from './forms/conferenceForm/conference
 import { MaterialModule } from "../material.module";
 import { NguCarouselModule } from "@ngu/carousel";
 import { ScrollingModule } from "@angular/cdk/scrolling";
+import { AanmeldformulierConferenceFeedbackComponent } from './forms/conferenceForm/conferenceForm.component'
 import { AanmeldformulierFeedbackComponent } from './forms/presentationdraftForm/aanmeldformulier.component';
 import { PresentationDraftTileComponent } from './tile-view/presentationdraft/presentation-draft-tile/presentation-draft-tile.component';
 import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
@@ -53,6 +54,7 @@ import { AccountComponent } from './account/account.component';
     AanmeldformulierDialogComponent,
     ConferenceFormDialogComponent,
     AanmeldformulierFeedbackComponent,
+    AanmeldformulierConferenceFeedbackComponent,
     FilterPipe,
     PresentationDraftTileComponent,
     DeleteDialog,
@@ -72,7 +74,7 @@ import { AccountComponent } from './account/account.component';
     ScrollingModule,
     AngularFontAwesomeModule
   ],
-  entryComponents: [AanmeldformulierDialogComponent, ConferenceFormDialogComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog, MailDialog, LoginFailComponent],
+  entryComponents: [AanmeldformulierDialogComponent, ConferenceFormDialogComponent, AanmeldformulierFeedbackComponent, AanmeldformulierConferenceFeedbackComponent, SaveDialog, DeleteDialog, MailDialog, LoginFailComponent],
 
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
   bootstrap: [AppComponent]
