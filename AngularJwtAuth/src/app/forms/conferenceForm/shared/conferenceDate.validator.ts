@@ -1,9 +1,8 @@
-import { AbstractControl } from "@angular/forms";
+import { AbstractControl, ValidatorFn } from '@angular/forms';
 
-export function ConferenceDateValidator(control: AbstractControl): { [key: string]: boolean } | null {
-    const conferenceStartDate = control.get('conferenceDate.startDate');
-    const conferenceEndDate = control.get('conferenceDate.endDate');
-    return conferenceStartDate && conferenceEndDate && conferenceStartDate.value != conferenceEndDate.value ?
-        { 'misMatch': true } :
-        null;
-}
+export function ConferenceDateValidator(begindatum: Date, einddatum: Date): ValidatorFn {
+    return (control: AbstractControl): {[key: string]: any} | null => {
+      const forbidden = false; //nameRe.test(control.value);
+      return forbidden ? {'startDate': {value: control.value}} : null;
+    };
+  }

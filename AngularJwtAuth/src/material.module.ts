@@ -21,7 +21,8 @@ import {
   MatToolbarModule,
   MatBadgeModule,
   MatCardModule,
-  MatDividerModule
+  MatDividerModule,
+  MAT_DATE_LOCALE
 } from "@angular/material";
 
 @NgModule({
@@ -48,6 +49,9 @@ import {
     MatBadgeModule,
     MatCardModule,
     MatDividerModule
+  ],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
   ]
 })
 export class MaterialModule { }

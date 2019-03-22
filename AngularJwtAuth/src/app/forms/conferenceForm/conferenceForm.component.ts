@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, EmailValidator, FormArray } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
 import { forbiddenConferenceNameValidator } from './shared/conferenceName.validator';
 import { ConferenceDateValidator } from './shared/conferenceDate.validator';
 import { ConferenceService } from './conferenceForm.service';
 import { Conference } from './conferenceForm';
 import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
 import { ConferenceFormDialogComponent } from './conferenceFormDialog/conferenceForm-dialog.component';
-import { Stage } from '../../objects/conference/stage';
 
 @Component({
   selector: 'conferenceForm',
@@ -14,8 +13,8 @@ import { Stage } from '../../objects/conference/stage';
   styleUrls: ['./conferenceForm.component.css']
 })
 export class ConferenceFormComponent implements OnInit {
-
   conferenceForm: FormGroup;
+  dateGroup: FormGroup;
   conferences: Conference[] = [];
   categories: string[] = [];
   stages: string[] = [];
@@ -24,21 +23,31 @@ export class ConferenceFormComponent implements OnInit {
   dateOfToday = new Date(Date.now());
   dateOfTomorrow = new Date(this.dateOfToday.setDate(this.dateOfToday.getDate() + 1));
   selectedDate = new Date();
-  
+
+  isValid: string;
+
   get alternateCategoryMethod() {
     return this.conferenceForm.get('categories') as FormArray;
   }
-  
+
   addAlternateCategory() {
     this.alternateCategoryMethod.push(this.fb.control(''));
   }
-  
+
   removeAlternateCategory(i: number) {
     this.alternateCategoryMethod.removeAt(i);
   }
-  
+
   get name() {
     return this.conferenceForm.get('name');
+  }
+
+  get startDate() {
+    return this.conferenceForm.get('dateGroup').get('startDate');
+  }
+  
+  get endDate() {
+    return this.conferenceForm.get('dateGroup').get('endDate');
   }
 
   get stageName() {
@@ -82,12 +91,14 @@ export class ConferenceFormComponent implements OnInit {
   ngOnInit() {
     this.conferenceForm = this.fb.group({
       'name': [null, [Validators.required, Validators.minLength(3), forbiddenConferenceNameValidator(/javiel/)]],
-      'startDate': [{ disabled: true, value: '' }],
-      'startTime': [null],
-      'endDate': [{ disabled: true, value: '' }],
-      'endTime': [null],
-      'deadlineDate': [{ disabled: true, value: '' }],
-      'deadlineTime': [null],
+      'dateGroup': this.fb.group({
+        'startDate': [{ disabled: true, value: ''}],
+        'startTime': [null],
+        'endDate': [{ disabled: true, value: '' }, [ConferenceDateValidator]],
+        'endTime': [null],
+        'deadlineDate': [{ disabled: true, value: '' }],
+        'deadlineTime': [null],
+      }),    
       'stages': this.fb.array([]),
       'categories': this.fb.array([])
     },
@@ -120,6 +131,26 @@ export class ConferenceFormComponent implements OnInit {
     this.addConference(conference);
   }
 
+  validateDate() {
+    console.log("validerend");
+    let begindatum = new Date(this.startDate.value).toISOString().substring(0,10);
+    let einddatum = new Date(this.endDate.value).toISOString().substring(0,10);
+ 
+    if(new Date(begindatum) > new Date(einddatum)){
+      console.log("Mag niet");
+      this.conferenceForm.get('dateGroup').get('startDatum').invalid;
+      this.conferenceForm.get('dateGroup').get('eindDatum').invalid;
+    }else if(new Date(einddatum) > new Date(begindatum)){
+      console.log("Mag");
+      this.conferenceForm.get('dateGroup').get('startDatum').valid;
+      this.conferenceForm.get('dateGroup').get('eindDatum').valid;
+    }else{
+      console.log("Gelijk");
+      this.conferenceForm.get('dateGroup').get('startDatum').valid;
+      this.conferenceForm.get('dateGroup').get('eindDatum').valid;
+    }
+  }
+
   addConference(conference) {
     this.conferenceService.postConference(conference)
       .subscribe(conference => this.conferences.push(conference));
@@ -133,7 +164,7 @@ export class ConferenceFormComponent implements OnInit {
     this.conferenceService.deleteConference(id).subscribe(conference => this.getConferences());
   }
 
-  popUpAddCategories(){
+  popUpAddCategories() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -143,7 +174,7 @@ export class ConferenceFormComponent implements OnInit {
       popUpInhoud: '',
       popUpType: 0
     }
-    
+
     const dialogRef = this.dialog.open(ConferenceFormDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
@@ -153,12 +184,12 @@ export class ConferenceFormComponent implements OnInit {
     );
   }
 
-  deleteCategory(x: string){
+  deleteCategory(x: string) {
     let category = x;
     this.categories.splice(this.categories.indexOf(category), 1);
   }
 
-  popUpAddStages(){
+  popUpAddStages() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -168,7 +199,7 @@ export class ConferenceFormComponent implements OnInit {
       popUpInhoud: '',
       popUpType: 1
     }
-    
+
     const dialogRef = this.dialog.open(ConferenceFormDialogComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe(
@@ -178,36 +209,38 @@ export class ConferenceFormComponent implements OnInit {
     );
   }
 
-  deleteStage(x: string){
+  deleteStage(x: string) {
     let stage = x;
     this.stages.splice(this.stages.indexOf(stage), 1);
   }
- 
+
   submit() {
+    this.validateDate();
     this.createConference();
     this.openSnackBar();
   }
 
-openSnackBar() {
-  this.conferenceForm.reset();
-  this.categories = [];
-  this.stages = [];
-  this.snackBar.openFromComponent(AanmeldformulierConferenceFeedbackComponent, {
-    duration: 5000
-  });
-}
+  openSnackBar() {
+    this.conferenceForm.reset();
+    this.categories = [];
+    this.stages = [];
+
+    this.snackBar.openFromComponent(AanmeldformulierConferenceFeedbackComponent, {
+      duration: 5000
+    });
+  }
 }
 
 @Component({
-selector: 'conferentieformulier-feedback-snack',
-template: `
+  selector: 'conferentieformulier-feedback-snack',
+  template: `
 <span>De conferentie is aangemaakt.</span>
 `,
-styles: [`
+  styles: [`
   span {
     color: white;
   }
 `]
 })
-export class AanmeldformulierConferenceFeedbackComponent {}
+export class AanmeldformulierConferenceFeedbackComponent { }
 
