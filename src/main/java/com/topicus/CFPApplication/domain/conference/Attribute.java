@@ -22,7 +22,7 @@ public class Attribute {
 	@ApiModelProperty(position = 2, value = "Amount of the item needed")
 	private int amount;
 
-	// onderzoek hoe dit werkt
+	// TODO: onderzoek hoe dit werkt 
 	@ApiModelProperty(position = 3, value = "The image for this attribute", hidden = true)
 	private Blob icon;
 
