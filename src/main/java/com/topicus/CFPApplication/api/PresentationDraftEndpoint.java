@@ -1,12 +1,7 @@
 package com.topicus.CFPApplication.api;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
 import java.util.Set;
 
-import javax.naming.CannotProceedException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.topicus.CFPApplication.domain.Applicant;
-//import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
-import com.topicus.CFPApplication.persistence.ConferenceService;
 import com.topicus.CFPApplication.persistence.PresentationDraftService;
-import com.topicus.CFPApplication.persistence.PresentationService;
 import com.topicus.CFPApplication.persistence.SubscribeService;
-import com.topicus.CFPApplication.persistence.mail.MailService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -58,48 +49,6 @@ public class PresentationDraftEndpoint {
 		return ResponseEntity.badRequest().build();
 	}
 
-	@ApiOperation("Looks for a draft based on the search criteria's")
-	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a presentation draft with the given ID"),
-			@ApiResponse(code = 404, message = "Could not retrieve a presentation draft with the given criteria's") })
-	@GetMapping("api/presentationdraft/{id}")
-	public ResponseEntity<?> findById(
-			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id) {
-		if (id != null && id > 0) {
-			Optional<PresentationDraft> result = this.presentationDraftService.findById(id);
-			if (result.isPresent()) {
-				return ResponseEntity.ok(result.get());
-			} else {
-				return new ResponseEntity<>("Could not find presentation with the given ID", HttpStatus.NOT_FOUND);
-			}
-		} else {
-			return ResponseEntity.badRequest().build();
-		}
-	}
-
-	@ApiOperation("Changes the label of the selected presentationdraft")
-	@ApiResponses({
-			@ApiResponse(code = 200, message = "Successfully changed the label of the conference with the given ID"),
-			@ApiResponse(code = 400, message = "Invalid ID or label value"),
-			@ApiResponse(code = 404, message = "Could not find a presentationdraft with the given ID"),
-			@ApiResponse(code = 304, message = "This label has already been assigned to this presentationdraft") })
-	@PostMapping("api/presentationdraft/{id}/label/{value}")
-	public ResponseEntity<?> changeLabel(
-			@ApiParam(required = true, name = "id", value = "Presentationdraft ID", type = "Long") @PathVariable("id") Long id,
-			@ApiParam(required = true, name = "value", value = "1. Denied 2. Accepted 3. Reserved 4. Undetermined", type = "Integer") @PathVariable("value") Integer value) {
-		if (id != null && id > 0 && value != null && value > 0 && value <= 4) {
-			int result = this.presentationDraftService.changeLabel(id, value);
-			if (result == 0) {
-				return ResponseEntity.status(HttpStatus.NOT_MODIFIED).build();
-			} else if (result == -1) {
-				return new ResponseEntity<>("Presentationdraft with the given ID does not exist", HttpStatus.NOT_FOUND);
-			} else {
-				return ResponseEntity.ok().body(result);
-			}
-		}
-		return new ResponseEntity<>("ID does not exist or label value is invalid", HttpStatus.BAD_REQUEST);
-
-	}
-
 	@ApiOperation("Deletes a presentationdraft by ID")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully deleted the presentationdraft with the given ID"),
 			@ApiResponse(code = 400, message = "Invalid ID value given"),
@@ -117,6 +66,7 @@ public class PresentationDraftEndpoint {
 		return ResponseEntity.badRequest().build();
 	}
 
+	// Methode moet nog geïmplementeerd en opgeschoond worden.
 //	@ApiOperation("Finalize all presentationdrafts")
 //	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully finalized all presentationdrafts"),
 //			@ApiResponse(code = 412, message = "Deadline has not yet passed, or there are still presentationdrafts with the label value of: undetermined or unlabeled"),
@@ -158,13 +108,4 @@ public class PresentationDraftEndpoint {
 //		}
 //		return new ResponseEntity<>("Invalid conference ID", HttpStatus.NOT_FOUND);
 //	}
-
-	@ApiOperation(value = "Adds a presentationdraft", hidden = true)
-	@PutMapping("api/save_presentationdraft/conferenceId/{id}")
-	public PresentationDraft changePresentationDraft(
-			@PathVariable("id") long conferenceId,
-			@RequestBody @Valid PresentationDraft presentationDraft) {
-		return presentationDraftService.save(conferenceId, presentationDraft);
-	}
-
 }

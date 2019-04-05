@@ -40,7 +40,7 @@ public class MailEndpoint {
 	}
 
 	/*
-	 * gives information on all the mail configuration values. Will give current
+	 * Gives information on all the mail configuration values. Will give current
 	 * mail server,port,username.
 	 * 
 	 * @return ResponseEntity<List<String>>
@@ -57,14 +57,13 @@ public class MailEndpoint {
 	}
 
 	/*
-	 * sets the mail server, port, username and password. Values should be given in
+	 * Sets the mail server, port, username and password. Values should be given in
 	 * that order. If setup was successful, it will return a OK status. If not it
 	 * will return a 412 status, with the reason. After successfully setting up the
 	 * email, a template will be send to the email address that it was successful.
 	 * 
 	 * @return ResponseEntity<?>
 	 */
-
 	@ApiOperation("Sets the email server, port, sender's e-mail and password."
 			+ "The e-mail must exists on the e-mail server in combination with the given password")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Setup successful"),
@@ -91,7 +90,6 @@ public class MailEndpoint {
 	/*
 	 * for testing purposes!
 	 */
-
 	@ApiOperation("For testing purposes. Will send a mail to the given e-mail. Be sure that you have setup the e-mail configurations with the setupconfig endpoint")
 	@GetMapping("api/sendmail/{email}/{name}")
 	public void sendMail(
@@ -122,7 +120,6 @@ public class MailEndpoint {
 	 * 
 	 * @return ResponseEntity<Iterable<Applicant>>
 	 */
-
 	@ApiOperation("Sends mail to all applicants of a given presentationdraft. You can only send HTML templates that are in the src/main/resources/templates folder")
 	@ApiResponses({
 			@ApiResponse(code = 200, message = "E-mail was send to the host with of the presentationdraft with the given ID"),
@@ -140,7 +137,6 @@ public class MailEndpoint {
 	/*
 	 * this will find a MailTemplate(object with String text) from the database NOT FINISHED
 	 */
-
 	@ApiOperation("Will find a MailTemplate(object with String text) from the database")
 	@ApiResponses({ @ApiResponse(code = 200, message = "template was found and send to frontend") })
 	@GetMapping("api/email/template/{template-id}")
