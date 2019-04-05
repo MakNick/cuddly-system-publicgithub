@@ -27,9 +27,9 @@ public class SwaggerConfig extends WebMvcConfigurationSupport {
 		ParameterBuilder aParameterBuilder = new ParameterBuilder();
 		aParameterBuilder.name("Authorization")                 // name of header
         .modelRef(new ModelRef("string"))
-        .parameterType("header")               // type - header
-        .defaultValue("Bearer em9uZTpteXBhc3N3b3Jk")        // based64 of - zone:mypassword
-        .required(true)                // for compulsory
+        .parameterType("header")               					// type - header
+        .defaultValue("Bearer em9uZTpteXBhc3N3b3Jk")        	// based64 of - zone:mypassword
+        .required(true)                							// for compulsory
         .build();
 		java.util.List<Parameter> aParameters = new ArrayList<>();
         aParameters.add(aParameterBuilder.build());  
