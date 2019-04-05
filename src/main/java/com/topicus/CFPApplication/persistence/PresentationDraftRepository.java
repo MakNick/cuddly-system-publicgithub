@@ -15,7 +15,7 @@ public interface PresentationDraftRepository extends PagingAndSortingRepository<
 
 	@Query(value = "select * from presentation_draft p where p.conference_id = :conferenceId and "
 			+ "(:label is null or p.label = :label) and"
-			+ "(:subject is null or p.subject = :subject) and"
+			+ "(:subject is null or p.subject like %:subject%) and"
 			+ "(:category is null or p.category = :category)", nativeQuery = true)
 	Page<PresentationDraft> searchPresentationDrafts(
 			@Param("conferenceId") long conferenceId,
