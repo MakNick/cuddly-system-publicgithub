@@ -1,3 +1,5 @@
+@import "../../../variables.scss";
+
 .content {
   display: flex;
 }
@@ -8,8 +10,8 @@
 
 .filter-container {
   display: flex;
-  min-height: 520px;
-  max-height: 550px;
+  /*min-height: 520px;*/
+  /*max-height: 550px;*/
 }
 
 .draft-tile-info{
@@ -46,9 +48,7 @@
 }
 
 .draft-tile-info-container{
-  height: 100%;
-  width: 100%;
-  margin: 10px;
+
 }
 
 .mat-grid-tile{
@@ -57,68 +57,49 @@
 
 .draft-tile{
   cursor: pointer;
-  box-shadow: 2px 2px 2px 0 lightgrey;
+  border: 1px solid $tile-border-color;
+  box-shadow: $tile-box-shadow;
   transition: all .5s ease;
 }
 
 .draft-tile:hover{
-  box-shadow: -1px 1px 5px 0 #180A3D;
-}
-
-.unlabeled-tile {
-  border: 1px solid #dfdfdf;
-}
-
-.undetermined-tile{
-  border: 1px solid #dfdfdf;
-}
-
-.accepted-tile{
-  border: 1px solid #dfdfdf;
+  box-shadow: $tile-hover-box-shadow;
 }
 
 .accepted-tile::after{
   content: "";
   width: 5px;
-  border: 1px solid rgba(24, 10, 61, 0.45);
+  border: 1px solid $label-border-color;
   height: 30%;
   display: block;
   top: -5px;
   position: relative;
   left: 95%;
-  background-color: #00ff1d;
-}
-
-.denied-tile{
-  border: 1px solid #dfdfdf;
+  background-color: $accepted-background-color;
 }
 
 .denied-tile::after{
   content: "";
   width: 5px;
-  border: 1px solid rgba(24, 10, 61, 0.45);
+  border: 1px solid $label-border-color;
   height: 30%;
   top: -5px;
   display: block;
   position: relative;
   left: 95%;
-  background-color: #ff1414;
-}
-
-.reserved-tile{
-  border: 1px solid #dfdfdf;
+  background-color: $denied-background-color;
 }
 
 .reserved-tile::after{
   content: "";
   width: 5px;
-  border: 1px solid rgba(24, 10, 61, 0.45);
+  border: 1px solid $label-border-color;
   height: 30%;
   top: -5px;
   display: block;
   position: relative;
   left: 95%;
-  background-color: #ffb100;
+  background-color: $reserved-background-color;
 }
 
 .buttons-top {
@@ -128,7 +109,7 @@
 
 .buttons-top > button {
   border: 1px solid rgba(24, 10, 61, 0.45);
-  
+
 }
 
 @media only screen and (max-width: 650px) {

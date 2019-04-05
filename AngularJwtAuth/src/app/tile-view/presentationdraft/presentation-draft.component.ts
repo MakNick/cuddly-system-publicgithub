@@ -17,7 +17,7 @@ import {LoadingService} from "../../services/loading.service";
 @Component({
   selector: 'app-presentationdraft',
   templateUrl: './presentation-draft.component.html',
-  styleUrls: ['./presentation-draft.component.css'],
+  styleUrls: ['./presentation-draft.component.scss'],
   animations: [fadeOut]
 })
 export class PresentationDraftComponent implements OnInit {
