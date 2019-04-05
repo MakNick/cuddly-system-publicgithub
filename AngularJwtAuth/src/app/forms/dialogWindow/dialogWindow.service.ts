@@ -11,7 +11,7 @@ export class dialogWindowService {
 
   savedApplicants: Applicant[] = [];
   savedCategories: string[] = [];
-  savedStages: string[] = [];
+  savedStages: Stage[] = [];
 
 
   constructor(private http: HttpClient) { }

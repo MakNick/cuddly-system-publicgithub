@@ -7,6 +7,7 @@ import { Conference } from './conferenceForm';
 import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
 import { DialogWindowComponent } from '../dialogWindow/dialogWindow.component';
 import {dialogWindowService} from '../dialogWindow/dialogWindow.service';
+import {Stage} from './stages/stage';
 
 
 @Component({
@@ -19,7 +20,7 @@ export class ConferenceFormComponent implements OnInit {
   conferenceForm: FormGroup;
   conferences: Conference[] = [];
   categories: string[] = [];
-  stages: string[] = [];
+  stages: Stage[] = [];
   defaultDateTime: string = "2099-01-01T01:00";
   dateOfToday = new Date(Date.now());
   dateOfTomorrow = new Date(this.dateOfToday.setDate(this.dateOfToday.getDate() + 1));
@@ -119,7 +120,6 @@ export class ConferenceFormComponent implements OnInit {
     }
     conference.categories = this.categories;
     conference.stages = this.stages;
-    console.log(conference);
     this.addConference(conference);
   }
 
@@ -180,9 +180,9 @@ export class ConferenceFormComponent implements OnInit {
     return this.dialogwindowservice.savedStages;
   }
 
-  deleteStage(x: string) {
+  deleteStage(x: Stage) {
     let stage = x;
-    this.dialogwindowservice.savedStages.splice(this.dialogwindowservice.savedStages.indexOf(stage), 1);
+    this.dialogwindowservice.savedStages.splice(this.dialogwindowservice.savedStages.findIndex(stg => stg.name === stage.name), 1);
     this.stages = this.dialogwindowservice.savedStages;
   }
  

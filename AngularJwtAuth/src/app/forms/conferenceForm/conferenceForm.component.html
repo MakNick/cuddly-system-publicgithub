@@ -79,7 +79,7 @@
                     </td>
                 </tr>
                 <tr *ngFor="let stage of getStages()">
-                    <td (click)="deleteStage(stage)">{{stage.stage}}</td>
+                    <td (click)="deleteStage(stage)">{{stage.name}}</td>
                     <mat-icon aria-label="icon_delete_category" (click)="deleteStage(stage)">delete</mat-icon>
                 </tr>
             </ng-container>

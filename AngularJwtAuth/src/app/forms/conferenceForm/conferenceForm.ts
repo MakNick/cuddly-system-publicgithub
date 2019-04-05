@@ -7,5 +7,5 @@ export class Conference {
     endDate: String;
     deadlinePresentationDraft: String;
     categories: Array<String>;
-    stages: Array<String>;
+    stages: Array<Stage>;
 }

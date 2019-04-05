@@ -56,7 +56,7 @@ public iconEmailFeedback: string;
     });
 
     this.stageForm = new FormGroup({
-      'stage': new FormControl(null, [Validators.required, Validators.minLength(1)])
+      'name': new FormControl(null, [Validators.required, Validators.minLength(1)])
     });
 
     this.forms = [this.cohostForm, this.categorieForm, this.stageForm];
