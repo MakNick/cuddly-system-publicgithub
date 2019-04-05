@@ -30,7 +30,7 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button *ngIf="getPopUpType()==0" class="mat-raised-button mat-primary" (click)="save(0)" [disabled]="this.cohostForm.invalid"><i class="fas fa-plus"></i></button>
-    <button *ngIf="getPopUpType()==1" class="mat-raised-button mat-primary" (click)="save(1)" [disabled]="this.categorieForm.invalid"><i class="fas fa-plus"></i></button>
-    <button *ngIf="getPopUpType()==2" class="mat-raised-button mat-primary" (click)="save(2)" [disabled]="this.stageForm.invalid"><i class="fas fa-plus"></i></button>
+  <button *ngIf="getPopUpType()==0" class="mat-raised-button mat-primary" (click)="save(0)" [disabled]="this.cohostForm.invalid"><i class="fas fa-plus"></i></button>
+  <button *ngIf="getPopUpType()==1" class="mat-raised-button mat-primary" (click)="save(1)" [disabled]="this.categorieForm.invalid"><i class="fas fa-plus"></i></button>
+  <button *ngIf="getPopUpType()==2" class="mat-raised-button mat-primary" (click)="save(2)" [disabled]="this.stageForm.invalid"><i class="fas fa-plus"></i></button>
 </mat-dialog-actions>

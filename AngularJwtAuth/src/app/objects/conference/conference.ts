@@ -11,7 +11,7 @@ export class Conference{
     endDate: Date;
 
     categories: string[];
-    stages: Stage[];
+    stages: string[];
     extras: Extra[];
     days: Day[]
     presentationDrafts: PresentationDraft[];

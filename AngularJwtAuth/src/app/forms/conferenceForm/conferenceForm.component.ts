@@ -117,6 +117,8 @@ export class ConferenceFormComponent implements OnInit {
         conference.deadlinePresentationDraft = this.conferenceForm.get('deadlineDate').value + "T" + this.conferenceForm.get('deadlineTime').value;
       }
     }
+    conference.categories = this.categories;
+    conference.stages = this.stages;
     console.log(conference);
     this.addConference(conference);
   }
@@ -211,4 +213,3 @@ styles: [`
 `],
 })
 export class AanmeldformulierConferenceFeedbackComponent {}
-
