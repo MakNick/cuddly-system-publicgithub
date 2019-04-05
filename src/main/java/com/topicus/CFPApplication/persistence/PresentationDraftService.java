@@ -124,23 +124,6 @@ public class PresentationDraftService {
         return false;
     }
 
-    public Page<PresentationDraft> findPresentationDraftsByLabel(Long conferenceId, byte labelId, int page, int limit) {
-
-        List<Integer> pageConfigs = PagingConstants.defaultPageConfigurations(page, limit);
-
-        Pageable pageableRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
-
-        if (labelId == 5) {
-            return this.presentationDraftRepository.findPresentationDraftByConferenceIdOrderByLabelDesc(conferenceId, pageableRequest);
-        }
-
-        for (Label label : Label.values()) {
-            if (labelId == label.ordinal()) {
-                return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndLabelOrderBySubject(conferenceId, label, pageableRequest);
-            }
-        }
-        throw new RuntimeException("Could not find a presentation draft with the label id of " + labelId);
-    }
 //	public List<PresentationDraft> makePresentationDraftsFinal(long conferenceId, int label)
 //			throws CannotProceedException,NoSuchElementException {
 //		Optional<Conference> conference = conferenceService.findById(conferenceId);
