@@ -111,7 +111,7 @@ public class MailEndpoint {
 	}
 
 	/*
-	 * this will find a presentationDraft by id, and then send all the applicants in
+	 * this will find a PresentationDraftRequest by id, and then send all the applicants in
 	 * the set of the applicationDraft an email the subject of the mail will be set
 	 * to the name of the email template.html if an applicant does not have an
 	 * email(null), or the email field has an String length less than 2. He will be
@@ -150,7 +150,7 @@ public class MailEndpoint {
 
 	/*
 	 * this will send a specified text as email to the applicants of a
-	 * presentationDraft
+	 * PresentationDraftRequest
 	 */
 	@ApiOperation("Sends a specified email to the applicants of a presentationdraft")
 	@ApiResponses({

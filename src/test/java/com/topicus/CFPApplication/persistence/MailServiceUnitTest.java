@@ -19,7 +19,7 @@
 //import org.springframework.mail.javamail.MimeMessagePreparator;
 //
 //import com.topicus.CFPApplication.domain.Applicant;
-//import com.topicus.CFPApplication.domain.PresentationDraft;
+//import com.topicus.CFPApplication.domain.PresentationDraftRequest;
 //import com.topicus.CFPApplication.persistence.mail.MailService;
 //
 //@RunWith(MockitoJUnitRunner.class)
@@ -33,7 +33,7 @@
 //	
 ////	@Test
 ////	public void sendSpecifiedEmailTest () {
-////		PresentationDraft p = new PresentationDraft();
+////		PresentationDraftRequest p = new PresentationDraftRequest();
 ////    	p.setId(1);
 ////    	Applicant a = new Applicant();
 ////    	a.setEmail("jojo@gangster.com");

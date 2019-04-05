@@ -34,7 +34,7 @@ public class PdfServiceTest {
 //		Conference conf = new Conference();
 //		conf.setId(1);
 //
-//		PresentationDraft pd = new PresentationDraft();
+//		PresentationDraftRequest pd = new PresentationDraftRequest();
 //		pd.setId(1);
 //		pd.setSubject("test");
 //		pd.setCategory("testCategory");

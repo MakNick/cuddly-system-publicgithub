@@ -72,18 +72,18 @@ public class ConferenceEndpoint {
         return ResponseEntity.badRequest().build();
     }
 
-    @ApiOperation("Retrieves all available presentation draft from a conference, based of the search criteria's")
-    @ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved all drafts based of the search criteria's"),
-            @ApiResponse(code = 404, message = "No drafts were found with the current search criteria")})
+    @ApiOperation("Retrieves all available presentation draft from a conference, based of the searchPresentationDrafts criteria's")
+    @ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved all drafts based of the searchPresentationDrafts criteria's"),
+            @ApiResponse(code = 404, message = "No drafts were found with the current searchPresentationDrafts criteria")})
     @GetMapping("api/conference/{id}/presentationdrafts/search")
     public ResponseEntity<Page<PresentationDraft>> searchPresentationDrafts(
             @PathVariable("id") long conferenceID,
             @RequestParam("s") String subject,
             @RequestParam("c") String category,
-            @RequestParam("l") int labelId,
+            @RequestParam("l") String label,
             @RequestParam("page") int page,
             @RequestParam("limit") int limit) {
-        return ResponseEntity.ok(this.presentationDraftService.findAllBySearchCriteria(conferenceID, subject, category, labelId, page, limit));
+        return ResponseEntity.ok(this.presentationDraftService.findAllBySearchCriteria(conferenceID, subject, category, label, page, limit));
 
     }
 

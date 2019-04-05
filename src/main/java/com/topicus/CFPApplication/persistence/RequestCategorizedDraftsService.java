@@ -22,11 +22,11 @@ public class RequestCategorizedDraftsService {
 	}
 	
 	//Method gets called when both Conference and Category exist
-//	public Iterable<PresentationDraft> findPresentationDraftsByCategory(Conference conference, String category){
-//		Iterable<PresentationDraft> allDraftsFromConference = this.presentationDraftRepository.findPresentationDraftByConferenceId(conference.getId());
+//	public Iterable<PresentationDraftRequest> findPresentationDraftsByCategory(Conference conference, String category){
+//		Iterable<PresentationDraftRequest> allDraftsFromConference = this.presentationDraftRepository.findPresentationDraftByConferenceId(conference.getId());
 //		presentationDraftConference = new PresentationDraftConference();
 //
-//		for(PresentationDraft pdraft : allDraftsFromConference) {
+//		for(PresentationDraftRequest pdraft : allDraftsFromConference) {
 //			if(pdraft.getCategory().equals(category)) {
 //				presentationDraftConference.addPresentationDraft(pdraft);
 //			}

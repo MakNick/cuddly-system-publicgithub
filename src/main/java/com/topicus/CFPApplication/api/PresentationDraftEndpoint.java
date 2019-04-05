@@ -58,7 +58,7 @@ public class PresentationDraftEndpoint {
 		return ResponseEntity.badRequest().build();
 	}
 
-	@ApiOperation("Looks for a draft based on the search criteria's")
+	@ApiOperation("Looks for a draft based on the searchPresentationDrafts criteria's")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved a presentation draft with the given ID"),
 			@ApiResponse(code = 404, message = "Could not retrieve a presentation draft with the given criteria's") })
 	@GetMapping("api/presentationdraft/{id}")
@@ -131,13 +131,13 @@ public class PresentationDraftEndpoint {
 //					return new ResponseEntity<>("Already finalized presentationDrafts", HttpStatus.I_AM_A_TEAPOT);
 //				} else {
 //					for (int label = 1; label < 4; label++) {
-//						List<PresentationDraft> listPresentationDrafts = presentationDraftService
+//						List<PresentationDraftRequest> listPresentationDrafts = presentationDraftService
 //								.makePresentationDraftsFinal(conferenceId, label);
 //						if (label == 2) {
-//							presentationService.makePresentation((ArrayList<PresentationDraft>) listPresentationDrafts,
+//							presentationService.makePresentation((ArrayList<PresentationDraftRequest>) listPresentationDrafts,
 //									conferenceService.findById(conferenceId).get());
 //						}
-//						for (PresentationDraft draft : listPresentationDrafts) {
+//						for (PresentationDraftRequest draft : listPresentationDrafts) {
 //							List<Applicant> listApplicants = new ArrayList<>(draft.getApplicants());
 //							for (Applicant applicant : listApplicants) {
 //								mailService.sendMailText(applicant.getEmail(), applicant.getName(),
