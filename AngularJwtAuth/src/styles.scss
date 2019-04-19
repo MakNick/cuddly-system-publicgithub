@@ -2,7 +2,7 @@
 @import "variables.scss"; // import the scss variable file and make this a scss extension
 
 body {
-  font-family: "Times New Roman", Times, serif;
+  font-family: $font-family;
   margin: 0;
   padding: 0;
 }
@@ -18,17 +18,17 @@ li{
 
 p {
   margin: 0;
-  color: #575E64;
+  color: $paragraph-color;
 }
 
 h1 {
   margin: 0;
-  color: #575E64;
+  color: $h1-color;
 }
 
 h3 {
   margin: 0;
-  color: #fff;
+  color: $h3-color;
 }
 
 button{
@@ -49,11 +49,22 @@ mat-toolbar-row span:hover {
 
 mat-toolbar-row span a {
   text-decoration: none;
-  color: #fff;
+  color: #ffffff;
+}
+
+#font6 {
+  direction: ltr;
+  display: block;
+  height: 218px;
+  overflow: auto;
+  position: absolute;
+  right: 76px;
+  top: 15px;
+  width: 58%;
 }
 
 .container {
-  margin: 20px 60px 0px 60px;
+  margin: 20px 60px 0 60px;
 }
 
 .nav-link {
@@ -61,7 +72,7 @@ mat-toolbar-row span a {
 }
 
 .active-nav-link {
-  border-bottom: 5px solid #FFE600 !important;
+  border-bottom: 5px solid $nav-link-border-color !important;
   top: 10px;
 
 }
@@ -72,7 +83,7 @@ mat-toolbar-row span a {
 }
 
 .mat-toolbar.mat-primary {
-  background-color: #180A3D;
+  background-color: $nav-background-color;
 }
 
 .loading-container{
@@ -93,7 +104,7 @@ mat-toolbar-row span a {
 }
 
 .back-button-box button {
-  color: #4f4078;
+  color: $back-button-color;
   padding: 0;
   font-size: 40px;
 }
@@ -103,19 +114,20 @@ mat-toolbar-row span a {
 }
 
 .snackbar-color {
-  background: #4f3e8e;
+  background: $snackbar-background-color;
 }
 
 .button {
-  background-color: #fff;
-  border: 1px solid #180A3D !important;
+  background-color: $button-background-color;
+  border: 1px solid $button-border-color !important;
   transition: background-color 2s cubic-bezier(0.24, 0.85, 0, 1.07);
-  color: #4f3e8e;
+  color: $button-text-color;
   font-weight: bold;
 }
 
 .button:hover {
-  background-color: rgba(79, 62, 142, 0.1);
+  background-color: $button-hover-background-color;
+  color: $button-hover-text-color;
 }
 
 .mobile-hide{

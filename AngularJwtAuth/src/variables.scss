@@ -1,3 +1,43 @@
 
-// hyperlinks
-$link-hover-color : blue;
+// main colors
+$main-color: #180A3D;
+$secondary-color: #4F3E8E;
+$highlight-color: #FFE600;
+
+// nav
+$nav-background-color: #180A3D;
+$nav-link-border-color: #180A3D;
+
+// buttons
+$button-background-color: #ffffff;
+$button-border-color: #4F3E8E;
+$button-text-color: #4F3E8E;
+$back-button-color: #4F3E8E;
+
+// button:hover
+$button-hover-background-color: #4F3E8E;
+$button-hover-text-color: #fff;
+
+// font colors
+$h1-color: #575E64;
+$h3-color: #ffffff;
+$paragraph-color: #575E64;
+
+// font style
+$font-family: "Times New Roman", Times, serif;
+
+// labels
+$accepted-background-color: #00ff1d;;
+$denied-background-color: #ff1414;
+$reserved-background-color: #ffd726;;
+$label-border-color: #000000;
+
+// tiles
+$tile-border-color: #dfdfdf;
+$tile-box-shadow: 2px 2px 2px 0 lightgrey;
+
+// tiles:hover
+$tile-hover-box-shadow: -1px 1px 5px 0 #180A3D;
+
+// snackbar
+$snackbar-background-color: #4f3e8e;

@@ -49,6 +49,7 @@ public class PresentationDraftService {
         List<Integer> pageConfigs = PagingConstants.defaultPageConfigurations(page, limit);
 
         Pageable pageRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
+
         return this.presentationDraftRepository.searchPresentationDrafts(conferenceId, subject.equals("empty") ? null : subject, category.equals("empty") ? null : category, label.equals("empty") ? null : label, pageRequest);
     }
 

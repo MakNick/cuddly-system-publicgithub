@@ -6,6 +6,7 @@ import { PresentationDraftApplicant } from '../../objects/presentationDraftAppli
 import { Conference } from '../../objects/conference/conference';
 import { MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar } from '@angular/material';
 import { AanmeldformulierDialogComponent } from './presentationdraftFormDialog/aanmeldformulier-dialog.component';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-aanmeldformulier',
@@ -17,7 +18,7 @@ export class AanmeldformulierComponent implements OnInit {
   public isZichtbaar = true;
   public feedbackBerichten = ['Voer a.u.b. een naam in die 3 tekens of langer is.', 'Voer a.u.b. een geldig e-mailadres in.', 'Voer a.u.b. een geldig onderwerp in.', 'Voeg a.u.b. een beschrijving toe.'];
   public numberCohosts: number;
-  public conference: Conference;
+  public conferenceID: number;
   public tableApplicants: Applicant[];
 
   public presentationDraftApplicant: PresentationDraftApplicant;
@@ -39,13 +40,15 @@ export class AanmeldformulierComponent implements OnInit {
 
   fileNameDialogRef: MatDialogRef<AanmeldformulierDialogComponent>;
 
-  constructor(private draftAanmeldService: draftAanmeldService, public dialog: MatDialog, private snackBar: MatSnackBar) {
+  constructor(private draftAanmeldService: draftAanmeldService, public dialog: MatDialog, private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
     this.submittable = false;
-    this.conference = new Conference;
-    this.conference.id = 1;     //Aanpassen - Via sessionStorage?
+    this.route.params.subscribe(params => {
+        this.conferenceID = +params['id'];       
+        console.log(this.conferenceID);
+      });
     this.numberCohosts = 0;
     this.presentationDraftApplicant = new PresentationDraftApplicant();
 
@@ -192,7 +195,7 @@ export class AanmeldformulierComponent implements OnInit {
   submit() {
     this.prepareApplicants();
     this.presentationDraftApplicant.presentationDraft = Object.assign(this.presentationdraftForm.get('presentationDraft').value);
-    this.draftAanmeldService.postPresentationDraftApplicant(this.presentationDraftApplicant)
+    this.draftAanmeldService.postPresentationDraftApplicant(this.presentationDraftApplicant, this.conferenceID)
       .subscribe(presentationDraftApplicant => console.log(presentationDraftApplicant),
         error => function (error: Error) {
           alert(error.message);

@@ -33,16 +33,6 @@ export class ConferenceComponent implements OnInit {
     this.fillConferences();
   }
 
-  // to give each tile it's image call in the carousel tag like so: (carouselLoad)="carouselTileLoad(0)"
-  // public carouselTileLoad(j) {
-  //   const len = this.carouselTiles[j].length;
-  //   for (let i = len; i < len; i++) {
-  //     this.carouselTiles[j].push(
-  //       this.images[Math.floor(Math.random() * this.images.length)]
-  //     );
-  //   }
-  // }
-
   fillConferences() {
     this.loadingService.setLoading(true)
     this.conferenceService.getConferences()
@@ -92,9 +82,6 @@ export class ConferenceComponent implements OnInit {
     };
 
     this.loadingService.setLoading(false);
-    // this.carouselTileItems.forEach(el => {
-    //   this.carouselTileLoad(el);
-    // });
   }
 
 }

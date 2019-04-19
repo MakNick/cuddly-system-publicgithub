@@ -1,3 +1,18 @@
-<h4>Content from Server</h4>
-{{board}}
-{{errorMessage}}
+<span>Kies hieronder een conference uit waarvoor je een presentatievoorstel wilt indienen:</span>
+
+<div>
+    <ngu-carousel class="mobile-hide" #myMiniCarousel [inputs]="miniConferenceTileConfigs"
+    [dataSource]="carouselTiles[0]">
+        <ngu-tile *nguCarouselDef="let item; let i = index" matBadge={{item.presentationDrafts.length}} matBadgeColor="warn">
+            <div class="tile-small" routerLink="{{item.id}}/presentationDraftApplicantForm">
+                <div class="conference-tile-small-info">
+                    <p>{{i}}. {{item.name}}</p>
+                    <img src="https://content.assets.pressassociation.io/2017/06/28150053/Cx-dyLsUsAAfB4K-640x480.jpg">
+                </div>
+            </div>
+        </ngu-tile>
+    </ngu-carousel>
+</div>
+
+
+

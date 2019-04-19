@@ -95,26 +95,6 @@ public class Conference {
 	@ApiModelProperty(position = 13, value = "Form to be used for this conference", hidden = true)
 	private PresentationDraftForm presentationDraftForm;
 
-	public void addCategorie(String categorie) {
-		this.categories.add(categorie);
-	}
-
-//	public void addStage(Stage stage) {
-//		this.stages.add(stage);
-//	}
-
-//	public void addExtra(Extra extra) {
-//		this.extras.add(extra);
-//	}
-
-	public void addDay(Day day) {
-		this.days.add(day);
-	}
-
-//	public void addMailTemplate(MailTemplate mailTemplate) {
-//		this.mailTemplates.add(mailTemplate);
-//	}
-
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
 		this.presentationDrafts.add(presentationDraft);
 	}
