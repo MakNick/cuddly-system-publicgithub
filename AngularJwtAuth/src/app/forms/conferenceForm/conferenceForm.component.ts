@@ -18,7 +18,7 @@ export class ConferenceFormComponent implements OnInit {
   conferences: Conference[] = [];
   categories: string[] = [];
   stages: string[] = [];
-  minDate = new Date(Date.now());
+  minDate = new Date();
 
   defaultDateTime: string = "2099-01-01T01:00";
   dateOfToday = new Date(Date.now());
