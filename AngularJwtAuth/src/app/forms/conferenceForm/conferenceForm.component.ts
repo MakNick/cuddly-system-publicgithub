@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators, FormGroup, FormArray } from '@angular/forms';
+import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
+import { FormBuilder, Validators, FormGroup, FormArray, AbstractControl } from '@angular/forms';
 import { forbiddenConferenceNameValidator } from './shared/conferenceName.validator';
-import { ConferenceDateValidator } from './shared/conferenceDate.validator';
 import { ConferenceService } from './conferenceForm.service';
 import { Conference } from './conferenceForm';
 import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
 import { ConferenceFormDialogComponent } from './conferenceFormDialog/conferenceForm-dialog.component';
+import { ConferenceDateValidator } from './shared/conferenceDate.validator';
 
 @Component({
   selector: 'conferenceForm',
@@ -18,6 +18,7 @@ export class ConferenceFormComponent implements OnInit {
   conferences: Conference[] = [];
   categories: string[] = [];
   stages: string[] = [];
+  minDate = new Date(Date.now());
 
   defaultDateTime: string = "2099-01-01T01:00";
   dateOfToday = new Date(Date.now());
@@ -48,6 +49,14 @@ export class ConferenceFormComponent implements OnInit {
   
   get endDate() {
     return this.conferenceForm.get('dateGroup').get('endDate');
+  }
+
+  get startTime() {
+    return this.conferenceForm.get('dateGroup').get('startTime');
+  }
+  
+  get endTime() {
+    return this.conferenceForm.get('dateGroup').get('endTime');
   }
 
   get stageName() {
@@ -94,15 +103,14 @@ export class ConferenceFormComponent implements OnInit {
       'dateGroup': this.fb.group({
         'startDate': [{ disabled: true, value: ''}],
         'startTime': [null],
-        'endDate': [{ disabled: true, value: '' }, [ConferenceDateValidator]],
+        'endDate': [{ disabled: true, value: ''} ],
         'endTime': [null],
         'deadlineDate': [{ disabled: true, value: '' }],
         'deadlineTime': [null],
-      }),    
+      }, { validator: ConferenceDateValidator }),    
       'stages': this.fb.array([]),
       'categories': this.fb.array([])
-    },
-      { validator: ConferenceDateValidator });
+    });
   }
 
   createConference() {
@@ -129,26 +137,6 @@ export class ConferenceFormComponent implements OnInit {
       }
     }
     this.addConference(conference);
-  }
-
-  validateDate() {
-    console.log("validerend");
-    let begindatum = new Date(this.startDate.value).toISOString().substring(0,10);
-    let einddatum = new Date(this.endDate.value).toISOString().substring(0,10);
- 
-    if(new Date(begindatum) > new Date(einddatum)){
-      console.log("Mag niet");
-      this.conferenceForm.get('dateGroup').get('startDatum').invalid;
-      this.conferenceForm.get('dateGroup').get('eindDatum').invalid;
-    }else if(new Date(einddatum) > new Date(begindatum)){
-      console.log("Mag");
-      this.conferenceForm.get('dateGroup').get('startDatum').valid;
-      this.conferenceForm.get('dateGroup').get('eindDatum').valid;
-    }else{
-      console.log("Gelijk");
-      this.conferenceForm.get('dateGroup').get('startDatum').valid;
-      this.conferenceForm.get('dateGroup').get('eindDatum').valid;
-    }
   }
 
   addConference(conference) {
@@ -189,6 +177,10 @@ export class ConferenceFormComponent implements OnInit {
     this.categories.splice(this.categories.indexOf(category), 1);
   }
 
+  setMaxDate(){
+    console.log("Jaja");
+  }
+
   popUpAddStages() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -215,7 +207,7 @@ export class ConferenceFormComponent implements OnInit {
   }
 
   submit() {
-    this.validateDate();
+    //this.validateDate();
     this.createConference();
     this.openSnackBar();
   }
@@ -243,4 +235,3 @@ export class ConferenceFormComponent implements OnInit {
 `]
 })
 export class AanmeldformulierConferenceFeedbackComponent { }
-

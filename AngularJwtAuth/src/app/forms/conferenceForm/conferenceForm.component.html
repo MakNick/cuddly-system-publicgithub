@@ -21,10 +21,10 @@
             <div class="input-start-date">
                 <mat-form-field appearance="legacy" formGroupName="dateGroup">
                     <mat-label>Begindatum:</mat-label>
-                    <input matInput [matDatepicker]="dp3" placeholder="Begindatum" formControlName="startDate">
-                    <!-- <mat-hint *ngIf="startDate.invalid">
+                    <input matInput [matDatepicker]="dp3" placeholder="Begindatum" [min]="minDate" [max]="maxDate" formControlName="startDate">
+                    <mat-hint *ngIf="startDate.errors?.dateIncorrect">
                         <small class="redChar"> Datum onjuist </small>
-                    </mat-hint> -->
+                    </mat-hint>
                     <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
                     <mat-datepicker #dp3 disabled="false"></mat-datepicker>
                 </mat-form-field>
@@ -34,6 +34,9 @@
                 <mat-form-field appearance="legacy" formGroupName="dateGroup">
                     <mat-label>Begintijd:</mat-label>
                     <input matInput formControlName="startTime" placeholder="Begintijd" type="time">
+                    <mat-hint *ngIf="endTime.errors?.timeIncorrect">
+                        <small class="redChar"> Tijd onjuist </small>
+                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -41,10 +44,10 @@
             <div class="input-end-date">
                 <mat-form-field appearance="legacy" formGroupName="dateGroup">
                     <mat-label>Einddatum:</mat-label>
-                    <input matInput [matDatepicker]="dp4" placeholder="Einddatum" formControlName="endDate">
-                    <!-- <mat-hint *ngIf="endDate.invalid">
+                    <input matInput [matDatepicker]="dp4" placeholder="Einddatum" [min]="minDate" (change)= "setMaxDate()" formControlName="endDate">
+                     <mat-hint *ngIf="endDate.errors?.dateIncorrect">
                         <small class="redChar"> Datum onjuist </small>
-                    </mat-hint> -->
+                    </mat-hint>
 
                     <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
                     <mat-datepicker #dp4 disabled="false"></mat-datepicker>
@@ -55,6 +58,9 @@
                 <mat-form-field appearance="legacy" formGroupName="dateGroup">
                     <mat-label>Eindtijd:</mat-label>
                     <input matInput formControlName="endTime" placeholder="Eindtijd" type="time">
+                    <mat-hint *ngIf="endTime.errors?.timeIncorrect">
+                        <small class="redChar"> Tijd onjuist </small>
+                    </mat-hint>
                 </mat-form-field>
             </div>
         </div>
@@ -111,18 +117,15 @@
     <div class="div4">
         <p></p>
     </div>
-
+   
     <button mat-icon-button type="submit" [disabled]="this.conferenceForm.invalid">
         <mat-icon aria-label="icon_verzenden">save</mat-icon>
         <mat-label *ngIf="this.conferenceForm.invalid">Vul minimaal de verplichte velden in a.u.b.</mat-label>
+        <mat-label *ngIf="this.conferenceForm.get('dateGroup').invalid && this.conferenceForm.get('dateGroup').touched">
+                - De ingevoerde datum en/of tijd is onjuist/onvolledig.
+        </mat-label>
         <mat-label *ngIf="!this.conferenceForm.invalid">Conferentie aanmaken</mat-label>
     </button>
-
-    <button mat-icon-button type="button" (click)="validateDate()">
-        <mat-icon aria-label="icon_verzenden">save</mat-icon>
-        <mat-label>Valideer datum tijd</mat-label>
-    </button>
-
 </form>
 
 
