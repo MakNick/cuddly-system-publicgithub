@@ -15,12 +15,12 @@ public class RequestCategorizedDraftsService {
 	private PresentationDraftRepository presentationDraftRepository;
 
 	private PresentationDraftConference presentationDraftConference;
-	
+
 	@Autowired
 	public RequestCategorizedDraftsService(PresentationDraftRepository presentationDraftRepository) {
 		this.presentationDraftRepository = presentationDraftRepository;
 	}
-	
+
 	//Method gets called when both Conference and Category exist
 //	public Iterable<PresentationDraftRequest> findPresentationDraftsByCategory(Conference conference, String category){
 //		Iterable<PresentationDraftRequest> allDraftsFromConference = this.presentationDraftRepository.findPresentationDraftByConferenceId(conference.getId());
@@ -33,6 +33,6 @@ public class RequestCategorizedDraftsService {
 //		}
 //		return presentationDraftConference.getPresentationDrafts();
 //	}
-	
+
 	
 }

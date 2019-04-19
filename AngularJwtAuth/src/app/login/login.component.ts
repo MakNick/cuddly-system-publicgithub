@@ -20,6 +20,8 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   private loginInfo: AuthLoginInfo;
 
+  date: Date = new Date();
+
   constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {

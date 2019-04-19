@@ -109,26 +109,4 @@ public class PresentationDraftService {
         }
         throw new RuntimeException("Could not find a presentation draft with the label id of " + labelId);
     }
-//	public List<PresentationDraftRequest> makePresentationDraftsFinal(long conferenceId, int label)
-//			throws CannotProceedException,NoSuchElementException {
-//		Optional<Conference> conference = conferenceService.findById(conferenceId);
-//		if (conference.isPresent()) {
-//			if (LocalDateTime.now().isBefore(conference.get().getDeadlinePresentationDraft())) {
-//				throw new CannotProceedException();
-//			} else if (conferenceService.findPresentationDrafts(conference.get(), 0).iterator().hasNext()
-//					|| conferenceService.findPresentationDrafts(conference.get(), 4).iterator().hasNext()) {
-//				throw new CannotProceedException();
-//			} else {
-//				List<PresentationDraftRequest> listPresentationDrafts = new ArrayList<>();
-//				Iterator<PresentationDraftRequest> tempList = conferenceService.findPresentationDrafts(conference.get(), label)
-//						.iterator();
-//				while (tempList.hasNext()) {
-//					listPresentationDrafts.add(tempList.next());
-//				}
-//				return listPresentationDrafts;
-//			}
-//		} else {
-//			throw new NoSuchElementException();
-//		}
-//	}
 }
