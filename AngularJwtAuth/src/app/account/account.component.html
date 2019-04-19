@@ -1,0 +1,35 @@
+<div *ngIf="info.token; else loggedOut" class="center">
+
+  <mat-card class="account-box">
+    <mat-card-header>
+      <mat-card-title>
+        <span>Account informatie</span>
+      </mat-card-title>
+      <span class="fill-remaining-space"></span>
+      <i class="fas fa-user"></i>
+    </mat-card-header>
+
+    <mat-divider></mat-divider>
+
+    <mat-card-content>
+      <br><br>
+      <p>
+        <strong>Gebruikersnaam:</strong> {{info.username}}
+      </p><br>
+      <p>
+        <strong>Rol:</strong> {{info.authorities}}
+      </p><br>
+      <p class="txt">
+        <strong>Token:</strong> {{info.token}}
+      </p><br>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<ng-template #loggedOut>
+  <mat-card class="account-box">
+    <mat-card-content>
+      Please login.
+    </mat-card-content>
+  </mat-card>
+</ng-template>

@@ -75,6 +75,13 @@ mat-toolbar-row span a {
   background-color: #180A3D;
 }
 
+.loading-container{
+  position: absolute;
+  top: 40%;
+  left: 45%;
+  z-index: 1;
+}
+
 .share-space {
   display: flex;
 }
@@ -113,6 +120,10 @@ mat-toolbar-row span a {
 
 .mobile-hide{
   visibility: visible;
+}
+
+.fill-remaining-space {
+  flex: 1 1 auto;
 }
 
 @media only screen and (max-width: 718px) {

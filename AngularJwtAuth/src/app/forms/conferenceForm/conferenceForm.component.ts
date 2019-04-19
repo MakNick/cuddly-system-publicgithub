@@ -212,26 +212,21 @@ export class ConferenceFormComponent implements OnInit {
     this.openSnackBar();
   }
 
-  openSnackBar() {
-    this.conferenceForm.reset();
-    this.categories = [];
-    this.stages = [];
-
-    this.snackBar.openFromComponent(AanmeldformulierConferenceFeedbackComponent, {
-      duration: 5000
-    });
-  }
+openSnackBar() {
+  this.conferenceForm.reset();
+  this.categories = [];
+  this.stages = [];
+  this.snackBar.openFromComponent(AanmeldformulierConferenceFeedbackComponent, {
+    duration: 5000,
+    panelClass: ['snackbar-color']
+  });
+}
 }
 
 @Component({
   selector: 'conferentieformulier-feedback-snack',
   template: `
 <span>De conferentie is aangemaakt.</span>
-`,
-  styles: [`
-  span {
-    color: white;
-  }
-`]
+`
 })
 export class AanmeldformulierConferenceFeedbackComponent { }

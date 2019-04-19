@@ -121,6 +121,16 @@
   background-color: #ffb100;
 }
 
+.buttons-top {
+  border: 1px solid rgba(24, 10, 61, 0.45);
+  display: block;
+}
+
+.buttons-top > button {
+  border: 1px solid rgba(24, 10, 61, 0.45);
+  
+}
+
 @media only screen and (max-width: 650px) {
 
   .content {
