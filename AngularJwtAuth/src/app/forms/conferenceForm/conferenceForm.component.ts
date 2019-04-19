@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormArray, AbstractControl } from '@angular/forms';
 import { forbiddenConferenceNameValidator } from './shared/conferenceName.validator';
 import { ConferenceService } from './conferenceForm.service';
@@ -177,10 +177,6 @@ export class ConferenceFormComponent implements OnInit {
     this.categories.splice(this.categories.indexOf(category), 1);
   }
 
-  setMaxDate(){
-    console.log("Jaja");
-  }
-
   popUpAddStages() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -207,7 +203,6 @@ export class ConferenceFormComponent implements OnInit {
   }
 
   submit() {
-    //this.validateDate();
     this.createConference();
     this.openSnackBar();
   }

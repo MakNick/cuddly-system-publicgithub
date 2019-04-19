@@ -44,7 +44,7 @@
             <div class="input-end-date">
                 <mat-form-field appearance="legacy" formGroupName="dateGroup">
                     <mat-label>Einddatum:</mat-label>
-                    <input matInput [matDatepicker]="dp4" placeholder="Einddatum" [min]="minDate" (change)= "setMaxDate()" formControlName="endDate">
+                    <input matInput [matDatepicker]="dp4" placeholder="Einddatum" [min]="minDate" formControlName="endDate">
                      <mat-hint *ngIf="endDate.errors?.dateIncorrect">
                         <small class="redChar"> Datum onjuist </small>
                     </mat-hint>
