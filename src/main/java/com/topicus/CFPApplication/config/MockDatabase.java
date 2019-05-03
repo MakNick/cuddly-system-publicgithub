@@ -9,8 +9,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.topicus.CFPApplication.domain.conference.Conference;
-import com.topicus.CFPApplication.persistence.ConferenceRepository;
+import com.topicus.CFPApplication.domain.Conference;
+import com.topicus.CFPApplication.persistence.repositories.ConferenceRepository;
 
 @Component
 public class MockDatabase {

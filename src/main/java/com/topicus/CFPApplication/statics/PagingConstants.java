@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.config.paging;
+package com.topicus.CFPApplication.statics;
 
 import java.util.Arrays;
 import java.util.List;

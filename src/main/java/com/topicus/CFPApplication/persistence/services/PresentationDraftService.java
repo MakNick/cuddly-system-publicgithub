@@ -1,12 +1,14 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.services;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 
-import com.topicus.CFPApplication.config.paging.PagingConstants;
-import com.topicus.CFPApplication.domain.conference.Conference;
+import com.topicus.CFPApplication.statics.PagingConstants;
+import com.topicus.CFPApplication.domain.Conference;
+import com.topicus.CFPApplication.persistence.repositories.ConferenceRepository;
+import com.topicus.CFPApplication.persistence.repositories.PresentationDraftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

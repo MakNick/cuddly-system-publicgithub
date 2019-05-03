@@ -3,8 +3,6 @@ package com.topicus.CFPApplication.domain;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.topicus.CFPApplication.domain.conference.Conference;
-
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 

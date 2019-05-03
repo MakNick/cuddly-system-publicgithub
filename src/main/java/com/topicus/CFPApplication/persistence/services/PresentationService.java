@@ -1,8 +1,10 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.services;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.topicus.CFPApplication.persistence.repositories.ConferenceRepository;
+import com.topicus.CFPApplication.persistence.repositories.PresentationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,7 +13,7 @@ import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.Presentation;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
-import com.topicus.CFPApplication.domain.conference.Conference;
+import com.topicus.CFPApplication.domain.Conference;
 
 @Service
 @Transactional

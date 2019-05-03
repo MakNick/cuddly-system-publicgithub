@@ -1,14 +1,9 @@
 package com.topicus.CFPApplication.persistence;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.naming.CannotProceedException;
-
+import com.topicus.CFPApplication.persistence.repositories.PresentationDraftRepository;
+import com.topicus.CFPApplication.persistence.services.PresentationDraftService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,16 +14,15 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
-import com.topicus.CFPApplication.domain.conference.Conference;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PresentationDraftServiceTest {
 
 	@Mock
-	PresentationDraftRepository draftRepo;
+    PresentationDraftRepository draftRepo;
 
 	@InjectMocks
-	PresentationDraftService draftService;
+    PresentationDraftService draftService;
 
 	@Test
 	public void changeLabelTestLabelAlreadyExist() {

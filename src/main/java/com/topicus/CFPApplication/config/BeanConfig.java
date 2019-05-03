@@ -7,10 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.topicus.CFPApplication.domain.conference.Extra;
-import com.topicus.CFPApplication.domain.conference.Stage;
-import com.topicus.CFPApplication.persistence.ConferenceRepository;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import com.topicus.CFPApplication.domain.Extra;
+import com.topicus.CFPApplication.domain.Stage;
+import com.topicus.CFPApplication.persistence.repositories.ConferenceRepository;
 
 @Configuration
 public class BeanConfig {

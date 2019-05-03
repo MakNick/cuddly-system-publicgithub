@@ -1,21 +1,10 @@
 package com.topicus.CFPApplication.persistence;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import com.topicus.CFPApplication.persistence.repositories.PresentationDraftRepository;
+import com.topicus.CFPApplication.persistence.services.ConferenceService;
+import com.topicus.CFPApplication.persistence.services.PdfService;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
-
-import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.domain.conference.Conference;
 
 //@RunWith(MockitoJUnitRunner.class)
 public class PdfServiceTest {

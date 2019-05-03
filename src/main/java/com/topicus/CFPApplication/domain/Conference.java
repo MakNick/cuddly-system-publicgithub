@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.domain.conference;
+package com.topicus.CFPApplication.domain;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;

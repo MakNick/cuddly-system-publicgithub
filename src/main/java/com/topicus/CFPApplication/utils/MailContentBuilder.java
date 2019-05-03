@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.persistence.mail;
+package com.topicus.CFPApplication.utils;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

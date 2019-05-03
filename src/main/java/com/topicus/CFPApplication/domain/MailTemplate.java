@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.domain.conference;
+package com.topicus.CFPApplication.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;

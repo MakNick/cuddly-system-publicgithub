@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.topicus.CFPApplication.persistence.ExcelService;
-import com.topicus.CFPApplication.persistence.PdfService;
+import com.topicus.CFPApplication.persistence.services.ExcelService;
+import com.topicus.CFPApplication.persistence.services.PdfService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

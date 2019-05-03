@@ -4,6 +4,11 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
+import com.topicus.CFPApplication.persistence.repositories.ApplicantRepository;
+import com.topicus.CFPApplication.persistence.repositories.PresentationDraftRepository;
+import com.topicus.CFPApplication.persistence.services.ApplicantService;
+import com.topicus.CFPApplication.persistence.services.PresentationDraftService;
+import com.topicus.CFPApplication.persistence.services.SubscribeService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -31,7 +36,7 @@ public class SubscribeServiceTest {
 	ApplicantService applicantService;
 
 	@Mock
-	ApplicantRepository applicantRepo;
+    ApplicantRepository applicantRepo;
 
 	@Test
 	public void linkPresentationDraftWithApplicantsTestElse() {

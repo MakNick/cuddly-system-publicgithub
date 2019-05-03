@@ -7,7 +7,6 @@ import java.util.Set;
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.topicus.CFPApplication.domain.conference.Conference;
 import org.springframework.data.annotation.CreatedDate;
 
 import io.swagger.annotations.ApiModel;

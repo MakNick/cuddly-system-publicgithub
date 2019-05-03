@@ -1,7 +1,8 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.services;
 
 import java.util.Optional;
 
+import com.topicus.CFPApplication.persistence.repositories.ApplicantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

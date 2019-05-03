@@ -20,7 +20,7 @@
 //
 //import com.topicus.CFPApplication.domain.Applicant;
 //import com.topicus.CFPApplication.domain.PresentationDraftRequest;
-//import com.topicus.CFPApplication.persistence.mail.MailService;
+//import com.topicus.CFPApplication.persistence.services.MailService;
 //
 //@RunWith(MockitoJUnitRunner.class)
 //public class MailServiceUnitTest {

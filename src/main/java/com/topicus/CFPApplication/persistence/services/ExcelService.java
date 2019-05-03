@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.services;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.domain.conference.Conference;
+import com.topicus.CFPApplication.domain.Conference;
 
 @Service
 public class ExcelService {

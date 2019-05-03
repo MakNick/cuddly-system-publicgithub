@@ -1,12 +1,8 @@
 package com.topicus.CFPApplication.api;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.Set;
 
-import javax.naming.CannotProceedException;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +14,8 @@ import com.topicus.CFPApplication.domain.Applicant;
 //import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
-import com.topicus.CFPApplication.persistence.ConferenceService;
-import com.topicus.CFPApplication.persistence.PresentationDraftService;
-import com.topicus.CFPApplication.persistence.PresentationService;
-import com.topicus.CFPApplication.persistence.SubscribeService;
-import com.topicus.CFPApplication.persistence.mail.MailService;
+import com.topicus.CFPApplication.persistence.services.PresentationDraftService;
+import com.topicus.CFPApplication.persistence.services.SubscribeService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.persistence.mail;
+package com.topicus.CFPApplication.persistence.services;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Properties;
 
+import com.topicus.CFPApplication.utils.MailContentBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
@@ -17,8 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.persistence.ApplicantService;
-import com.topicus.CFPApplication.persistence.PresentationDraftService;
 
 @Service
 @Transactional

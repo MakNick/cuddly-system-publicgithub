@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.domain.conference;
+package com.topicus.CFPApplication.domain;
 
 import java.util.Set;
 
@@ -11,7 +11,7 @@ import javax.persistence.OneToMany;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.topicus.CFPApplication.domain.conference.Attribute;
+import com.topicus.CFPApplication.domain.Attribute;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

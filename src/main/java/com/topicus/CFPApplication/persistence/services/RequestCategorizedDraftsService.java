@@ -1,12 +1,11 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.services;
 
+import com.topicus.CFPApplication.persistence.repositories.PresentationDraftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftConference;
-import com.topicus.CFPApplication.domain.conference.Conference;
 
 @Service
 @Transactional

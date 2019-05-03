@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.persistence.ApplicantService;
+import com.topicus.CFPApplication.persistence.services.ApplicantService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

@@ -15,8 +15,8 @@ package com.topicus.CFPApplication.persistence;
 //
 //import com.icegreen.greenmail.util.GreenMail;
 //import com.icegreen.greenmail.util.ServerSetup;
-//import com.topicus.CFPApplication.persistence.mail.MailContentBuilder;
-//import com.topicus.CFPApplication.persistence.mail.MailService;
+//import com.topicus.CFPApplication.utils.MailContentBuilder;
+//import com.topicus.CFPApplication.persistence.services.MailService;
 //
 //@SpringBootTest
 //@RunWith(SpringRunner.class)

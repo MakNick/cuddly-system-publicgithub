@@ -1,12 +1,10 @@
-package com.topicus.CFPApplication.domain.conference;
+package com.topicus.CFPApplication.domain;
 
 import java.sql.Blob;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-
-import com.topicus.CFPApplication.domain.conference.Stage;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

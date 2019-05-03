@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.services;
 
 import java.awt.HeadlessException;
 import java.awt.print.PrinterException;

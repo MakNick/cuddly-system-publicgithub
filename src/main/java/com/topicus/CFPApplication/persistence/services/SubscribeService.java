@@ -1,15 +1,18 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.services;
 
 import java.util.Optional;
 import java.util.Set;
 
+import com.topicus.CFPApplication.persistence.repositories.ApplicantRepository;
+import com.topicus.CFPApplication.persistence.repositories.ConferenceRepository;
+import com.topicus.CFPApplication.persistence.repositories.PresentationDraftRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.domain.conference.Conference;
+import com.topicus.CFPApplication.domain.Conference;
 
 @Service
 @Transactional

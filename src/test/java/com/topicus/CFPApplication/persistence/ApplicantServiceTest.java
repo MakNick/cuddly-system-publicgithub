@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.topicus.CFPApplication.persistence.repositories.ApplicantRepository;
+import com.topicus.CFPApplication.persistence.services.ApplicantService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +20,7 @@ import com.topicus.CFPApplication.domain.Applicant;
 public class ApplicantServiceTest {
 	
 	@Mock
-	ApplicantRepository applicantRepository;
+    ApplicantRepository applicantRepository;
 	
 	@InjectMocks
 	ApplicantService applicantService;

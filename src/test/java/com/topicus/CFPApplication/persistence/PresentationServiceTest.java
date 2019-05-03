@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.topicus.CFPApplication.persistence.repositories.ConferenceRepository;
+import com.topicus.CFPApplication.persistence.repositories.PresentationRepository;
+import com.topicus.CFPApplication.persistence.services.PresentationService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,19 +18,19 @@ import org.mockito.junit.MockitoJUnitRunner;
 import com.topicus.CFPApplication.domain.Presentation;
 import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraft.Label;
-import com.topicus.CFPApplication.domain.conference.Conference;
+import com.topicus.CFPApplication.domain.Conference;
 
 @RunWith(MockitoJUnitRunner.class)
 public class PresentationServiceTest {
 
 	@InjectMocks
-	PresentationService presentationService;
+    PresentationService presentationService;
 
 	@Mock
-	PresentationRepository presentationRepository;
+    PresentationRepository presentationRepository;
 
 	@Mock
-	ConferenceRepository conferenceRepository;
+    ConferenceRepository conferenceRepository;
 
 	@Test
 	public void makePresentationTest() {

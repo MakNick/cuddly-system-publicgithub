@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.domain.conference.MailTemplate;
-import com.topicus.CFPApplication.persistence.PresentationDraftService;
-import com.topicus.CFPApplication.persistence.mail.MailService;
+import com.topicus.CFPApplication.domain.MailTemplate;
+import com.topicus.CFPApplication.persistence.services.PresentationDraftService;
+import com.topicus.CFPApplication.persistence.services.MailService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

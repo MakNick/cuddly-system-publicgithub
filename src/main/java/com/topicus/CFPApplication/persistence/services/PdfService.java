@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.services;
 
 import java.awt.print.PrinterException;
 import java.io.FileNotFoundException;
@@ -20,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.topicus.CFPApplication.domain.Applicant;
 import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.domain.conference.Conference;
+import com.topicus.CFPApplication.domain.Conference;
 
 @Service
 @Transactional

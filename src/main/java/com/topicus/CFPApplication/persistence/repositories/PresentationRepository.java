@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.repositories;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;

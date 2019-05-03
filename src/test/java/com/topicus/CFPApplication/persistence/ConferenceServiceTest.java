@@ -1,11 +1,9 @@
 package com.topicus.CFPApplication.persistence;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import com.topicus.CFPApplication.persistence.repositories.ConferenceRepository;
+import com.topicus.CFPApplication.persistence.services.ConferenceService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,18 +12,16 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import com.topicus.CFPApplication.domain.PresentationDraft;
-import com.topicus.CFPApplication.domain.PresentationDraft.Label;
-import com.topicus.CFPApplication.domain.conference.Conference;
+import com.topicus.CFPApplication.domain.Conference;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConferenceServiceTest {
 
 	@Mock
-	ConferenceRepository conferenceRepo;
+    ConferenceRepository conferenceRepo;
 
 	@InjectMocks
-	ConferenceService conferenceService;
+    ConferenceService conferenceService;
 
 	@Test
 	public void saveTest() {

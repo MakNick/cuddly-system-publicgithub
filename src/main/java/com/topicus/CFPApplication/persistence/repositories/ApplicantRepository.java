@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.repositories;
 
 import java.util.Optional;
 
