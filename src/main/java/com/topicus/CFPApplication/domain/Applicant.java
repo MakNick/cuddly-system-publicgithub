@@ -4,16 +4,11 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import com.topicus.CFPApplication.constants.Gender;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -29,23 +24,30 @@ public class Applicant {
 
 	@ApiModelProperty(position = 2, required = true)
 	private String name;
+
 	@ApiModelProperty(position = 3, required = true)
 	private String email;
-	private String phonenumber;
+
+	@Column(length = 30)
+	private String phoneNumber;
+
 	@ApiModelProperty(position = 4, value = "Current job, hobby or interest of the applicant")
 	private String occupation;
-	private String gender; // mag deze eruit?
+
+	private Gender gender; // mag deze eruit?
+
 	@ApiModelProperty(position = 5, required = true, example = "1992-05-20")
 	private LocalDate dateOfBirth;
+
 	@ApiModelProperty(position = 6, value = "Attributes the applicant needs to host his/her presentation(s)")
 	private String requests;
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER)
-	@ApiModelProperty(position = 7, required = true, value = "List of presentationDrafts that this applicant wants to host", hidden = true)
+	@ApiModelProperty(position = 7, value = "List of presentationDrafts that this applicant wants to host", hidden = true)
 	private Set<PresentationDraft> presentationDrafts = new HashSet<PresentationDraft>();
 
 	@ManyToMany(mappedBy = "applicants", fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@ApiModelProperty(position = 8, required = true, value = "List of finalized presentations that this applicant will host", hidden = true)
+	@ApiModelProperty(position = 8, value = "List of finalized presentations that this applicant will host", hidden = true)
 	private Set<Presentation> presentations = new HashSet<Presentation>();
 
 	public void addPresentationDraft(PresentationDraft presentationDraft) {
@@ -81,12 +83,12 @@ public class Applicant {
 		this.email = email;
 	}
 
-	public String getPhonenumber() {
-		return phonenumber;
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
-	public void setPhonenumber(String phonenumber) {
-		this.phonenumber = phonenumber;
+	public void setPhoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
 	public String getOccupation() {
@@ -97,11 +99,11 @@ public class Applicant {
 		this.occupation = occupation;
 	}
 
-	public String getGender() {
+	public Gender getGender() {
 		return gender;
 	}
 
-	public void setGender(String gender) {
+	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
 

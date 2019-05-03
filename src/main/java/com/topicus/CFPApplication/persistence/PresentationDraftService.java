@@ -5,8 +5,15 @@ import java.util.List;
 import java.util.Optional;
 
 
+<<<<<<< HEAD:src/main/java/com/topicus/CFPApplication/persistence/PresentationDraftService.java
 import com.topicus.CFPApplication.config.paging.PagingConstants;
 import com.topicus.CFPApplication.domain.conference.Conference;
+=======
+import com.topicus.CFPApplication.constants.PagingConstants;
+import com.topicus.CFPApplication.domain.Conference;
+import com.topicus.CFPApplication.persistence.repositories.ConferenceRepository;
+import com.topicus.CFPApplication.persistence.repositories.PresentationDraftRepository;
+>>>>>>> f07616e... E-mail systeem eruit gesloopt -Javiel:src/main/java/com/topicus/CFPApplication/persistence/services/PresentationDraftService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
