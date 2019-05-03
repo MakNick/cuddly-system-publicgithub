@@ -11,6 +11,8 @@ import {ConferenceService} from "../conference/conference.service";
 import {PresentationDraft} from "../../objects/presentation-draft";
 import {PresentationDraftDetailService} from "./presentationdraftdetail/presentation-draft-detail.service";
 import {fadeOut} from "../../animations/presentation-draft-tile-view";
+import {DateFormatService} from "../../services/date-format.service";
+import {LoadingService} from "../../services/loading.service";
 
 @Component({
   selector: 'app-presentationdraft',
@@ -20,6 +22,7 @@ import {fadeOut} from "../../animations/presentation-draft-tile-view";
 })
 export class PresentationDraftComponent implements OnInit {
 
+  // in de service?
   page: Page;
   conferenceId: number;
 
@@ -33,12 +36,12 @@ export class PresentationDraftComponent implements OnInit {
   numberOfDrafts: number;
 
   currentPageIndex: number;
-  pageSizeOptions: number[] = [25,50,100];
+  pageSizeOptions: number[] = [25, 50, 100];
 
   constructor(private presentationDraftService: PresentationDraftService,
               private route: ActivatedRoute, private conferenceService: ConferenceService,
               private presentationDraftDetailService: PresentationDraftDetailService,
-              private location: Location) {
+              private location: Location, private loadingService: LoadingService) {
 
   }
 
@@ -60,11 +63,11 @@ export class PresentationDraftComponent implements OnInit {
     this.getCategories();
 
   }
+
   showAll() {
     this.presentationDraftService.getPresentationDraftByConferenceId(this.conferenceId, this.currentPageIndex ? this.currentPageIndex : 1, this.page ? this.page.size : 25).subscribe(page => {
       this.page = page;
     });
-
   }
 
   paginate(pageEvent: PageEvent) {
@@ -73,16 +76,20 @@ export class PresentationDraftComponent implements OnInit {
       .subscribe(page => this.page = page);
   }
 
-  savePageConfigs(event){
+  savePageConfigs(event) {
     this.page.size = event.pageSize;
     event.pageIndex == 1 ? this.currentPageIndex = 2 : this.currentPageIndex = event.pageIndex;
   }
 
-  back(){
+  back() {
     this.location.back();
   }
 
-  showPresentationDraftDetail(ps:PresentationDraft): void {
+  isLoading(){
+    return this.loadingService.isLoading();
+  }
+
+  showPresentationDraftDetail(ps: PresentationDraft): void {
     this.presentationDraftDetailService.selectedPresentationDraft = ps;
     this.presentationDraftDetailService.activeConferenceId = this.conferenceId;
     this.presentationDraftDetailService.categories = this.availableCategories;
@@ -95,16 +102,14 @@ export class PresentationDraftComponent implements OnInit {
   }
 
   applyFilter() {
-    if(this.categoryFilter != null && this.labelFilter != undefined){
-      this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategoryAndLabelId(this.conferenceId, this.categoryFilter.toLowerCase(), this.labelFilter, 1, 25)
-        .subscribe(page => this.page = page);
-    }else if(this.categoryFilter != null){
-      this.presentationDraftService.getPresentationDraftsByConferenceIdAndCategory(this.conferenceId, this.categoryFilter.toLowerCase(), 1, 25)
-        .subscribe(page => this.page = page);
-    }else if(this.labelFilter != undefined){
-      this.presentationDraftService.getPresentationDraftsByConferenceIdAndLabelId(this.conferenceId, this.labelFilter, 1, 25)
-        .subscribe(page => this.page = page)
-    }
+    this.loadingService.setLoading(true);
+    this.presentationDraftService.searchPresentationDraft(this.conferenceId, this.searchToken != undefined ? this.searchToken : ""
+      , this.categoryFilter != undefined ? this.categoryFilter : "", this.labelFilter != undefined ? this.labelFilter : -1
+      , 0, this.page.size).subscribe(
+        page => this.page = page,
+        error => console.log(error.message),
+      () => this.loadingService.setLoading(false)
+      );
   }
 
   resetFilters() {
@@ -127,4 +132,19 @@ export class PresentationDraftComponent implements OnInit {
     }
   }
 
+  downloadAllePDF() {
+    this.conferenceService.getAllPdfByConferenceId(this.conferenceId).subscribe((response) => {let blob = new Blob([response], { type: 'application/pdf' });
+    var fileUrl = window.document.createElement('a');
+    fileUrl.href = window.URL.createObjectURL(blob);
+    fileUrl.download = 'PresentationDrafts.pdf';
+    fileUrl.click()});
+  }
+
+  downloadExcelOverzicht() {
+    this.conferenceService.getExcelByConferenceId(this.conferenceId).subscribe((response) => {let blob = new Blob([response], { type: 'application/pdf' });
+    var fileUrl = window.document.createElement('a');
+    fileUrl.href = window.URL.createObjectURL(blob);
+    fileUrl.download = 'PresentationDrafts.xlsx';
+    fileUrl.click()});
+  }
 }

@@ -2,7 +2,7 @@
 
 <h1 mat-dialog-title>{{popUpTitel}}</h1>
 
-<mat-dialog-content [formGroup]="cohostForm" *ngIf="getPopUpType()==0">
+<mat-dialog-content [formGroup]="categorieForm" *ngIf="getPopUpType()==0">
     <mat-form-field>
         <input matInput placeholder="Naam" formControlName="name" type="text" (change)="getIconFeedback($event)" required>
         <mat-icon matSuffix>{{iconNameFeedback}}</mat-icon>
@@ -23,7 +23,7 @@
     </mat-form-field>
 </mat-dialog-content>
 
-<mat-dialog-content [formGroup]="stageForm" *ngIf="getPopUpType()==2">
+<mat-dialog-content [formGroup]="stageForm" *ngIf="getPopUpType()==1">
     <mat-form-field>
         <input matInput placeholder="Stage" formControlName="name" type="text" required>
     </mat-form-field>

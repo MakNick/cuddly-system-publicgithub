@@ -19,19 +19,27 @@ import { PresentationdraftdetailComponent } from './tile-view/presentationdraft/
 import { PresentationDraftDetailService } from './tile-view/presentationdraft/presentationdraftdetail/presentation-draft-detail.service';
 import { ConferenceFormComponent } from './forms/conferenceForm/conferenceForm.component';
 import { AanmeldformulierComponent } from "./forms/presentationdraftForm/aanmeldformulier.component";
+import { AanmeldformulierDialogComponent } from './forms/presentationdraftForm/presentationdraftFormDialog/aanmeldformulier-dialog.component';
+import { ConferenceFormDialogComponent } from './forms/conferenceForm/conferenceFormDialog/conferenceForm-dialog.component';
 import { MaterialModule } from "../material.module";
 import { NguCarouselModule } from "@ngu/carousel";
 import { ScrollingModule } from "@angular/cdk/scrolling";
+import { AanmeldformulierConferenceFeedbackComponent } from './forms/conferenceForm/conferenceForm.component'
 import { AanmeldformulierFeedbackComponent } from './forms/presentationdraftForm/aanmeldformulier.component';
-import { DialogWindowComponent } from './forms/dialogWindow/dialogWindow.component';
+import { PresentationDraftTileComponent } from './tile-view/presentationdraft/presentation-draft-tile/presentation-draft-tile.component';
 import { SaveDialog } from './tile-view/presentationdraft/presentationdraftdetail/savedialog.component';
 import { DeleteDialog } from './tile-view/presentationdraft/presentationdraftdetail/deletedialog.component';
 import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetail/maildialog.component';
+import { AngularFontAwesomeModule } from 'angular-font-awesome';
+import { LoadingComponent } from './loading/loading.component';
+import { LoginFailComponent } from './login/snackbar-loginfail.component';
+import { AccountComponent } from './account/account.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
+    AccountComponent,
     LoginComponent,
     UserComponent,
     RegisterComponent,
@@ -43,12 +51,17 @@ import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetai
     PresentationdraftdetailComponent,
     ConferenceFormComponent,
     AanmeldformulierComponent,
-    DialogWindowComponent,
+    AanmeldformulierDialogComponent,
+    ConferenceFormDialogComponent,
     AanmeldformulierFeedbackComponent,
+    AanmeldformulierConferenceFeedbackComponent,
     FilterPipe,
-    SaveDialog,
+    PresentationDraftTileComponent,
     DeleteDialog,
-    MailDialog
+    MailDialog,
+    LoadingComponent,
+    LoginFailComponent,
+    SaveDialog
   ],
   imports: [
     BrowserModule,
@@ -58,9 +71,11 @@ import { MailDialog } from './tile-view/presentationdraft/presentationdraftdetai
     NguCarouselModule,
     ReactiveFormsModule,
     MaterialModule,
-    ScrollingModule
+    ScrollingModule,
+    AngularFontAwesomeModule
   ],
-  entryComponents: [DialogWindowComponent, AanmeldformulierFeedbackComponent, SaveDialog, DeleteDialog, MailDialog],
+  entryComponents: [AanmeldformulierDialogComponent, ConferenceFormDialogComponent, AanmeldformulierFeedbackComponent, AanmeldformulierConferenceFeedbackComponent, SaveDialog, DeleteDialog, MailDialog, LoginFailComponent],
+
   providers: [httpInterceptorProviders, PresentationDraftDetailService],
   bootstrap: [AppComponent]
 })

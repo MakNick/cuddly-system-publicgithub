@@ -12,6 +12,10 @@
   max-height: 550px;
 }
 
+.draft-tile-info{
+  display: grid;
+}
+
 .filter-box {
   padding: 0 20px 0 20px;
   display: flex;
@@ -41,13 +45,24 @@
   margin-right: 20px;
 }
 
+.draft-tile-info-container{
+  height: 100%;
+  width: 100%;
+  margin: 10px;
+}
+
+.mat-grid-tile{
+  overflow: visible;
+}
+
 .draft-tile{
   cursor: pointer;
+  box-shadow: 2px 2px 2px 0 lightgrey;
   transition: all .5s ease;
 }
 
 .draft-tile:hover{
-  box-shadow: -1px 1px 5px 0px #180A3D;
+  box-shadow: -1px 1px 5px 0 #180A3D;
 }
 
 .unlabeled-tile {
@@ -65,11 +80,10 @@
 .accepted-tile::after{
   content: "";
   width: 5px;
-  border-bottom: 1px solid #180A3D;
-  border-left: 1px solid #180A3D;
-  border-right: 1px solid #180A3D;
+  border: 1px solid rgba(24, 10, 61, 0.45);
   height: 30%;
   display: block;
+  top: -5px;
   position: relative;
   left: 95%;
   background-color: #00ff1d;
@@ -82,10 +96,9 @@
 .denied-tile::after{
   content: "";
   width: 5px;
-  border-bottom: 1px solid #180A3D;
-  border-left: 1px solid #180A3D;
-  border-right: 1px solid #180A3D;
+  border: 1px solid rgba(24, 10, 61, 0.45);
   height: 30%;
+  top: -5px;
   display: block;
   position: relative;
   left: 95%;
@@ -99,14 +112,23 @@
 .reserved-tile::after{
   content: "";
   width: 5px;
-  border-bottom: 1px solid #180A3D;
-  border-left: 1px solid #180A3D;
-  border-right: 1px solid #180A3D;
+  border: 1px solid rgba(24, 10, 61, 0.45);
   height: 30%;
+  top: -5px;
   display: block;
   position: relative;
   left: 95%;
   background-color: #ffb100;
+}
+
+.buttons-top {
+  border: 1px solid rgba(24, 10, 61, 0.45);
+  display: block;
+}
+
+.buttons-top > button {
+  border: 1px solid rgba(24, 10, 61, 0.45);
+  
 }
 
 @media only screen and (max-width: 650px) {

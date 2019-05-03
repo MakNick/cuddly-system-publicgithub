@@ -144,7 +144,7 @@ export class ConferenceFormComponent implements OnInit {
     dialogConfig.data = {
       popUpTitel: 'Categorie toevoegen',
       popUpInhoud: '',
-      popUpType: 1
+      popUpType: 0
     }
     
     const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
@@ -169,7 +169,7 @@ export class ConferenceFormComponent implements OnInit {
     dialogConfig.data = {
       popUpTitel: 'Stage toevoegen',
       popUpInhoud: '',
-      popUpType: 2
+      popUpType: 1
     }
     
     this.dialog.open(DialogWindowComponent, dialogConfig);
@@ -189,7 +189,7 @@ export class ConferenceFormComponent implements OnInit {
   submit() {
     this.createConference();
     this.openSnackBar();
-}
+  }
 
 openSnackBar() {
   this.conferenceForm.reset();
@@ -197,19 +197,15 @@ openSnackBar() {
   this.stages = [];
   this.snackBar.openFromComponent(AanmeldformulierConferenceFeedbackComponent, {
     duration: 5000,
+    panelClass: ['snackbar-color']
   });
 }
 }
 
 @Component({
-selector: 'snack-bar-component-example-snack',
+selector: 'conferentieformulier-feedback-snack',
 template: `
 <span>De conferentie is aangemaakt.</span>
 `,
-styles: [`
-  span {
-    color: white;
-  }
-`],
 })
 export class AanmeldformulierConferenceFeedbackComponent {}

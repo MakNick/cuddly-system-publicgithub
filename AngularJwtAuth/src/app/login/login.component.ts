@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 import { AuthService } from '../auth/auth.service';
 import { TokenStorageService } from '../auth/token-storage.service';
 import { AuthLoginInfo } from '../auth/login-info';
+import { MatSnackBar } from '@angular/material';
+import { LoginFailComponent } from './snackbar-loginfail.component';
 
 @Component({
   selector: 'app-login',
@@ -17,12 +20,21 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   private loginInfo: AuthLoginInfo;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
       this.isLoggedIn = true;
       this.roles = this.tokenStorage.getAuthorities();
+    }
+  }
+
+  openSnackBar() {
+    if (this.isLoginFailed) {
+      this.snackBar.openFromComponent(LoginFailComponent, {
+        duration: 3500,
+        panelClass: ['snackbar-color']
+      });
     }
   }
 
@@ -42,12 +54,19 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getAuthorities();
-        this.reloadPage();
+        if (this.roles[0] == 'ROLE_USER'){
+          this.router.navigateByUrl('/user');
+        } else if (this.roles[0] == 'ROLE_ADMIN'){
+          this.router.navigateByUrl('/conference');
+        } else {
+          this.reloadPage();
+        }
       },
       error => {
         console.log(error);
         this.errorMessage = error.error.message;
         this.isLoginFailed = true;
+        this.openSnackBar();
       }
     );
   }

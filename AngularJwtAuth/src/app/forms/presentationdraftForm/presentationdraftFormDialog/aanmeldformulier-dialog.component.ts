@@ -7,22 +7,21 @@ import {dialogWindowService} from './dialogWindow.service';
 export interface DialogData {
   popUpTitel: string;
   popUpInhoud: string;
+  popupType: string;
 }
 
 @Component({
-  selector: 'app-dialogwindow',
-  templateUrl: './dialogWindow.component.html',
-  styleUrls: ['./dialogWindow.component.css']
+  selector: 'app-aanmeldformulier-dialog',
+  templateUrl: './aanmeldformulier-dialog.component.html',
+  styleUrls: ['./aanmeldformulier-dialog.component.css']
 })
-export class DialogWindowComponent implements OnInit {
+export class AanmeldformulierDialogComponent implements OnInit {
 cohostForm: FormGroup;
-categorieForm: FormGroup;
-stageForm: FormGroup;
 description: string;
 cohostNaam: string;
 cohostEmail: string;
 
-forms: FormGroup[];
+form: FormGroup;
 
 popUpTitel: MatDialogTitle;
 popUpInhoud: any;
@@ -45,6 +44,7 @@ public iconEmailFeedback: string;
 
     this.popUpTitel = this.data.popUpTitel;
     this.popUpInhoud = this.data.popUpInhoud;
+    this.popUpType = this.data.popUpType;
 
     this.cohostForm = new FormGroup({
       'name': new FormControl(null, [Validators.required, Validators.minLength(3)]),
@@ -93,8 +93,6 @@ public iconEmailFeedback: string;
       this.iconEmailFeedback = (this.cohostForm.get('email').invalid == true) ? this.iconUnhappy : this.iconHappy;
       break;
     }
-  }
-
-    
+  } 
 }
 
