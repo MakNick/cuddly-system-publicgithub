@@ -1,8 +1,4 @@
-<<<<<<< HEAD:src/main/java/com/topicus/CFPApplication/config/paging/PagingConstants.java
 package com.topicus.CFPApplication.config.paging;
-=======
-package com.topicus.CFPApplication.constants;
->>>>>>> f07616e... E-mail systeem eruit gesloopt -Javiel:src/main/java/com/topicus/CFPApplication/constants/PagingConstants.java
 
 import java.util.Arrays;
 import java.util.List;

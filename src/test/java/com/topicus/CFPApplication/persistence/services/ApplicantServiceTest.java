@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.topicus.CFPApplication.persistence.ApplicantRepository;
+import com.topicus.CFPApplication.persistence.ApplicantService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
