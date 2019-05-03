@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {Router} from '@angular/router';
 
 import { AuthService } from '../auth/auth.service';
 import { TokenStorageService } from '../auth/token-storage.service';
@@ -19,7 +20,7 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   private loginInfo: AuthLoginInfo;
 
-  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private snackBar: MatSnackBar) { }
+  constructor(private authService: AuthService, private tokenStorage: TokenStorageService, private snackBar: MatSnackBar, private router: Router) { }
 
   ngOnInit() {
     if (this.tokenStorage.getToken()) {
@@ -53,7 +54,13 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getAuthorities();
-        this.reloadPage();
+        if (this.roles[0] == 'ROLE_USER'){
+          this.router.navigateByUrl('/user');
+        } else if (this.roles[0] == 'ROLE_ADMIN'){
+          this.router.navigateByUrl('/conference');
+        } else {
+          this.reloadPage();
+        }
       },
       error => {
         console.log(error);

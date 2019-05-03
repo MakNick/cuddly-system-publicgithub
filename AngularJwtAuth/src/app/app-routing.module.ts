@@ -42,7 +42,7 @@ const routes: Routes = [
     },
     //
     {
-        path: 'presentationDraftApplicantForm',
+        path: 'user/:id/presentationDraftApplicantForm',
         component: AanmeldformulierComponent
     },
     {

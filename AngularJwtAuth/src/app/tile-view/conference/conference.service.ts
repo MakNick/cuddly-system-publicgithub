@@ -8,7 +8,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class ConferenceService {
-
+  
   constructor(private http : HttpClient) { }
 
   getConferences(): Observable<Conference[]>{

@@ -7,13 +7,9 @@ import { PresentationDraftApplicant } from '../../objects/presentationDraftAppli
 })
 export class draftAanmeldService {
 
-  private userUrl = 'http://localhost:8082/api/presentationdraft';
-
   constructor(private http: HttpClient) { }
 
-  postPresentationDraftApplicant(presentationDraftApplicant){
-    return this.http.post<PresentationDraftApplicant>(this.userUrl, presentationDraftApplicant);
+  postPresentationDraftApplicant(presentationDraftApplicant, conferenceID:number){
+    return this.http.post<PresentationDraftApplicant>('http://localhost:8082/api/conference/'+conferenceID+'/savepresentationdraft', presentationDraftApplicant);
   }
-
-
 }
