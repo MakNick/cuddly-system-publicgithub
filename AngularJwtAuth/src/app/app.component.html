@@ -17,8 +17,8 @@
         routerLinkActive #isOpen="routerLinkActive">Admin Board</a>
     </span>
     <span *ngIf="authority === 'user'" class="nav-item">
-      <a mat-button [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link"
-        routerLink="user" routerLinkActive #isOpen="routerLinkActive">Voorstel indienen</a>
+      <a mat-button [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link" routerLink="user"
+      routerLinkActive #isOpen="routerLinkActive">Voorstel indienen</a>
     </span>
     <span *ngIf="authority === 'admin'" class="nav-item">
       <a mat-button [@fadeIn] [@navLink]="isOpen.isActive ? 'open' : 'closed'" class="nav-link" routerLink="conference"

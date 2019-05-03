@@ -65,6 +65,14 @@ public class PresentationDraftEndpoint {
 		}
 		return ResponseEntity.badRequest().build();
 	}
+	
+	@ApiOperation(value = "Adds a presentationdraft", hidden = true)
+	@PutMapping("api/save_presentationdraft/conferenceId/{id}")
+	public PresentationDraft changePresentationDraft(
+			@PathVariable("id") long conferenceId,
+			@RequestBody @Valid PresentationDraft presentationDraft) {
+		return presentationDraftService.save(conferenceId, presentationDraft);
+	}
 
 	/*
 	 *  TODO: Methode moet nog geïmplementeerd en opgeschoond worden.
