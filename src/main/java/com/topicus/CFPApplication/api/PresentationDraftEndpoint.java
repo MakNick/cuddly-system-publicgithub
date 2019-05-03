@@ -66,7 +66,9 @@ public class PresentationDraftEndpoint {
 		return ResponseEntity.badRequest().build();
 	}
 
-	// TODO: Methode moet nog geïmplementeerd en opgeschoond worden.
+	/*
+	 *  TODO: Methode moet nog geïmplementeerd en opgeschoond worden.
+	 */
 //	@ApiOperation("Finalize all presentationdrafts")
 //	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully finalized all presentationdrafts"),
 //			@ApiResponse(code = 412, message = "Deadline has not yet passed, or there are still presentationdrafts with the label value of: undetermined or unlabeled"),

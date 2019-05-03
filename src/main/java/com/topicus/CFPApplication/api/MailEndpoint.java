@@ -88,7 +88,7 @@ public class MailEndpoint {
 	}
 
 	/*
-	 * for testing purposes!
+	 * For testing purposes!
 	 */
 	@ApiOperation("For testing purposes. Will send a mail to the given e-mail. Be sure that you have setup the e-mail configurations with the setupconfig endpoint")
 	@GetMapping("api/sendmail/{email}/{name}")
@@ -98,6 +98,9 @@ public class MailEndpoint {
 		mailService.sendMail(email, name);
 	}
 
+	/*
+	 * For testing purposes!
+	 */
 	@ApiOperation("For testing purposes. Will send a mail to the given e-mail. Be sure that you have setup the e-mail configurations with the setupconfig endpoint."
 			+ "This will also insert a given text into the e-mail")
 	@GetMapping("api/sendmailtext/{email}/{name}/{text}")
