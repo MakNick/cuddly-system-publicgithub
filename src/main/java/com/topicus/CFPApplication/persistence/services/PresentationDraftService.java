@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Optional;
 
 
-import com.topicus.CFPApplication.statics.PagingConstants;
+import com.topicus.CFPApplication.constants.PagingConstants;
 import com.topicus.CFPApplication.domain.Conference;
 import com.topicus.CFPApplication.persistence.repositories.ConferenceRepository;
 import com.topicus.CFPApplication.persistence.repositories.PresentationDraftRepository;

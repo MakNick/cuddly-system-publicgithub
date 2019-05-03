@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.persistence;
+package com.topicus.CFPApplication.persistence.services;
 
 import com.topicus.CFPApplication.persistence.repositories.PresentationDraftRepository;
 import com.topicus.CFPApplication.persistence.services.ConferenceService;

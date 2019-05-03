@@ -1,4 +1,4 @@
-package com.topicus.CFPApplication.statics;
+package com.topicus.CFPApplication.constants;
 
 import java.util.Arrays;
 import java.util.List;

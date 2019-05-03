@@ -162,7 +162,7 @@ public class PdfService {
 			content.add("ID Applicant: " + app.getId());
 			content.add("Name: " + app.getName().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 			content.add("E-mail: " + app.getEmail().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
-			content.add("Phone Number: " + app.getPhonenumber());
+			content.add("Phone Number: " + app.getPhoneNumber());
 			content.add("Occupation: " + app.getOccupation());
 			content.add("Gender: " + app.getGender());
 			content.add(

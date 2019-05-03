@@ -110,48 +110,6 @@ public class PresentationDraftEndpoint {
 		return ResponseEntity.badRequest().build();
 	}
 
-//	@ApiOperation("Finalize all presentationdrafts")
-//	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully finalized all presentationdrafts"),
-//			@ApiResponse(code = 412, message = "Deadline has not yet passed, or there are still presentationdrafts with the label value of: undetermined or unlabeled"),
-//			@ApiResponse(code = 404, message = "Invalid conference ID"),
-//			@ApiResponse(code = 418, message = "Already finalized presentationDrafts") })
-//	@GetMapping("api/{conferenceId}/presentationdraft/finalize")
-//	public ResponseEntity<Object> makePresentationDraftsFinal(
-//			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId) {
-//		if (conferenceId > 0 && conferenceId != null) {
-//			try {
-//				if (!conferenceService.findById(conferenceId).get().getPresentations().isEmpty()) {
-//					return new ResponseEntity<>("Already finalized presentationDrafts", HttpStatus.I_AM_A_TEAPOT);
-//				} else {
-//					for (int label = 1; label < 4; label++) {
-//						List<PresentationDraftRequest> listPresentationDrafts = presentationDraftService
-//								.makePresentationDraftsFinal(conferenceId, label);
-//						if (label == 2) {
-//							presentationService.makePresentation((ArrayList<PresentationDraftRequest>) listPresentationDrafts,
-//									conferenceService.findById(conferenceId).get());
-//						}
-//						for (PresentationDraftRequest draft : listPresentationDrafts) {
-//							List<Applicant> listApplicants = new ArrayList<>(draft.getApplicants());
-//							for (Applicant applicant : listApplicants) {
-//								mailService.sendMailText(applicant.getEmail(), applicant.getName(),
-//										"MailTemplate " + draft.getLabel().toString()); // GETNAME CONFERENCE AANPASSEN NAAR
-//																				// GETTEMPLATE TEXT VANUIT INNERCLASS IN
-//																				// CONFERENCE!
-//							}
-//						}
-//					}
-//					return new ResponseEntity<>("Finalize mails sent (Accepted, reserved and denied)", HttpStatus.OK);
-//				}
-//			} catch (CannotProceedException cpe) {
-//				return new ResponseEntity<>("Deadline not passed or Unlabeled presentationDrafts not empty",
-//						HttpStatus.PRECONDITION_FAILED);
-//			} catch (NoSuchElementException nse) {
-//				return new ResponseEntity<>("Conference not found", HttpStatus.NOT_FOUND);
-//			}
-//		}
-//		return new ResponseEntity<>("Invalid conference ID", HttpStatus.NOT_FOUND);
-//	}
-
 	@ApiOperation(value = "Adds a presentationdraft", hidden = true)
 	@PutMapping("api/save_presentationdraft/conferenceId/{id}")
 	public PresentationDraft changePresentationDraft(
