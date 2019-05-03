@@ -45,8 +45,6 @@ public class ExcelServiceTest {
 
         Mockito.when(this.conferenceService.findById(Mockito.anyLong())).thenReturn(Optional.of(conference));
 
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
         try {
             XSSFWorkbook workBook = this.excelService.createExcel(2L);
             Mockito.verify(this.conferenceService).findById(Mockito.anyLong());
