@@ -22,17 +22,19 @@ import com.topicus.CFPApplication.domain.Applicant;
 @RunWith(MockitoJUnitRunner.class)
 public class ExcelServiceTest {
 
-    // Hier gaan de mocks in
+    // Hier gaan de mocks in, vandaar de naam 'injectmocks'
     @InjectMocks
     ExcelService excelService;
 
-    // Dit zit er in de functie die getest wordt
+    // Deze zit in de functie die getest wordt dus moet die worden gemockt
     @Mock
     ConferenceService conferenceService;
 
+    // Hier moet nog even naar gekeken worden, niet qua test logica maar meer hoe je de tekst weer uit de 'workbook' haalt. Tot nu toe krijg ik het niet goed gedecodeerd.
     @Test
     public void createExcelTest() {
 
+        // given
         Applicant applicantOne = new Applicant();
         applicantOne.setName("First applicant");
         Applicant applicantTwo = new Applicant();
@@ -46,8 +48,10 @@ public class ExcelServiceTest {
         conference.setName("Test conference");
         conference.setPresentationDrafts(new HashSet<>(Arrays.asList(presentationDraft, presentationDraft, presentationDraft, presentationDraft)));
 
+        // when
         Mockito.when(this.conferenceService.findById(Mockito.anyLong())).thenReturn(Optional.of(conference));
 
+        // then
         try {
             XSSFWorkbook workBook = this.excelService.createExcel(2L);
             Mockito.verify(this.conferenceService).findById(Mockito.anyLong());
