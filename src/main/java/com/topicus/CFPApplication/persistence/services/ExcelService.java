@@ -98,7 +98,7 @@ public class ExcelService {
 
 	}
 
-	public void initiateExcelHeader(XSSFSheet sheet) {
+	private void initiateExcelHeader(XSSFSheet sheet) {
 		String[] initialHeader = { "id", "Category", "Duration", "Label", "Subject", "Summary", "Time of Creation",
 				"Type", "Applicant 1", "", "Applicant 2", "", "Applicant 3", "", "Applicant 4" };
 		int colNum = 0;

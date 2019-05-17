@@ -33,7 +33,7 @@ public class ApplicantEndpoint {
 
 	@ApiOperation("Retrieves all available applicants from the database")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved all applicants") })
-	@GetMapping("api/applicant")
+	@GetMapping("api/applicants")
 	public ResponseEntity<Iterable<Applicant>> listApplicants() {
 		Iterable<Applicant> applicants = applicantService.findAll();
 		return ResponseEntity.ok(applicants);
@@ -42,7 +42,7 @@ public class ApplicantEndpoint {
 	@ApiOperation("Retrieves an applicant by ID.")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved an applicant with the given ID"),
 			@ApiResponse(code = 404, message = "Could not retrieve an applicant with the given ID") })
-	@GetMapping("api/applicant/{id}")
+	@GetMapping("api/applicants/{id}")
 	public ResponseEntity<Applicant> findById(
 			@ApiParam(required = true, name = "id", value = "Applicant ID", type = "Long") @PathVariable("id") Long id) {
 		Optional<Applicant> result = this.applicantService.findById(id);
@@ -57,7 +57,7 @@ public class ApplicantEndpoint {
 	@ApiResponses({ @ApiResponse(code = 200, message = "Successfully retrieved presentation drafts for this applicant"),
 			@ApiResponse(code = 404, message = "Could not retrieve an applicant with the specified ID"),
 			@ApiResponse(code = 400, message = "Invalid ID value") })
-	@GetMapping("api/applicant/{id}/presentationdrafts")
+	@GetMapping("api/applicants/{id}/presentationdrafts")
 	public ResponseEntity<Iterable<PresentationDraft>> showPresentationDraftsByApplicant(
 			@ApiParam(required = true, name = "id", value = "Applicant ID") @PathVariable("id") Long id) {
 
