@@ -5,8 +5,8 @@ import { draftAanmeldService } from '../presentationdraftForm/aanmeldformulier.s
 import { PresentationDraftApplicant } from '../../objects/presentationDraftApplicant';
 import { Conference } from '../../objects/conference/conference';
 import { MatDialog, MatDialogRef, MatDialogConfig, MatSnackBar } from '@angular/material';
-import { AanmeldformulierDialogComponent } from './presentationdraftFormDialog/aanmeldformulier-dialog.component';
-import { Router, ActivatedRoute } from '@angular/router';
+import { DialogWindowComponent } from '../dialogWindow/dialogWindow.component';
+import {dialogWindowService} from '../dialogWindow/dialogWindow.service';
 
 @Component({
   selector: 'app-aanmeldformulier',
@@ -36,11 +36,13 @@ export class AanmeldformulierComponent implements OnInit {
   public iconSubjectFeedback: string;
   public iconSummaryFeedback: string;
 
+  public expandOptions: boolean;
+
   presentationdraftForm: FormGroup;
 
   fileNameDialogRef: MatDialogRef<AanmeldformulierDialogComponent>;
 
-  constructor(private draftAanmeldService: draftAanmeldService, public dialog: MatDialog, private snackBar: MatSnackBar, private router: Router, private route: ActivatedRoute) {
+  constructor(private draftAanmeldService: draftAanmeldService, public dialog: MatDialog, private snackBar: MatSnackBar, private dialogwindowservice: dialogWindowService) {
   }
 
   ngOnInit(): void {
@@ -132,7 +134,7 @@ export class AanmeldformulierComponent implements OnInit {
     this.duration.setValue = event.target.value;
   }
 
-  getIconFeedback(event: any){
+  getIconFeedback(event: any) {
     let formcontrolname = event.target.getAttribute('formcontrolname');
 
     switch(formcontrolname){
@@ -154,7 +156,7 @@ export class AanmeldformulierComponent implements OnInit {
     }
   }
 
-  popUpAddCohosts(){
+  popUpAddCohosts() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -165,31 +167,24 @@ export class AanmeldformulierComponent implements OnInit {
       popUpType: 0
     }
     
-    const dialogRef = this.dialog.open(AanmeldformulierDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      data => {
-        this.maakCohost([data.cohostNaam, data.cohostEmail]);
-      }
-    );
+    this.dialog.open(DialogWindowComponent, dialogConfig);
   }
 
-  maakCohost(applicantInfo: string[]){
-    let applicant = new Applicant();
-    applicant.name = applicantInfo[0];
-    applicant.email = applicantInfo[1];
-    applicant.requests = 'Ik ben een cohost';
-    this.tableApplicants.push(applicant);
+  getApplicants() {
+    for (const applicant of this.dialogwindowservice.savedApplicants){
+      applicant.requests = 'Ik ben een cohost';
+    }
+    return this.dialogwindowservice.savedApplicants;
   }
 
   deleteCohost(applicant: Applicant){
-    this.tableApplicants.splice(this.tableApplicants.indexOf(applicant), 1);
+    this.getApplicants().splice(this.tableApplicants.indexOf(applicant), 1);
   }
 
   prepareApplicants() {
-    this.presentationDraftApplicant.applicants = this.tableApplicants;
-    let indiener = Object.assign(this.presentationdraftForm.get('indiener').value);
-    this.presentationDraftApplicant.applicants.push(indiener);
+    this.presentationDraftApplicant.applicants = this.getApplicants();
+    const indiener = Object.assign(this.presentationdraftForm.get('indiener').value);
+    this.presentationDraftApplicant.applicants.unshift(indiener);
   }
     
   submit() {
@@ -203,6 +198,8 @@ export class AanmeldformulierComponent implements OnInit {
         });
 
     this.submitted = true;
+    this.expandOptions = false;
+    this.dialogwindowservice.savedApplicants = [];
     this.openSnackBar();
   }
 

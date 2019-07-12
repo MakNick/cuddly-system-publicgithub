@@ -1,6 +1,23 @@
+<button class="mdc-icon-button material-icons" (click)="close()">close</button>
+
 <h1 mat-dialog-title>{{popUpTitel}}</h1>
 
 <mat-dialog-content [formGroup]="categorieForm" *ngIf="getPopUpType()==0">
+    <mat-form-field>
+        <input matInput placeholder="Naam" formControlName="name" type="text" (change)="getIconFeedback($event)" required>
+        <mat-icon matSuffix>{{iconNameFeedback}}</mat-icon>
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+        <input matInput placeholder="E-mailadres" formControlName="email" type="email" (change)="getIconFeedback($event)" required>
+        <mat-icon matSuffix>{{iconEmailFeedback}}</mat-icon>
+    </mat-form-field>
+
+    <p>{{popUpInhoud}}</p>
+</mat-dialog-content>
+
+
+<mat-dialog-content [formGroup]="categorieForm" *ngIf="getPopUpType()==1">
     <mat-form-field>
         <input matInput placeholder="Categorie" formControlName="category" type="text" required>
     </mat-form-field>
@@ -8,11 +25,12 @@
 
 <mat-dialog-content [formGroup]="stageForm" *ngIf="getPopUpType()==1">
     <mat-form-field>
-        <input matInput placeholder="Stage" formControlName="stage" type="text" required>
+        <input matInput placeholder="Stage" formControlName="name" type="text" required>
     </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions>
-    <button *ngIf="getPopUpType()==0" class="mat-raised-button mat-primary" (click)="save()" [disabled]="this.categorieForm.invalid">Toevoegen</button>
-    <button *ngIf="getPopUpType()==1" class="mat-raised-button mat-primary" (click)="save()" [disabled]="this.stageForm.invalid">Toevoegen</button>
+  <button *ngIf="getPopUpType()==0" class="mat-raised-button mat-primary" (click)="save(0)" [disabled]="this.cohostForm.invalid"><i class="fas fa-plus"></i></button>
+  <button *ngIf="getPopUpType()==1" class="mat-raised-button mat-primary" (click)="save(1)" [disabled]="this.categorieForm.invalid"><i class="fas fa-plus"></i></button>
+  <button *ngIf="getPopUpType()==2" class="mat-raised-button mat-primary" (click)="save(2)" [disabled]="this.stageForm.invalid"><i class="fas fa-plus"></i></button>
 </mat-dialog-actions>

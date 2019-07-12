@@ -78,8 +78,8 @@
                         <mat-icon aria-label="icon_new_category" (click)=popUpAddStages()>add_location</mat-icon>
                     </td>
                 </tr>
-                <tr *ngFor="let stage of stages">
-                    <td (click)="deleteStage(stage)">{{stage}}</td>
+                <tr *ngFor="let stage of getStages()">
+                    <td (click)="deleteStage(stage)">{{stage.name}}</td>
                     <mat-icon aria-label="icon_delete_category" (click)="deleteStage(stage)">delete</mat-icon>
                 </tr>
             </ng-container>
@@ -94,8 +94,8 @@
                         <mat-icon aria-label="icon_new_category" (click)=popUpAddCategories()>note</mat-icon>
                     </td>
                 </tr>
-                <tr *ngFor="let category of categories">
-                    <td (click)="deleteCategory(category)">{{category}}</td>
+                <tr *ngFor="let category of getCategories()">
+                    <td (click)="deleteCategory(category)">{{category.category}}</td>
                     <mat-icon aria-label="icon_delete_category" (click)="deleteCategory(category)">delete</mat-icon>
                 </tr>
             </ng-container>

@@ -5,8 +5,10 @@ import { ConferenceDateValidator } from './shared/conferenceDate.validator';
 import { ConferenceService } from './conferenceForm.service';
 import { Conference } from './conferenceForm';
 import { MatDialogConfig, MatDialog, MatSnackBar } from '@angular/material';
-import { ConferenceFormDialogComponent } from './conferenceFormDialog/conferenceForm-dialog.component';
-import { Stage } from '../../objects/conference/stage';
+import { DialogWindowComponent } from '../dialogWindow/dialogWindow.component';
+import {dialogWindowService} from '../dialogWindow/dialogWindow.service';
+import {Stage} from './stages/stage';
+
 
 @Component({
   selector: 'conferenceForm',
@@ -18,8 +20,7 @@ export class ConferenceFormComponent implements OnInit {
   conferenceForm: FormGroup;
   conferences: Conference[] = [];
   categories: string[] = [];
-  stages: string[] = [];
-
+  stages: Stage[] = [];
   defaultDateTime: string = "2099-01-01T01:00";
   dateOfToday = new Date(Date.now());
   dateOfTomorrow = new Date(this.dateOfToday.setDate(this.dateOfToday.getDate() + 1));
@@ -77,7 +78,7 @@ export class ConferenceFormComponent implements OnInit {
     // event.target.min = this.selectedTime;
   }
 
-  constructor(private fb: FormBuilder, private conferenceService: ConferenceService, private dialog: MatDialog, private snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private conferenceService: ConferenceService, private dialog: MatDialog, private snackBar: MatSnackBar, private dialogwindowservice: dialogWindowService) { }
 
   ngOnInit() {
     this.conferenceForm = this.fb.group({
@@ -117,6 +118,8 @@ export class ConferenceFormComponent implements OnInit {
         conference.deadlinePresentationDraft = this.conferenceForm.get('deadlineDate').value + "T" + this.conferenceForm.get('deadlineTime').value;
       }
     }
+    conference.categories = this.categories;
+    conference.stages = this.stages;
     this.addConference(conference);
   }
 
@@ -144,18 +147,18 @@ export class ConferenceFormComponent implements OnInit {
       popUpType: 0
     }
     
-    const dialogRef = this.dialog.open(ConferenceFormDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      data => {
-        this.categories.push(data.category);
-      }
-    );
+    const dialogRef = this.dialog.open(DialogWindowComponent, dialogConfig);
   }
 
-  deleteCategory(x: string){
+  getCategories(){
+    this.categories = this.dialogwindowservice.savedCategories;
+    return this.dialogwindowservice.savedCategories;
+  }
+
+  deleteCategory(x: string) {
     let category = x;
-    this.categories.splice(this.categories.indexOf(category), 1);
+    this.dialogwindowservice.savedCategories.splice(this.dialogwindowservice.savedCategories.indexOf(category), 1);
+    this.categories = this.dialogwindowservice.savedCategories;
   }
 
   popUpAddStages(){
@@ -169,18 +172,18 @@ export class ConferenceFormComponent implements OnInit {
       popUpType: 1
     }
     
-    const dialogRef = this.dialog.open(ConferenceFormDialogComponent, dialogConfig);
-
-    dialogRef.afterClosed().subscribe(
-      data => {
-        this.stages.push(data.stage);
-      }
-    );
+    this.dialog.open(DialogWindowComponent, dialogConfig);
   }
 
-  deleteStage(x: string){
+  getStages() {
+    this.stages = this.dialogwindowservice.savedStages;
+    return this.dialogwindowservice.savedStages;
+  }
+
+  deleteStage(x: Stage) {
     let stage = x;
-    this.stages.splice(this.stages.indexOf(stage), 1);
+    this.dialogwindowservice.savedStages.splice(this.dialogwindowservice.savedStages.findIndex(stg => stg.name === stage.name), 1);
+    this.stages = this.dialogwindowservice.savedStages;
   }
  
   submit() {
@@ -206,4 +209,3 @@ template: `
 `,
 })
 export class AanmeldformulierConferenceFeedbackComponent {}
-
