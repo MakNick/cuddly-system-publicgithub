@@ -14,7 +14,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @Entity
-@ApiModel(value = "PresentationDraft", description = "Holds all values for the presentationdrafts")
+@ApiModel(value = "PresentationDraftRequest", description = "Holds all values for the presentationdrafts")
 
 public class PresentationDraft {
 

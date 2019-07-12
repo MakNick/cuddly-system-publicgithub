@@ -17,7 +17,7 @@ import {LoadingService} from "../../services/loading.service";
 @Component({
   selector: 'app-presentationdraft',
   templateUrl: './presentation-draft.component.html',
-  styleUrls: ['./presentation-draft.component.css'],
+  styleUrls: ['./presentation-draft.component.scss'],
   animations: [fadeOut]
 })
 export class PresentationDraftComponent implements OnInit {
@@ -29,7 +29,7 @@ export class PresentationDraftComponent implements OnInit {
   breakpoint: number;
 
   searchToken: string = "";
-  labelFilter: number;
+  labelFilter: string;
   categoryFilter: string;
 
   availableCategories: string[];
@@ -103,13 +103,17 @@ export class PresentationDraftComponent implements OnInit {
 
   applyFilter() {
     this.loadingService.setLoading(true);
-    this.presentationDraftService.searchPresentationDraft(this.conferenceId, this.searchToken != undefined ? this.searchToken : ""
-      , this.categoryFilter != undefined ? this.categoryFilter : "", this.labelFilter != undefined ? this.labelFilter : -1
-      , 0, this.page.size).subscribe(
+    this.presentationDraftService.searchPresentationDraft(this.formatSearchToken(this.conferenceId), this.formatSearchToken(this.searchToken),
+      this.formatSearchToken(this.categoryFilter), this.formatSearchToken(this.labelFilter), 0, this.page.size)
+      .subscribe(
         page => this.page = page,
         error => console.log(error.message),
       () => this.loadingService.setLoading(false)
       );
+  }
+
+  private formatSearchToken(token){
+    return token ? token : "empty";
   }
 
   resetFilters() {

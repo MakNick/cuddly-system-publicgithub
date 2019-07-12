@@ -44,7 +44,7 @@ public class PdfService {
 			for (int i = 0; i < listPresentations.size(); i++) {
 				addContent(content, listPresentations.get(i));
 				if (i != listPresentations.size() - 1) {
-					content.add(" "); // to create new page for a different presentationDraft
+					content.add(" "); // to create new page for a different PresentationDraftRequest
 				}
 			}
 			PDDocument pdd = saveAllPresentationDraft(content);
@@ -84,7 +84,7 @@ public class PdfService {
 			for (int i = 0; i < listPresentations.size(); i++) {
 				addContent(content, listPresentations.get(i));
 				if (i != listPresentations.size() - 1) {
-					content.add(" "); // to create new page for a different presentationDraft
+					content.add(" "); // to create new page for a different PresentationDraftRequest
 				}
 			}
 			try {
@@ -142,7 +142,7 @@ public class PdfService {
 	}
 
 	private void addContent(List<String> content, PresentationDraft presentationDraft) {
-		content.add("ID PresentationDraft: " + presentationDraft.getId());
+		content.add("ID PresentationDraftRequest: " + presentationDraft.getId());
 		content.add("Subject: "
 				+ presentationDraft.getSubject().replaceAll("\n", "").replaceAll("\r", "").replaceAll("\t", ""));
 		content.add("Category: "

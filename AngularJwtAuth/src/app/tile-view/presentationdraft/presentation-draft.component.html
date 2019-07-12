@@ -22,7 +22,7 @@
       </mat-paginator>
 
     </span>
-    <cdk-virtual-scroll-viewport itemSize="100" style="height: 500px; padding: 10px">
+    <cdk-virtual-scroll-viewport itemSize="100" style="height: 500px; padding: 10px;">
       <mat-grid-list cols="{{breakpoint}}" rowHeight="100" gutterSize="10" style="margin: 20px"
                      (window:resize)="onResize($event)">
         <span *ngIf="page">
@@ -64,23 +64,20 @@
       </mat-form-field>
       <mat-form-field>
         <mat-select (closed)="applyFilter()" [(value)]="labelFilter" placeholder="Label">
-          <mat-option value="0">
+          <mat-option value="UNLABELED">
             New
           </mat-option>
-          <mat-option value="2">
+          <mat-option value="ACCEPTED">
             Accepted
           </mat-option>
-          <mat-option value="1">
+          <mat-option value="DENIED">
             Denied
           </mat-option>
-          <mat-option value="3">
+          <mat-option value="RESERVED">
             Reserved
           </mat-option>
-          <mat-option value="4">
+          <mat-option value="UNDETERMINED">
             Undetermined
-          </mat-option>
-          <mat-option value="5">
-            All
           </mat-option>
         </mat-select>
       </mat-form-field>

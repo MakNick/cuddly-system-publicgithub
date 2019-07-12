@@ -103,14 +103,14 @@ public class FileDownloadEndpoint {
 		return new ResponseEntity<>(new byte[0], HttpStatus.NOT_FOUND);
 	}
 
-	@ApiOperation(value = "Get single presentationDraft and create PDF ")
+	@ApiOperation(value = "Get single PresentationDraftRequest and create PDF ")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Create PDF succesfully"),
 			@ApiResponse(code = 400, message = "Invalid conference ID and/or presentationdraft ID value"),
 			@ApiResponse(code = 404, message = "No presentationdraft ID available"),
 			@ApiResponse(code = 412, message = "Cancelled save request") })
 	@GetMapping("api/{conferenceId}/download/pdf/{id}")
 	public ResponseEntity<byte[]> getSinglePdf(
-			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id,
+			@ApiParam(required = true, name = "id", value = "PresentationDraftRequest ID") @PathVariable("id") Long id,
 			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId)
 			throws IOException {
 		if (conferenceId > 0 && conferenceId != null) {

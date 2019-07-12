@@ -51,13 +51,13 @@ public class FilePrintEndpoint {
 		return new ResponseEntity<>("No conference available", HttpStatus.NOT_FOUND);
 	}
 
-	@ApiOperation(value = "Print single presentationDraft")
+	@ApiOperation(value = "Print single PresentationDraftRequest")
 	@ApiResponses({ @ApiResponse(code = 200, message = "Printing PDF succesfully"),
 			@ApiResponse(code = 400, message = "A error occured while trying to print file or invalid ID value"),
 			@ApiResponse(code = 404, message = "No presentationdraft and/or conference available") })
 	@GetMapping("api/print/pdf/{id}")
 	public ResponseEntity<?> printSinglePdf(
-			@ApiParam(required = true, name = "id", value = "PresentationDraft ID") @PathVariable("id") Long id,
+			@ApiParam(required = true, name = "id", value = "PresentationDraftRequest ID") @PathVariable("id") Long id,
 			@ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId) throws IOException {
 		if (conferenceId > 0 && conferenceId != null) {
 			if (id != null && id != 0) {
