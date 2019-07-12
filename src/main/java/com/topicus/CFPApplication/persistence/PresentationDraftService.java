@@ -97,20 +97,6 @@ public class PresentationDraftService {
         return presentationDraftRepository.findById(id);
     }
 
-    public int changeLabel(long id, int value) {
-        Optional<PresentationDraft> result = presentationDraftRepository.findById(id);
-        if (result.isPresent()) {
-            PresentationDraft presentationDraft = result.get();
-            if (labelList.get(value).equals(presentationDraft.getLabel())) {
-                return 0;
-            } else {
-                presentationDraft.setLabel(labelList.get(value));
-                return value;
-            }
-        }
-        return -1;
-    }
-
     public Boolean delete(long id) {
         Optional<PresentationDraft> opt = presentationDraftRepository.findById(id);
         if (opt.isPresent()) {
@@ -124,23 +110,7 @@ public class PresentationDraftService {
         return false;
     }
 
-    public Page<PresentationDraft> findPresentationDraftsByLabel(Long conferenceId, byte labelId, int page, int limit) {
-
-        List<Integer> pageConfigs = PagingConstants.defaultPageConfigurations(page, limit);
-
-        Pageable pageableRequest = PageRequest.of(pageConfigs.get(0), pageConfigs.get(1));
-
-        if (labelId == 5) {
-            return this.presentationDraftRepository.findPresentationDraftByConferenceIdOrderByLabelDesc(conferenceId, pageableRequest);
-        }
-
-        for (Label label : Label.values()) {
-            if (labelId == label.ordinal()) {
-                return this.presentationDraftRepository.findPresentationDraftByConferenceIdAndLabelOrderBySubject(conferenceId, label, pageableRequest);
-            }
-        }
-        throw new RuntimeException("Could not find a presentation draft with the label id of " + labelId);
-    }
+    // TODO: Methode moet nog geïmplemeneerd en opgeschoond worden bij Finalizen
 //	public List<PresentationDraft> makePresentationDraftsFinal(long conferenceId, int label)
 //			throws CannotProceedException,NoSuchElementException {
 //		Optional<Conference> conference = conferenceService.findById(conferenceId);

@@ -57,14 +57,14 @@ public class MailService {
 					couldNotSendList.add(d);
 				}
 			}
-			return couldNotSendList; // all mails have been send if this list is empty. If not, those applicants are
-										// returned.
+			// All mails have been send if this list is empty. If not, those applicants are returned.
+			return couldNotSendList; 
 		}
-		return couldNotSendList; // if this is returned empty. The presentationDraft id doesn't exist.
+		// If this is returned empty. The presentationDraft id doesn't exist.
+		return couldNotSendList; 
 	}
 
-	// Usage for sending invitation to specified mailing list from customer. Add
-	// Iterable parameter.
+	// Usage for sending invitation to specified mailing list from customer. Add iterable parameter.
 	public List<Applicant> sendAllApplicantsMail(String templateName) {
 		Iterable<Applicant> applicants = applicantService.findAll();
 		List<Applicant> couldNotSendMail = new ArrayList<>();

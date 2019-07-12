@@ -1,6 +1,5 @@
 package com.topicus.CFPApplication.api;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -19,7 +18,6 @@ import com.topicus.CFPApplication.domain.PresentationDraft;
 import com.topicus.CFPApplication.domain.PresentationDraftApplicant;
 import com.topicus.CFPApplication.domain.conference.Conference;
 import com.topicus.CFPApplication.persistence.ConferenceService;
-import com.topicus.CFPApplication.persistence.RequestCategorizedDraftsService;
 import com.topicus.CFPApplication.persistence.SubscribeService;
 
 import io.swagger.annotations.Api;
@@ -41,6 +39,35 @@ public class ConferenceEndpoint {
         this.conferenceService = conferenceService;
         this.presentationDraftService = presentationDraftService;
         this.subscribeService = subscribeService;
+    }
+    
+    @ApiOperation(value = "Adds a new conference")
+    @ApiResponses({@ApiResponse(code = 200, message = "Successfully added a conference"),
+            @ApiResponse(code = 400, message = "Invalid conference object")})
+    @PostMapping("api/conference")
+    public ResponseEntity<Conference> saveConference(@RequestBody @Valid Conference conference) {
+        if (conference != null) {
+            return ResponseEntity.ok(conferenceService.save(conference));
+        }
+
+        return ResponseEntity.badRequest().build();
+    }
+    
+    @ApiOperation("Deletes a conference by ID")
+    @ApiResponses({@ApiResponse(code = 200, message = "Successfully deleted the conference with the given ID"),
+            @ApiResponse(code = 400, message = "Invalid ID value")})
+    @DeleteMapping("api/conference/delete/{id}")
+    public ResponseEntity<Conference> delete(
+            @ApiParam(required = true, name = "id", value = "Conference ID") @PathVariable("id") Long id) {
+        if (id != null && id > 0) {
+            try {
+                conferenceService.delete(id);
+                return ResponseEntity.ok().build();
+            } catch (Exception e) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @ApiOperation("Retrieves all available conference from the database")
@@ -71,10 +98,25 @@ public class ConferenceEndpoint {
         }
         return ResponseEntity.badRequest().build();
     }
+    
+    @ApiOperation("Retrieves all presentation draft from a conference")
+    @ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved the presentationDrafts with the given ID"),
+            @ApiResponse(code = 404, message = "The conference passed does not exist")})
+    @GetMapping(path = "api/conference/{id}/presentationdrafts")
+    public ResponseEntity<Page<PresentationDraft>> getAllPresentationDrafts(
+            @PathVariable(value = "id") Long id,
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "limit", defaultValue = "25") Integer limit) {
 
-    @ApiOperation("Retrieves all available presentation draft from a conference, based of the search criteria's")
-    @ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved all drafts based of the search criteria's"),
-            @ApiResponse(code = 404, message = "No drafts were found with the current search criteria")})
+        if (id > 0) {
+            return ResponseEntity.ok().body(this.presentationDraftService.findAllByConferenceId(id, page, limit));
+        }
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+    }
+
+    @ApiOperation("Retrieves all available presentation drafts from a conference, based on the searchcriteria")
+    @ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved all drafts based on the searchcriteria"),
+            @ApiResponse(code = 404, message = "No drafts were found with the current searchcriteria")})
     @GetMapping("api/conference/{id}/presentationdrafts/search")
     public ResponseEntity<Page<PresentationDraft>> searchPresentationDrafts(
             @PathVariable("id") long conferenceID,
@@ -87,19 +129,7 @@ public class ConferenceEndpoint {
 
     }
 
-    @ApiOperation(value = "Adds a new conference")
-    @ApiResponses({@ApiResponse(code = 200, message = "Successfully added a conference"),
-            @ApiResponse(code = 400, message = "Invalid conference object")})
-    @PostMapping("api/conference")
-    public ResponseEntity<Conference> saveConference(@RequestBody @Valid Conference conference) {
-        if (conference != null) {
-            return ResponseEntity.ok(conferenceService.save(conference));
-        }
-
-        return ResponseEntity.badRequest().build();
-    }
-
-    @ApiOperation(value = "Adds a new presentation at he given conference ID")
+    @ApiOperation(value = "Adds a new presentation to the given conference ID")
     @ApiResponses({@ApiResponse(code = 200, message = "Successfully added a new conference"),
             @ApiResponse(code = 404, message = "Conference with the given ID doest not exist"),
             @ApiResponse(code = 400, message = "ID value or presentationdraftapplicant is invalid")})
@@ -120,54 +150,4 @@ public class ConferenceEndpoint {
         }
         return ResponseEntity.badRequest().build();
     }
-
-    @ApiOperation("Deletes a conference by ID")
-    @ApiResponses({@ApiResponse(code = 200, message = "Successfully deleted the conference with the given ID"),
-            @ApiResponse(code = 400, message = "Invalid ID value")})
-    @DeleteMapping("api/conference/delete/{id}")
-    public ResponseEntity<Conference> delete(
-            @ApiParam(required = true, name = "id", value = "Conference ID") @PathVariable("id") Long id) {
-        if (id != null && id > 0) {
-            try {
-                conferenceService.delete(id);
-                return ResponseEntity.ok().build();
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
-
-    @ApiOperation("Retrieves presentation drafts from a conference with a certain label. 0=unlabeled, 1=denied, 2=accepted, 3=reserved, 4=undetermined, anyOtherNumber=all")
-    @GetMapping("api/conference/{conferenceId}/presentationdrafts/label/{labelId}")
-    public ResponseEntity<Page<PresentationDraft>> findPresentationdrafts(
-            @ApiParam(required = true, name = "conferenceId", value = "Conference ID") @PathVariable("conferenceId") Long conferenceId,
-            @ApiParam(required = true, name = "labelId", value = "Label numeric value") @PathVariable("labelId") byte labelId,
-            int page, int limit) {
-        if (labelId <= 5 && labelId >= 0) {
-            try {
-                return ResponseEntity.ok(presentationDraftService.findPresentationDraftsByLabel(conferenceId, labelId, page, limit));
-            }catch(RuntimeException re){
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).varyBy("Could not find any presentation draft with the given label").build();
-            }
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
-    @ApiOperation("Retrieves all presentation draft from a conference")
-    @ApiResponses({@ApiResponse(code = 200, message = "Successfully retrieved the presentationDrafts with the given ID"),
-            @ApiResponse(code = 404, message = "The conference passed does not exist")})
-    @GetMapping(path = "api/conference/{id}/presentationdrafts")
-    public ResponseEntity<Page<PresentationDraft>> getAllPresentationDrafts(
-            @PathVariable(value = "id") Long id,
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "limit", defaultValue = "25") Integer limit) {
-
-        if (id > 0) {
-            return ResponseEntity.ok().body(this.presentationDraftService.findAllByConferenceId(id, page, limit));
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-    }
-
 }

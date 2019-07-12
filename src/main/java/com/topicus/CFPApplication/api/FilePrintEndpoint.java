@@ -18,6 +18,10 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+
+/*
+ * TODO: ENDPOINTS WORDEN NIET GEBRUIKT, WEL LATEN BESTAAN VOOR EVENTUELE TOEKOMSTIGE IMPLEMENTATIE
+ */
 @RestController
 @Api(value = "FilePrintEndpoint", description = "Print files")
 public class FilePrintEndpoint {

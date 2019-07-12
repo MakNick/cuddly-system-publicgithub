@@ -11,8 +11,8 @@ public class PagingConstants {
     public static List<Integer> defaultPageConfigurations(int page, int limit){
 
         if (page > 0) page -= 1;
-        if(page < 0 ) page = 0;
-        if(limit < 0 || limit > 100) limit = DEFAULT_LIMIT;
+        if (page < 0) page = 0;
+        if (limit < 0 || limit > 100) limit = DEFAULT_LIMIT;
 
         return Arrays.asList(page,limit);
     }
